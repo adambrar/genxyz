@@ -1,0 +1,17 @@
+{
+	"name": "silverstripe/comments",
+	"description": "This module provides commenting functionality for Pages and other DataObjects on your SilverStripe site.",
+	"type": "silverstripe-module",
+	"keywords": ["silverstripe", "comments"],
+	"authors": [{
+		"name": "Will Rossiter",
+		"email": "will@fullscreen.io"
+	}],
+	"require": {
+		"silverstripe/framework": "~3.1",
+		"colymba/gridfield-bulk-editing-tools": "2.0.2"
+	},
+	"suggest": {
+		"ezyang/htmlpurifier": "4.*"
+	}
+}

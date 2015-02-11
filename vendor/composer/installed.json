@@ -1,0 +1,359 @@
+[
+    {
+        "name": "composer/installers",
+        "version": "v1.0.20",
+        "version_normalized": "1.0.20.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/composer/installers.git",
+            "reference": "1bff8aa77a18f3616f468ed8000cf86a5725bac3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/composer/installers/zipball/1bff8aa77a18f3616f468ed8000cf86a5725bac3",
+            "reference": "1bff8aa77a18f3616f468ed8000cf86a5725bac3",
+            "shasum": ""
+        },
+        "replace": {
+            "roundcube/plugin-installer": "*",
+            "shama/baton": "*"
+        },
+        "require-dev": {
+            "composer/composer": "1.0.*@dev",
+            "phpunit/phpunit": "4.1.*"
+        },
+        "time": "2015-01-11 03:51:11",
+        "type": "composer-installer",
+        "extra": {
+            "class": "Composer\\Installers\\Installer",
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Composer\\Installers\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Kyle Robinson Young",
+                "email": "kyle@dontkry.com",
+                "homepage": "https://github.com/shama"
+            }
+        ],
+        "description": "A multi-framework Composer library installer",
+        "homepage": "http://composer.github.com/installers/",
+        "keywords": [
+            "Craft",
+            "Dolibarr",
+            "Hurad",
+            "MODX Evo",
+            "OXID",
+            "SMF",
+            "Thelia",
+            "WolfCMS",
+            "agl",
+            "annotatecms",
+            "bitrix",
+            "cakephp",
+            "chef",
+            "codeigniter",
+            "concrete5",
+            "croogo",
+            "dokuwiki",
+            "drupal",
+            "elgg",
+            "fuelphp",
+            "grav",
+            "installer",
+            "joomla",
+            "kohana",
+            "laravel",
+            "lithium",
+            "magento",
+            "mako",
+            "mediawiki",
+            "modulework",
+            "moodle",
+            "phpbb",
+            "piwik",
+            "ppi",
+            "puppet",
+            "roundcube",
+            "shopware",
+            "silverstripe",
+            "symfony",
+            "typo3",
+            "wordpress",
+            "zend",
+            "zikula"
+        ]
+    },
+    {
+        "name": "silverstripe/framework",
+        "version": "3.1.9",
+        "version_normalized": "3.1.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/silverstripe/silverstripe-framework.git",
+            "reference": "87d6250ea75f5e1c765d9004c51bd5ffd5633185"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/silverstripe/silverstripe-framework/zipball/87d6250ea75f5e1c765d9004c51bd5ffd5633185",
+            "reference": "87d6250ea75f5e1c765d9004c51bd5ffd5633185",
+            "shasum": ""
+        },
+        "require": {
+            "composer/installers": "*",
+            "php": ">=5.3.2"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~3.7@stable"
+        },
+        "time": "2015-01-14 22:56:46",
+        "type": "silverstripe-module",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "tests/behat/features/bootstrap"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "SilverStripe",
+                "homepage": "http://silverstripe.com"
+            },
+            {
+                "name": "The SilverStripe Community",
+                "homepage": "http://silverstripe.org"
+            }
+        ],
+        "description": "The SilverStripe framework",
+        "homepage": "http://silverstripe.org",
+        "keywords": [
+            "framework",
+            "silverstripe"
+        ]
+    },
+    {
+        "name": "silverstripe/cms",
+        "version": "3.1.9",
+        "version_normalized": "3.1.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/silverstripe/silverstripe-cms.git",
+            "reference": "ee4639ed7447b35ec7159b39165819f11b0ccb56"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/silverstripe/silverstripe-cms/zipball/ee4639ed7447b35ec7159b39165819f11b0ccb56",
+            "reference": "ee4639ed7447b35ec7159b39165819f11b0ccb56",
+            "shasum": ""
+        },
+        "require": {
+            "composer/installers": "*",
+            "php": ">=5.3.2",
+            "silverstripe/framework": "3.1.*"
+        },
+        "time": "2015-01-12 04:52:29",
+        "type": "silverstripe-module",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "tests/behat/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "SilverStripe",
+                "homepage": "http://silverstripe.com"
+            },
+            {
+                "name": "The SilverStripe Community",
+                "homepage": "http://silverstripe.org"
+            }
+        ],
+        "description": "The SilverStripe Content Management System",
+        "homepage": "http://silverstripe.org",
+        "keywords": [
+            "cms",
+            "silverstripe"
+        ]
+    },
+    {
+        "name": "silverstripe/widgets",
+        "version": "0.2.0",
+        "version_normalized": "0.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/silverstripe/silverstripe-widgets.git",
+            "reference": "8ee406675e40ab7c978939c5cdacd810494baabe"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/silverstripe/silverstripe-widgets/zipball/8ee406675e40ab7c978939c5cdacd810494baabe",
+            "reference": "8ee406675e40ab7c978939c5cdacd810494baabe",
+            "shasum": ""
+        },
+        "require": {
+            "silverstripe/cms": "~3.1",
+            "silverstripe/framework": "~3.1"
+        },
+        "time": "2014-08-06 04:03:50",
+        "type": "silverstripe-module",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "Ingo Schommer",
+                "email": "ingo@silverstripe.com"
+            }
+        ],
+        "description": "Widgets are small pieces of functionality such as showing the latest Comments or Flickr Photos. They normally display on the sidebar of your website.",
+        "keywords": [
+            "blog",
+            "silverstripe",
+            "widgets"
+        ]
+    },
+    {
+        "name": "silverstripe/blog",
+        "version": "0.7.0",
+        "version_normalized": "0.7.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/silverstripe/silverstripe-blog.git",
+            "reference": "067003a6c313267cc61ebce1240f906d695c75b3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/silverstripe/silverstripe-blog/zipball/067003a6c313267cc61ebce1240f906d695c75b3",
+            "reference": "067003a6c313267cc61ebce1240f906d695c75b3",
+            "shasum": ""
+        },
+        "require": {
+            "silverstripe/cms": "~3.1"
+        },
+        "suggest": {
+            "silverstripe/comments": "Enable user comments on any page type, including blog posts",
+            "silverstripe/widgets": "Additional 'sidebar features', e.g. a list of recent posts and a tagcloud",
+            "simplepie/simplepie": "Parse RSS feeds, required for the RSS widget"
+        },
+        "time": "2014-03-22 10:49:11",
+        "type": "silverstripe-module",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "Saophalkun Ponlu",
+                "email": "phalkunz@silverstripe.com"
+            },
+            {
+                "name": "Carlos Barberis",
+                "email": "carlos@silverstripe.com"
+            }
+        ],
+        "description": "The blog module allows you to post blogs on your SilverStripe. It includes the ability to post blogs using a site front-end form. Blogs are summarised on the blog holder page type, with more detail viewable when a specific blog is clicked.",
+        "keywords": [
+            "blog",
+            "silverstripe"
+        ]
+    },
+    {
+        "name": "colymba/gridfield-bulk-editing-tools",
+        "version": "v2.0.2",
+        "version_normalized": "2.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/colymba/GridFieldBulkEditingTools.git",
+            "reference": "013a4fde7babd6eacc67874021fb43be9b085a0f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/colymba/GridFieldBulkEditingTools/zipball/013a4fde7babd6eacc67874021fb43be9b085a0f",
+            "reference": "013a4fde7babd6eacc67874021fb43be9b085a0f",
+            "shasum": ""
+        },
+        "require": {
+            "silverstripe/framework": "~3.1"
+        },
+        "time": "2014-08-29 07:00:51",
+        "type": "silverstripe-module",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD Simplified"
+        ],
+        "authors": [
+            {
+                "name": "Thierry Francois",
+                "homepage": "http://colymba.com"
+            },
+            {
+                "name": "GitHub contributors",
+                "homepage": "https://github.com/colymba/GridFieldBulkEditingTools/contributors"
+            }
+        ],
+        "description": "SilverStripe 3 GridField component to upload images and edit records in bulk",
+        "homepage": "https://github.com/colymba/GridFieldBulkEditingTools",
+        "keywords": [
+            "Image upload",
+            "bulk upload",
+            "gridfield bulk upload",
+            "silverstripe"
+        ]
+    },
+    {
+        "name": "silverstripe/comments",
+        "version": "1.2.1",
+        "version_normalized": "1.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/silverstripe/silverstripe-comments.git",
+            "reference": "a061be87321b0d048bfdb692cd7550c33f5da872"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/silverstripe/silverstripe-comments/zipball/a061be87321b0d048bfdb692cd7550c33f5da872",
+            "reference": "a061be87321b0d048bfdb692cd7550c33f5da872",
+            "shasum": ""
+        },
+        "require": {
+            "colymba/gridfield-bulk-editing-tools": "2.0.2",
+            "silverstripe/framework": "~3.1"
+        },
+        "suggest": {
+            "ezyang/htmlpurifier": "4.*"
+        },
+        "time": "2014-11-11 23:13:33",
+        "type": "silverstripe-module",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "Will Rossiter",
+                "email": "will@fullscreen.io"
+            }
+        ],
+        "description": "This module provides commenting functionality for Pages and other DataObjects on your SilverStripe site.",
+        "keywords": [
+            "comments",
+            "silverstripe"
+        ]
+    }
+]

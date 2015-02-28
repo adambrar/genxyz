@@ -21,3 +21,11 @@ Director::set_environment_type('dev');
 
 HTMLEditorConfig::get('cms')->setOption('valid_elements', '*[*]');
 HTMLEditorConfig::get('cms')->setOption('invalid_elements', 'script');
+
+Page::set_restricted_pagetypes(array(
+    'ErrorPage',
+    'VirtualPage',
+    'RedirectorPage'
+));
+
+Object::useCustomClass('MemberLoginForm', 'StudentLoginForm');

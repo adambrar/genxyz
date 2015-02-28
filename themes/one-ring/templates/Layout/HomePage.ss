@@ -7,9 +7,16 @@
                     <div class="content-container unit size3of4 lastUnit">
                         <article>
                             <div class="content">$Content</div>
+                            
+                            <div class="blog blogentries">
+                                <% loop $LatestBlogPosts %>
+                                    <% include BlogSummary %>
+                                <% end_loop %>
+                            </div>
+                            
                             $Form
-                        </article>
                             $PageComments
+                        </article>
                     </div>
                 </div>
             </div>

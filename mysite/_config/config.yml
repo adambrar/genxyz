@@ -13,3 +13,7 @@ SSViewer:
 SiteConfig:
     extensions:
         - CustomSiteConfig
+
+Group:
+    extensions:
+        - GroupDecorator

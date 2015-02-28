@@ -13,3 +13,11 @@
 .blogEntry p {
     margin: 0;
 }
+
+.blogSummary h2 {
+    margin: 0.5em 0 0.2em 0;
+}
+
+.blogSummary p {
+    margin: 0;
+}

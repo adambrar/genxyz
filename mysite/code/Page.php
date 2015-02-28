@@ -1,12 +1,13 @@
 <?php
-class Page extends SiteTree {
+class Page extends SiteTree implements PermissionProvider {
 
 	private static $db = array(
         'menuWelcome' => 'Boolean',
         'menuStudent' => 'Boolean',
         'menuUniversity' => 'Boolean',
         'menuStudentSidebar' => 'Boolean',
-        'menuShown' => "Enum('Welcome, Student, University, None')"
+        'menuShown' => "Enum('Welcome, Student, University, None')",
+        'showDropdown' => 'Boolean(1)'
 	);
 
 	private static $has_one = array(
@@ -14,7 +15,8 @@ class Page extends SiteTree {
 	);
     
     private static $defaults = array(
-        'menuShown' => 'Welcome'  
+        'menuShown' => 'Welcome',
+        'showDropdown' => '1'
     );
     
     function getSettingsFields() {
@@ -24,12 +26,91 @@ class Page extends SiteTree {
         $fields->addFieldToTab('Root.Settings', new CheckboxField('menuStudent',"Show up in student menu?"), 'ShowInSearch');
         $fields->addFieldToTab('Root.Settings', new CheckboxField('menuUniversity',"Show up in university menu?"), 'ShowInSearch');
         $fields->addFieldToTab('Root.Settings', new CheckboxField('menuStudentSidebar',"Show up in student sidebar menu?"), 'ShowInSearch');
+        $fields->addFieldToTab('Root.Settings', new CheckboxField('showDropdown',"Show dropdown menu for children?"), 'ShowInSearch');
         
         $options = array('Welcome', 'Student', 'University');
         $menuOptions = DropdownField::create( 'menuShown', 'Which menu will show on this page?', singleton('WelcomePage')->dbObject('menuShown')->enumValues() )->setEmptyString('Select menu');
         $fields->addFieldToTab('Root.Settings', $menuOptions, 'ShowInSearch');
         
         return $fields;
+    }
+    
+    /*
+     *  array of restricted pagetypes, only to be managed
+     *  by users that have MANAGE_RESTRICTED_PAGETYPES permission
+     */
+    protected static $restricted_pagetypes = array();
+ 
+    /*
+     *  Add a new permission
+     */
+    function providePermissions(){
+        return array(
+            'MANAGE_RESTRICTED_PAGETYPES' => array(
+                'name' => _t(
+                    'Page.RESTRICTED_PAGETYPES',
+                    'Manage restricted pagetypes'
+                ),
+                'category' => _t(
+                    'Page.PERMISSIONS_SETTINGS',
+                    'Special settings'
+                ),
+                'help' => _t(
+                    'Page.RESTRICTED_PAGETYPES_HELP',
+                    'Can create and delete restricted pagetypes'
+                ),
+                'sort' => 100
+            )
+        );
+    }
+    
+    /*
+     * setter for resticted pagetpes
+     */
+    public static function set_restricted_pagetypes($pagetypes) {
+        self::$restricted_pagetypes = $pagetypes;
+    }
+    
+    /*
+     *  check if this is a restricted pagetype and if the user
+     *  has permission to manage restricted pagetypes
+     */
+    protected function canManageRestrictedPagetypes($Member) {
+ 
+        // are there any restricted pagetypes?
+        if (!empty(self::$restricted_pagetypes)) {
+            if (in_array($this->ClassName, self::$restricted_pagetypes)) {
+ 
+                if (!permission::check('MANAGE_RESTRICTED_PAGETYPES')) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    /*
+     *  disable the creation of restricted pages for people
+     *  that don't have the right pernmissions
+     */
+    function canCreate($Member = null){
+        if ($this->canManageRestrictedPagetypes($Member)) {
+            return parent::canCreate($Member);
+        } else {
+            return false;
+        }
+    }
+    
+    /*
+     *  disable the deletion of restricted pages for people
+     *  that don't have the right pernmissions
+     */
+    function canDelete($Member = null){
+        if ($this->canManageRestrictedPagetypes($Member)) {
+            return parent::canDelete($Member);
+        } else {
+            return false;
+        }
     }
 }
 class Page_Controller extends ContentController {

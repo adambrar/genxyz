@@ -17,3 +17,7 @@ SiteConfig:
 Group:
     extensions:
         - GroupDecorator
+        
+DateField:
+    default_config:
+        showcalendar: true

@@ -29,3 +29,5 @@ Page::set_restricted_pagetypes(array(
 ));
 
 Object::useCustomClass('MemberLoginForm', 'StudentLoginForm');
+
+Object::add_extension('Member', 'MemberDecorator');

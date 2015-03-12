@@ -1,3 +1,4 @@
+<% include Logo %>
 <div class="main" role="main">
 	<div class="inner typography line">
         <div id="main-wrapper">
@@ -6,11 +7,11 @@
                     <div class="content-container unit size3of4 lastUnit">
                         <article>
                             <div class="row">
-                            <div class="4u -4u 12u(2)>
+                            <div class="6u -3u 12u(2)>
                             <div class="content">
-                                <h2>$Title</h2>
+                                <h2>$Title!</h2>
                                 $Content
-                                $RegistrationForm
+                                $RegisterForm
                             </div>
                             </div>
                             </div>

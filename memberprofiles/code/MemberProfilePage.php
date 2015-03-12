@@ -455,12 +455,16 @@ class MemberProfilePage_Controller extends Page_Controller {
 			$password->setValue(null);
 			$password->setCanBeEmpty(true);
 		}
-
-		return array (
-			'Title' => $this->obj('ProfileTitle'),
+        
+        $pageData = array (
+            'Title' => $this->obj('ProfileTitle'),
 			'Content' => $this->obj('ProfileContent'),
-			'Form'  => $form
-		);
+			'Form'  => $form,
+        );
+
+        //CUSTOM ADDED//
+        $this->extend('updateProfilePageData', $pageData);
+        return $pageData;
 	}
 
 	/**
@@ -470,7 +474,7 @@ class MemberProfilePage_Controller extends Page_Controller {
 		if(!$this->AllowProfileViewing) {
 			$this->httpError(404);
 		}
-
+        
 		return new MemberProfileViewer($this, 'show');
 	}
 
@@ -575,7 +579,7 @@ class MemberProfilePage_Controller extends Page_Controller {
 		}
 
 		$form->sessionMessage (
-			_t('MemberProfiles.PROFILEUPDATED', 'Your profile has been updated.'),
+			_t('MemberProfiles.PROFILEUPDATED', 'Your profile has been updated!'),
 			'good'
 		);
 		return $this->redirectBack();

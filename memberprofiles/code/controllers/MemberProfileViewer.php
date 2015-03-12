@@ -98,12 +98,14 @@ class MemberProfileViewer extends Page_Controller {
 		}
 
 		$member = Member::get()->byID($id);
-		$groups = $this->parent->Groups();
-
-		if(!$member->inGroups($groups)) {
-			$this->httpError(403);
+        
+        //remove comments after implementing groups.
+//		$groups = $this->parent->Groups();
+//
+		if(!$member) {
+			$this->httpError(404);
 		}
-
+//
 		$sections     = $this->parent->Sections();
 		$sectionsList = new ArrayList();
 
@@ -117,12 +119,17 @@ class MemberProfileViewer extends Page_Controller {
 			$member->getName()
 		);
 		$this->data()->Parent = $this->parent;
+        
+        //CUSTOM ADDED//
+        $customData = array(
+            'Member' => $member,
+            'Sections' => $sectionsList,
+            'IsSelf' => $member->ID == Member::currentUserID(),
+        );
+        
+        $this->extend('updateProfileViewer', $customData);
 
-		$controller = $this->customise(array(
-			'Member'   => $member,
-			'Sections' => $sectionsList,
-			'IsSelf'   => $member->ID == Member::currentUserID()
-		));
+        $controller = $this->customise($customData);
 		return $controller->renderWith(array(
 			'MemberProfileViewer_view', 'MemberProfileViewer', 'Page'
 		));

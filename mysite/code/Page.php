@@ -15,7 +15,7 @@ class Page extends SiteTree implements PermissionProvider {
 	);
     
     private static $defaults = array(
-        'menuShown' => 'Welcome',
+        'menuShown' => 'Student',
         'showDropdown' => '1'
     );
     
@@ -60,7 +60,19 @@ class Page extends SiteTree implements PermissionProvider {
                     'Can create and delete restricted pagetypes'
                 ),
                 'sort' => 100
-            )
+            ),
+            'VIEW_PROFILES' => array(
+                'name' => 'Can view profiles',
+                'category' => 'User access',
+                'help' => 'Can view all user profiles',
+                'sort' => 101
+            ),
+            'POST_IN_FORUM' => array(
+                'name' => 'Can post to forum',
+                'category' => 'User access',
+                'help' => 'Can make new posts in forum',
+                'sort' => 103
+            ),
         );
     }
     
@@ -87,6 +99,16 @@ class Page extends SiteTree implements PermissionProvider {
             }
         }
         return true;
+    }
+    
+    public function canViewProfiles($Member = null)
+    {
+        return false;   
+        if(Permission::check('VIEW_PROFILES')) {
+            return true;
+        } else {
+            return Securtiy::permissionFailure($this, 'You need to be logged in to view this profile. Please login or create an account.');
+        }
     }
     
     /*

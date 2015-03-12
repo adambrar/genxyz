@@ -40,4 +40,7 @@ ErrorDocument 500 /assets/error-500.html
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule .* framework/main.php?url=%1 [QSA]
 </IfModule>
+
+php_value display_errors On
+
 ### SILVERSTRIPE END ###

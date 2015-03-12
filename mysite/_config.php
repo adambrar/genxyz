@@ -18,6 +18,7 @@ i18n::set_locale('en_US');
 
 // Remove when live
 Director::set_environment_type('dev');
+error_reporting(E_ALL);
 
 HTMLEditorConfig::get('cms')->setOption('valid_elements', '*[*]');
 HTMLEditorConfig::get('cms')->setOption('invalid_elements', 'script');
@@ -31,3 +32,7 @@ Page::set_restricted_pagetypes(array(
 Object::useCustomClass('MemberLoginForm', 'StudentLoginForm');
 
 Object::add_extension('Member', 'MemberDecorator');
+
+Object::add_extension('MemberProfilePage_Controller', 'MemberProfilePage_ControllerDecorator');
+
+Object::add_extension('MemberProfileViewer', 'MemberProfileViewerDecorator');

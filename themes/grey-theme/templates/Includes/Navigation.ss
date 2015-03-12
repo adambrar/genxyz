@@ -1,4 +1,5 @@
 <nav id="nav" class="primary">
+    
     <% if $menuShown = "Welcome" %>
         <ul>   
             <% loop $Menu(1).Filter('menuWelcome', 1) %>
@@ -55,6 +56,7 @@
                 <% end_if %>            
                 </li>
             <% end_loop %>
+            <li><a class="" href="Security/logout">Logout</a></li>
         </ul>
         
     <% else_if $menuShown = "University" %>

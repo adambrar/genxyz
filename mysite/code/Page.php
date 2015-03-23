@@ -134,6 +134,13 @@ class Page extends SiteTree implements PermissionProvider {
             return false;
         }
     }
+    
+    function isSignedIn() {
+        if( Member::currentUserID() )
+            return true;
+        else
+            return false;
+    }
 }
 class Page_Controller extends ContentController {
 

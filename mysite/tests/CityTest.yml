@@ -1,0 +1,10 @@
+City:
+  firstcity:
+    Title: First City
+    ID: 1
+  SecondCity:
+    Title: Second City
+    ID: 2
+  ThirdCity:
+    Title: Third City
+    ID: 33

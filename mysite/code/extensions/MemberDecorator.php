@@ -2,6 +2,7 @@
 class MemberDecorator extends DataExtension {
     
     private static $db = array(
+        "Username" => "Varchar(100)",
         "MiddleName" => 'Varchar(50)',
         "DateOfBirth" => 'Date',
         "Nationality" => 'Varchar(100)',
@@ -22,6 +23,7 @@ class MemberDecorator extends DataExtension {
     public function updateCMSFields(FieldList $fields) 
     {
         $fields->addFieldToTab("Root.Main", new TextField('MiddleName', 'Middle Name'), 'surname');      
+        $fields->addFieldToTab("Root.Profile", new TextField('Username', 'Username'));      
         $fields->addFieldToTab("Root.Profile", new TextField('DateOfBirth', 'Date of Birth'));      
         $fields->addFieldToTab("Root.Profile", new CountryDropdownField('Nationality', 'Nationality'));         
         $fields->addFieldToTab("Root.Profile", new TextField('Telephone', 'Telephone Number'));         
@@ -39,7 +41,7 @@ $fields->addFieldToTab("Root.Profile", new DropdownField('City', 'City', HighSch
     
     function Link()
     {
-        if($ProfilePage = DataObject::get_one('EditProfilePage'))
+        if($ProfilePage = DataObject::get_one('MemberProfilePage'))
         {
            return $ProfilePage->Link();
         }

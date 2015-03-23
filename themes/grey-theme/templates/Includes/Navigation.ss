@@ -1,7 +1,10 @@
 <nav id="nav" class="primary">
     
     <% if $menuShown = "Welcome" %>
-        <ul>   
+        <ul>
+            <% if isSignedIn %>
+                <li class="link"><a href="/myprofile" title="MyProfile">MyProfile</a></li>
+            <% end_if %>
             <% loop $Menu(1).Filter('menuWelcome', 1) %>
                 <% if $Children %>
                     <% if $showDropdown %>
@@ -56,6 +59,7 @@
                 <% end_if %>            
                 </li>
             <% end_loop %>
+            <li><a class="" href="home">GenXYZ</a></li>
             <li><a class="" href="Security/logout">Logout</a></li>
         </ul>
         

@@ -50,7 +50,9 @@ class MemberConfirmationAdminTest extends FunctionalTest {
 		$admin  = new SecurityAdmin();
 		$group  = $this->objFromFixture('Group', 'group');
 
-		Form::disable_all_security_tokens();
+        //disable_all_security_tokens() is deprecated
+		//Form::disable_all_security_tokens();
+        SecurityToken::disable();
 		$this->logInWithPermission('ADMIN');
 
 		$gLink = Controller::join_links($admin->Link(), 'show', $group->ID);

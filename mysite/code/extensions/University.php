@@ -20,4 +20,11 @@ class University extends DataObject {
         }
     }
     
+    public function updateCMSFields(FieldList $fields)
+    {        
+        $fields->insertBefore("Root", new Tab('Test', 'Test'), 'Comments');
+        
+        return $fields;
+    }
+    
 }

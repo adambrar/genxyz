@@ -1,0 +1,10 @@
+HighSchool:
+  firstschool:
+    Title: First School
+    ID: 1
+  secondschool:
+    Title: Second School
+    ID: 2
+  thirdschool:
+    Title: Third School
+    ID: 33

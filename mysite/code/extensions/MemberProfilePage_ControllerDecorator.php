@@ -12,7 +12,8 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $fields = $form->Fields();
 		
         $fields->insertBefore(new LiteralField('Hd_Personal', '<h3>Personal Info<h3>'), 'FirstName');
-        $fields->insertAfter(new TextField('MiddleName', 'Middle Name'), 'FirstName');
+        $fields->insertAfter(new TextField('Username', 'Username'), 'Hd_Personal');
+        $fields->insertAfter(new TextField('MiddleName', 'Middle Name'), 'Firstname');
         $fields->insertAfter(new CountryDropdownField('Nationality', 'Nationality'), 'Email');
 		
         $fields->insertAfter(new LiteralField('Hd_Address', '<h3>Address<h3>'), 'Nationality');
@@ -40,33 +41,34 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $basicForm = $this->BasicProfileForm();
         $basicForm->loadDataFrom($member);
 
-        $educationForm = $this->EducationProfileForm();
+        $educationForm = $this->EducationProfileForm($member);
         $educationForm->loadDataFrom($member);
 
-        $addressForm = $this->AddressProfileForm();
+        $addressForm = $this->AddressProfileForm($member);
         $addressForm->loadDataFrom($member);
 
         $pageData['BasicProfileForm'] = $basicForm;
         $pageDate['EducationProfileForm'] = $educationForm;
         $pageDate['AddressProfileForm'] = $addressForm;
-        $pageData['BlogEntries'] = $this->getLatestBlogEntries($member, 5);
-        return $pageData;
-    }
-    
-    //get latest blog posts for member
-    public function getLatestBlogEntries($member = null, $max = 5)
-    {
-        if(!$member) {
-            return false;
-        }
-        
+
         $holder = BlogHolder::get()->filter(array(
             'ownerID' => $member->ID
         ))->First();
         
-      return SiteTree::get()->filter(array(
+        if(!$holder) {
+            $pageData['BlogHolder'] = false;
+            return $pageData;
+        }
+        
+        $pageData['BlogPostURL'] = $holder->postURL();
+        
+        $entries = BlogEntry::get()->filter(array(
             'ParentID' => $holder->ID
-        ))->limit($max);
+        ))->limit(10);
+        
+        $pageData['BlogEntries'] = $entries;
+        
+        return $pageData;
     }
     
     
@@ -92,13 +94,23 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     }
     
     //form for address input
-    public function AddressProfileForm()
+    public function AddressProfileForm($member = null)
     {
+        if(!$member) {
+            $memberEmail = Member::currentUser()->Email;
+            $userName = Member::currentUser()->Username;
+        } else {
+            $memberEmail = $member->Email;
+            $userName = $member->Username;
+        }
+        
         $fields = new FieldList(
             new TextField('StreetAddress', 'Street Address'),
             new DropdownField('City', 'City', City::getCityOptions()),
             new CountryDropdownField('Country', 'Current Country'),
-            new TextField('PostalCode', 'Postal Code')
+            new TextField('PostalCode', 'Postal Code'),
+            new HiddenField('Username', 'Username', $userName),
+            new HiddenField('Email', 'Email', $memberEmail)
         );
         
         $actions = new FieldList(
@@ -111,13 +123,23 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     }
     
     //education info form
-    public function EducationProfileForm()
+    public function EducationProfileForm($member = null)
     {
+        if(!$member) {
+            $memberEmail = Member::currentUser()->Email;
+            $userName = Member::currentUser()->Username;
+        } else {
+            $memberEmail = $member->Email;
+            $userName = $member->Username;
+        }
+        
         $fields = new FieldList(
             new DropdownField('HighSchool', 'High School', HighSchool::getHighSchoolOptions()),
             new DateField('HSGraduation', 'High School Graduation Date'),
             new DropdownField('University', 'University', University::getUniversityOptions()),
-            new DateField('UniversityGraduation', 'University Graduation Date')
+            new DateField('UniversityGraduation', 'University Graduation Date'),
+            new HiddenField('Username', 'Username', $userName),
+            new HiddenField('Email', 'Email', $memberEmail)
         );
         
         $actions = new FieldList(
@@ -163,9 +185,20 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $blogHolder->URLSegment = $member->FirstName."-".$member->Surname;
         $blogHolder->Status = "Published";
         $blogHolder->ParentID = $blogTree->ID;
+        
+        $widgetArea = new WidgetArea();
+        $widgetArea->write();
+        
+        $blogHolder->SideBarWidgetID = $widgetArea->ID;
         $blogHolder->write();
         $blogHolder->doRestoreToStage();
         
+        $managementWidget = new BlogManagementWidget();
+        $managementWidget->ParentID = $widgetArea->ID;
+        $managementWidget->Enabled = 1;
+        $managementWidget->write();
+        
+        //create welcome blog entry
         $blog = new BlogEntry();
         $blog->Title = "Welcome to the ISNetwoork".$member.FirstName."!";
         $blog->Author = "Admin";
@@ -195,10 +228,4 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $userGroup->Members()->add($member);
     }
     
-    //check for email before writing
-//    protected function onBeforeWrite() {
-//        parent::onBeforeWrite();
-//        
-//        if($this->owner->Email)
-
 }

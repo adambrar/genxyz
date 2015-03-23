@@ -21,6 +21,10 @@ table.welcome_forum tr:nth-child(2n) {
     background-color: #f5f5f5;
 }
 
+table.welcome_forum tr:nth-child(2n+3) {
+    background-color: white;
+}
+
 table.welcome_forum tr:last-child {
     border: 1px solid #ccc;
 }

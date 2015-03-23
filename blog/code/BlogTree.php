@@ -220,7 +220,7 @@ class BlogTree extends Page {
 		if($retrieveCallback) return call_user_func($retrieveCallback, 'BlogEntry', $filter, $limit, $order);
 
 		$entries = BlogEntry::get()->where($filter)->sort($order);
-
+        
     	$list = new PaginatedList($entries, Controller::curr()->request);
     	$list->setPageLength($limit);
     	return $list;
@@ -256,11 +256,12 @@ class BlogTree_Controller extends Page_Controller {
 	 * @return PaginatedList
 	 */
 	public function BlogEntries($limit = null) {
-		require_once('Zend/Date.php');
+
+        require_once('Zend/Date.php');
 		
 		if($limit === null) $limit = BlogTree::$default_entries_limit;
 
-		// only use freshness if no action is present (might be displaying tags or rss)
+        // only use freshness if no action is present (might be displaying tags or rss)
 		if ($this->LandingPageFreshness && !$this->request->param('Action')) {
 			$d = new Zend_Date(SS_Datetime::now()->getValue());
 			$d->sub($this->LandingPageFreshness, Zend_Date::MONTH);

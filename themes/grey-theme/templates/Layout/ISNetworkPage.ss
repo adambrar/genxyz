@@ -8,14 +8,10 @@
                         <article>
                             <div class="content">
                                 <div class="row">
-                                    <div class="6u 12u(1)">
+                                    <div class="8u -2u 12u(1)">
                                         <h2>Login</h2>
                                         $LoginForm
                                         <a>Create new account</a>
-                                    </div>
-                                    <div class="6u 12u(2)">
-                                        <h2>Pricing</h2>
-                                        $Pricing
                                     </div>
                                 </div>
                                 <div class="row">

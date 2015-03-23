@@ -13,6 +13,7 @@
         </li>
     <% end_loop %>
     </li>
+    <li>-</li>
     <li><a class="dropdown" href="">Basic Information</a>
         <ul><li>$BasicProfileForm</li></ul>
     </li>

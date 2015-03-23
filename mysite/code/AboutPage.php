@@ -11,13 +11,13 @@ class AboutPage extends Page
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-
-        $fields->removeByName("Content");
               
-        $fields->addFieldToTab("Root.Main", new TextareaField('AboutStatement', 'About'));      
-        $fields->addFieldToTab("Root.Main", new TextareaField('MissionStatement', 'Mission Statement'));
-        $fields->addFieldToTab("Root.Main", new TextareaField('AboutValues', 'Values'));
+        $fields->addFieldToTab("Root.Main", new TextareaField('AboutStatement', 'About'), 'Content');      
+        $fields->addFieldToTab("Root.Main", new TextareaField('MissionStatement', 'Mission Statement'), 'Content');
+        $fields->addFieldToTab("Root.Main", new TextareaField('AboutValues', 'Values'), 'Content');
         
+        $fields->removeByName("Content");
+
         return $fields;
     }
 }

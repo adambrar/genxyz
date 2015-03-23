@@ -9,6 +9,9 @@
 		"silverstripe/blog": "0.7.*",
 		"silverstripe/comments": "*"
 	},
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
 	"config": {
 		"process-timeout": 600	
 	},

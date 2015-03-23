@@ -17,12 +17,14 @@
 
                                     <div class="row">
                                         <div class="8u 12u(1)">
-                                             <% if BlogEntries %>
+                                             <% if BlogHolder %>
+                                             <% with BlogHolder %>
                                                 <% loop BlogEntries %>
-                                                    <% include BlogSummary %>
+                                                    <% include StudentBlogSummary %>
                                                 <% end_loop %>
+                                            <% end_with %>
                                             <% else %>
-                                                <h2><% _t('BlogHolder_ss.NOENTRIES', 'There are no blog entries') %></h2>
+                                                <h1><% _t('BlogHolder_ss.NOENTRIES', 'There are no blog entries!') %></h1>
                                             <% end_if %>
                                         </div>
                                         <div class="4u 12u(2)">

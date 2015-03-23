@@ -11,18 +11,20 @@
                                     <% include StudentSidebar %>
                                 </div>
                                 <div class="5u 8u(2)">
-                                    <% if BlogEntries %>
+                                     <% if BlogEntries %>
                                         <% loop BlogEntries %>
-                                            <% include BlogSummary %>
+                                            <% include StudentBlogSummary %>
                                         <% end_loop %>
                                     <% else %>
-                                        <h2><% _t('BlogHolder_ss.NOENTRIES', 'There are no blog entries') %></h2>
+                                        <h1><% _t('BlogHolder_ss.NOENTRIES', 'There are no blog entries!') %></h1>                                            
                                     <% end_if %>
                                 </div>
                                 <div class="3u 4u(2)">
                                     <h2>Blog Management</h2>
-                                    <p><a>Post new</a></p>
+                                    <a href="{$BlogPostURL}">Post new blog entry</a>
+                                    </br>
                                     <h2>Chat Module</h2>
+                                    <h1>This is where the chat module will live...</h1>
                                 </div>
                             </div>
                         </article>

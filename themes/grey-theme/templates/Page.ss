@@ -3,9 +3,6 @@
 <% require javascript('framework/thirdparty/jquery/jquery.js') %>
 
     $Layout
-                
-<%-- Please move: Theme javascript (below) should be moved to mysite/code/page.php  --%>
-<%--<script type="text/javascript" src="{$ThemeDir}/javascript/script.js"></script> --%>
 
 </body>
 </html>

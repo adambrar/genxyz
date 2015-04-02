@@ -8,7 +8,7 @@ class MemberProfileViewerDecorator extends DataExtension {
         
         $customData['IsLoggedIn'] = Member::currentUserID();
         $customData['BlogEntries'] = $this->getLatestBlogEntries($member, 5);
-        
+
         return $customData;
     }
     
@@ -18,17 +18,19 @@ class MemberProfileViewerDecorator extends DataExtension {
         if(!$member) {
             return false;
         }
-        
+
         $holder = BlogHolder::get()->filter(array(
             'ownerID' => $member->ID
         ))->First();
-        
+
         if(!$holder) {
             return false;
         }
         
-        return SiteTree::get()->filter(array(
+        $entries = SiteTree::get()->filter(array(
             'ParentID' => $holder->ID
-        ))->limit($max);
+        ));
+        
+        return $entries;
     }
 }

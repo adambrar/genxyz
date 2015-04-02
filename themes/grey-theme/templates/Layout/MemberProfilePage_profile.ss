@@ -10,7 +10,7 @@
                                 <div class="4u 12u(1)">
                                     <% include StudentSidebar %>
                                 </div>
-                                <div class="5u 8u(2)">
+                                <div class="4u 8u(2)">
                                      <% if BlogEntries %>
                                         <% loop BlogEntries %>
                                             <% include StudentBlogSummary %>
@@ -19,12 +19,13 @@
                                         <h1><% _t('BlogHolder_ss.NOENTRIES', 'There are no blog entries!') %></h1>                                            
                                     <% end_if %>
                                 </div>
-                                <div class="3u 4u(2)">
+                                <div class="4u 4u(2)">
                                     <h2>Blog Management</h2>
                                     <a href="{$BlogPostURL}">Post new blog entry</a>
                                     </br>
                                     <h2>Chat Module</h2>
-                                    <h1>This is where the chat module will live...</h1>
+                                    <iframe src={$chatLink} width="100%" height="480" scrolling="auto" frameborder="0" name="frame_chat"> </iframe>
+
                                 </div>
                             </div>
                         </article>

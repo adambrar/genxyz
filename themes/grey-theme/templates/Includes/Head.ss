@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!--[if !IE]><!-->
-<html lang="$ContentLocale">
+<html lang="$ContentLocale" dir="$i18nScriptDirection">
 <!--<![endif]-->
 <!--[if IE 6 ]><html lang="$ContentLocale" class="ie ie6"><![endif]-->
 <!--[if IE 7 ]><html lang="$ContentLocale" class="ie ie7"><![endif]-->
@@ -32,4 +32,5 @@
     <% require themedCSS('blog') %>
     <% require themedCSS('forum') %>
     <link rel="shortcut icon" href="$ThemeDir/images/favicon.ico" />
+    <script src="//v2.zopim.com/?2uDfL8QV5WgywsgloRQMbP785ruTgGtR" charset="utf-8" type="text/javascript"></script>
 </head>

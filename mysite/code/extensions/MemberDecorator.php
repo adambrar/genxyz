@@ -10,14 +10,20 @@ class MemberDecorator extends DataExtension {
         "StreetAddress" => 'Varchar(100)',
         "Country" => 'Varchar(100)',
         "PostalCode" => 'Varchar(10)',
-        "HSGradution" => 'Date',
-        "UniversityGraduation" => 'Date'
+        "HSGraduation" => 'Date',
+        "UniversityGraduation" => 'Date',
+        "ContactFirstName" => 'Varchar(100)',
+        "ContactSurname" => 'Varchar(100)',
+        "ContactTelephone" => 'Varchar(100)',
+        "ContactCountry" => 'Varchar(100)',
+        "ContactEmail" => 'Varchar(100)'
     );
     
     private static $has_one = array(
         "HighSchool" => 'HighSchool',
         "University" => 'University',
-        "City" => 'City'
+        "City" => 'City',
+        "ProfilePicture" => 'Image'
     );
     
     public function updateCMSFields(FieldList $fields) 
@@ -29,22 +35,22 @@ class MemberDecorator extends DataExtension {
         $fields->addFieldToTab("Root.Profile", new TextField('Telephone', 'Telephone Number'));         
         $fields->addFieldToTab("Root.Profile", new TextField('StreetAddress', 'Street Address'));         
 $fields->addFieldToTab("Root.Profile", new DropdownField('City', 'City', HighSchool::getHighSchoolOptions()));         
-                $fields->addFieldToTab("Root.Profile", new CountryDropdownField('Country', 'Birth Country'));         
+        $fields->addFieldToTab("Root.Profile", new CountryDropdownField('Country', 'Birth Country'));         
         $fields->addFieldToTab("Root.Profile", new TextField('PostalCode', 'Postal Code'));
         
-        $fields->addFieldToTab("Root.Profile", new DropdownField('HighSchool', 'High School', HighSchool::getHighSchoolOptions()));         
+        $fields->addFieldToTab("Root.Profile", new DropdownField('HighSchoolID', 'High School', HighSchool::getHighSchoolOptions()));         
         $fields->addFieldToTab("Root.Profile", new DateField('HSGraduation', 'Graduation'));         
         
-        $fields->addFieldToTab("Root.Profile", new DropdownField('University', 'University', University::getUniversityOptions()));         
+        $fields->addFieldToTab("Root.Profile", new DropdownField('UniversityID', 'University', University::getUniversityOptions()));         
         $fields->addFieldToTab("Root.Profile", new DateField('UniversityGraduation', 'Graduation'));         
     }
     
     function Link()
     {
-        if($ProfilePage = DataObject::get_one('MemberProfilePage'))
+        if($ProfilePage = DataObject::get_one('MemberProfilePage')->filter('AllowProfileEditing', '1'))
         {
            return $ProfilePage->Link();
         }
     }
-           
+    
 }

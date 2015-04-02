@@ -20,9 +20,11 @@
 		<a href="$Link#PageComments_holder" class="comments" title="View Comments for this post">
 			$Comments.Count <% _t('BlogSummary_ss.SUMMARYCOMMENTS','comment(s)') %>
 		</a> 
+        <% if TippyTop.IsSelf %>
 		| 
-		<a href="$Link" class="readmore" title="Read Full Post">
-			<% _t('BlogSummary_ss.READFULLPOST','Read the full post') %>
-		</a>
-	</p>
+		<a href="$EditURL" id="editpost" title="<% _t('MySite_BlogEntry.EDITTHIS', 'Edit test post') %>"><% _t('MySite_BlogEntry.EDITTHIS', 'Edit post') %></a>
+        |
+        <a href="$Link(unpublishPost)" id="unpublishpost"><% _t('MySite_BlogEntry.UNPUBLISHTHIS', 'Unpublish test post') %></a>
+        <% end_if %>
+    </p>
 </div>

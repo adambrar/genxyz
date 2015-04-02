@@ -10,9 +10,9 @@ class SidebarMenuHeader extends Page
          'showDropdown' => '0'
      );
     
-    private static $allowed_children = array(
-        'SidebarMenuPage'
-    );
+//    private static $allowed_children = array(
+//        'SidebarMenuPage'
+//    );
     
     
 }

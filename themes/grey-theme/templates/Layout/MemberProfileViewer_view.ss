@@ -17,14 +17,13 @@
 
                                     <div class="row">
                                         <div class="8u 12u(1)">
-                                             <% if BlogHolder %>
-                                             <% with BlogHolder %>
+                                             <% if BlogEntries %>
                                                 <% loop BlogEntries %>
-                                                    <% include StudentBlogSummary %>
+
+                                                    <% include StudentBlogSummary TippyTop=$Top %>
                                                 <% end_loop %>
-                                            <% end_with %>
                                             <% else %>
-                                                <h1><% _t('BlogHolder_ss.NOENTRIES', 'There are no blog entries!') %></h1>
+                                                <h1><% _t('BlogHolder_ss.NOENTRIES', 'There are no blog entries!') %></h1>                                            
                                             <% end_if %>
                                         </div>
                                         <div class="4u 12u(2)">

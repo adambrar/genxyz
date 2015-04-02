@@ -23,6 +23,12 @@
     <li><a class="dropdown" href="">Education</a>
         <ul><li>$EducationProfileForm</li></ul>
     </li>
+    <li><a class="dropdown" href="">Emergency Contact</a>
+        <ul><li>$EmergencyContactProfileForm</li></ul>
+    </li>
+    <li><a class="dropdown" href="">Profile Picture</a>
+        <ul><li>$ImageUpload</li></ul>
+    </li>
 </ul>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>

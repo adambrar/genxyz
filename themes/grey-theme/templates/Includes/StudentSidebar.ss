@@ -3,21 +3,18 @@
     <!-- Sidebar -->
     <section class="box feature">
         <div class="row">
-            <div class="5u">
-                <a href="#" class="image fit"><img src="$ThemeDir/images/pic01.jpg" alt="" /></a>
+            <div class="6u">
+                <a href="#" class="image fit"><img src="/Silverstripe/{$ProfilePicture}" alt="ProfilePicture" /></a>
+                <h1>$Member.ProfilePictureID.ClassName</h1>
             </div>
-            <div class="7u profile-heading">
+            <div class="6u profile-heading">
                 <ul>
-                    <li>Name: $Member.FirstName $Member.Surname</li>
-                    <li>High School: High School</li>
-                    <li>University: University</li>
-                    <li>Country: $Member.Country</li>
-                    <li>Birthday: $Member.Birthday</li>
+                    <li><h2>$Member.FirstName.LimitCharacters(12, "...") $Member.Surname.LimitCharacters(12, "...")</h2></li>
                 </ul>
             </div>
         </div>
-        
-        <div class="user_menu">
+        <div class="row user_menu">
+
             <% include StudentSidebarMenu %>
         </div>
     </section>

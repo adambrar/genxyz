@@ -29,7 +29,7 @@ class Page extends SiteTree implements PermissionProvider {
         $fields->addFieldToTab('Root.Settings', new CheckboxField('showDropdown',"Show dropdown menu for children?"), 'ShowInSearch');
         
         $options = array('Welcome', 'Student', 'University');
-        $menuOptions = DropdownField::create( 'menuShown', 'Which menu will show on this page?', singleton('WelcomePage')->dbObject('menuShown')->enumValues() )->setEmptyString('Select menu');
+        $menuOptions = DropdownField::create( 'menuShown', 'Which menu will show on this page?', singleton('Page')->dbObject('menuShown')->enumValues() )->setEmptyString('Select menu');
         $fields->addFieldToTab('Root.Settings', $menuOptions, 'ShowInSearch');
         
         return $fields;
@@ -141,6 +141,13 @@ class Page extends SiteTree implements PermissionProvider {
         else
             return false;
     }
+    
+    function profilePageLink() {
+        return MemberProfilePage::get()->filter(array(
+            'AllowRegistration' => '0',
+            'AllowProfileEditing' => '1'
+        ))->First()->Link();
+    }
 }
 class Page_Controller extends ContentController {
 
@@ -159,10 +166,7 @@ class Page_Controller extends ContentController {
 	 *
 	 * @var array
 	 */
-	private static $allowed_actions = array (
-        'getCMSFields'
-	);
-
+	
 	public function init() {
 		parent::init();
 		// You can include any CSS or JS required by your project here.

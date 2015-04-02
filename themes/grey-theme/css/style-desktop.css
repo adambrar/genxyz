@@ -185,6 +185,8 @@
 				padding-left: 1.5em;
 			}
 
+            
+
 				#nav ul li a,
 				#nav ul li span
 				{
@@ -237,6 +239,44 @@
 					background: #444;
 					color: #fff;
 				}
+            
+            #nav ul li a.profile-button
+            {
+                background-color: #0090c5;
+                color: #ffffff;
+            }
+
+            #nav ul li:hover a.profile-button
+            {
+                background-color: #10a0d5;
+                color: #696969;
+            }
+
+            #nav ul li a.genxyz-button
+            {
+                background-color: #0090c5;
+                color: #ffffff;
+            }
+
+            #nav ul li:hover a.genxyz-button
+            {
+                background-color: #10a0d5;
+                color: #696969;
+            }
+
+            #nav ul li a.logout-button
+            { 
+                background-color: #FF4486;
+                color: #ffffff;
+            }
+
+            #nav ul li:hover a.logout-button
+            { 
+                background-color: #EF3476;
+                color: #696969;
+            }
+
+            
 				
 	.dropotron
 	{

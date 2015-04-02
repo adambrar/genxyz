@@ -10,10 +10,10 @@ class SidebarMenuPage extends Page
          'showDropdown' => '0'
      );
     
-    private static $allowed_children = array(
-        'SidebarMenuService'
-    );
-    
+//    private static $allowed_children = array(
+//        'SidebarMenuService'
+//    );
+//    
     static $can_be_root = false;
     
     

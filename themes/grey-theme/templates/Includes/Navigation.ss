@@ -3,7 +3,7 @@
     <% if $menuShown = "Welcome" %>
         <ul>
             <% if isSignedIn %>
-                <li class="link"><a href="/myprofile" title="MyProfile">MyProfile</a></li>
+                <li class="link"><a class="profile-button" href="{$profilePageLink}" title="MyProfile">MyProfile</a></li>
             <% end_if %>
             <% loop $Menu(1).Filter('menuWelcome', 1) %>
                 <% if $Children %>
@@ -34,6 +34,8 @@
     
     <% else_if $menuShown = "Student" %>
         <ul>   
+            <li><a class="genxyz-button" href="home">GenXYZ</a></li>
+
             <% loop $Menu(1).Filter('menuStudent', 1) %>
                 <% if $Children %>
                     <% if $showDropdown %>
@@ -59,8 +61,8 @@
                 <% end_if %>            
                 </li>
             <% end_loop %>
-            <li><a class="" href="home">GenXYZ</a></li>
-            <li><a class="" href="Security/logout">Logout</a></li>
+            
+            <li><a class="logout-button" href="Security/logout">Logout</a></li>
         </ul>
         
     <% else_if $menuShown = "University" %>

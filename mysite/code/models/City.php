@@ -3,7 +3,7 @@
 class City extends DataObject {
     
     private static $db = array(
-        'Title' => 'Varchar(100)',
+        'Name' => 'Varchar(100)',
     );
     
     private static $has_many = array(
@@ -14,7 +14,7 @@ class City extends DataObject {
     {
         if($cities = DataObject::get("City"))
         {
-            return $cities->map('ID', 'Title', 'Please Select');
+            return $cities->map('ID', 'Name', 'Please Select');
         } else {
             return array('No Cities');
         }

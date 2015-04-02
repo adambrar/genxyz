@@ -26,5 +26,7 @@ class ISNetworkPage extends Page
  
 class ISNetworkPage_Controller extends Page_Controller 
 {
-     
+     function MemberName() {
+         return Member::currentUser()->FirstName;
+     }
 }

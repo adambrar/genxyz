@@ -120,13 +120,13 @@ class MemberProfileViewer extends Page_Controller {
 		);
 		$this->data()->Parent = $this->parent;
         
-        //CUSTOM ADDED//
         $customData = array(
             'Member' => $member,
             'Sections' => $sectionsList,
             'IsSelf' => $member->ID == Member::currentUserID(),
         );
         
+        //CUSTOM ADDED//
         $this->extend('updateProfileViewer', $customData);
 
         $controller = $this->customise($customData);

@@ -35,6 +35,10 @@ Object::useCustomClass('MemberLoginForm', 'GroupRedirectLoginForm');
 
 Object::add_extension('Member', 'MemberDecorator');
 
+Object::add_extension('BlogHolder', 'BlogHolderDecorator');
+
 Object::add_extension('MemberProfilePage_Controller', 'MemberProfilePage_ControllerDecorator');
 
 Object::add_extension('MemberProfileViewer', 'MemberProfileViewerDecorator');
+
+SiteTree::add_extension('Translatable');

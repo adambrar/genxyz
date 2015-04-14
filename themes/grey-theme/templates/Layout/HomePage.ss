@@ -1,6 +1,6 @@
 <% include Header %>
 <div id="main-wrapper" class="main" role="main">
-    <article>
+    <article class="home_page">
         <div id="slideshow">
             <div class="container 125%">
                 <ul class="slides">
@@ -34,9 +34,9 @@
             </div>
         </div>
         <div class="container">
-            <div class="row update-box">
+            <div class="row update-box" id="forum_updates">
                 <div class="10u -1u 12u(9)">
-                    <h2 class="update_title">Forum Updates</h2>
+                    <h2 class="update_title"><%t HomePage.FORUM "Forum Updates" %></h2>
                     <table class="welcome_forum">
                         <tr class="category">
                             <td><% _t('ForumHolder_ss.FORUM','Forum') %></td>
@@ -51,29 +51,29 @@
             <div class="welcome_updates"> 
                 <div class="row">
                     <div class="6u 12u(3)">
-                        <h2 class="update_title">Recent Blog Posts</h2>
+                        <h2 class="update_title"><%t HomePage.STUDENTBLOG "Recent Blog Posts" %></h2>
                         <% if StudentBlogPosts %>
                             <% loop $StudentBlogPosts %>
                                 <% include StudentBlogSummary %>
                             <% end_loop %>
                         <% else %>
-                            <p>There are no recent student posts</p>
+                            <p><%t HomePage.NOSTUDENTPOSTS "There are no recent student posts" %></p>
                         <% end_if %>
                     </div>
                     <div class="6u 12u(4)">
-                        <h2 class="update_title">GenXYZ</h2>
+                        <h2 class="update_title"><%t HomePage.GENXYZ "GenXYZ<" %>/h2>
                         <% if GenXYZBlogPosts %>
                             <% loop $GenXYZBlogPosts %>
                                 <% include StudentBlogSummary %>
                             <% end_loop %>
                         <% else %>
-                            <p>There are no recent posts from GenXYZ</p>
+                            <p><%t HomePage.NOGENXYZPOSTS "There are no recent posts from GenXYZ" %></p>
                         <% end_if %>
                     </div>
                 </div>
                 <div class="row update-box">
                     <div class="6u 12u(7)">
-                        <h2 class="update_title">Media Updates</h2>
+                        <h2 class="update_title"><%t HomePage.MEDIA "Media Updates" %></h2>
                         <p>Some random text for testing</p>
                         <p>Some random text for testing</p>
                         <h1 class="update_title">Media Updates</h1>
@@ -84,7 +84,7 @@
                         <p>Some random text for testing</p>
                     </div>
                     <div class="6u 12u(5)">
-                        <h2 class="update_title">Interactive Updates</h2>
+                        <h2 class="update_title"><%t HomePage.INTERACTIVE "Interactive Updates" %></h2>
                         <p>Some random text for testing</p>
                         <p>Some random text for testing</p>
                         <h1 class="update_title">Interactive Updates</h1>

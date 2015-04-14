@@ -1,9 +1,9 @@
 <nav id="nav" class="primary">
-    
-    <% if $menuShown = "Welcome" %>
-        <ul>
+    <ul>
+        <% if $menuShown = "Welcome" %>
+        
             <% if isSignedIn %>
-                <li class="link"><a class="profile-button" href="{$profilePageLink}" title="MyProfile">MyProfile</a></li>
+                <li class="link"><a class="profile-button" href="{$profilePageLink}" title="MyProfile"><%t NavigationTemplate.MYPROFILE "MyProfile" %></a></li>
             <% end_if %>
             <% loop $Menu(1).Filter('menuWelcome', 1) %>
                 <% if $Children %>
@@ -30,11 +30,9 @@
                 <% end_if %>            
                 </li>
             <% end_loop %>
-        </ul>
     
-    <% else_if $menuShown = "Student" %>
-        <ul>   
-            <li><a class="genxyz-button" href="home">GenXYZ</a></li>
+        <% else_if $menuShown = "Student" %>
+            <li><a class="genxyz-button" href="home"><%t NavigationTemplate.GENXYZ "GenXYZ" %></a></li>
 
             <% loop $Menu(1).Filter('menuStudent', 1) %>
                 <% if $Children %>
@@ -62,11 +60,9 @@
                 </li>
             <% end_loop %>
             
-            <li><a class="logout-button" href="Security/logout">Logout</a></li>
-        </ul>
+            <li><a class="logout-button" href="Security/logout"><%t NavigationTemplate.LOGOUT 'Logout' %></a></li>
         
-    <% else_if $menuShown = "University" %>
-        <ul>   
+        <% else_if $menuShown = "University" %>
             <% loop $Menu(1).Filter('menuUniversity', 1) %>
                 <% if $Children %>
                     <% if $showDropdown %>
@@ -92,6 +88,7 @@
                 <% end_if %>            
                 </li>
             <% end_loop %>
-        </ul>
-    <% end_if %>
+        <% end_if %>
+        <li><% include LanguageSelector %></li>
+    </ul>
 </nav>

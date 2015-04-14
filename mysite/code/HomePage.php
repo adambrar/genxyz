@@ -26,13 +26,19 @@ class HomePage_Controller extends Page_Controller
         $holder = BlogHolder::get()->filter(array(
             'Title' => 'GenXYZ'
         ))->First();
+        
+        if(!$holder) { return false; }
+            
         $entry = BlogEntry::get()->filter('ParentID', $holder->ID)->First();
 
         return ($entry) ? BlogEntry::get()->filter('ParentID', $holder->ID)->limit($num)->sort('Date') : false;
     }
     
-    function AllForums($num=3) {
+    function AllForums($num=5) {
         $holder = Forum::get()->First();
+        
+        if(!$holder) { return false; }
+        
         return ($holder) ? Forum::get()->limit($num) : false;    
     }
      

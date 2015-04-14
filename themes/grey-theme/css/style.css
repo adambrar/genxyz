@@ -532,7 +532,7 @@
 }
 
 #slideshow img {
-    max-width: 100%;
+    max-width: 120%;
     max-height: auto;
     display: block;
 }

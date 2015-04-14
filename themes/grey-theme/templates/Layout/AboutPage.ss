@@ -6,13 +6,13 @@
                 <div class="content-container unit size3of4 lastUnit">
                     <article>
                         <div class="content">
-                            <h2>About</h2>
+                            <h2><%t AboutPage.ABOUT "About" %></h2>
                             $AboutStatement
 
-                            <h2>Mission Statement</h2>
+                            <h2><%t AboutPage.MISSION "Mission Statement" %></h2>
                             $MissionStatement
 
-                            <h2>Values</h2>
+                            <h2><%t AboutPage.VALUES "Values" %></h2>
                             $AboutValues
                         </div>
 

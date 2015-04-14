@@ -23,19 +23,48 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     {
         $fields = $form->Fields();
 		
-        $fields->insertBefore(new LiteralField('Hd_Personal', '<h3>Personal Info</h3>'), 'FirstName');
-        $fields->insertAfter(new TextField('Username', 'Username'), 'Hd_Personal');
-        $fields->insertAfter(new TextField('MiddleName', 'Middle Name'), 'Firstname');
-        $fields->insertAfter(new CountryDropdownField('Nationality', 'Nationality'), 'Email');
+        $fields->insertBefore(new LiteralField('Hd_Personal', '<h3>' . _t(
+            'MemberRegForm.PERSONALINFOLABEL', 
+            'Personal Info') . '</h3>'), 'FirstName');
+        $fields->insertAfter(new TextField('MiddleName', _t(
+            'MemberRegForm.MIDDLENAME', 
+            'Middle Name')), 'Firstname');
+        $fields->insertAfter(new CountryDropdownField('Nationality', _t(
+            'MemberRegForm.NATIONALITY', 
+            'Nationality')), 'Email');
 		
-        $fields->insertAfter(new LiteralField('Hd_Address', '<h3>Address</h3>'), 'Nationality');
-        $fields->insertAfter(new TextField('StreetAddress', 'Street Address'), 'Hd_Address');
-        $fields->insertAfter(new DropdownField('City', 'City', HighSchool::getHighSchoolOptions()), 'StreetAddress');
-        $fields->insertAfter(new CountryDropdownField('Country', 'Current Country'), 'City');
-        $fields->insertAfter(new TextField('PostalCode', 'Postal Code'), 'Country');
-        $fields->insertAfter(new DropdownField('HighSchool', 'High School', HighSchool::getHighSchoolOptions()), 'StreetAddress');
+        $fields->insertAfter(new LiteralField('Hd_Address', '<h3>' . _t(
+            'MemberRegForm.ADDRESSLABEL', 
+            'Address') . '</h3>'), 'Nationality');
+        $fields->insertAfter(new TextField('StreetAddress', _t(
+            'MemberRegForm.STREETADDRESS', 
+            'Street Address')), 'Hd_Address');
+        $fields->insertAfter(new DropdownField('City', _t(
+            'MemberRegForm.CITY', 
+            'City'), HighSchool::getHighSchoolOptions()), 'StreetAddress');
+        $fields->insertAfter(new CountryDropdownField('Country', _t(
+            'MemberRegForm.CURRENTCOUNTRY', 
+            'Current Country')), 'City');
+        $fields->insertAfter(new TextField('PostalCode', _t(
+            'MemberRegForm.POSTALCODE', 
+            'Postal Code')), 'Country');
+        $fields->insertAfter(new DropdownField('HighSchool', _t(
+            'MemberRegForm.HIGHSCHOOL', 
+            'High School'), HighSchool::getHighSchoolOptions()), 'StreetAddress');
         
-        $fields->insertBefore(new LiteralField('Hd_Security', '<h3>Security</h3>'), 'Password');        
+        $fields->insertBefore(new LiteralField('Hd_Security', '<h3>' . _t(
+            'MemberRegForm.SECUTRIYLABEL', 
+            'Security') . '</h3>'), 'Password');        
+        
+        $required = new RequiredFields(array(
+            'FirstName',
+            'Surname',
+            'City',
+            'Country',
+            'HighSchool',
+            'Email',
+            'Password'
+        ));
         
         $form->setFields($fields);
     }
@@ -69,12 +98,15 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         
         $pictureForm = $this->ProfilePictureForm($member);
         $pictureForm->loadDataFrom($member);
+        
+        $imageForm = $this->ProfilePictureForm($member);
+        $imageForm->loadDataFrom($member);
 
-        $pageData['BasicProfileForm'] = $basicForm;
-        $pageData['EducationProfileForm'] = $educationForm;
-        $pageData['AddressProfileForm'] = $addressForm;
-        $pageData['EmergencyContactProfileForm'] = $emergencyForm;
-        $pageData['ImageUpload'] = $this->ProfilePictureForm($member);
+        $pageData['BasicForm'] = $basicForm;
+        $pageData['EducationForm'] = $educationForm;
+        $pageData['AddressForm'] = $addressForm;
+        $pageData['EmergencyContactForm'] = $emergencyForm;
+        $pageData['ImageUploadForm'] = $imageForm;
         $pageData['IsSelf'] = $member->ID == Member::currentUserID();
 
         // get profile picture
@@ -122,9 +154,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             'ID'        => $member->ProfilePictureID
         ))->First();
         if(!$profilePicture) {
-            $pageData['ProfilePictureFile'] = "assets/Uploads/default:wq.jpg";
+            return "assets/Uploads/default.jpg";
         } else {
-            $pageData['ProfilePictureFile'] = $profilePicture->Filename;
+            return $profilePicture->Filename;
         }
     }
     
@@ -141,24 +173,40 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     **/
     
     //form for basic info on profile
-    public function BasicProfileForm($member = null)
+    public function BasicProfileForm(Member $member = null)
     {
         if(!$member) {
             $member = Member::currentUser();
         }
         
         $fields = new FieldList(
-            new LiteralField('LiteralHeader', '<h2>Contact Info</h2>'),
-            new TextField('FirstName', 'First Name<span>*</span>'),
-            new TextField('MiddleName', 'Middle Name'),
-            new TextField('Surname', 'Family Name<span>*</span>'),
-            new DateField('DateOfBirth', 'Birthday'),
-            new CountryDropdownField('Nationality', 'Nationality'),
-            new EmailField('Email', 'Email<span>*</span>')
+            new LiteralField('LiteralHeader', '<h2>' . _t(
+                'MemberProfileForms.BASICLABEL',
+                'Basic Information') . '</h2>'),
+            new TextField('FirstName', _t(
+                'MemberProfileForms.FIRSTNAME',
+                'First Name') . '<span>*</span>'),
+            new TextField('MiddleName', _t(
+                'MemberProfileForms.MIDDLENAME',
+                'Middle Name')),
+            new TextField('Surname', _t(
+                'MemberProfileForms.SURNAME',
+                'Surname') . '<span>*</span>'),
+            new DateField('DateOfBirth', _t(
+                'MemberProfileForms.BIRTHDAY',
+                'Birthday')),
+            new CountryDropdownField('Nationality', _t(
+                'MemberProfileForms.NATIONALITY',
+                'Nationality')),
+            new EmailField('Email', _t(
+                'MemberProfileForms.EMAIL',
+                'Email') . '<span>*</span>')
         );
         
         $actions = new FieldList(
-            new FormAction('saveProfileForm', 'Save')
+            new FormAction('saveProfileForm', _t(
+                'MemberProfileForms.SAVEBUTTON',
+                'Save'))
         );
         
         $required = new RequiredFields(array(
@@ -171,25 +219,37 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     }
     
     //form for address input
-    public function AddressProfileForm($member = null)
+    public function AddressProfileForm(Member $member = null)
     {
         if(!$member) {
             $member = Member::currentUser();
         }   
         
         $fields = new FieldList(
-            new LiteralField('LiteralHeader', '<h2>Current Address</h2>'),
-            new TextField('StreetAddress', 'Street Address<span>*</span>'),
-            new DropdownField('City', 'City', City::getCityOptions()),
-            new CountryDropdownField('Country', 'Current Country<span>*</span>'),
-            new TextField('PostalCode', 'Postal Code'),
+            new LiteralField('LiteralHeader', '<h2>' . _t(
+                'MemberProfileForms.CURRENTADDRESS',
+                'Current Address') . '</h2>'),
+            new TextField('StreetAddress', _t(
+                'MemberProfileForms.STREETADDRESS',
+                'Street Address') . '<span>*</span>'),
+            new DropdownField('City', _t(
+                'MemberProfileForms.CITY',
+                'City'), City::getCityOptions()),
+            new CountryDropdownField('Country', _t(
+                'MemberProfileForms.COUNTRY',
+                'Country') . '<span>*</span>'),
+            new TextField('PostalCode', _t(
+                'MemberProfileForms.POSTALCODE',
+                'Postal Code')),
             
             new HiddenField('Username', 'Username'),
             new HiddenField('Email', 'Email')
         );
         
         $actions = new FieldList(
-            new FormAction('saveProfileForm', 'Save')
+            new FormAction('saveProfileForm', _t(
+                'MemberProfileForms.SAVEBUTTON',
+                'Save'))
         );
         
         $required = new RequiredFields(array(
@@ -201,25 +261,37 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     }
 
     //education info form
-    public function EducationProfileForm($member = null)
+    public function EducationProfileForm(Member $member = null)
     {
         if(!$member) {
             $member = Member::currentUser();
         }
                
         $fields = new FieldList(
-            new LiteralField('LiteralHeader', '<h2>Education Information</h2>'),
-            new DropdownField('HighSchoolID', 'High School<span>*</span>', HighSchool::getHighSchoolOptions()),
-            new DateField('HSGraduation', 'High School Graduation Date'),
-            new DropdownField('UniversityID', 'University<span>*</span>', University::getUniversityOptions()),
-            new DateField('UniversityGraduation', 'University Graduation Date'),
+            new LiteralField('LiteralHeader', '<h2>' . _t(
+                'MemberProfileForms.EDUCATIONLABEL',
+                'Education Information') . '</h2>'),
+            new DropdownField('HighSchoolID', _t(
+                'MemberProfileForms.HIGHSCHOOL',
+                'High School') . '<span>*</span>', HighSchool::getHighSchoolOptions()),
+            new DateField('HSGraduation', _t(
+                'MemberProfileForms.HIGHSCHOOLGRAD',
+                'High School Graduation Date')),
+            new DropdownField('UniversityID', _t(
+                'MemberProfileForms.UNIVERSITY',
+                'University') . '<span>*</span>', University::getUniversityOptions()),
+            new DateField('UniversityGraduation', _t(
+                'MemberProfileForms.UNIVERSITYGRAD',
+                'University Graduation Date')),
             
             new HiddenField('Username', 'Username'),
             new HiddenField('Email', 'Email')
         );
         
         $actions = new FieldList(
-            new FormAction('saveProfileForm', 'Save')
+            new FormAction('saveProfileForm', _t(
+                'MemberProfileForms.SAVEBUTTON',
+                'Save'))
         );
         
         $required = new RequiredFields(array(
@@ -229,26 +301,40 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         return new Form($this->owner, 'EducationProfileForm', $fields, $actions, $required);
     }
      
-    public function EmergencyContactProfileForm($member = null)
+    public function EmergencyContactProfileForm(Member $member = null)
     {
         if(!$member) {
             $member = Member::currentUser();
         }
         
         $fields = new FieldList(
-            new LiteralField('LiteralHeader', '<h2>Emergency Contact Details</h2>'),
-            new TextField('ContactFirstName', 'First Name<span>*</span>'),
-            new TextField('ContactSurname', 'Last Name<span>*</span>'),
-            new PhoneNumberField('ContactTelephone', 'Telephone'),
-            new CountryDropdownField('ContactCountry', 'Current Country'),
-            new EmailField('ContactEmail', 'Email<span>*</span>'),
+            new LiteralField('LiteralHeader', '<h2>' . _t(
+                'MemberProfileForms.EMERGENCYCONTACTLABEL',
+                'Emergency Contact Details') . '</h2>'),
+            new TextField('ContactFirstName', _t(
+                'MemberProfileForms.FIRSTNAME',
+                'First Name') . '<span>*</span>'),
+            new TextField('ContactSurname', _t(
+                'MemberProfileForms.SURNAME',
+                'Family Name') . '<span>*</span>'),
+            new PhoneNumberField('ContactTelephone', _t(
+                'MemberProfileForms.CONTACTTELEPHONE',
+                'Telephone')),
+            new CountryDropdownField('ContactCountry', _t(
+                'MemberProfileForms.COUNTRY',
+                'Current Country')),
+            new EmailField('ContactEmail', _t(
+                'MemberProfileForms.EMAIL',
+                'Email') . '<span>*</span>'),
 
             new HiddenField('Username', 'Username'),
             new HiddenField('Email', 'Email')
         );
         
         $actions = new FieldList(
-            new FormAction('saveProfileForm', 'Save')
+            new FormAction('saveProfileForm', _t(
+                'MemberProfileForms.SAVEBUTTON',
+                'Save'))
         );
         
         $required = new RequiredFields(array(
@@ -259,6 +345,37 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
 
         return new Form($this->owner, 'EmergencyContactProfileForm', $fields, $actions, $required);
     }
+    
+    public function ProfilePictureForm($member = null) {
+        if(!$member) {
+            $member = Member::currentUser();
+        }
+        
+        $fields = new FieldList(
+            new LiteralField('Hd_ProfilePicture', '<h3>' . _t(
+                'MemberProfileForms.PROFILEPICTUREUPLOAD',
+                'Upload A New Profile Picture') . '</h3>'),
+            new HiddenField('Username', 'Username'),
+            new HiddenField('Email', 'Email')
+        );
+
+        $imageUpload = new FileField('ProfilePicture', 'Use a .jpg or .png image file');
+        $imageUpload->getValidator()->allowedExtensions = array('jpg', 'png');
+
+        $fields->insertBefore($imageUpload, 'Username');
+        
+        $actions = new FieldList(
+            new FormAction('saveProfileForm', _t(
+                'MemberProfileForms.UPLOAD',
+                'Upload'))
+        );
+        
+        $required = new RequiredFields(array(
+            'ProfilePicture'
+        ));
+
+        return new Form($this->owner, 'ProfilePictureForm', $fields, $actions, $required);
+    }   
     
     public function saveProfileForm(array $data, Form $form) {
         $member = Member::currentUser();
@@ -282,60 +399,6 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         
 		return $this->owner->redirectBack();
 	}
-    
-    public function ProfilePictureForm($member = null) {
-        if(!$member) {
-            $member = Member::currentUser();
-        }
-        
-        $fields = new FieldList(
-            new LiteralField('Hd_ProfilePicture', '<h3>Upload A New Profile Picture</h3>'),
-            new HiddenField('Username', 'Username'),
-            new HiddenField('Email', 'Email')
-        );
-
-        $imageUpload = new FileField('ProfilePicture', 'Use a .jpg or .png image file');
-        $imageUpload->getValidator()->allowedExtensions = array('jpg', 'png');
-//        $imageUpload->setAllowedMaxFileNumber(1);
-//        $imageUpload->setCanPreviewFolder(false);
-//        $imageUpload->setCanAttachExisting(false);
-//        
-        $fields->insertBefore($imageUpload, 'Username');
-        
-        $actions = new FieldList(
-            new FormAction('saveProfilePicture', 'Upload')
-        );
-        
-        $required = new RequiredFields(array(
-            'ProfilePicture'
-        ));
-
-        return new Form($this->owner, 'ProfilePictureForm', $fields, $actions, $required);
-    }   
-    
-    public function saveProfilePicture(array $data, Form $form) {
-        var_dump($data);
-        
-        $member = Member::currentUser();
-
-        $form->saveInto($member);
-		
-        try {
-			$member->write();
-		} catch(ValidationException $e) {
-			$form->sessionMessage($e->getResult()->message(), 'bad');
-            
-			return $this->owner->redirectBack();
-		}
-
-		$form->sessionMessage (
-			_t('MemberProfiles.PROFILEUPDATED', 'Your profile has been updated!'),
-			'good'
-		);
-        
-        return $this->owner->redirectBack();
-
-    }
     
     //---End Profile Page Data---//
     
@@ -364,10 +427,10 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         
         //create new blog holder for member
         $blogHolder = new BlogHolder();
-        $blogHolder->Title = $member->ID;
-        $blogHolder->AllowCustomAuthors = true;
+        $blogHolder->Title = $member->FirstName."-".$member->Surname."-".$member->ID;
+        $blogHolder->AllowCustomAuthors = false;
         $blogHolder->OwnerID = $member->ID;
-        $blogHolder->URLSegment = $member->FirstName."-".$member->Surname;
+        $blogHolder->URLSegment = $member->FirstName."-".$member->Surname."-".$member->ID;
         $blogHolder->Status = "Published";
         $blogHolder->ParentID = $blogTree->ID;
         
@@ -385,7 +448,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         
         //create welcome blog entry
         $blog = new BlogEntry();
-        $blog->Title = "Welcome to the ISNetwoork".$member.FirstName."!";
+        $blog->Title = "Welcome to the ISNetwork " . $member->FirstName . "!";
         $blog->Author = "Admin";
         $blog->URLSegment = 'first-post';
         $blog->Tags = "created, first, welcome";

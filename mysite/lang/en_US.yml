@@ -1,0 +1,106 @@
+en_US:
+  MySite_BlogEntry:
+    EDITTHIS: 'Edit Post'
+    UNPUBLISHTHIS: 'Unpublish Post'
+    
+  MemberRegForm:
+    PERSONALINFOLABEL: 'Personal Info'
+    MIDDLENAME: 'Middle Name'
+    NATIONALITY: 'Nationality'
+    ADDRESSLABEL: 'Address'
+    CITY: 'City'
+    CURRENTCOUNTRY: 'Current Country'
+    POSTALCODE: 'Postal Code'
+    HIGHSCHOOL: 'High School'
+    SECURITYLABEL: 'Security'
+    
+  MemberProfileForms:
+    SAVEBUTTON: 'Save'
+    BASICLABEL: 'Basic Information'
+    FIRSTNAME: 'First Name'
+    MIDDLENAME: 'Middle Name'
+    SURNAME: 'Family Name'
+    BIRTHDAY: 'Birthday'
+    NATIONALITY: 'Nationality'
+    EMAIL: 'Email'
+    CURRENTADDRESS: 'Current Address'
+    STREETADDRESS: 'Street Address'
+    CITY: 'City'
+    COUNTRY: 'Country'
+    POSTALCODE: 'Postal Code'
+    EDUCATIONLABEL: 'Education Information'
+    HIGHSCHOOL: 'High School'
+    HIGHSCHOOLGRAD: 'High School Graduation'
+    UNIVERSITY: 'University'
+    UNIVERSITYGRAD: 'University Graduation'
+    EMERGENCYCONTACTLABEL: 'Emergency Contact Information'
+    CONTACTTELEPHONE: 'Telephone Number'
+    PROFILEPICTURELABEL: 'Upload a new profile picture'
+    PROFILEPICTUREUPLOAD: 'use a .jpg or .png file'
+    
+  NavigationTemplate:
+    MYPROFILE: 'MyProfile'
+    GENXYZ: 'GenXYZ'
+    LOGOUT: 'Logout'
+    
+  ServiceRequest:
+    FINDOUTMORE: 'Find Out More'
+    
+  StudentProfile:
+    BASICINFORMATION: 'Basic Information'
+    ADDRESS: 'Address'
+    EDUCATION: 'Education'
+    EMERGENCYCONTACT: 'Emergency Contact'
+    PROFILEPICTURE: 'Profile Picture'
+    HIGHSCHOOL: 'High School'
+    HIGHSCHOOLUNKNOWN: 'High School: Unknown'
+    UNIVERSITY: 'University'
+    UNIVERSITYUNKNOWN: 'University: Unknown'
+    COUNTRY: 'Country'
+    BIRTHDAY: 'Birthday'
+  
+  StudentProfilePage:
+    BLOGMANAGEMENT: 'Blog Management'
+    NEWBLOGPOST: 'Post New'
+    VIEWBLOG: 'View All Blog Posts'
+    STUDENTCHATROOM: 'Student Chatroom'
+    
+  StudentProfileView:
+    PROFILENAME: '%s %s Profile'
+    LOGINREMINDER: 'You need to be logged in to view this profile!'
+    
+  HopePage:
+    FORUM: 'Forum Updates'
+    STUDENTBLOG: 'Student Blogs'
+    NOSTUDENTPOSTS: 'There are no recent student posts'
+    GENXYZ: 'GenXYZ'
+    NOGENXYZPOSTS: 'There are no recent posts from GenXYZ'
+    MEDIA: 'Media Updates'
+    INTERACTIVE: 'Interactive'
+    
+  AboutPage:
+    ABOUT: 'About'
+    MISSION: 'Mission Statement'
+    VALUES: 'Values'
+    
+  ISNetworkPage:
+    YOUARESIGNEDIN: 'You are currently signed in as '
+    LOGINLINK: 'Login as someone else'
+    LOGIN: 'Login'
+    REGISTERLINK: 'Create a new account'
+    ABOUT: 'About'
+    SERVICES: 'Services'
+    MEDIA: 'Media'
+    INTERACTIVE: 'Interactive'
+    
+  InitiativesPage:
+    OURINITIATIVES: 'Our Initiatives'
+    SCHOLARSHIPS: 'Scholarship Opportunities'
+    SOCIAL: 'Social Enterprises'
+    NOTFORPROFITS: 'Not For Profits'
+    FUNDRAISING: 'Fundraising'
+    WORKPLACEMENT: 'Work Placement'
+    
+  PartnersPage:
+    INSTITUTIONS: 'Institutions'
+    HIGHSCHOOLS: 'High School'

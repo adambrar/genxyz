@@ -143,12 +143,18 @@ class Page extends SiteTree implements PermissionProvider {
     }
     
     function profilePageLink() {
-        return MemberProfilePage::get()->filter(array(
+        $profilePage = MemberProfilePage::get()->filter(array(
             'AllowRegistration' => '0',
             'AllowProfileEditing' => '1'
-        ))->First()->Link();
+        ))->First();
+        
+        if($profilePage)
+            return $profilePage->Link();
+        else
+            return false;
     }
 }
+
 class Page_Controller extends ContentController {
 
 	/**
@@ -171,6 +177,9 @@ class Page_Controller extends ContentController {
 		parent::init();
 		// You can include any CSS or JS required by your project here.
 		// See: http://doc.silverstripe.org/framework/en/reference/requirements
+        if($this->dataRecord->hasExtension('Translatable')) {
+            i18n::set_locale($this->dataRecord->Locale);
+        }
 	}
 
 }

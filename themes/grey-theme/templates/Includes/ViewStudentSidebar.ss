@@ -6,19 +6,19 @@
             <a href="#" class="image fit"><img src="$ThemeDir/images/pic08.jpg" alt="" /></a>
             <div class="profile-heading">
                 <ul>
-                    <li>Name: $Member.FirstName $Member.Surname</li>
+                    <li><%t StudentProfile.NAME "Name" %>: $Member.FirstName $Member.Surname</li>
                     <% if $Member.HighSchool %>
-                        <li>High School: $Member.HighSchoolID</li>
+                        <li><%t StudentProfile.HIGHSCHOOL "High School" %>: $Member.HighSchoolID</li>
                     <% else %>
-                        <li>High School: Unknown</li>
+                        <li><%t StudentProfile.HIGHSCHOOLUNKNOWN "High School: Unknown" %></li>
                     <% end_if %>
                     <% if $Member.University %>
-                        <li>University: $Member.UniversityID</li>
+                        <li><%t StudentProfile.UNIVERSITY "University" %>: $Member.UniversityID</li>
                     <% else %>
-                        <li>University: Undecided</li>
+                        <li><%t StudentProfile.UNIVERSITYUNKNOWN "University: Unknown" %></li>
                     <% end_if %>
-                    <li>Country: $Member.Country</li>
-                    <li>Birthday: $Member.Birthday</li>
+                    <li><%t StudentProfile.COUNTRY "Country" %>: $Member.Country</li>
+                    <li><%t StudentProfile.BIRTHDAY "Birthday" %>: $Member.Birthday</li>
                 </ul>
             </div>
         </div>

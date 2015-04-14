@@ -14,20 +14,20 @@
     <% end_loop %>
     </li>
     <li>-</li>
-    <li><a class="dropdown" href="">Basic Information</a>
-        <ul><li>$BasicProfileForm</li></ul>
+    <li><a class="dropdown" href=""><%t StudentProfile.BASICINFORMATION "Basic Information" %></a>
+        <ul><li>$BasicForm(Member)</li></ul>
     </li>
-    <li><a class="dropdown" href="">Address</a>
-        <ul><li>$AddressProfileForm</li></ul>
+    <li><a class="dropdown" href=""><%t StudentProfile.ADDRESS "Address" %></a>
+        <ul><li>$AddressForm</li></ul>
     </li>
-    <li><a class="dropdown" href="">Education</a>
-        <ul><li>$EducationProfileForm</li></ul>
+    <li><a class="dropdown" href=""><%t StudentProfile.EDUCATION "Education" %></a>
+        <ul><li>$EducationForm</li></ul>
     </li>
-    <li><a class="dropdown" href="">Emergency Contact</a>
-        <ul><li>$EmergencyContactProfileForm</li></ul>
+    <li><a class="dropdown" href=""><%t StudentProfile.EMERGENCYCONTACT "Emergency Contact" %></a>
+        <ul><li>$EmergencyContactForm</li></ul>
     </li>
-    <li><a class="dropdown" href="">Profile Picture</a>
-        <ul><li>$ImageUpload</li></ul>
+    <li><a class="dropdown" href=""><%t StudentProfile.PROFILEPICTURE "Profile Picture" %></a>
+        <ul><li>$ImageUploadForm</li></ul>
     </li>
 </ul>
 

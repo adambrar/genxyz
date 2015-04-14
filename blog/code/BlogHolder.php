@@ -28,7 +28,6 @@ class BlogHolder extends BlogTree implements PermissionProvider {
 
 	private static $has_one = array(
 		'Owner' => 'Member',
-        'SideBarWidget' => 'WidgetArea',
 	);
 
 	private static $allowed_children = array(
@@ -57,8 +56,6 @@ class BlogHolder extends BlogTree implements PermissionProvider {
 			"Content"
 		);
         
-        $fields->addFieldToTab("Root.Widgets", new WidgetAreaEditor("SideBarWidget"));
-
 		$this->extend('updateCMSFields', $fields);
 
 		return $fields;

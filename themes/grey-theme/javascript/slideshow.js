@@ -1,15 +1,6 @@
 $(window).load(function(){
-	
-	// We are listening to the window.load event, so we can be sure
-	// that the images in the slideshow are loaded properly.
-
-
 	// Testing wether the current browser supports the canvas element:
 	var supportCanvas = false;//'getContext' in document.createElement('canvas');
-
-	// The canvas manipulations of the images are CPU intensive,
-	// this is why we are using setTimeout to make them asynchronous
-	// and improve the responsiveness of the page.
 
 	var slides = $('#slideshow li'),
 		current = 0,
@@ -45,5 +36,14 @@ $(window).load(function(){
 		});
 		
 	},100);
+    
+    
+    var topMargin = parseFloat($("#slideshow-overlay").offset().top) - parseFloat($(window).height())*2/5;
+    
+    if(topMargin >= parseFloat($("#slideshow-overlay").offset().top)){
+        topMargin = 0;
+    }
+    
+    $("#slideshow-overlay").css({"margin-top":"-" + topMargin.toString() + "px"});
 
 });

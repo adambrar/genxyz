@@ -4,6 +4,11 @@ class University extends DataObject {
     
     private static $db = array(
         'Title' => 'Varchar(100)',
+        'Website' => 'Varchar(100)',
+        'ContactName' => 'Varchar(50)',
+        'ContactPhoneNumber' => 'Varchar(30)',
+        'BusinessRegNumber' => 'Varchar(50)',
+        'Address' => 'Varchar(40)'
     );
     
     private static $has_many = array(
@@ -19,12 +24,4 @@ class University extends DataObject {
             return array('No Universities');
         }
     }
-    
-    public function updateCMSFields(FieldList $fields)
-    {        
-        $fields->insertBefore("Root", new Tab('Test', 'Test'), 'Comments');
-        
-        return $fields;
-    }
-    
 }

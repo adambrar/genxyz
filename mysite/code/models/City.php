@@ -4,6 +4,7 @@ class City extends DataObject {
     
     private static $db = array(
         'Name' => 'Varchar(100)',
+        'CoutnryCode' => 'Varchar(3)'
     );
     
     private static $has_many = array(
@@ -12,7 +13,7 @@ class City extends DataObject {
     
     public static function getCityOptions()
     {
-        if($cities = DataObject::get("City"))
+        if(!($cities = DataObject::get("City")->sort('Name')))
         {
             return $cities->map('ID', 'Name', 'Please Select');
         } else {

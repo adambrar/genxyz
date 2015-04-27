@@ -174,7 +174,6 @@ class BlogEntry extends Page {
 	function EditURL() {
 		return ($this->getParent()) ? $this->getParent()->Link('post') . '/' . $this->ID . '/' : false;
 	}
-	
 	function IsOwner() {
 		if(method_exists($this->Parent(), 'IsOwner')) {
 			return $this->Parent()->IsOwner();

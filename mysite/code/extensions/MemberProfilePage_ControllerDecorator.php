@@ -1,18 +1,16 @@
 <?php
 
 //Adds hooks to: 
-//  Profile page form
+//  Profile page forms
 //  Register form
 //  Member add
 class MemberProfilePage_ControllerDecorator extends DataExtension {
     
     private static $allowed_actions = array(
         'saveProfileForm',
-        'saveProfilePicture',
         'BasicProfileForm',
         'AddressProfileForm',
         'EducationProfileForm',
-        'ContactProfileForm',
         'EmergencyContactProfileForm',
         'ProfilePictureForm'
         
@@ -79,34 +77,12 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $member = Member::currentUser();
         $pageData['Member'] = $member;
         
-    //pass link to student chatroom with username as 'firstName lastName'
-        $chatName = $member->FirstName . "%20" . $member->Surname;
-        $pageData['chatLink'] = "/chat/chat.php?username=" . $chatName;
+    //pass link to student chatroom with username as 'firstName lastName' and link to user profile in 'userurl'
+        $chatName = preg_replace("/[^A-Za-z0-9]/", "", $member->FirstName) . '%20' . preg_replace("/[^A-Za-z0-9]/", "", $member->Surname);
+        $userurl = Director::absoluteURL("myprofile/show/".$member->ID, true);
         
-        //get all form data
-        $basicForm = $this->BasicProfileForm($member);
-        $basicForm->loadDataFrom($member);
+        $pageData['ChatLink'] = "/chat/chat.php?username=" . $chatName . "&userurl=".$userurl;
 
-        $educationForm = $this->EducationProfileForm($member);
-        $educationForm->loadDataFrom($member);
-
-        $addressForm = $this->AddressProfileForm($member);
-        $addressForm->loadDataFrom($member);
-        
-        $emergencyForm = $this->EmergencyContactProfileForm($member);
-        $emergencyForm->loadDataFrom($member);
-        
-        $pictureForm = $this->ProfilePictureForm($member);
-        $pictureForm->loadDataFrom($member);
-        
-        $imageForm = $this->ProfilePictureForm($member);
-        $imageForm->loadDataFrom($member);
-
-        $pageData['BasicForm'] = $basicForm;
-        $pageData['EducationForm'] = $educationForm;
-        $pageData['AddressForm'] = $addressForm;
-        $pageData['EmergencyContactForm'] = $emergencyForm;
-        $pageData['ImageUploadForm'] = $imageForm;
         $pageData['IsSelf'] = $member->ID == Member::currentUserID();
 
         // get profile picture
@@ -160,6 +136,62 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         }
     }
     
+    public function BlogManagementURLs($member = null)
+    {
+        if(!$member) $member = Member::currentUser();
+        
+        $holder = BlogHolder::get()->filter(array(
+            'ownerID' => $member->ID
+        ))->First();
+        
+        if(!$holder) {
+            return "Blog management unavailable at this time. Refresh this page to access your blog.";
+        }
+        
+        $urls = "<li><a title='Create a new blog post' href='". $holder->Link() . "post'>" . _t('StudentProfile.NEWBLOGPOST', 'New Blog Post') . "</a></li>";
+        $urls .= "<li><a title='View main blog page' href='". $holder->Link() . "'>" . _t('StudentProfile.VIEWBLOG', 'View All Blog Posts') . "</a></li>";
+        
+        return $urls;
+    }
+    
+    public function getProfileForm($formName, Member $member = null)
+    {
+        $form = null;
+        
+        if(!$member) {$member = Member::currentUser();}
+        
+        switch($formName)
+        {
+            case "Basic":
+                $form = $this->BasicProfileForm($member);
+                break;
+            case "Address":
+                $form = $this->AddressProfileForm($member);
+                break;
+            case "Education":
+                $form = $this->EducationProfileForm($member);
+                break;
+            case "Contact":
+                $form = $this->EmergencyContactProfileForm($member);
+                break;
+            case "ProfilePicture":
+                $form = $this->ProfilePictureForm($member);
+                break;
+            default:
+                $form = null;
+                break;
+        }
+        
+        if(!$form) { 
+            user_error("Profile Form not found!", E_USER_ERROR); 
+            return false;
+        }
+        
+        $form->loadDataFrom($member);
+        
+        return $form;
+    }
+    
     
     /**
     //Forms on Member Profile Page
@@ -195,9 +227,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new DateField('DateOfBirth', _t(
                 'MemberProfileForms.BIRTHDAY',
                 'Birthday')),
-            new CountryDropdownField('Nationality', _t(
+            new DropdownField('Nationality', _t(
                 'MemberProfileForms.NATIONALITY',
-                'Nationality')),
+                'Nationality'), Country::getCountryOptions()),
             new EmailField('Email', _t(
                 'MemberProfileForms.EMAIL',
                 'Email') . '<span>*</span>')
@@ -235,9 +267,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new DropdownField('City', _t(
                 'MemberProfileForms.CITY',
                 'City'), City::getCityOptions()),
-            new CountryDropdownField('Country', _t(
+            new DropdownField('Country', _t(
                 'MemberProfileForms.COUNTRY',
-                'Country') . '<span>*</span>'),
+                'Country') . '<span>*</span>', Country::getCountryOptions()),
             new TextField('PostalCode', _t(
                 'MemberProfileForms.POSTALCODE',
                 'Postal Code')),
@@ -459,7 +491,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $blog->doRestoreToStage();
         
         //---- 2. add member to groups: student, user
-        if(!$userGroup = DataObject::get_one('Group', "Code = 'users'"))
+        $userGroup = DataObject::get_one('Group', "Code = 'users'");
+        var_dump($userGroup);
+        if(!$userGroup)
         {
             $userGroup = new Group();
             $userGroup->Code = "user";

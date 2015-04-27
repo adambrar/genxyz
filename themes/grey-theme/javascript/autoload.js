@@ -10,7 +10,7 @@ $(window).load(function(){
         $('#slideshow .next').trigger('click',[true]);
 
         // Schedulling a time out in 5 seconds.
-        timeOut = setTimeout(autoAdvance,4000);
+        timeOut = setTimeout(autoAdvance,6000);
     })();
 
 });

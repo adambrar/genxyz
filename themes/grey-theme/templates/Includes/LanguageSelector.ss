@@ -1,25 +1,12 @@
 <% if Translations %>
-    <div id="lang">
-        <ul>
-            <% loop Translations %>
-                <li>
-                    <a href="$Link" hreflang="$Locale.RFC1766" title="$Title">
-                        Show page in $Locale.Nice
-                   </a>
-                </li>
-            <% end_loop %>
-        </ul>    
-    </div>   
+    <a id="lang-selector" href="">$Locale.Nice</a>
+    <ul>
+        <% loop Translations %>
+            <li>
+                <a class="lang-option" href="$Link" hreflang="$Locale.RFC1766" title="$Title">
+                    Switch to $Locale.Nice
+                </a><span class="flag-icon flag-icon-gr"></span>
+            </li>
+        <% end_loop %>
+    </ul>    
 <% end_if %>
-
-
-<%-- if Translations %>
-    <div id="lang">
-        <select onChange="window.location.href=this.value">
-            <option value="">Select a Language</option>
-            <% loop Translations %>
-                <option value="$Link">$Locale.Nice</option>
-            <% end_loop %>
-        </select>    
-    </div>   
-<% end_if --%>

@@ -8,12 +8,12 @@
                 <ul>
                     <li><%t StudentProfile.NAME "Name" %>: $Member.FirstName $Member.Surname</li>
                     <% if $Member.HighSchool %>
-                        <li><%t StudentProfile.HIGHSCHOOL "High School" %>: $Member.HighSchoolID</li>
+                        <li><%t StudentProfile.HIGHSCHOOL "High School" %>: $HighSchoolName($Member.HighSchoolID)</li>
                     <% else %>
                         <li><%t StudentProfile.HIGHSCHOOLUNKNOWN "High School: Unknown" %></li>
                     <% end_if %>
                     <% if $Member.University %>
-                        <li><%t StudentProfile.UNIVERSITY "University" %>: $Member.UniversityID</li>
+                        <li><%t StudentProfile.UNIVERSITY "University" %>: $UniversityName($Member.UniversityID)</li>
                     <% else %>
                         <li><%t StudentProfile.UNIVERSITYUNKNOWN "University: Unknown" %></li>
                     <% end_if %>

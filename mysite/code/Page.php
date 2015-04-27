@@ -153,6 +153,39 @@ class Page extends SiteTree implements PermissionProvider {
         else
             return false;
     }
+    
+    function UniversityName($id) {
+        if(!$id) return false;
+        
+        $name = University::get()->byID($id);
+        
+        if($name)
+            return $name->Title;
+        else
+            return false;
+    }
+    
+    function HighSchoolName($id) {
+        if(!$id) return false;
+        
+        $name = HighSchool::get()->byID($id);
+        
+        if($name)
+            return $name->Title;
+        else
+            return false;
+    }
+    
+    function CountryName($code) {
+        if(!$code) return false;
+        return Locale::getDisplayRegion('-'.$code, 'en');
+        $name = Country::get()->filter('code', $code)->First()->Name;
+        
+        if($name)
+            return $name;
+        else
+            return false;
+    }
 }
 
 class Page_Controller extends ContentController {

@@ -66,8 +66,9 @@ en_US:
     STUDENTCHATROOM: 'Student Chatroom'
     
   StudentProfileView:
-    PROFILENAME: '%s %s Profile'
+    PROFILENAME: 'Profile for '
     LOGINREMINDER: 'You need to be logged in to view this profile!'
+    LINKS: '<a href="register">Register</a> or <a href="isnetwork">Login</a> here.'
     
   HopePage:
     FORUM: 'Forum Updates'

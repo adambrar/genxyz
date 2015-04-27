@@ -28,13 +28,14 @@ class MemberDecorator extends DataExtension {
     
     public function updateCMSFields(FieldList $fields) 
     {
+        $countries = Country::getCountryOptions();
         $fields->addFieldToTab("Root.Main", new TextField('MiddleName', 'Middle Name'), 'surname');      
         $fields->addFieldToTab("Root.Profile", new TextField('Username', 'Username'));      
         $fields->addFieldToTab("Root.Profile", new TextField('DateOfBirth', 'Date of Birth'));      
         $fields->addFieldToTab("Root.Profile", new CountryDropdownField('Nationality', 'Nationality'));         
         $fields->addFieldToTab("Root.Profile", new TextField('Telephone', 'Telephone Number'));         
         $fields->addFieldToTab("Root.Profile", new TextField('StreetAddress', 'Street Address'));         
-$fields->addFieldToTab("Root.Profile", new DropdownField('City', 'City', HighSchool::getHighSchoolOptions()));         
+$fields->addFieldToTab("Root.Profile", new DropdownField('City', 'City', City::getCityOptions()));         
         $fields->addFieldToTab("Root.Profile", new CountryDropdownField('Country', 'Birth Country'));         
         $fields->addFieldToTab("Root.Profile", new TextField('PostalCode', 'Postal Code'));
         

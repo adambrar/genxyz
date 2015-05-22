@@ -10,8 +10,7 @@
                         $Form
                     <% else %>
                         <div class="row">
-                            <div class="4u -4u">
-                                <h2>$Title</h2>
+                            <div class="8u -2u 12u(1)">
                                 $Form
                             </div>
                         </div>

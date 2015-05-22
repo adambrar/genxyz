@@ -22,6 +22,7 @@
     <script src="$ThemeDir/javascript/skel.min.js"></script>
     <script src="$ThemeDir/javascript/skel-layers.min.js"></script>
     <script src="$ThemeDir/javascript/init.js"></script>
+    <script src="$ThemeDir/javascript/selectload.js"></script>
     <noscript>
         <% require themedCSS('bootstrap.min') %>
         <% require themedCSS('skel') %>

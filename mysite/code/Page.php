@@ -93,7 +93,7 @@ class Page extends SiteTree implements PermissionProvider {
         if (!empty(self::$restricted_pagetypes)) {
             if (in_array($this->ClassName, self::$restricted_pagetypes)) {
  
-                if (!permission::check('MANAGE_RESTRICTED_PAGETYPES')) {
+                if (!Permission::check('MANAGE_RESTRICTED_PAGETYPES')) {
                     return false;
                 }
             }
@@ -178,7 +178,7 @@ class Page extends SiteTree implements PermissionProvider {
     
     function CountryName($code) {
         if(!$code) return false;
-        return Locale::getDisplayRegion('-'.$code, 'en');
+
         $name = Country::get()->filter('code', $code)->First()->Name;
         
         if($name)
@@ -205,6 +205,11 @@ class Page_Controller extends ContentController {
 	 *
 	 * @var array
 	 */
+    
+    private static $allowed_actions = array(
+        'countriesasjson',
+        'citiesasjson'
+    );
 	
 	public function init() {
 		parent::init();
@@ -213,6 +218,100 @@ class Page_Controller extends ContentController {
         if($this->dataRecord->hasExtension('Translatable')) {
             i18n::set_locale($this->dataRecord->Locale);
         }
+        
+        Requirements::javascript('silverstripe/themes/' . SSViewer::current_theme() . '/javascript/selectload.js');
+        
+        self::logoutInactiveUser();
 	}
+    
+    public function countriesasjson($message = "", $extraData = null, $status = "success") 
+    {
+        $this->response->addHeader('Content-Type', 'application/json');
+        SSViewer::set_source_file_comments(false);
+		if($status != "success") {
+			$this->setStatusCode(400, $message);
+		}
+		// populate Javascript
+		$js = array ();
+        
+        $countries = Country::get()->sort('Name', 'ASC');
+        
+        if($countries)
+        {
+            foreach($countries as $country)
+            {
+                $js[] = array(
+                    "title" => $country->Name,
+                    "value" => $country->ID
+                );
+            }
+        }
+        
+        if(is_array($extraData)) { $js = array_merge($js, $extraData); }
+        
+        $json = json_encode($js);
+        
+        return $json;
+    }
+    
+    public function citiesasjson($message = "", $extraData = null, $status = "success") 
+    {
+        $this->response->addHeader('Content-Type', 'application/json');
+        SSViewer::set_source_file_comments(false);
+		if($status != "success") {
+			$this->setStatusCode(400, $message);
+		}
+		// populate Javascript
+		$js = array ();
+        
+        $cities = City::get()->sort('Name', 'ASC');
+        
+        if($cities)
+        {
+            foreach($cities as $city)
+            {
+                $js[] = array(
+                    "title" => $city->Name,
+                    "value" => $city->ID
+                );
+            }
+        }
+        
+        if(is_array($extraData)) { $js = array_merge($js, $extraData); }
+        
+        $json = json_encode($js);
+        
+        return $json;
+    }
+    
+    /**
+    * The function will logout a user after certain amount of time
+    *
+    */
+    function logoutInactiveUser() {
+        // Set inactivity to half an hour (converted to seconds)
+        $inactivityLimit = 30 * 60;
+
+        // Get value from session
+        $sessionStart = Session::get('session_start_time'); 
+        if (isset($sessionStart)) {
+        $elapsed_time = time() - Session::get('session_start_time');
+        // If elapsed time is greater or equal to inactivity period, logout user
+        if ($elapsed_time >= $inactivityLimit) { 
+          $member = Member::currentUser(); 
+          if($member) {
+            // Logout member
+            $member->logOut();
+          }
+          // Clear session
+          Session::clear_all();
+          // Redirect user to the login screen
+          $this->redirect(Director::baseURL() . 'Security/login'); 
+        } 
+      }
+
+      // Set new value
+      Session::set('session_start_time', time()); 
+    }
 
 }

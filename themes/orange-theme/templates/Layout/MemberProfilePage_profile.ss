@@ -6,7 +6,7 @@
                 <article>
                     <div class="row">
                         <div class="4u 12u(1)">
-                            <% include StudentSidebar %>
+                                <% include StudentSidebar %>
                         </div>
                         <div class="4u 8u(2)">
                              <% if BlogEntries %>

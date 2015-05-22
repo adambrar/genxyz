@@ -20,22 +20,27 @@
                 <div id="slideshow-overlay" class="container 80%">
                     <div class="row">
                         <div class="3u">
-                            <a href="/photos/logo_files/GenXYZ_dc.jpg" class="image fit"><img src="/photos/logo_files/GenXYZ_dc.jpg" alt="ProfilePicture" /></a>
+                            <a href="$ThemeDir/images/GenXYZ_dc.jpg" class="image fit"><img src="/photos/logo_files/GenXYZ_dc.jpg" alt="ProfilePicture" /></a>
                         </div>
                         <div class="9u">
                             <div class="text">
-                                <h2>$SiteConfig.Title</h2>
-                                <p>It's not just about the money.</p>
+                                <h2>$WelcomeTitle</h2>
+                                <p>$WelcomeMessage</p>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="4u -1u 12u(3)">
+                        <div class="4u">
                             <ul>
                                 <li><a class="button big icon fa-arrow-circle-right" href="isnetwork">Students</a></li>
                             </ul>
                         </div>
-                        <div class="4u -1u 12u(3)">
+                        <div class="4u">
+                            <ul>
+                                <li><a class="button big icon fa-arrow-circle-right" href="partners-portal">Partners</a></li>
+                            </ul>
+                        </div>
+                        <div class="4u">
                             <ul>
                                 <li><a id="see-more-button" class="button big icon fa-arrow-circle-right" href="#">See More</a></li>
                             </ul>
@@ -78,7 +83,7 @@
                             <h2 class="update_title"><%t HomePage.GENXYZ "GenXYZ<" %>/h2>
                             <% if GenXYZBlogPosts %>
                                 <% loop $GenXYZBlogPosts %>
-                                    <% include StudentBlogSummary %>
+                                    <% include GenXYZBlogSummary %>
                                 <% end_loop %>
                             <% else %>
                                 <p><%t HomePage.NOGENXYZPOSTS "There are no recent posts from GenXYZ" %></p>

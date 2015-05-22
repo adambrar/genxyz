@@ -8,14 +8,14 @@ class Country extends DataObject {
     );
     
     private static $has_many = array(
-        'Student' => 'Member'
+        'Members' => 'Member'
     );
     
     public static function getCountryOptions()
     {
-        if(!($cities = DataObject::get("Country")))
+        if(!($countries = DataObject::get("Country")))
         {
-            return $cities->map('Code', 'Name', 'Please Select');
+            return $countries->map('Code', 'Name', 'Please Select');
         } else {
             return array('No Countries');
         }

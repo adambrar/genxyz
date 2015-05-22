@@ -12,10 +12,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         'AddressProfileForm',
         'EducationProfileForm',
         'EmergencyContactProfileForm',
-        'ProfilePictureForm'
-        
+        'ProfilePictureForm',
     );
-
+            
     //student registration form
     public function updateRegisterForm($form) 
     {
@@ -27,9 +26,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $fields->insertAfter(new TextField('MiddleName', _t(
             'MemberRegForm.MIDDLENAME', 
             'Middle Name')), 'Firstname');
-        $fields->insertAfter(new CountryDropdownField('Nationality', _t(
+        $fields->insertAfter(DropdownField::create('Nationality', _t(
             'MemberRegForm.NATIONALITY', 
-            'Nationality')), 'Email');
+            'Nationality'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'), 'Email');
 		
         $fields->insertAfter(new LiteralField('Hd_Address', '<h3>' . _t(
             'MemberRegForm.ADDRESSLABEL', 
@@ -37,12 +36,12 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $fields->insertAfter(new TextField('StreetAddress', _t(
             'MemberRegForm.STREETADDRESS', 
             'Street Address')), 'Hd_Address');
-        $fields->insertAfter(new DropdownField('City', _t(
+        $fields->insertAfter(DropdownField::create('City', _t(
             'MemberRegForm.CITY', 
-            'City'), HighSchool::getHighSchoolOptions()), 'StreetAddress');
-        $fields->insertAfter(new CountryDropdownField('Country', _t(
+            'City'))->setEmptyString('Select a City')->addExtraClass('city-select-dropdown'), 'StreetAddress');
+        $fields->insertAfter(DropdownField::create('Country', _t(
             'MemberRegForm.CURRENTCOUNTRY', 
-            'Current Country')), 'City');
+            'Current Country'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'), 'City');
         $fields->insertAfter(new TextField('PostalCode', _t(
             'MemberRegForm.POSTALCODE', 
             'Postal Code')), 'Country');
@@ -227,9 +226,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new DateField('DateOfBirth', _t(
                 'MemberProfileForms.BIRTHDAY',
                 'Birthday')),
-            new DropdownField('Nationality', _t(
+            DropdownField::create('Nationality', _t(
                 'MemberProfileForms.NATIONALITY',
-                'Nationality'), Country::getCountryOptions()),
+                'Nationality'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
             new EmailField('Email', _t(
                 'MemberProfileForms.EMAIL',
                 'Email') . '<span>*</span>')
@@ -264,12 +263,12 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new TextField('StreetAddress', _t(
                 'MemberProfileForms.STREETADDRESS',
                 'Street Address') . '<span>*</span>'),
-            new DropdownField('City', _t(
+            DropdownField::create('City', _t(
                 'MemberProfileForms.CITY',
-                'City'), City::getCityOptions()),
-            new DropdownField('Country', _t(
+                'City'))->setEmptyString('Select a City')->addExtraClass('city-select-dropdown'),
+            DropdownField::create('Country', _t(
                 'MemberProfileForms.COUNTRY',
-                'Country') . '<span>*</span>', Country::getCountryOptions()),
+                'Country') . '<span>*</span>')->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
             new TextField('PostalCode', _t(
                 'MemberProfileForms.POSTALCODE',
                 'Postal Code')),
@@ -352,9 +351,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new PhoneNumberField('ContactTelephone', _t(
                 'MemberProfileForms.CONTACTTELEPHONE',
                 'Telephone')),
-            new CountryDropdownField('ContactCountry', _t(
+            DropdownField::create('ContactCountry', _t(
                 'MemberProfileForms.COUNTRY',
-                'Current Country')),
+                'Current Country'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
             new EmailField('ContactEmail', _t(
                 'MemberProfileForms.EMAIL',
                 'Email') . '<span>*</span>'),
@@ -411,8 +410,6 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     
     public function saveProfileForm(array $data, Form $form) {
         $member = Member::currentUser();
-
-        $SQL_data = Convert::raw2SQL($data);
 
         $form->saveInto($member);
 		
@@ -472,11 +469,12 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $blogHolder->SideBarWidgetID = $widgetArea->ID;
         $blogHolder->write();
         $blogHolder->doRestoreToStage();
+        $blogHolder->menuShown = 'Student';
         
-        $managementWidget = new BlogManagementWidget();
-        $managementWidget->ParentID = $widgetArea->ID;
-        $managementWidget->Enabled = 1;
-        $managementWidget->write();
+        $tagcloudwidget = new TagCloudWidget();
+        $tagcloudwidget->ParentID = $widgetArea->ID;
+        $tagcloudwidget->Enabled = 1;
+        $tagcloudwidget->write();
         
         //create welcome blog entry
         $blog = new BlogEntry();
@@ -492,7 +490,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         
         //---- 2. add member to groups: student, user
         $userGroup = DataObject::get_one('Group', "Code = 'users'");
-        var_dump($userGroup);
+
         if(!$userGroup)
         {
             $userGroup = new Group();
@@ -508,6 +506,10 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         }
         //Add member to user group
         $userGroup->Members()->add($member);
+        
+        //set member type to student
+        $member->MemberType = "Student";
+        $member->write();
     }
     
 }

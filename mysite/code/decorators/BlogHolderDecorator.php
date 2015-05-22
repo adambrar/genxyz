@@ -8,4 +8,5 @@ class BlogHolderDecorator extends DataExtension {
     public function updateCMSFields(FieldList $fields) {
         $fields->addFieldToTab("Root.Widgets", new WidgetAreaEditor("SideBarWidget"));
     }
+    
 }

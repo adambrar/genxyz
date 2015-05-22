@@ -235,6 +235,19 @@
 				border: 0;
 			}
 
+    /* Form Messages */
+    .message.Bad
+    {
+        color: red;
+        font-weight: bold;
+    }
+
+    .message.Good
+    {
+        color: green;
+        font-weight: bold;
+    }
+
 	/* Tables */
 	
 		table
@@ -415,6 +428,11 @@
 					background: #e4e4e4;
 					background: rgba(0,0,0,0.15);
 				}
+
+            .checkbox input[type=checkbox]
+            {
+                margin: 0;
+            }
 
 	/* List */
 
@@ -612,7 +630,7 @@ article.home_page {
     .user_menu {
         /*font: normal normal 90% sans-serif;*/
         max-width: 250px;
-        margin: auto;
+        margin: 0;
         background: #ffffff;
         text-align: center;
         padding-top: 1em;
@@ -625,7 +643,7 @@ article.home_page {
         text-align: center;
     }
     .user_menu > ul {
-        margin-bottom: 0px;
+        margin: 0px;
         @include box-shadow(0 0 25px #000);
     }
     .user_menu > ul > li {
@@ -884,13 +902,16 @@ article.home_page {
 			margin: 0px;
 			padding: 0px;
 			list-style: none;
+            margin-top: 2em;
 		}
 		ul.tabs li{
 			background: none;
-			color: #222;
+			color: black;
 			display: inline-block;
 			padding: 10px 15px;
 			cursor: pointer;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
 		}
 
         ul.tabs li#search-bar {
@@ -898,18 +919,27 @@ article.home_page {
         }
 
 		ul.tabs li.current{
-			background: #ededed;
-			color: #222;
+			background: white;
+			color: black;
+            -webkit-box-shadow: 6px -4px 7px -4px rgba(0,0,0,0.4);
+            -moz-box-shadow: 6px -4px 7px -4px rgba(0,0,0,0.4);
+            box-shadow: 6px -4px 7px -4px rgba(0,0,0,0.4);
 		}
 
 		.tab-content{
 			display: none;
-			background: #ededed;
+			background: white;
 			padding: 15px;
+            margin-bottom: 2.5em;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
 		}
 
 		.tab-content.current{
 			display: inherit;
+            -webkit-box-shadow: 6px -4px 7px -4px rgba(0,0,0,0.4);
+            -moz-box-shadow: 6px -4px 7px -4px rgba(0,0,0,0.4);
+            box-shadow: 6px -4px 7px -4px rgba(0,0,0,0.4);
 		}
 	
 /*********************************************************************************/

@@ -4,7 +4,7 @@ class City extends DataObject {
     
     private static $db = array(
         'Name' => 'Varchar(100)',
-        'CoutnryCode' => 'Varchar(3)'
+        'CountryCode' => 'Varchar(3)'
     );
     
     private static $has_many = array(

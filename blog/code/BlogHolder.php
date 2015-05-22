@@ -218,7 +218,7 @@ class BlogHolder_Controller extends BlogTree_Controller {
 			'Form' => $this->BlogEntryForm()
 		));
 
-		return $page->renderWith('Page');
+        return $page->renderWith('Page');
 	}
 
 	/**
@@ -283,6 +283,8 @@ class BlogHolder_Controller extends BlogTree_Controller {
 		} else {
 			$form->loadDataFrom(array("Author" => Cookie::get("BlogHolder_Name")));
 		}
+        
+        $this->extend('updateBlogPostForm', $form);
 
 		return $form;
 	}

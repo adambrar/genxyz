@@ -4,9 +4,6 @@ class HighSchool extends DataObject {
     
     private static $db = array(
         'Title' => 'Varchar(100)',
-        'City' => 'Varchar(100)',
-        'Country' => 'Varchar(100)',
-        'PhoneNumber' => 'Varchar(30)'
     );
     
     private static $has_many = array(

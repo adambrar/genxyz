@@ -29,11 +29,15 @@ class GroupRedirectLoginForm extends MemberLoginForm {
         //cycle through each group  
         foreach($Groups as $Group)
         {
-            //if the member is in the group and that group has GoToAdmin checked
-            if($member && $member->inGroup($Group->ID) && $Group->GoToAdmin == 1) 
+            //if the member is in the group and that group has GoToAdmin checked or GoToAcademicsPortal
+            if( $member && $member->inGroup($Group->ID) && ($Group->GoToAdmin == 1 || $Group->GoToAcademicsPortal == 1) ) 
             {   
                 //redirect to the admin page
-                return $this->controller->redirect( Director::baseURL() . 'admin' );
+                if($Group->GoToAdmin)
+                    return $this->controller->redirect( Director::baseURL() . 'admin' );
+                else
+                    $portalPage = AcademicsPortalPage::get()->First()->Link();
+                    return $this->controller->redirect( $portalPage );
             }
             //otherwise if the member is in the group and that group has a page linked
             elseif($member && $member->inGroup($Group->ID)  && $Group->LinkedPageID != 0) 

@@ -3,21 +3,17 @@
 class University extends DataObject {
     
     private static $db = array(
-        'Title' => 'Varchar(100)',
-        'Website' => 'Varchar(100)',
-        'ContactName' => 'Varchar(50)',
-        'ContactPhoneNumber' => 'Varchar(30)',
-        'BusinessRegNumber' => 'Varchar(50)',
-        'Address' => 'Varchar(40)'
+        'Title' => 'Varchar(100)'        
     );
     
     private static $has_many = array(
-        'Student' => 'Member'
+        'Students' => 'Member'
     );
     
     public static function getUniversityOptions()
     {
-        if($universities = DataObject::get("University"))
+        $universities = DataObject::get("University");
+        if($universities)
         {
             return $universities->map('ID', 'Title', 'Please Select');
         } else {

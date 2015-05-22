@@ -15,7 +15,7 @@
 
                                         <div class="blogEntry">
                                             <h2 class="postTitle">$Title</h2>
-                                            <p class="authorDate"><% _t('BlogEntry_ss.POSTEDBY', 'Posted by') %> <a href="{$authorProfileURL}" target="_blank">$Author.XML</a> <% _t('BlogEntry_ss.POSTEDON', 'on') %> $Date.Long | $Comments.Count <% _t('BlogEntry_ss.COMMENTS', 'Comments') %></p>
+                                            <p class="authorDate"><% _t('BlogEntry_ss.POSTEDBY', 'Posted by') %> <a href="{$authorProfileURL($BlogHolder.OwnerID)}" target="_blank">$Author.XML</a> <% _t('BlogEntry_ss.POSTEDON', 'on') %> $Date.Long | $Comments.Count <% _t('BlogEntry_ss.COMMENTS', 'Comments') %></p>
                                             <% if TagsCollection %>
                                                 <p class="tags">
                                                      <% _t('BlogEntry_ss.TAGS', 'Tags:') %> 

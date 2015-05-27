@@ -186,6 +186,17 @@ class Page extends SiteTree implements PermissionProvider {
         else
             return false;
     }
+    
+    function getAllScholarships($num = 5)
+    {
+        $scholarships = Scholarship::get()->sort('DateCreated', 'DESC')->limit($num);
+        foreach($scholarships as $scholarship) {
+            echo "test" . $scholarship->Name;
+        }
+        
+        echo "test";
+        return "test";
+    }
 }
 
 class Page_Controller extends ContentController {
@@ -219,7 +230,8 @@ class Page_Controller extends ContentController {
             i18n::set_locale($this->dataRecord->Locale);
         }
         
-        Requirements::javascript('silverstripe/themes/' . SSViewer::current_theme() . '/javascript/selectload.js');
+        Requirements::javascript(Director::baseFolder() . 'themes/' . SSViewer::current_theme() . '/javascript/selectload.js');
+        Requirements::javascript(Director::baseFolder() . 'themes/' . SSViewer::current_theme() . '/javascript/scrolllink.js');
         
         self::logoutInactiveUser();
 	}
@@ -290,7 +302,7 @@ class Page_Controller extends ContentController {
     */
     function logoutInactiveUser() {
         // Set inactivity to half an hour (converted to seconds)
-        $inactivityLimit = 30 * 60;
+        $inactivityLimit = 120 * 60;
 
         // Get value from session
         $sessionStart = Session::get('session_start_time'); 

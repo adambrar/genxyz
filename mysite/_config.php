@@ -40,6 +40,12 @@ Object::add_extension('BlogHolder_Controller', 'BlogHolder_ControllerDecorator')
 
 Object::add_extension('BlogEntry', 'BlogEntryDecorator');
 
+Object::add_extension('BlogTree', 'BlogTreeDecorator');
+
+Object::add_extension('CommentingController', 'CommentingControllerDecorator');
+
+Object::add_extension('ForumHolder', 'ForumHolderDecorator');
+
 Object::add_extension('MemberProfilePage_Controller', 'MemberProfilePage_ControllerDecorator');
 
 Object::add_extension('MemberProfileViewer', 'MemberProfileViewerDecorator');

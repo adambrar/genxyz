@@ -64,4 +64,4 @@
             
 <script src="{$ThemeDir}/javascript/tabbed.js"></script>
 
-<% include Footer %>
+<% include EmptyFooter %>

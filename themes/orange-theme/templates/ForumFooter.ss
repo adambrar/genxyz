@@ -1,6 +1,6 @@
                 <% with ForumHolder %>
                     <div class="forum-footer">
-                        <% if $CurrentlyOnlineEnabled %>
+                        <!--<% if $CurrentlyOnlineEnabled %>
                         <p>
                             <strong><% _t('ForumFooter_ss.CURRENTLYON','Currently Online:') %></strong>
                             <% if $CurrentlyOnline %>
@@ -11,41 +11,24 @@
                                 <span><% _t('ForumFooter_ss.NOONLINE','There is nobody online.') %></span>
                             <% end_if %>
                         </p>
-                        <% end_if %>
+                        <% end_if %> -->
                         <p>
                             <strong><% _t('ForumFooter_ss.LATESTMEMBER','Welcome to our latest member:') %></strong>			
-                            <% if $LatestMembers(1) %>
-                                <% loop $LatestMembers(1) %>
-                                    <% if Link %>
-                                        <a href="$Link" <% if Nickname %>title="$Nickname<% _t('ForumFooter_ss.ISONLINE') %>"<% end_if %>><% if Nickname %>$Nickname<% else %>Anon<% end_if %></a><% if Last %><% else %>,<% end_if %> 
-                                    <% else %>
-                                        <span>Anon</span><% if Last %><% else %>,<% end_if %> 
-                                    <% end_if %>
+                            <% if $NewestMember(1) %>
+                                <% loop $NewestMember(1) %>
+                                    <a href="$getProfilePageLink($ID)">$FirstName $Surname</a>
                                 <% end_loop %>
                             <% end_if %>
                         </p>
                     </div><!-- forum-footer. -->
                 <% end_with %>
-
+                </div>
             </div>
+            </div>
+        </div>
         </div>
    </div>
 </div>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-<script>
-$(function() {	
-    $("a.dropdown").click(function() {
-        var ul = $(this).next(),
-                clone = ul.clone().css({"height":"auto"}).appendTo("body"),
-                height = ul.css("height") === "0px" ? ul[0].scrollHeight + "px" : "0px";
-
-        clone.remove();
-        ul.animate({"height":height});
-        return false;
-    });
-
-});
-</script>
 <% include Footer %>
     
 </body>

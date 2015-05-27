@@ -5,8 +5,9 @@
 	<div class="inner typography line">
         <div id="main-wrapper">
             <div class="container">
-                <div class="row 200%">
-                    <div class="9u 12u(2)">
+                <h2>$Title</h2>
+                <div class="row content-box-light">
+                    <div class="6u -1u 12u(2)">
                         <div id="content">
                             <% include BlogSideBar %>
                             <div class="content-container unit size3of4 lastUnit">
@@ -27,8 +28,9 @@
                                     <div class="blog blogentries">
                                     <% if BlogEntries %>
                                         <% loop BlogEntries %>
-                                            <% include BlogSummary %>
-                                            <hr>
+                                            <div class="small-content-box">
+                                                <% include GenXYZBlogSummary %>
+                                            </div>
                                         <% end_loop %>
                                     <% else %>
                                         <h2><% _t('BlogTree_ss.NOENTRIES', 'There are no blog entries') %></h2>
@@ -46,7 +48,9 @@
                         </div>
                     </div>
                     <div class="3u 12u(3)">
-                        $SideBarWidget
+                        <div class="small-content-box">
+                            $SideBarWidget
+                        </div>
                     </div>
                 </div>
             </div>

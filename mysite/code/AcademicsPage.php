@@ -59,9 +59,9 @@ class AcademicsPage_Controller extends Page_Controller
                     '4' => '4 years',
                     '5' => '5 years',
             ))->setEmptyString('Select program length')->addExtraClass('question-3 questions'),
-            CountryDropdownField::create('Nationality', _t(
+            DropdownField::create('Program', _t(
                 'MemberProfileForms.DEFAULT',
-                'Country'))->addExtraClass('question-4 questions')
+                'Program'))->addExtraClass('question-4 questions')
         );
         
         $actions = FieldList::create(

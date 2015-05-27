@@ -8,7 +8,7 @@
                         <div class="row">
                             <div class="6u 12u(1)">
                                 <% if $isSignedIn %>
-                                    <h2><%t ISNetworkPage.YOUARESIGNEDIN "You are currently signed into ISNetwork as " %>$MemberName!</h2>
+                                    <h1><%t ISNetworkPage.YOUARESIGNEDIN "You are currently signed into ISNetwork as " %>$MemberName!</h1>
                                     <ul>
                                         <li><a class="button small icon fa-arrow-circle-right" href="Security/logout"><%t ISNetworkPage.LOGINLINK "Login as someone else" %></a></li>
                                     </ul>

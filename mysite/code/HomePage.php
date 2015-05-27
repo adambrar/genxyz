@@ -27,14 +27,13 @@ class HomePage_Controller extends Page_Controller
     * posts by GenXYZ (removes GenXYZ tag)
     **/
     function StudentBlogPosts($num=4) {
-        $id = BlogHolder::get()->filter('Title', 'GenXYZ');
+        $id = BlogHolder::get()->filter('Title', 'GenXYZ')->First()->ID;
+
+        $entry = SiteTree::get()->filter(array(
+            'ClassName' => 'BlogEntry'            
+        ))->exclude('ParentID', $id)->First();
         
-        $entry = BlogEntry::get()->exclude(array(
-            'Tags:PartialMatch' => array('created, first, welcome'),
-            'ParentID' => $id,
-        ))->First();
-        
-        return ($entry) ? BlogEntry::get()->exclude('Tags:PartialMatch', array('created, first, welcome', 'GenXYZ'))->sort('Date', 'DESC')->limit($num) : false;    
+        return ($entry) ? SiteTree::get()->filter(array('ClassName' => 'BlogEntry'))->exclude(array('ParentID' => $id))->sort('Created', 'DESC')->limit($num) : false;    
     }
     
     /**

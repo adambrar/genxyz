@@ -17,7 +17,13 @@
                             <div class="5u -1u 12u(2) gutters-fix">
                                 <div class="small-content-box">
                                     <h2><%t PartnersPortalPage.LOGIN "Login" %></h2>
-                                    $LoginForm
+                                    <% if isSignedIn %>
+                                        <h1>You are signed in.</h1>
+                                        <a class="button small icon fa-arrow-circle-right" href="Security/logout"><%t ISNetworkPage.LOGINLINK "Login as someone else" %></a>
+                                        <a class="button small icon fa-arrow-circle-right" href="{$getProfileLink}"><%t PartnersPortalPage.EDITPROFILE "Edit your profile" %></a>
+                                    <% else %>
+                                        $LoginForm
+                                    <% end_if %>
                                 </div>
                             </div>
                             <div class="5u 12u(3) gutters-fix">

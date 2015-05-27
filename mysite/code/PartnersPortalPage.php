@@ -99,18 +99,10 @@ class PartnersPortalPage_Controller extends Page_Controller
     public function doRegister(array $data, Form $form)
     {
         $member = new Member();
-        $profile = new PartnersProfile();
         
 		$form->saveInto($member);
-                
-        try {
-			$profile->write();
-		} catch(ValidationException $e) {
-			$form->sessionMessage($e->getResult()->message(), 'bad');
-			return;
-		}
         
-        $member->PartnersProfileID = $profile->ID;
+        $member->PartnersProfileID = $this->createProfilePage();
         
         try {
 			$member->write();
@@ -160,6 +152,12 @@ class PartnersPortalPage_Controller extends Page_Controller
         
         $form->addErrorMessage('Blurb', 'You have registered successfully. A representative will contact you shortly using the e-mail address provided.', 'Good');
         return $this->redirectBack();
+    }
+    
+    public function createProfilePage()
+    {
+        $profile = new PartnersProfile();
+        return $profile->write();
     }
     
     public function BasicInfoForm()
@@ -300,5 +298,27 @@ class PartnersPortalPage_Controller extends Page_Controller
         return $this->redirectBack();
     }
     
+    public function getProfileLink()
+    {
+        $member = Member::currentUser();
+
+        if(!$member) {
+            return false;
+        }
+
+        if($member->MemberType == "University") {
+            $portalPage = PartnersPortalPage::get()->First()->Link();
+            return $this->controller->redirect( $portalPage . 'edit/university/' . $member->ID );
+        } else if($member->MemberType == "Agency") {
+            $portalPage = PartnersPortalPage::get()->First()->Link();
+            return $this->controller->redirect( $portalPage . 'edit/agent/' . $member->ID );
+        } else if($member->MemberType == "Student") {
+            return $profilePage = MemberProfilePage::get()->filter(array(
+            'AllowRegistration' => '0',
+            'AllowProfileEditing' => '1'
+        ))->First()->Link();
+            
+        }
+    }   
     
 }

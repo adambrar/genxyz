@@ -12,5 +12,13 @@ class Scholarship extends DataObject {
         'University' => 'University'
     );
     
+    private static $searchable_fields = array(
+        'Name',
+        'Amount'
+    );
     
+    private static $summary_fields = array(
+        'Name',
+        'Amount'
+    );
 }

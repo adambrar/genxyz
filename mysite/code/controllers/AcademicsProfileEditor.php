@@ -51,12 +51,18 @@ class AcademicsProfileEditor extends Page_Controller {
 		if(!$member || $member->MemberType != "Agent" || Member::currentUserID() != $id) {
 			$this->httpError(404);
 		}
-
+        
+        //check user has profile page and create if not
+        if(!$member->PartnersProfileID) {
+            $member->PartnersProfileID = $this->parent->createProfilePage();
+            $member->write();
+       }
+        
         $profileContent = PartnersProfile::get()->byID($member->PartnersProfileID);
-
-		$this->data()->Title = sprintf(
+        
+        $this->data()->Title = sprintf(
 			_t('MemberProfiles.MEMBERPROFILETITLE', "%s's Information"),
-			$member->getName()
+			$member->BusinessName
 		);
 		$this->data()->Parent = $this->parent;
         
@@ -73,7 +79,7 @@ class AcademicsProfileEditor extends Page_Controller {
 		return $controller->renderWith(array(
 			'AgentProfile_edit', 'Page'
 		));
-	} 
+	}
 
 	/**
 	 * Handles viewing a university's profile.

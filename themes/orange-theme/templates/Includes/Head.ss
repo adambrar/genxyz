@@ -23,6 +23,7 @@
     <script src="$ThemeDir/javascript/skel-layers.min.js"></script>
     <script src="$ThemeDir/javascript/init.js"></script>
     <script src="$ThemeDir/javascript/selectload.js"></script>
+    <script src="$ThemeDir/javascript/scrolllink.js"></script>
     <noscript>
         <% require themedCSS('bootstrap.min') %>
         <% require themedCSS('skel') %>
@@ -33,6 +34,7 @@
     <% require themedCSS('blog') %>
     <% require themedCSS('forum') %>
     <% require themedCSS('flag-icon.min') %>
+    <% require themedCSS('comments') %>
     <link rel="shortcut icon" href="$ThemeDir/images/favicon.ico" />
     <!--<script src="//v2.zopim.com/?2uDfL8QV5WgywsgloRQMbP785ruTgGtR" charset="utf-8" type="text/javascript"></script>-->
 </head>

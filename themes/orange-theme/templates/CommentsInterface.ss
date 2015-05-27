@@ -17,7 +17,7 @@
 			<p><% _t('CommentsInterface_ss.COMMENTSDISABLED', 'Posting comments has been disabled') %>.</p>	
 		<% end_if %>
 
-		<h4><% _t('CommentsInterface_ss.COMMENTS','Comments') %></h4>
+		<h2><% _t('CommentsInterface_ss.COMMENTS','Comments') %></h2>
 	
 		<div class="comments-holder">
 			<% if Comments %>

@@ -33,12 +33,25 @@
                     </div>
                 <% else %>
                     <div class="row">
-                    <div class="6u -3u 12u(1)">
-                        <h2><%t StudentProfileView.PROFILENAME "Profile for " %>$Member.FirstName $Member.Surname</h2>
-                        <p><%t StudentProfileView.LOGINREMINDER "You need to be logged in to the view this profile!" %></p>
-                        <p><%t StudentProfileView.LINKS "<a>Login or Register</a>" %></p>                                                                                         
-                    </div>
-                    </div>
+                            <div class="6u -3u 12u(1)">
+                                <div class="row content-box-light">
+                                <h2><%t AccessDenied.TITLE "Access Denied" %></h2>
+                                <h1><%t StudentProfileView.LOGINREMINDER "You need to be logged in to view this content!" %></h1>
+                                <div class="row">
+                                    <div class="6u">
+                                        <ul>
+                                            <li><a class="button small icon fa-arrow-circle-right" href="register">Register</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="6u">
+                                        <ul>
+                                            <li><a class="button small icon fa-arrow-circle-right" href="Security/login">Login</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
                 <% end_if %>
                 </article>
             </div>

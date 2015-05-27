@@ -18,7 +18,7 @@ class GroupRedirectLoginForm extends MemberLoginForm {
         }
     }
     
-    public function redirectByGroup($data) 
+    public function redirectByGroup($data)
     {   
         // gets the current member that is logging in
         $member = Member::currentUser();
@@ -33,11 +33,15 @@ class GroupRedirectLoginForm extends MemberLoginForm {
             if( $member && $member->inGroup($Group->ID) && ($Group->GoToAdmin == 1 || $Group->GoToAcademicsPortal == 1) ) 
             {   
                 //redirect to the admin page
-                if($Group->GoToAdmin)
+                if($Group->GoToAdmin) {
                     return $this->controller->redirect( Director::baseURL() . 'admin' );
-                else
-                    $portalPage = AcademicsPortalPage::get()->First()->Link();
-                    return $this->controller->redirect( $portalPage );
+                } else if($member->MemberType == 'Agent') {
+                    $portalPage = PartnersPortalPage::get()->First()->Link();
+                    return $this->controller->redirect( $portalPage . 'edit/agent/' . $member->ID );
+                } else if($member->MemberType == 'University') {
+                    $portalPage = PartnersPortalPage::get()->First()->Link();
+                    return $this->controller->redirect( $portalPage . 'edit/university/' . $member->ID );
+                }
             }
             //otherwise if the member is in the group and that group has a page linked
             elseif($member && $member->inGroup($Group->ID)  && $Group->LinkedPageID != 0) 
@@ -50,6 +54,6 @@ class GroupRedirectLoginForm extends MemberLoginForm {
             }
         }
         //if not found in group return false
-        return false;
+        //return false;
     }
 }

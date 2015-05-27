@@ -5,22 +5,12 @@
     <div id="main-wrapper">
         <div class="container">
             <div id="content">
-                <div class="forum-header">
+            <div class="row content-box-light">
+                <div class="12u gutters-fix">
+                <div class="forum-header small-content-box">
 
                     <% loop ForumHolder %>
                         <div class="forum-header-forms">
-
-                            <span class="forum-search-dropdown-icon"></span>
-                            <div class="forum-search-bar">
-                                <form class="forum-search" action="$Link(search)" method="get">
-                                    <fieldset>
-                                        <label for="search-text"><% _t('ForumHeader_ss.SEARCHBUTTON','Search') %></label>
-                                        <input id="search-text" class="text active" type="text" name="Search" value="$Query.ATT" />
-                                        <input class="submit action" type="submit" value="<% _t('ForumHeader_ss.SEARCHBUTTON','Search') %>"/>
-                                    </fieldset>	
-                                </form>
-                            </div>
-
                             <form class="forum-jump" action="#">
                                 <label for="forum-jump-select"><% _t('ForumHeader_ss.JUMPTO','Jump to:') %></label>
                                 <select id="forum-jump-select" onchange="if(this.value) location.href = this.value">
@@ -66,11 +56,12 @@
                         <p>
                             Moderators: 
                             <% loop Moderators %>
-                                <a href="$Link">$Nickname</a>
+                                <a href="$getProfilePageLink($ID)">$FirstName</a>
                                 <% if not Last %>, <% end_if %>
                             <% end_loop %>
                         </p>
                     <% end_if %>
 
                 </div><!-- forum-header. -->
+                <div class="small-content-box">
 

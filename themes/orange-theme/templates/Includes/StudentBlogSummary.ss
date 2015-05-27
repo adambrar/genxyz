@@ -10,11 +10,7 @@
 		</p>
 	<% end_if %>
 
-	<% if BlogHolder.ShowFullEntry %>
-		$Content
-	<% else %> 
-		<p>$Content.FirstParagraph(html)</p>
-	<% end_if %>
+    <p>$Content.LimitCharacters(120)</p>
 	
 	<p class="blogVitals">
 		<a href="$Link#PageComments_holder" class="comments" title="View Comments for this post">

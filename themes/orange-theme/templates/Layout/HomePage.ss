@@ -51,17 +51,19 @@
         </div>
         <div class="container">
             <div class="row welcome_updates content-box-dark" id="forum_updates">
-                <div class="10u -1u 12u(9)">
-                    <h2 class="update_title"><%t HomePage.FORUM "Forum Updates" %></h2>
-                    <table class="welcome_forum">
-                        <tr class="category">
-                            <td><% _t('ForumHolder_ss.FORUM','Forum') %></td>
-                            <td><% _t('ForumHolder_ss.LASTPOST','Last Post') %></td>
-                        </tr>
-                        <% loop $AllForums %>
-                            <% include WelcomeForumHolder_List %>
-                        <% end_loop %>
-                    </table>
+                <div class="10u -1u 12u(9) gutters-fix">
+                    <div class="small-content-box">
+                        <h2 class="update_title"><%t HomePage.FORUM "Forum Updates" %></h2>
+                        <table class="forum-topics welcome_forum">
+                            <tr class="category">
+                                <td><% _t('ForumHolder_ss.FORUM','Forum') %></td>
+                                <td><% _t('ForumHolder_ss.LASTPOST','Last Post') %></td>
+                            </tr>
+                            <% loop $AllForums %>
+                                <% include WelcomeForumHolder_List %>
+                            <% end_loop %>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="welcome_updates"> 

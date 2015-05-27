@@ -629,7 +629,7 @@ article.home_page {
     
     .user_menu {
         /*font: normal normal 90% sans-serif;*/
-        max-width: 250px;
+        max-width: 100%;
         margin: 0;
         background: #ffffff;
         text-align: center;
@@ -641,6 +641,7 @@ article.home_page {
         list-style: none;
         margin: 0; padding: 0;
         text-align: center;
+        width: 100%;
     }
     .user_menu > ul {
         margin: 0px;
@@ -688,9 +689,13 @@ article.home_page {
         text-align: left;
         margin: .5em .5em;
         padding: 0;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        border-radius: 10px;
     }
     .user_menu > ul > li > ul > li:hover {
-        background: #ffffff;
+        background: #f0f0f0;
     }
     .user_menu > ul > li > ul > li > a {
         display: block;
@@ -723,7 +728,7 @@ article.home_page {
 /*********************************************************************************/
         
     .profile-heading > ul li {
-        margin: -1em 0px;
+        margin: 0px;
         padding: 0px;
     }
 

@@ -44,7 +44,7 @@ class Page extends SiteTree implements PermissionProvider {
     /*
      *  Add a new permission
      */
-    function providePermissions(){
+    function providePermissions() {
         return array(
             'MANAGE_RESTRICTED_PAGETYPES' => array(
                 'name' => _t(
@@ -101,8 +101,7 @@ class Page extends SiteTree implements PermissionProvider {
         return true;
     }
     
-    public function canViewProfiles($Member = null)
-    {
+    public function canViewProfiles($Member = null) {
         return false;   
         if(Permission::check('VIEW_PROFILES')) {
             return true;
@@ -115,7 +114,7 @@ class Page extends SiteTree implements PermissionProvider {
      *  disable the creation of restricted pages for people
      *  that don't have the right pernmissions
      */
-    function canCreate($Member = null){
+    function canCreate($Member = null) {
         if ($this->canManageRestrictedPagetypes($Member)) {
             return parent::canCreate($Member);
         } else {
@@ -127,7 +126,7 @@ class Page extends SiteTree implements PermissionProvider {
      *  disable the deletion of restricted pages for people
      *  that don't have the right pernmissions
      */
-    function canDelete($Member = null){
+    function canDelete($Member = null) {
         if ($this->canManageRestrictedPagetypes($Member)) {
             return parent::canDelete($Member);
         } else {
@@ -136,31 +135,66 @@ class Page extends SiteTree implements PermissionProvider {
     }
     
     function isSignedIn() {
-        if( Member::currentUserID() )
+        if(Member::currentUserID()) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
     
     function profilePageLink() {
-        $profilePage = MemberProfilePage::get()->filter(array(
-            'AllowRegistration' => '0',
-            'AllowProfileEditing' => '1'
-        ))->First();
+        $member = Member::currentUser();        
         
-        if($profilePage)
-            return $profilePage->Link();
-        else
+        if(!$member) {
             return false;
+        }
+
+        if($member->isUniversity()) {
+            $portalPage = PartnersPortalPage::get()->First();
+            return $portalPage->Link() . 'edit/university/' . $member->ID;
+        } else if($member->isAgent()) {
+            $portalPage = PartnersPortalPage::get()->First();
+            return $portalPage->Link() . $portalPage . 'edit/agent/' . $member->ID;
+        } else if($member->isStudent()) {
+            return MemberProfilePage::get()->filter(array(
+                'AllowRegistration' => '0',
+                'AllowProfileEditing' => '1'
+            ))->First()->Link();
+            
+        }
+    }
+    
+    function showProfilePageLink($id = null) {
+        if(!$id || !ctype_digit($id))
+             return false;
+        
+        $member = Member::get()->ByID($id);
+        
+        if(!$member) {
+            return false;
+        }
+
+        if($member->isUniversity()) {
+            $portalPage = AcademicsPage::get()->First();
+            return $portalPage->Link() . 'show/university/' . $member->ID;
+        } else if($member->isAgent()) {
+            $portalPage = AcademicsPage::get()->First();
+            return $portalPage->Link() . $portalPage . 'show/agent/' . $member->ID;
+        } else if($member->isStudent()) {
+            return MemberProfilePage::get()->filter(array(
+                'AllowRegistration' => '0',
+                'AllowProfileEditing' => '1'
+            ))->First()->Link() . 'show/' . $member->ID;
+        }
     }
     
     function UniversityName($id) {
         if(!$id) return false;
         
-        $name = University::get()->byID($id);
+        $university = University::get()->byID($id);
         
-        if($name)
-            return $name->Title;
+        if($university)
+            return $university->Title;
         else
             return false;
     }
@@ -168,35 +202,25 @@ class Page extends SiteTree implements PermissionProvider {
     function HighSchoolName($id) {
         if(!$id) return false;
         
-        $name = HighSchool::get()->byID($id);
-        
-        if($name)
-            return $name->Title;
-        else
-            return false;
-    }
-    
-    function CountryName($code) {
-        if(!$code) return false;
+        $highSchool = HighSchool::get()->byID($id);
 
-        $name = Country::get()->filter('code', $code)->First()->Name;
-        
-        if($name)
-            return $name;
+        if($highSchool)
+            return $highSchool->Title;
         else
             return false;
     }
     
-    function getAllScholarships($num = 5)
-    {
-        $scholarships = Scholarship::get()->sort('DateCreated', 'DESC')->limit($num);
-        foreach($scholarships as $scholarship) {
-            echo "test" . $scholarship->Name;
-        }
+    function CountryName($id) {
+        if(!$id) return false;
+
+        $country = Country::get()->ByID($id);
         
-        echo "test";
-        return "test";
+        if($country)
+            return $country->Name;
+        else
+            return false;
     }
+    
 }
 
 class Page_Controller extends ContentController {
@@ -236,8 +260,7 @@ class Page_Controller extends ContentController {
         self::logoutInactiveUser();
 	}
     
-    public function countriesasjson($message = "", $extraData = null, $status = "success") 
-    {
+    public function countriesasjson($message = "", $extraData = null, $status = "success") {
         $this->response->addHeader('Content-Type', 'application/json');
         SSViewer::set_source_file_comments(false);
 		if($status != "success") {
@@ -266,8 +289,7 @@ class Page_Controller extends ContentController {
         return $json;
     }
     
-    public function citiesasjson($message = "", $extraData = null, $status = "success") 
-    {
+    public function citiesasjson($message = "", $extraData = null, $status = "success") {
         $this->response->addHeader('Content-Type', 'application/json');
         SSViewer::set_source_file_comments(false);
 		if($status != "success") {
@@ -276,7 +298,23 @@ class Page_Controller extends ContentController {
 		// populate Javascript
 		$js = array ();
         
-        $cities = City::get()->sort('Name', 'ASC');
+        if(!(isset($_GET['Country'])) || $_GET['Country'] == "") {
+            return json_encode(array(
+                "title" => "Select a country below to load cities",
+                "value" => "false"
+            ));
+        }
+        
+        if(!(ctype_digit($_GET['Country']))) {
+            return json_encode(array(
+                "title" => "Select a valid country below to load cities",
+                "value" => "error"
+            ));
+        }
+        
+        $country = Country::get()->ByID($_GET['Country']);
+        
+        $cities = City::get()->filter('CountryCode', $country->Code)->sort('Name', 'ASC');
         
         if($cities)
         {
@@ -324,6 +362,11 @@ class Page_Controller extends ContentController {
 
       // Set new value
       Session::set('session_start_time', time()); 
+    }
+    
+    
+    function getFooterScholarships() {
+        return Scholarship::get()->limit(5);
     }
 
 }

@@ -4,7 +4,7 @@
     <section>
         <div class="row">
             <div class="6u">
-                <a href="#" class="image fit"><img src="/Silverstripe/{$ProfilePicture}" alt="ProfilePicture" /></a>
+                <a href="#" class="image fit"><img src="{$BaseHref}{$ProfilePicture}" alt="ProfilePicture" /></a>
             </div>
             <div class="6u profile-heading">
                 <ul>

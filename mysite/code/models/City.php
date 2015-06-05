@@ -11,8 +11,7 @@ class City extends DataObject {
         'Student' => 'Member'
     );
     
-    public static function getCityOptions()
-    {
+    public static function getCityOptions() {
         if(!($cities = DataObject::get("City")->sort('Name')))
         {
             return $cities->map('ID', 'Name', 'Please Select');
@@ -21,4 +20,15 @@ class City extends DataObject {
         }
     }
     
+    public static function getCityName($id) {
+        if(!$id || !cytpe_digit($id))
+            return false;
+        
+        $name = City::get()->ByID($id)->Name;
+        if($name) {
+            return $name;
+        } else {
+            return false;
+        }
+    }
 }

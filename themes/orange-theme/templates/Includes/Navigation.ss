@@ -54,7 +54,7 @@
                 </li>
             <% end_loop %>
             
-            <li><a class="logout-button" href="Security/logout"><%t NavigationTemplate.LOGOUT 'Logout' %></a></li>
+            <li><a id="logout-button" href="Security/logout"><%t NavigationTemplate.LOGOUT 'Logout' %></a></li>
         
         <% else_if $menuShown = "University" %>
             <% loop $Menu(1).Filter('menuUniversity', 1) %>

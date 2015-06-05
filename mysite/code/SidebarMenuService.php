@@ -9,8 +9,7 @@ class SidebarMenuService extends Page
     
     static $can_be_root = false;
     
-    public function getCMSFields()
-    {
+    public function getCMSFields() {
         $fields = parent::getCMSFields();
         
         $fields->addFieldToTab("Root.Main", new TextField('Subtitle', 'Subtitle'), 'Content');      

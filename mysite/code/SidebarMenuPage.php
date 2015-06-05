@@ -14,7 +14,7 @@ class SidebarMenuPage extends Page
 //        'SidebarMenuService'
 //    );
 //    
-    static $can_be_root = false;
+      static $can_be_root = false;
     
     
 }
@@ -33,8 +33,7 @@ class SidebarMenuPage_Controller extends Page_Controller
     
     public function Member() { return Member::currentUser(); }
     
-    public function ChatLink($member = null)
-    {
+    public function ChatLink($member = null) {
         if(!$member) { return "/chat/chat.php?username=Anonymous&userurl='#'"; }
         $chatName = $member->FirstName . "%20" . $member->Surname;
         $userurl = Director::absoluteURL("myprofile/show/".$member->ID, true);
@@ -42,8 +41,7 @@ class SidebarMenuPage_Controller extends Page_Controller
         return "/chat/chat.php?username=" . $chatName . "&userurl=".$userurl;
     }
     
-    public function BlogManagementURLs($member = null)
-    {
+    public function BlogManagementURLs($member = null) {
         if(!$member) $member = Member::currentUser();
         
         $holder = BlogHolder::get()->filter(array(
@@ -61,8 +59,7 @@ class SidebarMenuPage_Controller extends Page_Controller
     }
     
      // get profile picture
-    public function ProfilePicture($member = null)
-    {
+    public function ProfilePicture($member = null) {
         if(!$member) {
             $member = Member::currentUser();
         }
@@ -78,8 +75,7 @@ class SidebarMenuPage_Controller extends Page_Controller
         }
     }
     
-    public function getProfileForm($formName, Member $member = null)
-    {
+    public function getProfileForm($formName, Member $member = null) {
         $form = null;
         
         if(!$member) {$member = Member::currentUser();}
@@ -119,8 +115,7 @@ class SidebarMenuPage_Controller extends Page_Controller
         
     
     //form for basic info on profile
-    public function BasicProfileForm()
-    {
+    public function BasicProfileForm() {
         $fields = new FieldList(
             new LiteralField('LiteralHeader', '<h2>' . _t(
                 'MemberProfileForms.BASICLABEL',
@@ -161,8 +156,7 @@ class SidebarMenuPage_Controller extends Page_Controller
     }
     
     //form for address input
-    public function AddressProfileForm()
-    {
+    public function AddressProfileForm() {
         $fields = new FieldList(
             new LiteralField('LiteralHeader', '<h2>' . _t(
                 'MemberProfileForms.CURRENTADDRESS',
@@ -199,8 +193,7 @@ class SidebarMenuPage_Controller extends Page_Controller
     }
 
     //education info form
-    public function EducationProfileForm()
-    {
+    public function EducationProfileForm() {
         $fields = new FieldList(
             new LiteralField('LiteralHeader', '<h2>' . _t(
                 'MemberProfileForms.EDUCATIONLABEL',
@@ -235,8 +228,7 @@ class SidebarMenuPage_Controller extends Page_Controller
         return new Form($this->owner, 'EducationProfileForm', $fields, $actions, $required);
     }
      
-    public function EmergencyContactProfileForm()
-    {
+    public function EmergencyContactProfileForm() {
         $fields = new FieldList(
             new LiteralField('LiteralHeader', '<h2>' . _t(
                 'MemberProfileForms.EMERGENCYCONTACTLABEL',

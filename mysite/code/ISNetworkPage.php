@@ -9,8 +9,7 @@ class ISNetworkPage extends Page
          'Interactive' => 'Text'
      );
     
-    public function getCMSFields()
-    {
+    public function getCMSFields() {
         $fields = parent::getCMSFields();
         
         $fields->addFieldToTab("Root.Main", new TextareaField('About', 'About'), 'Content');      

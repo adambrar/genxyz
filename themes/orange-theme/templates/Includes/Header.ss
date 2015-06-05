@@ -13,18 +13,19 @@
     </header>
     <div id="lang-bar">
         <div id="lang-selector" class="container">
-        <ul>
-            <% if isSignedIn %>
+            <ul>
                 <li class="link">
-                    <% if $menuShown = "Student" %>
-                        <a id="langbar-button" href="home"><%t NavigationTemplate.GENXYZ "GenXYZ" %></a></li>
+                    <% if $menuShown = "Welcome" %>
+                        <% if isSignedIn %>
+                            <a id="langbar-button" href="{$profilePageLink}" title="MyProfile"><%t NavigationTemplate.MYPROFILE "MyProfile" %></a></li>
+                            <li><a id="logout-button" href="Security/logout" title="Logout!">Logout</a>
+                        <% end_if %>
                     <% else %>
-                        <a id="langbar-button" href="{$profilePageLink}" title="MyProfile"><%t NavigationTemplate.MYPROFILE "MyProfile" %></a>
+                        <a id="langbar-button" href="home" title="Go Home!"><%t NavigationTemplate.GENXYZ "GenXYZ" %></a>
                     <% end_if %>
                 </li>
-            <% end_if %>
-            <li><% include LanguageSelector %><li>
-        </ul>
+                <li><% include LanguageSelector %><li>
+            </ul>
         </div>
     </div> 
 </div>

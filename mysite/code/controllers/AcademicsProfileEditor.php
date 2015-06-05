@@ -48,7 +48,7 @@ class AcademicsProfileEditor extends Page_Controller {
 
 		$member = Member::get()->byID($id);
         
-		if(!$member || $member->MemberType != "Agent" || Member::currentUserID() != $id) {
+		if(!$member || !$member->isAgent() || Member::currentUserID() != $id) {
 			$this->httpError(404);
 		}
         
@@ -99,7 +99,7 @@ class AcademicsProfileEditor extends Page_Controller {
 
 		$member = Member::get()->byID($id);
         
-		if(!$member || $member->MemberType != "University" || Member::currentUserID() != $id) {
+		if(!$member || !$member->isUniversity() || Member::currentUserID() != $id) {
 			$this->httpError(404);
 		}
 
@@ -108,6 +108,11 @@ class AcademicsProfileEditor extends Page_Controller {
 			$member->getName()
 		);
 		$this->data()->Parent = $this->parent;
+        
+        if(!$member->PartnersProfileID) {
+            $member->PartnersProfileID = $this->parent->createProfilePage();
+            $member->write();
+        }
         
         $profileContent = PartnersProfile::get()->byID($member->PartnersProfileID);
         

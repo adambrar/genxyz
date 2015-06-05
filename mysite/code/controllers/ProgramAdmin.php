@@ -1,18 +1,17 @@
 <?php
 
-class EducationAdmin extends ModelAdmin {
+class ProgramAdmin extends ModelAdmin {
     
     private static $managed_models = array(
-        'HighSchool',
-        'University',
-        'Scholarship'
+        'ProgramName',
+        'Program'
     );
     
-    private static $url_segment = 'education';
+    private static $url_segment = 'programs';
     
-    private static $menu_title = 'Education';
+    private static $menu_title = 'Programs';
     
-    private static $menu_icon = 'mysite/icons/Letter_E_grey_Icon_16.png';
+    private static $menu_icon = 'mysite/icons/Letter_P_grey_Icon_16.png';
 
     public function getSearchContext() {
         $context = parent::getSearchContext();

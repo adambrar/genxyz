@@ -20,7 +20,7 @@
 		| 
 		<a href="$EditURL" id="editpost" title="<% _t('MySite_BlogEntry.EDITTHIS', 'Edit test post') %>"><% _t('MySite_BlogEntry.EDITTHIS', 'Edit post') %></a>
         |
-        <a href="$Link(unpublishPost)" id="unpublishpost"><% _t('MySite_BlogEntry.UNPUBLISHTHIS', 'Unpublish test post') %></a>
+        <a href="$Link(unpublishPost)" id="unpublishpost"><% _t('MySite_BlogEntry.UNPUBLISHTHIS', 'Unpublish this post') %></a>
         <% end_if %>
     </p>
 </div>

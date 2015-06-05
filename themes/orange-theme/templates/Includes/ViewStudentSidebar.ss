@@ -1,11 +1,11 @@
 <div id="sidebar">
 
     <!-- Sidebar -->
-    <section class="box feature">
+    <section>
         <div class="row">
             <a href="#" class="image fit"><img src="$ThemeDir/images/pic08.jpg" alt="" /></a>
             <div class="profile-heading">
-                <h2>
+                <h1>
                 <ul id="student-view-info-box">
                     <li><%t StudentProfile.NAME "Name" %>: <span class="student-sidebar-text">$Member.FirstName $Member.Surname</span></li>
                     <% if $Member.HighSchool %>
@@ -18,10 +18,10 @@
                     <% else %>
                         <li><%t StudentProfile.UNIVERSITYUNKNOWN "University: <span class='student-sidebar-text'>Unknown</span>" %></li>
                     <% end_if %>
-                    <li><%t StudentProfile.COUNTRY "Country" %>: <span class="student-sidebar-text">$CountryName($Member.Country)</span></li>
-                    <li><%t StudentProfile.BIRTHDAY "Birthday" %>: <span class="student-sidebar-text">$Member.Birthday</span></li>
+                    <li><%t StudentProfile.COUNTRY "Country" %>: <span class="student-sidebar-text">$CountryName($Member.CurrentCountryID)</span></li>
+                    <li><%t StudentProfile.BIRTHDAY "Birthday" %>: <span class="student-sidebar-text">$Member.DateOfBirth.Long</span></li>
                 </ul>
-                </h2>
+                </h1>
             </div>
         </div>
     </section>

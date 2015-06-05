@@ -15,8 +15,7 @@ class Agent extends DataObject {
         'Student' => 'Member'
     );
     
-    public static function getAgentOptions()
-    {
+    public static function getAgentOptions() {
         $agents = DataObject::get("Agent");
         if($agents)
         {

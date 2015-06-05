@@ -21,10 +21,10 @@
                             </div>
                             <div class="6u 12u(2)">
                                 <video controls>
-                                    <source src="/silverstripe/assets/Uploads/vid.mp4" type="video/mp4">
-                                    <source src="/silverstripe/assets/Uploads/vid.ogv" type="video/ogg">
-                                    <source src="/silverstripe/assets/Uploads/vid.webm" type="video/webm">
-                                    <source src="/silverstripe/assets/Uploads/vid.3gp" type="video/3gp">
+                                    <source src="{$BaseHref}assets/Uploads/vid.mp4" type="video/mp4">
+                                    <source src="{$BaseHref}assets/Uploads/vid.ogv" type="video/ogg">
+                                    <source src="{$BaseHref}assets/Uploads/vid.webm" type="video/webm">
+                                    <source src="{$BaseHref}assets/Uploads/vid.3gp" type="video/3gp">
                                 </video>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 <div class="blogSummary">
 	<h1 class="postTitle"><a href="$Link" title="<% _t('BlogSummary_ss.VIEWFULL', 'View full post titled -') %> '$Title'">$MenuTitle</a></h1>
-	<p class="authorDate"><% _t('GenXYZBlog.POSTEDON', 'Posted On') %> $Date.Long</p>
+	<p class="authorDate"><% _t('GenXYZBlog.POSTEDON', 'Posted on') %> $Date.Long</p>
 	<% if TagsCollection %>
 		<p class="tags">
 			<% _t('BlogSummary_ss.TAGS','Tags') %>:
@@ -20,7 +20,7 @@
 		| 
 		<a href="$EditURL" id="editpost" title="<% _t('MySite_BlogEntry.EDITTHIS', 'Edit test post') %>"><% _t('MySite_BlogEntry.EDITTHIS', 'Edit post') %></a>
         |
-        <a href="$Link(unpublishPost)" id="unpublishpost"><% _t('MySite_BlogEntry.UNPUBLISHTHIS', 'Unpublish test post') %></a>
+        <a href="$Link(unpublishPost)" id="unpublishpost"><% _t('MySite_BlogEntry.UNPUBLISHTHIS', 'Unpublish this post') %></a>
         <% end_if %>
     </p>
 </div>

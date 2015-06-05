@@ -10,6 +10,8 @@ class UniversityAdmin extends ModelAdmin {
     
     private static $menu_title = 'University';
     
+    private static $menu_icon = 'mysite/icons/Letter_U_grey_Icon_16.png';
+    
     public function getSearchContext() {
         $context = parent::getSearchContext();
         $fields = $context->getFields();
@@ -48,8 +50,7 @@ class UniversityAdmin extends ModelAdmin {
         return $list;
     }
     
-    public function getEditForm($id = null, $fields = null)
-    {
+    public function getEditForm($id = null, $fields = null) {
         $form = parent::getEditForm($id, $fields);
 
         $gridFieldName = 'Member';

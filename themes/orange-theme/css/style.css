@@ -236,13 +236,15 @@
 			}
 
     /* Form Messages */
-    .message.Bad
+    .message.Bad,
+    .message.bad
     {
         color: red;
         font-weight: bold;
     }
 
-    .message.Good
+    .message.Good,
+    .message.good
     {
         color: green;
         font-weight: bold;
@@ -510,7 +512,7 @@
 
         
     iframe {
-        background-image: url("/silverstripe/themes/orange-theme/images/ajax-loader.gif");
+        background-image: url("../images/ajax-loader.gif");
         background-repeat: no-repeat;
         background-position: center;
     }
@@ -708,7 +710,6 @@ article.home_page {
 /*********************************************************************************/
 /* Student Sidebar Text                                                          */
 /*********************************************************************************/
-
     #student-view-info-box {
         background-color: #FFAE27;
         padding: 10px;
@@ -719,8 +720,7 @@ article.home_page {
 
     .student-sidebar-text {
         color: #0F5AC8;
-        font-weight: 100;
-        
+        font-size: 1.2em;
     }
 
 /*********************************************************************************/

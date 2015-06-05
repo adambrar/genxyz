@@ -8,9 +8,56 @@
                     <% if isSignedIn %>
                         <div class="content">
                             <div class="row content-box-light">
+                                <div class="3u 12u(1) gutters-fix">
+                                    <div class="small-content-box">
+                                        $FilterAcademics
+                                    </div>
+                                </div>
+                                <div class="6u 12u(2) gutters-fix">
+                                    <div class="small-content-box">
+                                        <h2>Universities</h2>
+                                        <% loop PaginatedUniversities %>
+                                            <div class="row">
+                                                <div class="3u">
+                                                    <a href="$Top.showProfilePageLink($ID)" class="image fit"><img class="avatar" src="$Top.LogoLink($ID)" alt="Logo" /></a>
+                                                </div>
+                                                <div class="9u">
+                                                    <h1><a href="$Top.showProfilePageLink($ID)" >$BusinessName</a></h1>
+                                                    <p>$Top.CountryName($BusinessCountryID) - $BusinessTelephone</p>
+                                                </div>
+                                            </div>
+                                        <% end_loop %>
+                                        <% if $PaginatedUniversities.MoreThanOnePage %>
+                                            <% if $PaginatedUniversities.NotFirstPage %>
+                                                <a class="prev button small" href="$PaginatedUniversities.PrevLink">Prev</a>
+                                            <% end_if %>
+                                            <% loop $PaginatedUniversities.Pages %>
+                                                <% if $CurrentBool %>
+                                                    $PageNum
+                                                <% else %>
+                                                    <% if $Link %>
+                                                        <a href="$Link">$PageNum</a>
+                                                    <% else %>
+                                                        ...
+                                                    <% end_if %>
+                                                <% end_if %>
+                                                <% end_loop %>
+                                            <% if $PaginatedUniversities.NotLastPage %>
+                                                <a class="next button small" href="$PaginatedUniversities.NextLink">Next</a>
+                                            <% end_if %>
+                                        <% end_if %>
+                                    </div>
+                                </div>
                                 <div class="3u 12u(3) gutters-fix">
                                     <div class="small-content-box">
-                                        <h2>Recent Additions</h2>
+                                        <h2>Updates</h2>
+                                        <h1>News 1</h1>
+                                        <p>Some details</p>
+                                        <h1>News 2</h1>
+                                        <p>More exciting news</p>
+                                    </div>
+                                    <div class="small-content-box">
+                                        <h2>Recently Added</h2>
                                         <h1>Popular Agent 1</h1>
                                         <p>quick description</p>
                                         <h1>Popular Uni</h1>
@@ -19,21 +66,7 @@
                                         <p>description of scholarship</p>
                                     </div>
                                 </div>
-                                <div class="6u 12u(1) gutters-fix">
-                                    <div class="small-content-box">
-                                        <p>Select the type of education you are looking for.</p>
-                                        $FilterUniversities
-                                    </div>
-                                </div>
-                                <div class="3u 12u(2) gutters-fix">
-                                    <div class="small-content-box">
-                                        <h2>Updates</h2>
-                                        <h1>News 1</h1>
-                                        <p>Some details</p>
-                                        <h1>News 2</h1>
-                                        <p>More exciting news</p>
-                                    </div>
-                                </div>
+                            </div>
                         </div>
                     <% else %>
                         <div class="row">

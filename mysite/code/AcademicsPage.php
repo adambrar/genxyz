@@ -2,16 +2,32 @@
  
 class AcademicsPage extends Page 
 {
+    private static $db = array(
+         'Updates' => 'HTMLText',
+         'RecentlyAdded' => 'HTMLText',
+     );
     
+    public function getCMSFields() {
+        $fields = parent::getCMSFields();
+              
+        $fields->addFieldToTab("Root.Main", new HTMLEditorField('Updates', 'About'), 'Content');      
+        $fields->addFieldToTab("Root.Main", new HTMLEditorField('RecentlyAdded', 'Recently Added'), 'Content');
+        
+        $fields->removeByName("Content");
+
+        return $fields;
+    }    
 }
  
 class AcademicsPage_Controller extends Page_Controller 
 {
     private static $allowed_actions = array(
-        'SearchForm',
+        'FilterAcademics',
         'search',
         'show',
-        'searchcountriesasjson'
+        'searchprogramsasjson',
+        'searchcountriesasjson',
+        'doAcademicsSearch'
     );
     
     private static $url_handlers = array(
@@ -19,55 +35,40 @@ class AcademicsPage_Controller extends Page_Controller
         'agent/$MemberID!' => 'show',
     );
     
-    function init()
-    {
-        Requirements::javascript('silverstripe/themes/' . SSViewer::current_theme() . '/javascript/academicfilter.js');
+    function init() {
+        Requirements::javascript(Director::baseFolder() . '/themes/' . SSViewer::current_theme() . '/javascript/academicfilter.js');
         parent::init();
+        
+        if(!Member::currentUserID() || !Member::currentUser()->isStudent()) {
+            Security::permissionFailure(null, 'You need to be logged into a student profile to view this content.');
+        }
     }
     
-    public function show()
-    {
+    public function show() {
         return new AcademicsProfileViewer($this, 'show');
     }
     
-    public function search()
-    {
-    }
-    
-    public function FilterUniversities()
-    {
+    public function FilterAcademics() {
         $fields = new FieldList(
-            new LiteralField('LiteralHeader', '<h2>' . _t(
-                'MemberProfileForms.DEFAULT',
-                'Search Academic Institutions') . '</h2>'),
-            DropdownField::create('EducationLevel', _t(
-                'MemberProfileForms.EDUCATIONLEVEL',
-                'Level of Education') . '<span>*</span>', array(
-                    'post-secondary' => 'Post Secondary',
-                    'post-graduate' => 'Post Graduate',
-                    'secondary' => 'Secondary'))->setEmptyString('Select Level')->addExtraClass('question-1'),
+            new LiteralField('LiteralHeader', '<h1>' . _t(
+                'AcademicsSearchForm.DEFAULT',
+                'Filters') . '</h1>'),
             DropdownField::create('Country', _t(
-                'MemberProfileForms.COUNTRY',
-                'Country'))->setEmptyString('Select a country')->addExtraClass('question-2 questions'),
-            DropdownField::create('ProgramLength', _t(
-                'MemberProfileForms.PROGRAMLENGTH',
-                'Program Length') . '<span>*</span>', array(
-                    'half' => '6 months',
-                    '1' => '1 year',
-                    '2' => '2 years',
-                    '3' => '3 years',
-                    '4' => '4 years',
-                    '5' => '5 years',
-            ))->setEmptyString('Select program length')->addExtraClass('question-3 questions'),
+                'AcademicsSearchForm.COUNTRY',
+                'Country'))->setEmptyString('Select a country')->addExtraClass('country-select-dropdown filter-by-country'),
             DropdownField::create('Program', _t(
-                'MemberProfileForms.DEFAULT',
-                'Program'))->addExtraClass('question-4 questions')
+                'AcademicsSearchForm.DEFAULT',
+                'Program'), Program::getProgramOptions())->setEmptyString('Select Program')->addExtraClass('filter-by-program')//,
+//            DropdownField::create('ProgramLength', _t(
+//                'AcademicsSearchForm.PROGRAMLENGTH',
+//                'Program Length') . '<span>*</span>', singleton('Program')->dbObject('Length')->enumValues())->setEmptyString('Select program length')
+            
         );
         
         $actions = FieldList::create(
-            FormAction::create('saveProfileForm', _t(
+            FormAction::create('doAcademicsSearch', _t(
                 'MemberProfileForms.DEFAULT',
-                'Search'))->addExtraClass('searchAction')
+                'Filter'))->addExtraClass('academic-search-button')
         );
         
         $required = new RequiredFields(array(
@@ -76,18 +77,38 @@ class AcademicsPage_Controller extends Page_Controller
             'Email'
         ));
         
-        return new Form($this->owner, 'FilterUniversities', $fields, $actions, $required);
+        return new Form($this->owner, 'FilterAcademics', $fields, $actions, $required);
     }
     
-    public function searchcountriesasjson($message = "", $extraData = null, $status = "success") 
-    {
+    public function doAcademicsSearch(array $data, Form $form) {
+        if($data['Country'] == '' && $data['Program'] == '') {
+            $form->addErrorMessage('Blurb', 'Select filters to search!', 'bad');
+            return $this->owner->redirectBack();
+        }
+        
+        $filter = array('MemberType' => 'University');
+        
+        if($data['Country'] != '') {
+            $filter['BusinessCountryID'] = Convert::raw2sql($data['Country']);
+        }
+        
+        $universities = Member::get()->filter($filter);
+        
+        return $this->owner->redirect(
+            $this->Link('?Country='.Convert::raw2sql($data['Country'])
+                            .'&Program='.Convert::raw2sql($data['Program'])));
+
+    }
+    
+    
+    public function searchcountriesasjson($message = "", $extraData = null, $status = "success") {
         $this->response->addHeader('Content-Type', 'application/json');
         SSViewer::set_source_file_comments(false);
 		if($status != "success") {
 			$this->setStatusCode(400, $message);
 		}
 		// populate Javascript
-		$js = array ();
+		$js = array();
         
         $countries = Country::get()->sort('Name', 'ASC');
         
@@ -109,4 +130,45 @@ class AcademicsPage_Controller extends Page_Controller
         return $json;
     }
     
+    public function PaginatedUniversities() {
+        $filter = array('MemberType' => 'University');
+        
+        if($this->request->getVar('Country') != '' && 
+           ctype_digit($this->request->getVar('Country'))) {
+            $filter['BusinessCountryID'] = Convert::raw2sql($this->request->getVar('Country'));
+        }
+        
+        $reqProgram = $this->request->getVar('Program');
+        if($reqProgram != '' && ctype_digit($reqProgram)) {
+            $filter['Programs.ProgramNameID'] = Convert::raw2sql($this->request->getVar('Program'));
+        }
+        
+        $list = Member::get()->filter($filter);
+
+        $paginated = new PaginatedList($list, Controller::curr()->request);
+        
+        $paginated->setPageLength(25);
+        
+        return $paginated;
+    }
+    
+    public function getCountryName($id) {
+        return Country::getCountryName($id);
+    }
+    
+    public function LogoLink($id) {
+        $member = Member::get()->ByID($id);
+        if(!$member || $member->isStudent($member) || !$member->PartnersProfileID)
+            return false;
+        
+        $profile = PartnersProfile::get()->ByID($member->PartnersProfileID);
+        if(!$profile || !$profile->LogoImageID) {
+            return Director::baseURL() . 'assets/Uploads/default.jpg';
+        } else {
+            return File::get()->filter(array(
+                'ClassName' => 'Image',
+                'ID'        => $profile->LogoImageID
+            ))->First()->Link();
+        }    
+    }
 }

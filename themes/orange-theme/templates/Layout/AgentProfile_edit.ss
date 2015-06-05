@@ -9,7 +9,7 @@
                             <div class="row content-box-dark">
                                 <div class="9u 12u(1)">
                                     <div class="row">
-                                        <div class="2u"><% if Logo %><a href="#" class="image fit"><img src="/Silverstripe/{$Logo.Filename}" alt="Logo" /></a><% end_if %></div>
+                                        <div class="2u"><% if Logo %><a href="#" class="image fit"><img src="{$BaseHref}{$Logo.Filename}" alt="Logo" /></a><% end_if %></div>
                                         <div class="10u"><h2>$Member.BusinessName</h2></div>
                                     </div>
                                     <ul class="tabs">

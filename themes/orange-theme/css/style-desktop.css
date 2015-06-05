@@ -244,16 +244,11 @@
 
             /* Nav Buttons */
             
-            #nav ul li a.logout-button
+            #nav ul li a#logout-button,
+            #lang-bar ul li a#logout-button
             {
                 background-color: #FF4486;
                 color: #ffffff;
-            }
-
-            #nav ul li:hover a.logout-button
-            { 
-                background-color: #EF3476;
-                color: #696969;
             }
 
             /* End Nav Buttons */
@@ -320,8 +315,8 @@
 
             a#langbar-button:hover
             {
-                background-color: #20A0D5 !important;
-                color: #09469A !important;
+                background-color: #3A3ADE !important;
+                color: #FFF !important;
                 font-size: small !important;
             }
 

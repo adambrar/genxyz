@@ -11,18 +11,16 @@ class Country extends DataObject {
         'Members' => 'Member'
     );
     
-    public static function getCountryOptions()
-    {
-        if(!($countries = DataObject::get("Country")))
+    public static function getCountryOptions() {
+        if($countries = DataObject::get("Country")->sort('Name', 'ASC'))
         {
-            return $countries->map('Code', 'Name', 'Please Select');
+            return $countries->map('ID', 'Name', 'Please Select');
         } else {
             return array('No Countries');
         }
     }
     
-    public static function getCountryByCode($code)
-    {
+    public static function getCountryByCode($code) {
         $country = DataObject::get("Country")->filter('code', $code);
         
         if(!$country)
@@ -30,6 +28,18 @@ class Country extends DataObject {
             return false;
         } else {
             return $country->Name;
+        }
+    }
+    
+    public static function getCountryName($id) {
+        if(!$id || !cytpe_digit($id))
+            return false;
+        
+        $name = Country::get()->ByID($id)->Name;
+        if($name) {
+            return $name;
+        } else {
+            return false;
         }
     }
     

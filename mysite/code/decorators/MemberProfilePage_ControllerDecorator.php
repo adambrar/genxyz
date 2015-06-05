@@ -14,10 +14,17 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         'EmergencyContactProfileForm',
         'ProfilePictureForm',
     );
+    
+    function init() {
+        parent::init();
+        
+        if(!Member::currentUserID() || !Member::currentUser()->isStudent()) {
+            Security::permissionFailure(null, 'You need to be logged into a student profile to view this content.');
+        }
+    }
             
     //student registration form
-    public function updateRegisterForm($form) 
-    {
+    public function updateRegisterForm($form) {
         $fields = $form->Fields();
 		
         $fields->insertBefore(new LiteralField('Hd_Personal', '<h3>' . _t(
@@ -38,10 +45,10 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             'Street Address')), 'Hd_Address');
         $fields->insertAfter(DropdownField::create('City', _t(
             'MemberRegForm.CITY', 
-            'City'))->setEmptyString('Select a City')->addExtraClass('city-select-dropdown'), 'StreetAddress');
+            'City'))->setEmptyString('Select a Country to see Cities')->addExtraClass('city-select-dropdown'), 'StreetAddress');
         $fields->insertAfter(DropdownField::create('Country', _t(
             'MemberRegForm.CURRENTCOUNTRY', 
-            'Current Country'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'), 'City');
+            'Current Country'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown country-for-city-select'), 'City');
         $fields->insertAfter(new TextField('PostalCode', _t(
             'MemberRegForm.POSTALCODE', 
             'Postal Code')), 'Country');
@@ -51,7 +58,10 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         
         $fields->insertBefore(new LiteralField('Hd_Security', '<h3>' . _t(
             'MemberRegForm.SECUTRIYLABEL', 
-            'Security') . '</h3>'), 'Password');        
+            'Security') . '</h3>'), 'Password');
+        $fields->insertAfter(new LiteralField('TermsConditions', '<p>' . _t(
+            'MemberRegForm.TERMSCONDITIONS', 
+            'By registering you confirm you have read our <a href="#">terms and conditions</a> and understand our <a href="#">policies</a></p>') . '</h4>'), 'Password');
         
         $required = new RequiredFields(array(
             'FirstName',
@@ -69,18 +79,19 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     //---Profile Page Data---//
     
     //add extra data to profile page
-    public function updateProfilePageData(&$pageData)
-    {
+    public function updateProfilePageData(&$pageData) {
         unset($pageData['Form']);
         
         $member = Member::currentUser();
         $pageData['Member'] = $member;
         
+        $pageData['IsStudent'] = true;
+        
     //pass link to student chatroom with username as 'firstName lastName' and link to user profile in 'userurl'
         $chatName = preg_replace("/[^A-Za-z0-9]/", "", $member->FirstName) . '%20' . preg_replace("/[^A-Za-z0-9]/", "", $member->Surname);
         $userurl = Director::absoluteURL("myprofile/show/".$member->ID, true);
         
-        $pageData['ChatLink'] = "/chat/chat.php?username=" . $chatName . "&userurl=".$userurl;
+        $pageData['ChatLink'] = "http://192.99.169.104/chat/chat.php?username=" . $chatName . "&userurl=".$userurl;
 
         $pageData['IsSelf'] = $member->ID == Member::currentUserID();
 
@@ -118,8 +129,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     }
     
     // get profile picture
-    public function ProfilePicture($member = null)
-    {
+    public function ProfilePicture($member = null) {
         if(!$member) {
             $member = Member::currentUser();
         }
@@ -135,12 +145,11 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         }
     }
     
-    public function BlogManagementURLs($member = null)
-    {
+    public function BlogManagementURLs($member = null) {
         if(!$member) $member = Member::currentUser();
         
         //if not a student, member has no blog to manage
-        if($member->MemberType != "Student") {
+        if(!$member->isStudent()) {
             return "You do not have a blog to manage.";
         }
         
@@ -164,8 +173,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         return $urls;
     }
     
-    public function getProfileForm($formName, Member $member = null)
-    {
+    public function getProfileForm($formName, Member $member = null) {
         $form = null;
         
         if(!$member) {$member = Member::currentUser();}
@@ -215,8 +223,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     **/
     
     //form for basic info on profile
-    public function BasicProfileForm(Member $member = null)
-    {
+    public function BasicProfileForm(Member $member = null) {
         if(!$member) {
             $member = Member::currentUser();
         }
@@ -237,9 +244,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new DateField('DateOfBirth', _t(
                 'MemberProfileForms.BIRTHDAY',
                 'Birthday')),
-            DropdownField::create('Nationality', _t(
+            DropdownField::create('NationalityID', _t(
                 'MemberProfileForms.NATIONALITY',
-                'Nationality'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
+                'Nationality'), array('selected' => $member->NationalityID))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
             new EmailField('Email', _t(
                 'MemberProfileForms.EMAIL',
                 'Email') . '<span>*</span>')
@@ -261,8 +268,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     }
     
     //form for address input
-    public function AddressProfileForm(Member $member = null)
-    {
+    public function AddressProfileForm(Member $member = null) {
         if(!$member) {
             $member = Member::currentUser();
         }   
@@ -277,9 +283,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             DropdownField::create('City', _t(
                 'MemberProfileForms.CITY',
                 'City'))->setEmptyString('Select a City')->addExtraClass('city-select-dropdown'),
-            DropdownField::create('Country', _t(
+            DropdownField::create('CurrentCountryID', _t(
                 'MemberProfileForms.COUNTRY',
-                'Country') . '<span>*</span>')->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
+                'Country') . '<span>*</span>', array('selected' => $member->CurrentCountryID))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown country-for-city-select'),
             new TextField('PostalCode', _t(
                 'MemberProfileForms.POSTALCODE',
                 'Postal Code')),
@@ -303,8 +309,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     }
 
     //education info form
-    public function EducationProfileForm(Member $member = null)
-    {
+    public function EducationProfileForm(Member $member = null) {
         if(!$member) {
             $member = Member::currentUser();
         }
@@ -313,6 +318,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new LiteralField('LiteralHeader', '<h2>' . _t(
                 'MemberProfileForms.EDUCATIONLABEL',
                 'Education Information') . '</h2>'),
+            new TextField('Agency', _t(
+                'MemberProfileForms.AGENCY',
+                'Agency')),
             new DropdownField('HighSchoolID', _t(
                 'MemberProfileForms.HIGHSCHOOL',
                 'High School') . '<span>*</span>', HighSchool::getHighSchoolOptions()),
@@ -343,8 +351,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         return new Form($this->owner, 'EducationProfileForm', $fields, $actions, $required);
     }
      
-    public function EmergencyContactProfileForm(Member $member = null)
-    {
+    public function EmergencyContactProfileForm(Member $member = null) {
         if(!$member) {
             $member = Member::currentUser();
         }
@@ -362,9 +369,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new PhoneNumberField('ContactTelephone', _t(
                 'MemberProfileForms.CONTACTTELEPHONE',
                 'Telephone')),
-            DropdownField::create('ContactCountry', _t(
+            DropdownField::create('ContactCountryID', _t(
                 'MemberProfileForms.COUNTRY',
-                'Current Country'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
+                'Current Country'), array('selected' => $member->ContactCountryID))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
             new EmailField('ContactEmail', _t(
                 'MemberProfileForms.EMAIL',
                 'Email') . '<span>*</span>'),
@@ -403,6 +410,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
 
         $imageUpload = new FileField('ProfilePicture', 'Use a .jpg or .png image file');
         $imageUpload->getValidator()->allowedExtensions = array('jpg', 'png');
+        $imageUpload->setFolderName($imageUpload->getFolderName() . '/ProfilePictures');
 
         $fields->insertBefore($imageUpload, 'Username');
         
@@ -417,7 +425,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         ));
 
         return new Form($this->owner, 'ProfilePictureForm', $fields, $actions, $required);
-    }   
+    }
     
     public function saveProfileForm(array $data, Form $form) {
         $member = Member::currentUser();
@@ -446,8 +454,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     //Done after member added
     //1. Create Blog Page
     //2. Add member to appropriate groups
-    public function onAddMember($member)
-    {
+    public function onAddMember($member) {
         //---- 1. Create Blog Page
         //get existing blog tree
         $blogTree = SiteTree::get()->filter(array(
@@ -492,8 +499,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $member->write();
     }
     
-    private function createNewStudentBlog(Member $member, BlogTree $blogTree)
-    {
+    private function createNewStudentBlog(Member $member, BlogTree $blogTree) {
         $blogHolder = new BlogHolder();
         $blogHolder->Title = $member->FirstName."-".$member->Surname."-".$member->ID;
         $blogHolder->AllowCustomAuthors = false;

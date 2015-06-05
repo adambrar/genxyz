@@ -18,8 +18,7 @@ class GroupRedirectLoginForm extends MemberLoginForm {
         }
     }
     
-    public function redirectByGroup($data)
-    {   
+    public function redirectByGroup($data) {   
         // gets the current member that is logging in
         $member = Member::currentUser();
          
@@ -30,7 +29,8 @@ class GroupRedirectLoginForm extends MemberLoginForm {
         foreach($Groups as $Group)
         {
             //if the member is in the group and that group has GoToAdmin checked or GoToAcademicsPortal
-            if( $member && $member->inGroup($Group->ID) && ($Group->GoToAdmin == 1 || $Group->GoToAcademicsPortal == 1) ) 
+            if($member && $member->inGroup($Group->ID) 
+               && ($Group->GoToAdmin == 1 || $Group->GoToAcademicsPortal == 1)) 
             {   
                 //redirect to the admin page
                 if($Group->GoToAdmin) {

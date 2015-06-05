@@ -14,14 +14,25 @@ class University extends DataObject {
         'Programs' => 'Program'
     );
         
-    public static function getUniversityOptions()
-    {
+    public static function getUniversityOptions() {
         $universities = DataObject::get("University");
         if($universities)
         {
             return $universities->map('ID', 'Title', 'Please Select');
         } else {
             return array('No Universities');
+        }
+    }
+    
+    public static function getUniversityName($id) {
+        if(!$id || !cytpe_digit($id))
+            return false;
+        
+        $name = Member::get()->ByID($id)->BusinessName;
+        if($name) {
+            return $name;
+        } else {
+            return false;
         }
     }
 }

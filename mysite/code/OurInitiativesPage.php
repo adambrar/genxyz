@@ -11,8 +11,7 @@ class OurInitiativesPage extends Page
         'WorkPlacement' => 'Text'
     );
     
-    public function getCMSFields()
-    {
+    public function getCMSFields() {
         $fields = parent::getCMSFields();
               
         $fields->addFieldToTab("Root.Main", new TextareaField('Introduction', 'Introduction'), 'Content');      

@@ -10,6 +10,8 @@ class AgentsAdmin extends ModelAdmin {
     
     private static $menu_title = 'Agents';
     
+    private static $menu_icon = 'mysite/icons/Letter_A_grey_Icon_16.png';
+    
     public function getSearchContext() {
         $context = parent::getSearchContext();
         $fields = $context->getFields();

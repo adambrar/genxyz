@@ -4,9 +4,9 @@
         <div class="container">
             <div id="content">
                 <article>
-                    <div class="row">
-                    <div class="6u -3u 12u(2)>
-                    <div class="content">
+                    <div class="row content-box-light">
+                    <div class="6u -3u 12u(2) gutters-fix">
+                    <div class="small-content-box">
                         <h2>$Title!</h2>
                         $Content
                         $RegisterForm

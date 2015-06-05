@@ -7,8 +7,7 @@ class HomePage extends Page
          'WelcomeMessage' => 'Text',
      );
     
-    public function getCMSFields()
-    {
+    public function getCMSFields() {
         $fields = parent::getCMSFields();
               
         $fields->addFieldToTab("Root.Main", new TextareaField('WelcomeTitle', 'Welcome Title'), 'Content');      

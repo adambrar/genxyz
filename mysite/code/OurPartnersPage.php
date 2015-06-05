@@ -8,8 +8,7 @@ class OurPartnersPage extends Page
          'SecondaryBlurb' => 'Text'
      );
     
-    public function getCMSFields()
-    {
+    public function getCMSFields() {
         $fields = parent::getCMSFields();
 
         $fields->removeByName("Content");

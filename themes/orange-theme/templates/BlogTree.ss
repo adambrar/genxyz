@@ -15,21 +15,22 @@
 
                                     <div class="content">
                                     <div id="BlogContent" class="blogcontent typography">
+                                        <div class="small-content-box">
+                                            <% include BreadCrumbs %>
 
-                                    <% include BreadCrumbs %>
-
-                                    <% if SelectedTag %>
-                                        <h3><% _t('BlogTree_ss.VIEWINGTAGGED', 'Viewing entries tagged with') %> '$SelectedTag'</h3>
-                                    <% else_if SelectedDate %>
-                                        <h3><% _t('BlogTree_ss.VIEWINGPOSTEDIN', 'Viewing entries posted in') %> $SelectedNiceDate</h3>
-                                    <% else_if SelectedAuthor %>
-                                        <h3><% _t('BlogTree_ss.VIEWINGPOSTEDBY', 'Viewing entries posted by') %> $SelectedAuthor</h3>
+                                            <% if SelectedTag %>
+                                                <h3><% _t('BlogTree_ss.VIEWINGTAGGED', 'Viewing entries tagged with') %> '$SelectedTag'</h3>
+                                            <% else_if SelectedDate %>
+                                                <h3><% _t('BlogTree_ss.VIEWINGPOSTEDIN', 'Viewing entries posted in') %> $SelectedNiceDate</h3>
+                                            <% else_if SelectedAuthor %>
+                                                <h3><% _t('BlogTree_ss.VIEWINGPOSTEDBY', 'Viewing entries posted by') %> $SelectedAuthor</h3>
+                                        </div>
                                     <% end_if %>
                                     <div class="blog blogentries">
                                     <% if BlogEntries %>
                                         <% loop BlogEntries %>
-                                            <div class="small-content-box">
-                                                <% include GenXYZBlogSummary %>
+                                            <div class="smaall-content-box">
+                                                <% include StudentBlogSummary %>
                                             </div>
                                         <% end_loop %>
                                     <% else %>

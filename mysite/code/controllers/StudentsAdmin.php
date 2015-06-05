@@ -10,6 +10,8 @@ class StudentsAdmin extends ModelAdmin {
     
     private static $menu_title = 'Students';
     
+    private static $menu_icon = 'mysite/icons/Letter_S_grey_Icon_16.png';
+
     public function getSearchContext() {
         $context = parent::getSearchContext();
         $fields = $context->getFields();

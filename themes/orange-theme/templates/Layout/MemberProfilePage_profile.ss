@@ -11,11 +11,11 @@
                                     <% include StudentSidebar %>
                                 </div>
                             </div>
-                            <div class="4u 8u(2) gutters-fix">
+                            <div class="4u 8u(3) gutters-fix">
                                 <% if BlogEntries %>
                                     <div class="small-content-box">
                                         <% loop BlogEntries %>
-                                            <% include StudentBlogSummary TippyTop=$Top %>
+                                            <% include SingleBlogSummary TippyTop=$Top %>
                                         <% end_loop %>
                                     </div>
                                 <% else %>
@@ -24,7 +24,6 @@
                             </div>
                             <div class="4u 4u(2) gutters-fix">
                                 <% include StudentLeftBar %>
-
                             </div>
                         </div>
                     <% else %>

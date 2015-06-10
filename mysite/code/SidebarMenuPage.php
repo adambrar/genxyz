@@ -7,7 +7,8 @@ class SidebarMenuPage extends Page
          'menuStudent' => '0',
          'menuUniversity' => '0',
          'menuStudentSidebar' => '1',
-         'showDropdown' => '0'
+         'showDropdown' => '0',
+         'menuShown' => 'Student'
      );
     
 //    private static $allowed_children = array(
@@ -31,29 +32,52 @@ class SidebarMenuPage_Controller extends Page_Controller
         'ProfilePictureForm'
     );
     
+    public function init() {
+
+        parent::init();
+        
+        if(!Member::currentUserID() || !Member::currentUser()->isStudent()) {
+            Security::permissionFailure(null, 'You need to be logged into a student profile to view this content.');
+        }
+    }
+    
     public function Member() { return Member::currentUser(); }
     
     public function ChatLink($member = null) {
-        if(!$member) { return "/chat/chat.php?username=Anonymous&userurl='#'"; }
-        $chatName = $member->FirstName . "%20" . $member->Surname;
+        if(!$member) {
+            $member = Member::currentUser(); 
+        }
+        
+        $chatName = preg_replace("/[^A-Za-z0-9]/", "", $member->FirstName) . '%20' . preg_replace("/[^A-Za-z0-9]/", "", $member->Surname);
         $userurl = Director::absoluteURL("myprofile/show/".$member->ID, true);
         
-        return "/chat/chat.php?username=" . $chatName . "&userurl=".$userurl;
+        return "http://192.99.169.104/chat/chat.php?username=" . $chatName . "&userurl=".$userurl;
     }
     
     public function BlogManagementURLs($member = null) {
         if(!$member) $member = Member::currentUser();
         
+        //if not a student, member has no blog to manage
+        if(!$member->isStudent()) {
+            return "You do not have a blog to manage.";
+        }
+        
+        //get blog holder for member
         $holder = BlogHolder::get()->filter(array(
             'ownerID' => $member->ID
         ))->First();
         
         if(!$holder) {
-            return "Blog management unavailable at this time. Refresh this page to access your blog.";
+            $blogTree = SiteTree::get()->filter(array(
+                'ClassName' => 'BlogTree'
+            ))->First();
+            $blogID = $this->createNewStudentBlog($member, $blogTree);
+            $holder = BlogHolder::get()->ByID($blogID);
         }
         
         $urls = "<li><a title='Create a new blog post' href='". $holder->Link() . "post'>" . _t('StudentProfile.NEWBLOGPOST', 'New Blog Post') . "</a></li>";
-        $urls .= "<li><a title='View main blog page' href='". $holder->Link() . "'>" . _t('StudentProfile.VIEWBLOG', 'View All Blog Posts') . "</a></li>";
+        $urls .= "<li><a title='View main blog page' href='". $holder->Link() . "'>" . _t('StudentProfile.VIEWBLOG', 'View Your Blog Posts') . "</a></li>";
+        $urls .= "<li><a title='View main blog page' href='". $holder->parent()->Link() . "'>" . _t('StudentProfile.VIEWBLOG', 'View All Blog Posts') . "</a></li>";
         
         return $urls;
     }

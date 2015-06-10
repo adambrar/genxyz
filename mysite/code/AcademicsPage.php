@@ -16,7 +16,7 @@ class AcademicsPage extends Page
         $fields->removeByName("Content");
 
         return $fields;
-    }    
+    }
 }
  
 class AcademicsPage_Controller extends Page_Controller 
@@ -55,7 +55,7 @@ class AcademicsPage_Controller extends Page_Controller
                 'Filters') . '</h1>'),
             DropdownField::create('Country', _t(
                 'AcademicsSearchForm.COUNTRY',
-                'Country'))->setEmptyString('Select a country')->addExtraClass('country-select-dropdown filter-by-country'),
+                'Country'))->setEmptyString('Select a country')->addExtraClass('filter-by-country'),
             DropdownField::create('Program', _t(
                 'AcademicsSearchForm.DEFAULT',
                 'Program'), Program::getProgramOptions())->setEmptyString('Select Program')->addExtraClass('filter-by-program')//,
@@ -109,8 +109,14 @@ class AcademicsPage_Controller extends Page_Controller
 		}
 		// populate Javascript
 		$js = array();
+        $js[] = array(
+            'title' => 'first',
+            'value' => 'firstvalue'
+        );
         
-        $countries = Country::get()->sort('Name', 'ASC');
+        $countries = Country::get()->filter(array(
+            'ID' => 'Members.BusinessCountryID'
+        ))->sort('Name', 'ASC');
         
         if($countries)
         {

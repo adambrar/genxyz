@@ -1,7 +1,7 @@
 <?php
 class BlogHolder_ControllerDecorator extends DataExtension {
      
-    public function updateBlogPostForm($form) {
+    public function updateBlogEntryForm($form) {
         if(Member::currentUserID() != $this->owner->OwnerID) { 
             return $this->owner->httpError(404);
         }

@@ -22,6 +22,10 @@
                         <% end_if %>
                     <% else %>
                         <a id="langbar-button" href="home" title="Go Home!"><%t NavigationTemplate.GENXYZ "GenXYZ" %></a>
+                        <% if isSignedIn %>
+
+                            </li><li><a id="logout-button" href="Security/logout" title="Logout!">Logout</a>
+                        <% end_if %>
                     <% end_if %>
                 </li>
                 <li><% include LanguageSelector %><li>

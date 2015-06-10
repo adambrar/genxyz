@@ -7,7 +7,8 @@ class Page extends SiteTree implements PermissionProvider {
         'menuUniversity' => 'Boolean',
         'menuStudentSidebar' => 'Boolean',
         'menuShown' => "Enum('Welcome, Student, University, None')",
-        'showDropdown' => 'Boolean(1)'
+        'showDropdown' => 'Boolean(1)',
+        'EnableZopim' => 'Boolean'
 	);
 
 	private static $has_one = array(
@@ -32,6 +33,16 @@ class Page extends SiteTree implements PermissionProvider {
         $menuOptions = DropdownField::create( 'menuShown', 'Which menu will show on this page?', singleton('Page')->dbObject('menuShown')->enumValues() )->setEmptyString('Select menu');
         $fields->addFieldToTab('Root.Settings', $menuOptions, 'ShowInSearch');
         
+        return $fields;
+    }
+    
+    public function getCMSFields() {
+        $fields = parent::getCMSFields();
+
+        $fields->addFieldToTab("Root.Zopim", new CheckboxField('EnableZopim', 'Enable Zopim Chat on the page?'));
+        
+        $fields->removeByName("Content");
+
         return $fields;
     }
     

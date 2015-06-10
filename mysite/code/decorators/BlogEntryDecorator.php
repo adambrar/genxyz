@@ -11,7 +11,10 @@ class BlogEntryDecorator extends DataExtension {
     }
     
     function authorName() {
-        return BlogHolder::get()->byId($this->owner->ParentID)->OwnerID ? Member::get()->byId( BlogHolder::get()->byId($this->owner->ParentID)->OwnerID )->getName() : "Anon";
+        //if admin post return false
+        if($this->owner->BlogHolder->OwnerID == 1) { return false; }
+        
+        return $this->owner->BlogHolder->OwnerID ? Member::get()->byId( BlogHolder::get()->byId($this->owner->ParentID)->OwnerID )->getName() : "Anon";
     }
 
 }

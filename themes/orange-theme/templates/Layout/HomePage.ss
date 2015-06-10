@@ -73,7 +73,7 @@
                             <h2 class="update_title"><%t HomePage.STUDENTBLOG "Recent Blog Posts" %></h2>
                             <% if StudentBlogPosts %>
                                 <% loop $StudentBlogPosts %>
-                                    <% include StudentBlogSummary %>
+                                    <% include SingleBlogSummary %>
                                 <% end_loop %>
                             <% else %>
                                 <p><%t HomePage.NOSTUDENTPOSTS "There are no recent student posts" %></p>
@@ -85,7 +85,7 @@
                             <h2 class="update_title"><%t HomePage.GENXYZ "GenXYZ<" %>/h2>
                             <% if GenXYZBlogPosts %>
                                 <% loop $GenXYZBlogPosts %>
-                                    <% include GenXYZBlogSummary %>
+                                    <% include SingleBlogSummary %>
                                 <% end_loop %>
                             <% else %>
                                 <p><%t HomePage.NOGENXYZPOSTS "There are no recent posts from GenXYZ" %></p>

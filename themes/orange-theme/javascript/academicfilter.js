@@ -9,6 +9,13 @@ $(window).load(function(){
         }
     }
     
+    $.getJSON(location.href + '/searchcountriesasjson', 
+            function(data) {
+                $.each(data, function(key, val) {
+                    $("<option>").attr("value", val.value).text(val.title).appendTo($(".filter-by-country").not(".field"))
+                });
+    });
+    
     function setSelects() { 
         if($.urlParam('Program')) { $('.filter-by-program select').val($.urlParam('Program')); } 
         if($.urlParam('Country')) { $('.filter-by-country select').val($.urlParam('Country')); } 

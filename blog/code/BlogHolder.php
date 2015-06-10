@@ -284,7 +284,7 @@ class BlogHolder_Controller extends BlogTree_Controller {
 			$form->loadDataFrom(array("Author" => Cookie::get("BlogHolder_Name")));
 		}
         
-        $this->extend('updateBlogPostForm', $form);
+        $this->extend('updateBlogEntryForm', $form);
 
 		return $form;
 	}

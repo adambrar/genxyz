@@ -30,7 +30,7 @@
                                     <% if BlogEntries %>
                                         <% loop BlogEntries %>
                                             <div class="smaall-content-box">
-                                                <% include StudentBlogSummary %>
+                                                <% include SingleBlogSummary %>
                                             </div>
                                         <% end_loop %>
                                     <% else %>

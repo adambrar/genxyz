@@ -1,5 +1,5 @@
 (function ($) {
-    var ThemeDir = '/silverstripe/themes/grey-theme';
+    var ThemeDir = '/silver/themes/grey-theme';
 	skel.init({
 		reset: 'full',
 		breakpoints: {

@@ -249,6 +249,13 @@
             {
                 background-color: #FF4486;
                 color: #ffffff;
+                padding: 0.35em 0.55em 0.35em 0.55em;
+            }
+            #nav ul li a#logout-button:hover,
+            #lang-bar ul li a#logout-button:hover
+            {
+                background-color: #EE3375;
+                color: #EEE;
             }
 
             /* End Nav Buttons */
@@ -280,7 +287,8 @@
                 color: #FFD350;
                 text-decoration: none;
                 border-radius: 6px;
-                padding: 0.5em 1em 0.5em 1em;
+                padding: 0.35em 0.55em 0.35em 0.55em;
+                margin: 0.1em 0;
                 -moz-transition: background-color .25s ease-in-out;
                 -webkit-transition: background-color .25s ease-in-out;
                 -o-transition: background-color .25s ease-in-out;

@@ -36,5 +36,8 @@
     <% require themedCSS('flag-icon.min') %>
     <% require themedCSS('comments') %>
     <link rel="shortcut icon" href="$ThemeDir/images/favicon.ico" />
-    <!--<script src="//v2.zopim.com/?2uDfL8QV5WgywsgloRQMbP785ruTgGtR" charset="utf-8" type="text/javascript"></script>-->
+    <% if $EnableZopim %>
+        <script src="//v2.zopim.com/?2uDfL8QV5WgywsgloRQMbP785ruTgGtR" charset="utf-8" type="text/javascript"></script>
+        <script src="$ThemeDir/javascript/zopimbuttons.js"></script>
+    <% end_if %>
 </head>

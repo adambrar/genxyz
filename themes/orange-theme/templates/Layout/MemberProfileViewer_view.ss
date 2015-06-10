@@ -22,7 +22,7 @@
                                                  <% if BlogEntries %>
                                                     <% loop BlogEntries %>
 
-                                                        <% include StudentBlogSummary TippyTop=$Top %>
+                                                        <% include SingleBlogSummary TippyTop=$Top %>
                                                     <% end_loop %>
                                                 <% else %>
                                                     <h1><%t BlogHolder_ss.NOENTRIES "There are no recent blog entries!" %></h1>                                            

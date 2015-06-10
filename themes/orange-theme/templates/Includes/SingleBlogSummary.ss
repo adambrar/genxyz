@@ -1,6 +1,6 @@
 <div class="blogSummary">
 	<h1 class="postTitle"><a href="$Link" title="<% _t('BlogSummary_ss.VIEWFULL', 'View full post titled -') %> '$Title'">$MenuTitle</a></h1>
-	<p class="authorDate"><% _t('BlogSummary_ss.POSTEDBY', 'Posted by') %> <a href="{$authorProfileURL($BlogHolder.OwnerID)}" target="_bl  ank">$authorName</a> <% _t('BlogSummary_ss.POSTEDON', 'on') %> $Date.Long</p>
+	<p class="authorDate"><% if authorName %><% _t('BlogSummary_ss.POSTEDBY', 'Posted by') %> <a href="{$authorProfileURL($BlogHolder.OwnerID)}" target="_bl  ank">$authorName</a><% else %><% _t('BlogSummary_ss.POSTED', 'Posted') %><% end_if %> <% _t('BlogSummary_ss.POSTEDON', 'on') %> $Date.Long</p>
 	<% if TagsCollection %>
 		<p class="tags">
 			<% _t('BlogSummary_ss.TAGS','Tags') %>:

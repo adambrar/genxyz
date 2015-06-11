@@ -9,7 +9,7 @@ class PartnersPortalPage extends Page
     public function getCMSFields() {
         $fields = parent::getCMSFields();
               
-        $fields->addFieldToTab("Root.Main", new TextareaField('Message', 'Message'), 'Content');      
+        $fields->addFieldToTab("Root.Main", new TextareaField('Message', 'Message'));      
         $fields->removeByName("Content");
 
         return $fields;

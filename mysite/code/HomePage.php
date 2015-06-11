@@ -5,13 +5,17 @@ class HomePage extends Page
      private static $db = array(
          'WelcomeTitle' => 'Text',
          'WelcomeMessage' => 'Text',
+         'MediaUpdates' => 'HTMLText',
+         'InteractiveUpdates' => 'HTMLText'
      );
     
     public function getCMSFields() {
         $fields = parent::getCMSFields();
               
-        $fields->addFieldToTab("Root.Main", new TextareaField('WelcomeTitle', 'Welcome Title'), 'Content');      
-        $fields->addFieldToTab("Root.Main", new TextareaField('WelcomeMessage', 'Welcome Message'), 'WelcomeTitle');
+        $fields->addFieldToTab("Root.Main", new TextareaField('WelcomeTitle', 'Welcome Title'));      
+        $fields->addFieldToTab("Root.Main", new TextareaField('WelcomeMessage', 'Welcome Message'));
+        $fields->addFieldToTab("Root.Main", new HtmlEditorField('MediaUpdates', 'Media Updates'));
+        $fields->addFieldToTab("Root.Main", new HtmlEditorField('InteractiveUpdates', 'Interactive Updates'));
         
         $fields->removeByName("Content");
 

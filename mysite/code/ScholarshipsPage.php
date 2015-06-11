@@ -15,8 +15,8 @@ class ScholarshipsPage extends Page
     public function getCMSFields() {
         $fields = parent::getCMSFields();
               
-        $fields->addFieldToTab("Root.Main", new TextareaField('Message', 'Message'), 'Content');      
-        $fields->addFieldToTab("Root.Main", new NumericField('NumberShown', 'Number of Scholarships shown(max 99)'), 'Content');
+        $fields->addFieldToTab("Root.Main", new TextareaField('Message', 'Message'));      
+        $fields->addFieldToTab("Root.Main", new NumericField('NumberShown', 'Number of Scholarships shown(max 99)'));
         
         $fields->removeByName("Content");
 

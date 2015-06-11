@@ -17,7 +17,8 @@ class Page extends SiteTree implements PermissionProvider {
     
     private static $defaults = array(
         'menuShown' => 'Student',
-        'showDropdown' => '1'
+        'showDropdown' => '1',
+        'EnableZopim' => false
     );
     
     function getSettingsFields() {
@@ -351,7 +352,7 @@ class Page_Controller extends ContentController {
     */
     function logoutInactiveUser() {
         // Set inactivity to half an hour (converted to seconds)
-        $inactivityLimit = 120 * 60;
+        $inactivityLimit = 30 * 60;
 
         // Get value from session
         $sessionStart = Session::get('session_start_time'); 
@@ -359,17 +360,19 @@ class Page_Controller extends ContentController {
         $elapsed_time = time() - Session::get('session_start_time');
         // If elapsed time is greater or equal to inactivity period, logout user
         if ($elapsed_time >= $inactivityLimit) { 
-          $member = Member::currentUser(); 
-          if($member) {
-            // Logout member
-            $member->logOut();
-          }
-          // Clear session
-          Session::clear_all();
-          // Redirect user to the login screen
-          $this->redirect(Director::baseURL() . 'Security/login'); 
+            $member = Member::currentUser(); 
+            if($member) {
+                // Logout member
+                $member->logOut();
+            }
+            // Clear session
+            Session::clear_all();
+            // Redirect user to the login screen
+            if(!$this->menuWelcome) {
+                $this->redirect(Director::baseURL() . 'Security/login');
+            }
         } 
-      }
+    }
 
       // Set new value
       Session::set('session_start_time', time()); 

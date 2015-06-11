@@ -14,12 +14,12 @@ class OurInitiativesPage extends Page
     public function getCMSFields() {
         $fields = parent::getCMSFields();
               
-        $fields->addFieldToTab("Root.Main", new TextareaField('Introduction', 'Introduction'), 'Content');      
-        $fields->addFieldToTab("Root.Main", new TextareaField('ScholarshipOpportunities', 'Scholarship Opportunities'), 'Content');      
-        $fields->addFieldToTab("Root.Main", new TextareaField('SocialEnterprises', 'Social Enterprises'), 'Content');      
-        $fields->addFieldToTab("Root.Main", new TextareaField('NotForProfits', 'Not For Profits'), 'Content');      
-        $fields->addFieldToTab("Root.Main", new TextareaField('Fundraising', 'Fundraising'), 'Content');      
-        $fields->addFieldToTab("Root.Main", new TextareaField('WorkPlacement', 'Work Placement'), 'Content');      
+        $fields->addFieldToTab("Root.Main", new TextareaField('Introduction', 'Introduction'));      
+        $fields->addFieldToTab("Root.Main", new TextareaField('ScholarshipOpportunities', 'Scholarship Opportunities'));      
+        $fields->addFieldToTab("Root.Main", new TextareaField('SocialEnterprises', 'Social Enterprises'));      
+        $fields->addFieldToTab("Root.Main", new TextareaField('NotForProfits', 'Not For Profits'));      
+        $fields->addFieldToTab("Root.Main", new TextareaField('Fundraising', 'Fundraising'));      
+        $fields->addFieldToTab("Root.Main", new TextareaField('WorkPlacement', 'Work Placement'));      
 
         $fields->removeByName("Content");
 

@@ -12,10 +12,10 @@ class ISNetworkPage extends Page
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         
-        $fields->addFieldToTab("Root.Main", new TextareaField('About', 'About'), 'Content');      
-        $fields->addFieldToTab("Root.Main", new TextareaField('Services', 'Services'), 'Content');
-        $fields->addFieldToTab("Root.Main", new TextareaField('Media', 'Media'), 'Content');
-        $fields->addFieldToTab("Root.Main", new TextareaField('Interactive', 'Interactive'), 'Content');
+        $fields->addFieldToTab("Root.Main", new TextareaField('About', 'About'));      
+        $fields->addFieldToTab("Root.Main", new TextareaField('Services', 'Services'));
+        $fields->addFieldToTab("Root.Main", new TextareaField('Media', 'Media'));
+        $fields->addFieldToTab("Root.Main", new TextareaField('Interactive', 'Interactive'));
         
         $fields->removeByName("Content");
 

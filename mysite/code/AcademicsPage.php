@@ -10,8 +10,8 @@ class AcademicsPage extends Page
     public function getCMSFields() {
         $fields = parent::getCMSFields();
               
-        $fields->addFieldToTab("Root.Main", new HTMLEditorField('Updates', 'About'), 'Content');      
-        $fields->addFieldToTab("Root.Main", new HTMLEditorField('RecentlyAdded', 'Recently Added'), 'Content');
+        $fields->addFieldToTab("Root.Main", new HTMLEditorField('Updates', 'About'));      
+        $fields->addFieldToTab("Root.Main", new HTMLEditorField('RecentlyAdded', 'Recently Added'));
         
         $fields->removeByName("Content");
 

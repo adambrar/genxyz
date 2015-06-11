@@ -12,8 +12,8 @@ class SidebarMenuService extends Page
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         
-        $fields->addFieldToTab("Root.Main", new TextField('Subtitle', 'Subtitle'), 'Content');      
-        $fields->addFieldToTab("Root.Main", new TextField('Price', 'Price'), 'Content');
+        $fields->addFieldToTab("Root.Main", new TextField('Subtitle', 'Subtitle'));      
+        $fields->addFieldToTab("Root.Main", new TextField('Price', 'Price'));
         
         return $fields;
     }

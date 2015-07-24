@@ -1,7 +1,7 @@
 <div id="header-wrapper">
     <header id="header" class="container">
             <div id="logo">
-                <h1><img class="header-img" src="$ThemeDir/images/GenXYZ_dc.jpg" alt=""/><a href="$BaseHref">$SiteConfig.Title</a></h1>
+                <h1><a href="$BaseHref"><img class="header-img" src="$ThemeDir/images/GenXYZ_dc.jpg" alt=""/></a><a class="site-title" href="$BaseHref">$SiteConfig.Title</a></h1>
             </div>
             <% if $SearchForm %>
                 <span class="search-dropdown-icon">L</span>
@@ -19,6 +19,8 @@
                         <% if isSignedIn %>
                             <a id="langbar-button" href="{$profilePageLink}" title="MyProfile"><%t NavigationTemplate.MYPROFILE "MyProfile" %></a></li>
                             <li><a id="logout-button" href="Security/logout" title="Logout!">Logout</a>
+                        <% else %>
+                            <li>one<ul><li>one</li><li>yep</li><li>two</li><li>three</li></ul>
                         <% end_if %>
                     <% else %>
                         <a id="langbar-button" href="home" title="Go Home!"><%t NavigationTemplate.GENXYZ "GenXYZ" %></a>

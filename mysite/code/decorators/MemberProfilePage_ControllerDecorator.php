@@ -1,5 +1,4 @@
 <?php
-
 //Adds hooks to: 
 //  Profile page forms
 //  Register form
@@ -19,7 +18,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         parent::init();
         
         if(!Member::currentUserID() || !Member::currentUser()->isStudent()) {
-            Security::permissionFailure(null, 'You need to be logged into a student profile to view this content.');
+            Security::permissionFailure(null, 'You need to be logged in a student profile to view this content.');
         }
     }
             
@@ -91,7 +90,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $chatName = preg_replace("/[^A-Za-z0-9]/", "", $member->FirstName) . '%20' . preg_replace("/[^A-Za-z0-9]/", "", $member->Surname);
         $userurl = Director::absoluteURL("myprofile/show/".$member->ID, true);
         
-        $pageData['ChatLink'] = "http://192.99.169.104/chat/chat.php?username=" . $chatName . "&userurl=".$userurl;
+        $pageData['ChatLink'] = "http://localhost/ajax/chat?userName=" . $chatName . "&userID=".$member->ID;
 
         $pageData['IsSelf'] = $member->ID == Member::currentUserID();
 
@@ -166,9 +165,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             $holder = BlogHolder::get()->ByID($blogID);
         }
         
-        $urls = "<li><a title='Create a new blog post' href='". $holder->Link() . "post'>" . _t('StudentProfile.NEWBLOGPOST', 'New Blog Post') . "</a></li>";
-        $urls .= "<li><a title='View main blog page' href='". $holder->Link() . "'>" . _t('StudentProfile.VIEWBLOG', 'View Your Blog Posts') . "</a></li>";
-        $urls .= "<li><a title='View main blog page' href='". $holder->parent()->Link() . "'>" . _t('StudentProfile.VIEWBLOG', 'View All Blog Posts') . "</a></li>";
+        $urls = "<li><a class='button small icon fa-pencil-square-o' title='Create a new blog post' href='". $holder->Link() . "post'>" . _t('StudentProfile.NEWBLOGPOST', 'New Blog Post') . "</a></li>";
+        $urls .= "<li><a class='button small icon fa-file-o' title='View main blog page' href='". $holder->Link() . "'>" . _t('StudentProfile.VIEWMYBLOG', 'My Blog Posts') . "</a></li>";
+        $urls .= "<li><a class='button small icon fa-files-o' title='View main blog page' href='". $holder->parent()->Link() . "'>" . _t('StudentProfile.VIEWALLBLOG', 'All Blog Posts') . "</a></li>";
         
         return $urls;
     }
@@ -280,12 +279,12 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new TextField('StreetAddress', _t(
                 'MemberProfileForms.STREETADDRESS',
                 'Street Address') . '<span>*</span>'),
-            DropdownField::create('City', _t(
-                'MemberProfileForms.CITY',
-                'City'))->setEmptyString('Select a City')->addExtraClass('city-select-dropdown'),
             DropdownField::create('CurrentCountryID', _t(
                 'MemberProfileForms.COUNTRY',
                 'Country') . '<span>*</span>', array('selected' => $member->CurrentCountryID))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown country-for-city-select'),
+            DropdownField::create('City', _t(
+                'MemberProfileForms.CITY',
+                'City'))->setEmptyString('Select a City')->addExtraClass('city-select-dropdown'),
             new TextField('PostalCode', _t(
                 'MemberProfileForms.POSTALCODE',
                 'Postal Code')),
@@ -447,6 +446,22 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         
 		return $this->owner->redirectBack();
 	}
+    
+    public function includeChatRooms($member = null) {
+        require_once $_SERVER['DOCUMENT_ROOT']."/freechat/src/phpfreechat.class.php";
+
+        $params["serverid"] = md5(__FILE__."M"); // calculate a unique id for this chat
+        $params["title"]    = "Student Chat";
+        $params["nick"]     = "member";  // setup the intitial nickname
+        $params["channels"]        = array("room1");
+        $params["frozen_channels"] = array("room1", "room2", "room3", "room4");
+        $params["display_ping"] = false;
+        $params["theme"] = 'msn';
+        $params["showsmileys"] = false;
+
+        $chat = new phpFreeChat( $params );
+        return $chat->printChat(true);
+    }
     
     //---End Profile Page Data---//
     

@@ -60,8 +60,8 @@
 </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <script>
-$(function() {	
-    $("a.dropdown").click(function() {
+jQuery(function() {	
+    jQuery("a.dropdown").click(function() {
         var ul = $(this).next(),
                 clone = ul.clone().css({"height":"auto"}).appendTo("body"),
                 height = ul.css("height") === "0px" ? ul[0].scrollHeight + "px" : "0px";

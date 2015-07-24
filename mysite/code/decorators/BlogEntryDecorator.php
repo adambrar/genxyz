@@ -1,6 +1,10 @@
 <?php
 class BlogEntryDecorator extends DataExtension {
     
+    private static $has_one = array(
+        'Category' => 'BlogCategory'
+    );
+    
     function authorProfileURL($authorID) {
         $profilePage = SiteTree::get()->filter(array(
             'ClassName' => 'MemberProfilePage',
@@ -15,6 +19,10 @@ class BlogEntryDecorator extends DataExtension {
         if($this->owner->BlogHolder->OwnerID == 1) { return false; }
         
         return $this->owner->BlogHolder->OwnerID ? Member::get()->byId( BlogHolder::get()->byId($this->owner->ParentID)->OwnerID )->getName() : "Anon";
+    }
+    
+    function CurrentUserIsOwner() {
+        return $this->owner->BlogHolder->OwnerID == Member::currentUserID();
     }
 
 }

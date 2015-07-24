@@ -26,16 +26,17 @@
     <li><a class="dropdown" href=""><%t StudentProfile.EMERGENCYCONTACT "Emergency Contact" %></a>
         <ul><li>$getProfileForm("Contact")</li></ul>
     </li>
-    <li><a class="dropdown" href=""><%t StudentProfile.PROFILEPICTURE "Profile Picture" %></a>
+    <li><a class="dropdown profile-picture-form" href=""><%t StudentProfile.PROFILEPICTURE "Profile Picture" %></a>
         <ul><li>$getProfileForm("ProfilePicture")</li></ul>
     </li>
 </ul>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <script>
-$(function() {	
-    $("a.dropdown").click(function() {
-        var ul = $(this).next(),
+jQuery(function() {	
+    jQuery("a.dropdown").click(function() {
+        
+        var ul = jQuery(this).next(),
                 clone = ul.clone().css({"height":"auto"}).appendTo("body"),
                 height = ul.css("height") === "0px" ? ul[0].scrollHeight + "px" : "0px";
 

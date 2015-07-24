@@ -51,19 +51,11 @@
                                 <div class="3u 12u(3) gutters-fix">
                                     <div class="small-content-box">
                                         <h2>Updates</h2>
-                                        <h1>News 1</h1>
-                                        <p>Some details</p>
-                                        <h1>News 2</h1>
-                                        <p>More exciting news</p>
+                                        $Updates
                                     </div>
                                     <div class="small-content-box">
                                         <h2>Recently Added</h2>
-                                        <h1>Popular Agent 1</h1>
-                                        <p>quick description</p>
-                                        <h1>Popular Uni</h1>
-                                        <p>descriptive words</p>
-                                        <h1>Important Scholarship</h1>
-                                        <p>description of scholarship</p>
+                                        $RecentlyAdded
                                     </div>
                                 </div>
                             </div>
@@ -96,6 +88,20 @@
 </div>
             
 <script src="{$ThemeDir}/javascript/tabbed.js"></script>
-<script src="{$ThemeDir}/javascript/academicfilter.js"></script>    
+<script src="{$ThemeDir}/javascript/academicfilter.js"></script>
+<script type="text/javascript">
+
+tinyMCE.init({
+theme : "advanced",
+mode: "textareas", 
+theme_advanced_toolbar_location : "top",
+theme_advanced_buttons1 : "formatselect,|,bold,italic,underline,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,outdent,indent,separator,undo,redo",
+theme_advanced_buttons2 : "",
+theme_advanced_buttons3 : "",
+height:"250px",
+width:"400px"
+});
+
+</script>
 
 <% include Footer %>

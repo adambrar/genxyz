@@ -328,6 +328,14 @@
                 font-size: small !important;
             }
 
+    div.HorizontalForm_button {
+        float: left;
+    }
+
+    div.HorizontalForm {
+        width: 100px;
+        float: left;
+    }
             /* End of Language Bar */
 
 				

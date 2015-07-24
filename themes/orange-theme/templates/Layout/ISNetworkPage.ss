@@ -16,7 +16,6 @@
                                 <% else %>
                                     <h2><%t ISNetworkPage.LOGIN "Login" %></h2>
                                     $LoginForm
-                                    <a href="register"><%t ISNetworkPage.REGISTERLINK "Create a new account" %></a>
                                 <% end_if %>
                             </div>
                             <div class="6u 12u(2)">

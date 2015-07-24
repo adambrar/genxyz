@@ -20,6 +20,7 @@
 .comment p {
     margin: 0;
     padding: 0;
+    color: #000
 }
 
 .comment .image {

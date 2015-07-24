@@ -2,8 +2,36 @@
 class GroupRedirectLoginForm extends MemberLoginForm {
     
     private static $allowed_actions = array(
-        'dologin'
+        'dologin',
+        'LoginForm',
+        'register'
     );
+    
+    function __construct($controller, $name, $fields = null, 
+                         $actions = null, $checkCurrentUser = true) {
+        //create your authenticator input here, e.g. username, but it could be any credentials
+        //add your Authenticator to the form
+        $fields = new FieldList(
+            new TextField('Email', 'Email'),
+            new PasswordField('Password', 'Password'),
+            new CheckboxField("Remember", "Remember me next time?")
+        );
+
+        $actions = new FieldList(
+            new FormAction('dologin', 'Log in')
+        );
+        
+        if($controller->ClassName != "PartnersPortalPage") {
+            $actions->push(FormAction::create('register', 'Register')->addExtraClass('register-button'));
+        }
+
+        //LoginForm does its magic
+        parent::__construct($controller, $name, $fields, $actions);
+    }
+    
+    public function register($data) {
+        $this->controller->redirect(Director::absoluteURL('register', true));
+    }
     
     public function dologin($data) {
         if($this->performLogin($data)) {
@@ -54,6 +82,6 @@ class GroupRedirectLoginForm extends MemberLoginForm {
             }
         }
         //if not found in group return false
-        //return false;
+        return false;
     }
 }

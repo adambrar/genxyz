@@ -37,6 +37,8 @@ class AcademicsPage_Controller extends Page_Controller
     
     function init() {
         Requirements::javascript(Director::baseFolder() . '/themes/' . SSViewer::current_theme() . '/javascript/academicfilter.js');
+        HTMLEditorField::include_js();
+        
         parent::init();
         
         if(!Member::currentUserID() || !Member::currentUser()->isStudent()) {
@@ -58,11 +60,7 @@ class AcademicsPage_Controller extends Page_Controller
                 'Country'))->setEmptyString('Select a country')->addExtraClass('filter-by-country'),
             DropdownField::create('Program', _t(
                 'AcademicsSearchForm.DEFAULT',
-                'Program'), Program::getProgramOptions())->setEmptyString('Select Program')->addExtraClass('filter-by-program')//,
-//            DropdownField::create('ProgramLength', _t(
-//                'AcademicsSearchForm.PROGRAMLENGTH',
-//                'Program Length') . '<span>*</span>', singleton('Program')->dbObject('Length')->enumValues())->setEmptyString('Select program length')
-            
+                'Program'), Program::getProgramOptions())->setEmptyString('Select Program')->addExtraClass('filter-by-program')
         );
         
         $actions = FieldList::create(

@@ -11,20 +11,49 @@
                                     <% include StudentSidebar %>
                                 </div>
                             </div>
-                            <div class="4u 8u(3) gutters-fix">
-                                <% if BlogEntries %>
-                                    <div class="small-content-box">
-                                        <% loop BlogEntries %>
-                                            <% include SingleBlogSummary TippyTop=$Top %>
-                                        <% end_loop %>
+                            <div class="8u 12u(2) gutters-fix">    
+                                <div class="small-content-box">
+                                    <div class="slider-content">
+                                        <h2 class="content-slider"><%t StudentProfilePage.STUDENTCHATROOM "Student Chatroom" %></h2>
+                                        <iframe id="student-chat" class="hidden-content" src={$ChatLink} width="100%" height="800" scrolling="auto" frameborder="0" name="frame_chat"> </iframe>
                                     </div>
-                                <% else %>
-                                    <h1><% _t('BlogHolder_ss.NOENTRIES', 'There are no blog entries!') %></h1>                                            
-                                <% end_if %>
+                                    <div class="slider-content">
+                                        <h2 class="content-slider"><%t StudentProfilePage.BLOGMANAGEMENT "Blog Management" %></h2>
+                                        <div class="row hidden-content" style="display:none">    
+                                            <div class="7u">
+                                                <% if BlogEntries %>
+                                                        <% loop BlogEntries %>
+                                                            <% include SingleBlogSummary TippyTop=$Top %>
+                                                        <% end_loop %>
+                                                <% else %>
+                                                    <h1><% _t('BlogHolder_ss.NOENTRIES', 'There are no blog entries!') %></h1>                                            
+                                                <% end_if %>
+                                            </div>
+                                            <div class="5u">
+                                                <ul>
+                                                    $BlogManagementURLs
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slider-content">
+                                        <h2 class="content-slider"><%t StudentProfilePage.Chat "Forum Posts" %></h2>
+                                        <div class="row hidden-content" style="display:none">    
+                                            <% if ForumPosts %>
+                                                <% loop ForumPosts %>
+                                                    <h1><a href="$Link">$Title</a></h1>
+                                                    <p class="post-date">$Created.Long at $Created.Time</p>
+                                                    <p>$Content.LimitCharacters(80)</p>
+                                                <% end_loop %>
+                                            <% else %>
+                                                <h1><%t StudentProfile.NOPOSTS "There are no recent forum posts!" %></h1>                                            
+                                            <% end_if %>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-                            <div class="4u 4u(2) gutters-fix">
-                                <% include StudentLeftBar %>
-                            </div>
+                            
                         </div>
                     <% else %>
                         <div class="row">
@@ -53,4 +82,14 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    jQuery(".content-slider").click(function(){
+    jQuery(".hidden-content").not(jQuery(this).parent().find(".hidden-content")).slideUp(500);
+    jQuery(this).parent().find(".hidden-content").slideToggle(1000);
+    
+    function onChatLoad() {
+        alert("hello");
+    }
+});
+</script>                                            
 <% include Footer %>

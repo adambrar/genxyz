@@ -33,7 +33,14 @@ $(window).load(function(){
             $.each(data, function(key, val) {
                 $("<option>").attr("value", val.value).text(val.title).appendTo($(".city-select-dropdown").not(".field"))
             });
-        });});        
+        });}); 
+    
+        $(".profile-picture-edit").click(function() {
+            $(".profile-picture-form").trigger("click");
+            $('html, body').animate({
+                scrollTop: $(".profile-picture-form").offset().top
+            }, 500);
+        });
 
     
 });

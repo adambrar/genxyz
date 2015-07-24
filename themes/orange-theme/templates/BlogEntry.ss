@@ -13,7 +13,7 @@
 
                                 <div class="blogEntry">
                                     <h2 class="postTitle">$Title</h2>
-                                    <p class="authorDate"><% _t('BlogEntry_ss.POSTEDBY', 'Posted by') %> <a href="{$authorProfileURL($BlogHolder.OwnerID)}" target="_blank">$authorName</a> <% _t('BlogEntry_ss.POSTEDON', 'on') %> $Date.Long | $Comments.Count <% _t('BlogEntry_ss.COMMENTS', 'Comments') %></p>
+                                    <p class="authorDate"><% if authorName %><% _t('BlogEntry_ss.POSTEDBY', 'Posted by') %> <a href="{$authorProfileURL($BlogHolder.OwnerID)}" target="_blank">$authorName</a><% else %>Posted <% end_if %><% _t('BlogEntry_ss.POSTEDON', 'on') %> $Date.Long | $Comments.Count <% _t('BlogEntry_ss.COMMENTS', 'Comments') %></p>
                                     <% if TagsCollection %>
                                         <p class="tags">
                                              <% _t('BlogEntry_ss.TAGS', 'Tags:') %> 
@@ -22,10 +22,10 @@
                                             <% end_loop %>
                                         </p>
                                     <% end_if %>		
-                                    $Content		
+                                    <div class="blog-content">$Content</div>
                                 </div>
 
-                                <% if IsOwner %><p class="edit-post"><a href="$EditURL" id="editpost" title="<% _t('BlogEntry_ss.EDITTHIS', 'Edit this post') %>"><% _t('BlogEntry_ss.EDITTHIS', 'Edit this post') %></a> | <a href="$Link(unpublishPost)" id="unpublishpost"><% _t('BlogEntry_ss.UNPUBLISHTHIS', 'Unpublish this post') %></a></p><% end_if %>
+                                <% if CurrentUserIsOwner %><p class="edit-post"><a href="$EditURL" id="editpost" title="<% _t('BlogEntry_ss.EDITTHIS', 'Edit this post') %>"><% _t('BlogEntry_ss.EDITTHIS', 'Edit this post') %></a> | <a href="$Link(unpublishPost)" id="unpublishpost"><% _t('BlogEntry_ss.UNPUBLISHTHIS', 'Unpublish this post') %></a></p><% end_if %>
                             </div>
                             <div class="10u -1u 12u(2) gutters-fix">
                                 <div id="PageComments_holder" class="small-content-box">$PageComments</div>

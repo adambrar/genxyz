@@ -353,6 +353,14 @@
                 padding-right: 5px;
             }
 
+            img.profile-picture
+            {
+                border: 1px black solid;
+                -webkit-box-shadow: 6px -4px 7px -4px rgba(0,0,0,0.4);
+                -moz-box-shadow: 6px -4px 7px -4px rgba(0,0,0,0.4);
+                box-shadow: 6px -4px 7px -4px rgba(0,0,0,0.4);
+            }
+
 	/* Button */
 
 		input[type="button"],
@@ -430,6 +438,10 @@
 					background: #e4e4e4;
 					background: rgba(0,0,0,0.15);
 				}
+
+            .register-button {
+                float: right;
+            }
 
             .checkbox input[type=checkbox]
             {
@@ -509,13 +521,6 @@
 			box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.015);
 			box-shadow: 0px 3px 0px 0px rgba(0,0,0,0.05);
 		}
-
-        
-    iframe {
-        background-image: url("../images/ajax-loader.gif");
-        background-repeat: no-repeat;
-        background-position: center;
-    }
 
 /*********************************************************************************/
 /* Welcome Page                                                                       */
@@ -624,6 +629,38 @@ article.home_page {
 /*********************************************************************************/
 /* End of Slideshow                                                                         */
 /*********************************************************************************/
+
+/*********************************************************************************/
+/* Profile Page                                                                        */
+/*********************************************************************************/
+.picture-overlay {
+    margin-top: -25%;
+    left: 0; 
+    width: 100%;
+    z-index: 1000;
+    text-align: center;
+    background-color: #f7f7f7;
+    opacity: 0.5;
+    color: #000;
+}
+
+.picture-overlay a {
+    text-decoration: none;
+}
+
+.picture-overlay a:hover {
+    color: #777;
+}
+
+h2.content-slider {
+    margin-bottom: 0.5em;
+}
+
+h2.content-slider:hover {
+    color: #888888;
+    cursor: pointer;
+    cursor: hand;
+}
 
 /*********************************************************************************/
 /* User Vertical Menu                                                                         */
@@ -883,7 +920,7 @@ article.home_page {
 			font-weight: 800;
 		}
 
-        #logo a
+        #logo a.site-title
         {
             border-left: 2px solid #000000;
             padding-left: 5px;

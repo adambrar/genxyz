@@ -10,13 +10,13 @@
 		</p>
 	<% end_if %>
 
-    <p>$Content.LimitCharacters(120)</p>
+    <p class="blog-content">$Content.LimitCharacters(120)</p>
 	
 	<p class="blogVitals">
 		<a href="$Link#PageComments_holder" class="comments" title="View Comments for this post">
 			$Comments.Count <% _t('BlogSummary_ss.SUMMARYCOMMENTS','comment(s)') %>
 		</a> 
-        <% if TippyTop.IsSelf %>
+        <% if CurrentUserIsOwner %>
 		| 
 		<a href="$EditURL" id="editpost" title="<% _t('MySite_BlogEntry.EDITTHIS', 'Edit test post') %>"><% _t('MySite_BlogEntry.EDITTHIS', 'Edit post') %></a>
         |

@@ -382,5 +382,17 @@ class Page_Controller extends ContentController {
     function getFooterScholarships() {
         return Scholarship::get()->limit(5);
     }
+    
+    function HorizontalLoginForm() {
+        $form = $this->LoginForm();
+        $form->Fields()->dataFieldByName('Email')->addExtraClass('HorizontalForm');
+        $form->Fields()->dataFieldByName('Password')->addExtraClass('HorizontalForm');
+        $form->Fields()->removeByName('Remember');
+        $form->Actions()->removeByName('action_register');
+        
+        $form->Actions()->dataFieldByName('action_dologin')->addExtraClass('HorizontalForm HorizontalForm_button');
+        
+        return $form;
+    }
 
 }

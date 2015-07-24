@@ -97,24 +97,13 @@
                     <div class="6u 12u(7) gutters-fix">
                         <div class="small-content-box">
                             <h2 class="update_title"><%t HomePage.MEDIA "Media Updates" %></h2>
-                            <p>Some random text for testing</p>
-                            <p>Some random text for testing</p>
-                            <h1 class="update_title">Media Updates</h1>
-                            <p>Some random text for testing</p>
-                            <p>Some random text for testing</p>
-                            <h1 class="update_title">Media Updates</h1>
-                            <p>Some random text for testing</p>
-                            <p>Some random text for testing</p>
+                            $MediaUpdates
                         </div>
                     </div>
                     <div class="6u 12u(5) gutters-fix">
                         <div class="small-content-box">
                             <h2 class="update_title"><%t HomePage.INTERACTIVE "Interactive Updates" %></h2>
-                            <p>Some random text for testing</p>
-                            <p>Some random text for testing</p>
-                            <h1 class="update_title">Interactive Updates</h1>
-                            <p>Some random text for testing</p>
-                            <p>Some random text for testing</p>
+                            $InteractiveUpdates
                         </div>
                     </div>
                 </div>

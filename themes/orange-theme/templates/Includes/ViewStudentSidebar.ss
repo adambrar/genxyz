@@ -3,7 +3,7 @@
     <!-- Sidebar -->
     <section>
         <div class="row">
-            <a href="#" class="image fit"><img class="profile-picture" src="{$BaseHref}{$Member.ProfilePicture.Filename}" alt="" /></a>
+            <a href="#" class="image fit"><img class="profile-picture" src="{$BaseHref}{$Member.getProfilePictureLink($Member.ID)}" alt="" /></a>
             <div class="profile-heading">
                 <h1>
                 <ul id="student-view-info-box">

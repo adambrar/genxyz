@@ -32,29 +32,29 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $fields->insertAfter(new TextField('MiddleName', _t(
             'MemberRegForm.MIDDLENAME', 
             'Middle Name')), 'Firstname');
-        $fields->insertAfter(DropdownField::create('Nationality', _t(
-            'MemberRegForm.NATIONALITY', 
-            'Nationality'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'), 'Email');
+//        $fields->insertAfter(DropdownField::create('Nationality', _t(
+//            'MemberRegForm.NATIONALITY', 
+//            'Nationality'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'), 'Email');
 		
-        $fields->insertAfter(new LiteralField('Hd_Address', '<h3>' . _t(
-            'MemberRegForm.ADDRESSLABEL', 
-            'Address') . '</h3>'), 'Nationality');
-        $fields->insertAfter(new TextField('StreetAddress', _t(
-            'MemberRegForm.STREETADDRESS', 
-            'Street Address')), 'Hd_Address');
-        $fields->insertAfter(DropdownField::create('City', _t(
-            'MemberRegForm.CITY', 
-            'City'))->setEmptyString('Select a Country to see Cities')->addExtraClass('city-select-dropdown'), 'StreetAddress');
-        $fields->insertAfter(DropdownField::create('Country', _t(
-            'MemberRegForm.CURRENTCOUNTRY', 
-            'Current Country'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown country-for-city-select'), 'City');
-        $fields->insertAfter(new TextField('PostalCode', _t(
-            'MemberRegForm.POSTALCODE', 
-            'Postal Code')), 'Country');
-        $fields->insertAfter(new DropdownField('HighSchool', _t(
-            'MemberRegForm.HIGHSCHOOL', 
-            'High School'), HighSchool::getHighSchoolOptions()), 'StreetAddress');
-        
+//        $fields->insertAfter(new LiteralField('Hd_Address', '<h3>' . _t(
+//            'MemberRegForm.ADDRESSLABEL', 
+//            'Address') . '</h3>'), 'Nationality');
+//        $fields->insertAfter(new TextField('StreetAddress', _t(
+//            'MemberRegForm.STREETADDRESS', 
+//            'Street Address')), 'Hd_Address');
+//        $fields->insertAfter(DropdownField::create('City', _t(
+//            'MemberRegForm.CITY', 
+//            'City'))->setEmptyString('Select a Country to see Cities')->addExtraClass('city-select-dropdown'), 'StreetAddress');
+//        $fields->insertAfter(DropdownField::create('Country', _t(
+//            'MemberRegForm.CURRENTCOUNTRY', 
+//            'Current Country'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown country-for-city-select'), 'City');
+//        $fields->insertAfter(new TextField('PostalCode', _t(
+//            'MemberRegForm.POSTALCODE', 
+//            'Postal Code')), 'Country');
+//        $fields->insertAfter(new DropdownField('HighSchool', _t(
+//            'MemberRegForm.HIGHSCHOOL', 
+//            'High School'), HighSchool::getHighSchoolOptions()), 'StreetAddress');
+//        
         $fields->insertBefore(new LiteralField('Hd_Security', '<h3>' . _t(
             'MemberRegForm.SECUTRIYLABEL', 
             'Security') . '</h3>'), 'Password');
@@ -65,9 +65,6 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $required = new RequiredFields(array(
             'FirstName',
             'Surname',
-            'City',
-            'Country',
-            'HighSchool',
             'Email',
             'Password'
         ));
@@ -282,7 +279,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             DropdownField::create('CurrentCountryID', _t(
                 'MemberProfileForms.COUNTRY',
                 'Country') . '<span>*</span>', array('selected' => $member->CurrentCountryID))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown country-for-city-select'),
-            DropdownField::create('City', _t(
+            DropdownField::create('CityID', _t(
                 'MemberProfileForms.CITY',
                 'City'))->setEmptyString('Select a City')->addExtraClass('city-select-dropdown'),
             new TextField('PostalCode', _t(

@@ -48,8 +48,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="3u 12u(3)">
+                    <div class="4u 12u(3)">
                         <div class="small-content-box">
+                            <h3>Browse by Category</h3>
+                            <% if getCategories %>
+                                <% loop getCategories %>
+                                    <a class='button small icon fa-{$Icon}' title='See posts about {$Title}' href='#'>$Title</a>
+                                <% end_loop %>
+                            
+                            <% else %>
+                                <h1>No Cats!</h1>
+                            <% end_if %>
                             $SideBarWidget
                         </div>
                     </div>

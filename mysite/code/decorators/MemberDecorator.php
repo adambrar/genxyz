@@ -65,7 +65,7 @@ class MemberDecorator extends DataExtension {
             'ID'        => $member->ProfilePictureID
         ))->First()->Link();
         } else {
-            return Director::baseURL() . 'assets/Uploads/default.jpg';
+            return 'assets/Uploads/default.jpg';
         }
     }
     

@@ -41,8 +41,4 @@ class BlogHolder_ControllerDecorator extends DataExtension {
         return $form;           
     }
     
-    public function IsSelf() {
-        echo "true";
-        return true;
-    }
 }

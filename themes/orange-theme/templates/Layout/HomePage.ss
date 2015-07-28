@@ -49,66 +49,6 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="row welcome_updates content-box-dark" id="forum_updates">
-                <div class="10u -1u 12u(9) gutters-fix">
-                    <div class="small-content-box">
-                        <h2 class="update_title"><%t HomePage.FORUM "Forum Updates" %></h2>
-                        <table class="forum-topics welcome_forum">
-                            <tr class="category">
-                                <td><% _t('ForumHolder_ss.FORUM','Forum') %></td>
-                                <td><% _t('ForumHolder_ss.LASTPOST','Last Post') %></td>
-                            </tr>
-                            <% loop $AllForums %>
-                                <% include WelcomeForumHolder_List %>
-                            <% end_loop %>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="welcome_updates"> 
-                <div class="row content-box-light">
-                    <div class="6u 12u(3) gutters-fix">
-                        <div class="small-content-box">
-                            <h2 class="update_title"><%t HomePage.STUDENTBLOG "Recent Blog Posts" %></h2>
-                            <% if StudentBlogPosts %>
-                                <% loop $StudentBlogPosts %>
-                                    <% include SingleBlogSummary %>
-                                <% end_loop %>
-                            <% else %>
-                                <p><%t HomePage.NOSTUDENTPOSTS "There are no recent student posts" %></p>
-                            <% end_if %>
-                        </div>
-                    </div>
-                    <div class="6u 12u(4) gutters-fix">
-                        <div class="small-content-box">
-                            <h2 class="update_title"><%t HomePage.GENXYZ "GenXYZ<" %>/h2>
-                            <% if GenXYZBlogPosts %>
-                                <% loop $GenXYZBlogPosts %>
-                                    <% include SingleBlogSummary %>
-                                <% end_loop %>
-                            <% else %>
-                                <p><%t HomePage.NOGENXYZPOSTS "There are no recent posts from GenXYZ" %></p>
-                            <% end_if %>
-                        </div>
-                    </div>
-                </div>
-                <div class="row content-box-dark">
-                    <div class="6u 12u(7) gutters-fix">
-                        <div class="small-content-box">
-                            <h2 class="update_title"><%t HomePage.MEDIA "Media Updates" %></h2>
-                            $MediaUpdates
-                        </div>
-                    </div>
-                    <div class="6u 12u(5) gutters-fix">
-                        <div class="small-content-box">
-                            <h2 class="update_title"><%t HomePage.INTERACTIVE "Interactive Updates" %></h2>
-                            $InteractiveUpdates
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </article>
     $Form
     $PageComments

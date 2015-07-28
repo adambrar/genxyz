@@ -41,6 +41,7 @@ Object::add_extension('BlogHolder_Controller', 'BlogHolder_ControllerDecorator')
 Object::add_extension('BlogEntry', 'BlogEntryDecorator');
 
 Object::add_extension('BlogTree', 'BlogTreeDecorator');
+Object::add_extension('BlogTree_Controller', 'BlogTree_ControllerDecorator');
 
 Object::add_extension('CommentingController', 'CommentingControllerDecorator');
 

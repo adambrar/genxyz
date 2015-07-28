@@ -8,56 +8,16 @@
                     <% if isSignedIn %>
                         <div class="content">
                             <div class="row content-box-light">
-                                <div class="3u 12u(1) gutters-fix">
+                                <div class="4u gutters-fix">
                                     <div class="small-content-box">
-                                        $FilterAcademics
+                                        <% include StudentSidebar %>
                                     </div>
                                 </div>
-                                <div class="6u 12u(2) gutters-fix">
+                                <div class="8u gutters-fix">
                                     <div class="small-content-box">
-                                        <h2>Universities</h2>
-                                        <% loop PaginatedUniversities %>
-                                            <div class="row">
-                                                <div class="3u">
-                                                    <a href="$Top.showProfilePageLink($ID)" class="image fit"><img class="avatar" src="$Top.LogoLink($ID)" alt="Logo" /></a>
-                                                </div>
-                                                <div class="9u">
-                                                    <h1><a href="$Top.showProfilePageLink($ID)" >$BusinessName</a></h1>
-                                                    <p>$Top.CountryName($BusinessCountryID) - $BusinessTelephone</p>
-                                                </div>
-                                            </div>
-                                        <% end_loop %>
-                                        <% if $PaginatedUniversities.MoreThanOnePage %>
-                                            <% if $PaginatedUniversities.NotFirstPage %>
-                                                <a class="prev button small" href="$PaginatedUniversities.PrevLink">Prev</a>
-                                            <% end_if %>
-                                            <% loop $PaginatedUniversities.Pages %>
-                                                <% if $CurrentBool %>
-                                                    $PageNum
-                                                <% else %>
-                                                    <% if $Link %>
-                                                        <a href="$Link">$PageNum</a>
-                                                    <% else %>
-                                                        ...
-                                                    <% end_if %>
-                                                <% end_if %>
-                                                <% end_loop %>
-                                            <% if $PaginatedUniversities.NotLastPage %>
-                                                <a class="next button small" href="$PaginatedUniversities.NextLink">Next</a>
-                                            <% end_if %>
-                                        <% end_if %>
+                                        <h2>Academics Page Coming Soon!</h2>
                                     </div>
-                                </div>
-                                <div class="3u 12u(3) gutters-fix">
-                                    <div class="small-content-box">
-                                        <h2>Updates</h2>
-                                        $Updates
-                                    </div>
-                                    <div class="small-content-box">
-                                        <h2>Recently Added</h2>
-                                        $RecentlyAdded
-                                    </div>
-                                </div>
+                                </div>                  
                             </div>
                         </div>
                     <% else %>

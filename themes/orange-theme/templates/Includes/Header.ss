@@ -20,7 +20,7 @@
                             <a id="langbar-button" href="{$profilePageLink}" title="MyProfile"><%t NavigationTemplate.MYPROFILE "MyProfile" %></a></li>
                             <li><a id="logout-button" href="Security/logout" title="Logout!">Logout</a>
                         <% else %>
-                            <li>one<ul><li>one</li><li>yep</li><li>two</li><li>three</li></ul>
+                            <a id="langbar-button" href="Security/login" title="Login to your account"><%t NavigationTemplate.LOGINBUTTON "Login" %></a></li>
                         <% end_if %>
                     <% else %>
                         <a id="langbar-button" href="home" title="Go Home!"><%t NavigationTemplate.GENXYZ "GenXYZ" %></a>

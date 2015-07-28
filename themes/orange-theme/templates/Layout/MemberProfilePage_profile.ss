@@ -87,9 +87,6 @@
     jQuery(".hidden-content").not(jQuery(this).parent().find(".hidden-content")).slideUp(500);
     jQuery(this).parent().find(".hidden-content").slideToggle(1000);
     
-    function onChatLoad() {
-        alert("hello");
-    }
 });
 </script>                                            
 <% include Footer %>

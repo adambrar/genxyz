@@ -743,6 +743,11 @@ h2.content-slider:hover {
         color: #666;
         margin-left: 1em;
     }
+
+    #account-settings-menu > ul > li > ul {
+        height: 0;
+        overflow: hidden;
+    }
     
 /*********************************************************************************/
 /* Student Sidebar Text                                                          */

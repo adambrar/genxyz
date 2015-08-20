@@ -8,6 +8,7 @@
 
 	body
 	{
+        /*theme color*/
 		background-color:		#09469A;
 		background-image:		-moz-linear-gradient(top, rgba(0,0,0,0.05), rgba(0,0,0,0)),		url('images/bg01.png');
 		background-image:		-webkit-linear-gradient(top, rgba(0,0,0,0.05), rgba(0,0,0,0)),	url('images/bg01.png');
@@ -106,7 +107,7 @@
 		border-left: solid 0.5em #eee;
 		padding: 1em 0 1em 2em;
 		font-style: italic;
-	}	
+	}
 	
 	p, ul, ol, dl, table
 	{
@@ -371,6 +372,7 @@
 			-webkit-appearance: none;
 			position: relative;
 			display: inline-block;
+            /*theme color*/
 			background: #4F87D4;
 			color: #fff;
 			text-decoration: none;
@@ -542,6 +544,7 @@ article.home_page {
 
 
 .content-box-dark {
+    /*theme color*/
     background-color: #6FA7E4;
     margin-top: 10px;
     border-radius: 15px;
@@ -553,6 +556,7 @@ article.home_page {
 }
 
 .content-box-light {
+    /*theme color*/
     background-color: #8FB7F4;
     margin-top: 10px;
     border-radius: 15px;
@@ -564,6 +568,7 @@ article.home_page {
 }
 
 .small-content-box {
+    /*theme color*/
     background-color: white;
     margin: 10px;
     padding: 1em 1em 1em 1em;
@@ -697,7 +702,8 @@ h2.content-slider:hover {
         color: #666;
         font-weight: bold;
         @include text-shadow(#111 0 -1px);
-        background: #FFAE27;
+        /*theme color*/
+        background: #FCDF15;
         -moz-border-radius: 10px;
         -webkit-border-radius: 10px;
         -khtml-border-radius: 10px;
@@ -708,12 +714,14 @@ h2.content-slider:hover {
         border-bottom: 1px solid #222;
     }
     .user_menu > ul > li > a:hover {
-        background: #FFBD50;
+        /*theme color*/
+        background: #FFEF25;
     }
     .user_menu > ul > li > ul {
         height: 0;
         overflow: hidden;
-        background: #FFCE47;
+        /*theme color*/
+        background: #FFEF25;
         color: #333;
         font-size: .75em;
         -moz-border-radius: 10px;
@@ -753,6 +761,7 @@ h2.content-slider:hover {
 /* Student Sidebar Text                                                          */
 /*********************************************************************************/
     #student-view-info-box {
+        /*theme color*/
         background-color: #FFAE27;
         padding: 10px;
         border-radius: 8px;
@@ -761,6 +770,7 @@ h2.content-slider:hover {
     }
 
     .student-sidebar-text {
+        /*theme color*/
         color: #0F5AC8;
         font-size: 1.2em;
     }

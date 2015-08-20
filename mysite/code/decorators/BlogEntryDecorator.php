@@ -18,7 +18,10 @@ class BlogEntryDecorator extends DataExtension {
         //if admin post return false
         if($this->owner->BlogHolder->OwnerID == 1) { return false; }
         
-        return $this->owner->BlogHolder->OwnerID ? Member::get()->byId( BlogHolder::get()->byId($this->owner->ParentID)->OwnerID )->getName() : "Anon";
+        if($this->owner->BlogHolder->OwnerID == 0) { return "Anonymous Author"; }
+        
+        
+        return Member::get()->byId( $this->owner->BlogHolder->OwnerID ) ? Member::get()->byId( $this->owner->BlogHolder->OwnerID )->getName() : "Anonymous Author";
     }
     
     function CurrentUserIsOwner() {

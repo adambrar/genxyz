@@ -39,8 +39,8 @@
                                     <div class="slider-content">
                                         <h2 class="content-slider"><%t StudentProfilePage.Chat "Forum Posts" %></h2>
                                         <div class="row hidden-content" style="display:none">    
-                                            <% if ForumPosts %>
-                                                <% loop ForumPosts %>
+                                            <% if Member.LatestForumPosts(Member) %>
+                                                <% loop Member.LatestForumPosts(Member) %>
                                                     <h1><a href="$Link">$Title</a></h1>
                                                     <p class="post-date">$Created.Long at $Created.Time</p>
                                                     <p>$Content.LimitCharacters(80)</p>

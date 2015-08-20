@@ -10,19 +10,10 @@
                                 <% include StudentSidebar %>
                             </div>                        
                         </div>
-                        <div class="4u 8u(3) gutters-fix">
+                        <div class="8u 8u(3) gutters-fix">
                             <div class="small-content-box">
-                                <% if $Children %>
-                                    <% loop $Children %>
-                                        <% include ServiceRequest %>
-                                    <% end_loop %>
-                                <% else %>
-                                    <p>There are noooo children</p>
-                                <% end_if %>
+                                $Content
                             </div>
-                        </div>
-                        <div class="4u 4u(2) gutters-fix">
-                            <% include StudentLeftBar %>
                         </div>
                     </div>
                 </article>

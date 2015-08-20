@@ -2,22 +2,32 @@
 
 class SidebarMenuPage extends Page 
 {
-     private static $defaults = array(
-         'menuWelcome' => '0',
-         'menuStudent' => '0',
-         'menuUniversity' => '0',
-         'menuStudentSidebar' => '1',
-         'showDropdown' => '0',
-         'menuShown' => 'Student'
-     );
+    private static $db = array(
+         'PageContent' => 'HTMLText'
+    );  
+    
+    private static $defaults = array(
+        'menuWelcome' => '0',
+        'menuStudent' => '0',
+        'menuUniversity' => '0',
+        'menuStudentSidebar' => '1',
+        'showDropdown' => '0',
+        'menuShown' => 'Student'
+    );
+    
+    public function getCMSFields() {
+        $fields = parent::getCMSFields();
+
+        $fields->addFieldToTab("Root.Main", new HtmlEditorField('Content', 'Content'), 'Metadata');
+        
+        return $fields;
+    }
     
 //    private static $allowed_children = array(
 //        'SidebarMenuService'
 //    );
 //    
-      static $can_be_root = false;
-    
-    
+      static $can_be_root = false;    
 }
  
 class SidebarMenuPage_Controller extends Page_Controller 

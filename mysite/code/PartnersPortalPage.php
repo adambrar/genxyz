@@ -299,10 +299,10 @@ class PartnersPortalPage_Controller extends Page_Controller
         }
 
         if($member->isUniversity()) {
-            $portalPage = PartnersPortalPage::get()->First()->Link();
+            $portalPage = PartnersPortalPage::get()->First();
             return $portalPage->Link() . 'edit/university/' . $member->ID;
         } else if($member->isAgent()) {
-            $portalPage = PartnersPortalPage::get()->First()->Link();
+            $portalPage = PartnersPortalPage::get()->First();
             return $portalPage->Link() . $portalPage . 'edit/agent/' . $member->ID;
         } else if($member->isStudent()) {
             return $profilePage = MemberProfilePage::get()->filter(array(

@@ -92,6 +92,56 @@ class MemberDecorator extends DataExtension {
         }
     }
     
+    // get profile picture
+    public function ProfilePicture($member = null) {
+        if(!$member) {
+            $member = Member::currentUser();
+        }
+        
+        $profilePicture = File::get()->filter(array(
+            'ClassName' => 'Image',
+            'ID'        => $member->ProfilePictureID
+        ))->First();
+        if(!$profilePicture) {
+            return "assets/Uploads/default.jpg";
+        } else {
+            return $profilePicture->Filename;
+        }
+    }
+    
+    public function getLatestForumPosts($member = null, $max = 5) {
+        if(!$member) {
+            return false;
+        }
+        
+        $posts = Post::get()->filter(array(
+            'AuthorID' => $member->ID
+        ))->sort('Created', 'DESC')->limit($max);
+        
+        return $posts;
+    }
+    
+    //get latest blog posts for member
+    public function getLatestBlogEntries($member = null, $max = 5) {
+        if(!$member) {
+            return false;
+        }
+
+        $holder = BlogHolder::get()->filter(array(
+            'ownerID' => $member->ID
+        ))->First();
+
+        if(!$holder) {
+            return false;
+        }
+        
+        $entries = SiteTree::get()->filter(array(
+            'ParentID' => $holder->ID
+        ))->limit($max);
+        
+        return $entries;
+    }
+    
     public function updateCMSFields(FieldList $fields) {
         $fields->addFieldToTab('Root.Main', DropdownField::create('MemberType', 'Member Type', singleton('Member')->dbObject('MemberType')->enumValues())->setEmptyString('Select Member Type'), 'FirstName');
 

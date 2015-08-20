@@ -256,7 +256,7 @@ class BlogTree_Controller extends Page_Controller {
 	 * @return PaginatedList
 	 */
 	public function BlogEntries($limit = null) {
-
+        
         require_once('Zend/Date.php');
 		
 		if($limit === null) $limit = BlogTree::$default_entries_limit;

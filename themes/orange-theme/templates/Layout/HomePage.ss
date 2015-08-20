@@ -20,7 +20,7 @@
                 <div id="slideshow-overlay" class="container 80%">
                     <div class="row">
                         <div class="3u">
-                            <a href="$ThemeDir/images/GenXYZ_dc.jpg" class="image fit"><img src="$ThemeDir/images/GenXYZ_dc.jpg" alt="ProfilePicture" /></a>
+                            <a id="LogoWelcomePicture" href="$ThemeDir/images/GenXYZ_dc.jpg" class="image fit"><img src="$ThemeDir/images/GenXYZ_dc.jpg" alt="Logo Welcome Picture" /></a>
                         </div>
                         <div class="9u">
                             <div class="text">

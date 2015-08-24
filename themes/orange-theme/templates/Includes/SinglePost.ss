@@ -3,7 +3,7 @@
 		<% with Author %>
             <a href="$getProfilePageLink($ID)" title="See this user's profile">$FirstName $Surname</a><br />
 		
-            <a href="$getProfilePageLink($ID)" class="image fit"><img class="avatar profile-picture" src="$getProfilePictureLink($ID)" alt="Avatar" /></a>
+            <a href="$getProfilePageLink($ID)" class="image fit"><img class="avatar profile-picture" src="$ProfilePictureLink($ProfilePictureID)" alt="Avatar" /></a>
 			<!--<% if ForumRank %><span class="forum-rank">$ForumRank</span><br /><% end_if %>-->
 			<% if NumPosts %>
 				<span class="post-count">$NumPosts 

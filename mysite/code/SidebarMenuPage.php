@@ -18,7 +18,7 @@ class SidebarMenuPage extends Page
     public function getCMSFields() {
         $fields = parent::getCMSFields();
 
-        $fields->addFieldToTab("Root.Main", new HtmlEditorField('Content', 'Content'), 'Metadata');
+        $fields->addFieldToTab("Root.Main", new HtmlEditorField('Content', 'Content'));
         
         return $fields;
     }

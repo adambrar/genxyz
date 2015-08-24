@@ -30,7 +30,7 @@ class BlogHolder_ControllerDecorator extends DataExtension {
             });
             setTimeout(function () { 
                 tinyMCE.activeEditor.onKeyPress.add(function(){$("textarea").val(tinyMCE.activeEditor.getContent());});
-                tinyMCE.activeEditor.onPaste.add(function(ed, e){$("textarea").val(tinyMCE.activeEditor.getContent());console.debug("pasted.");});
+                tinyMCE.activeEditor.onPaste.add(function(ed, e){$("textarea").val(tinyMCE.activeEditor.getContent());});
                 }, 2000);
             </script>'));
         

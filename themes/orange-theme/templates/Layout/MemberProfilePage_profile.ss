@@ -13,12 +13,25 @@
                             </div>
                             <div class="8u 12u(2) gutters-fix">    
                                 <div class="small-content-box">
+                                    <!--Forum content-->
                                     <div class="slider-content">
-                                        <h2 class="content-slider"><%t StudentProfilePage.STUDENTCHATROOM "Student Chatroom" %></h2>
-                                        <iframe id="student-chat" class="hidden-content" src={$ChatLink} width="100%" height="800" scrolling="auto" frameborder="0" name="frame_chat"> </iframe>
+                                        <h2 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw"></i><%t StudentProfilePage.Chat "Forum Posts" %></h2>
+                                        <div class="hidden-content" style="display:none">    
+                                            <table class="default mini-forum">
+                                                <tr>
+                                                    <td><% _t('ForumHolder_ss.FORUM','Forum') %></td>
+                                                    <td><% _t('ForumHolder_ss.LASTPOST','Last Post') %></td>
+                                                </tr>
+                                                <% loop $AllForums %>
+                                                    <% include MiniForumHolder_List %>
+                                                <% end_loop %>
+                                            </table>
+                                        </div>
+
                                     </div>
+                                    <!--Blog content-->
                                     <div class="slider-content">
-                                        <h2 class="content-slider"><%t StudentProfilePage.BLOGMANAGEMENT "Blog Management" %></h2>
+                                        <h2 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw"></i><%t StudentProfilePage.BLOGMANAGEMENT "Blog Management" %></h2>
                                         <div class="row hidden-content" style="display:none">    
                                             <div class="7u">
                                                 <% if BlogEntries %>
@@ -36,20 +49,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!--Chatroom content-->                   
                                     <div class="slider-content">
-                                        <h2 class="content-slider"><%t StudentProfilePage.Chat "Forum Posts" %></h2>
-                                        <div class="row hidden-content" style="display:none">    
-                                            <% if Member.LatestForumPosts(Member) %>
-                                                <% loop Member.LatestForumPosts(Member) %>
-                                                    <h1><a href="$Link">$Title</a></h1>
-                                                    <p class="post-date">$Created.Long at $Created.Time</p>
-                                                    <p>$Content.LimitCharacters(80)</p>
-                                                <% end_loop %>
-                                            <% else %>
-                                                <h1><%t StudentProfile.NOPOSTS "There are no recent forum posts!" %></h1>                                            
-                                            <% end_if %>
-                                        </div>
-
+                                        <h2 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw"></i><%t StudentProfilePage.STUDENTCHATROOM "Student Chatroom" %></h2>
+                                        <iframe id="student-chat" class="hidden-content" style="display:none" src={$ChatLink} width="100%" height="800" scrolling="auto" frameborder="0" name="frame_chat"> </iframe>
                                     </div>
                                 </div>
                             </div>
@@ -84,9 +87,12 @@
 </div>
 <script type="text/javascript">
     jQuery(".content-slider").click(function(){
-    jQuery(".hidden-content").not(jQuery(this).parent().find(".hidden-content")).slideUp(500);
-    jQuery(this).parent().find(".hidden-content").slideToggle(1000);
-    
-});
+        jQuery(".fa-rotate-90").removeClass("fa-rotate-90");
+        if(!jQuery(this).parent().find(".hidden-content").is(":visible")) {
+            jQuery(this).children().addClass("fa-rotate-90");
+        }
+        jQuery(".hidden-content").not(jQuery(this).parent().find(".hidden-content")).slideUp(750);
+        jQuery(this).parent().find(".hidden-content").slideToggle(750);
+    });
 </script>                                            
 <% include Footer %>

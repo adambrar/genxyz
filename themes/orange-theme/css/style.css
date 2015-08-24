@@ -208,27 +208,27 @@
 
 			form .formerize-placeholder
 			{
-				color: #555 !important;
+				color: rgba(112, 192, 229, 0.9) !important;
 			}
 
 			form ::-webkit-input-placeholder
 			{
-				color: #555 !important;
+				color: rgba(112, 192, 229, 0.9) !important;
 			}
 
 			form :-moz-placeholder
 			{
-				color: #555 !important;
+				color: rgba(112, 192, 229, 0.9) !important;
 			}
 
 			form ::-moz-placeholder
 			{
-				color: #555 !important;
+				color: rgba(112, 192, 229, 0.9) !important;
 			}
 
 			form :-ms-input-placeholder
 			{
-				color: #555 !important;
+				color: rgba(112, 192, 229, 0.9) !important;
 			}
 
 			form ::-moz-focus-inner
@@ -238,18 +238,13 @@
 
     /* Form Messages */
     .message.Bad,
-    .message.bad
-    {
-        color: red;
-        font-weight: bold;
-    }
+    .message.bad,
+    .message
+    { color: red; }
 
     .message.Good,
-    .message.good
-    {
-        color: green;
-        font-weight: bold;
-    }
+    .message.good 
+    { color: green; }
 
 	/* Tables */
 	
@@ -271,6 +266,7 @@
 					table.default tr:first-child
 					{
 						border-top: 0;
+                        background-color: #C7C7C7;
 					}
 			
 				table.default td
@@ -299,6 +295,7 @@
 				table.default tbody
 				{
 				}
+        table.mini-forum tr td:first-child {width: 40%;}
  
 	/* Image */
 

@@ -14,7 +14,9 @@
     <% end_loop %>
     </li>
     <li>-</li>
-    
+    <% if isProfileSaved %>
+        <li><span class="message good">Your profile has been updated!</span></li>
+    <% end_if %>
     <li id="account-settings-menu">
         <a id="account-settings" class="dropdown" href=""><%t StudentProfile.ACCOUNTSETTINGS "Account Settings" %></a>
         <ul>

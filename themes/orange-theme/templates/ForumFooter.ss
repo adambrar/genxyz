@@ -13,10 +13,10 @@
                         </p>
                         <% end_if %> -->
                         <p>
-                            <strong><% _t('ForumFooter_ss.LATESTMEMBER','Welcome to our latest member:') %></strong>			
-                            <% if $NewestMember(1) %>
-                                <% loop $NewestMember(1) %>
-                                    <a href="$getProfilePageLink($ID)">$FirstName $Surname</a>
+                            <strong><% _t('ForumFooter_ss.LATESTMEMBER','Welcome to our latest member(s):') %></strong>			
+                            <% if $NewestMember(3) %>
+                                <% loop $NewestMember(3) %>
+                                    <a href="$getProfilePageLink($ID)">$FirstName $Surname</a>|
                                 <% end_loop %>
                             <% end_if %>
                         </p>

@@ -5,7 +5,7 @@ class BlogCategory extends DataObject {
     private static $db = array(
         'Title' => 'Varchar(100)',
         'Description' => 'Text',
-        'Icon' => 'Varchar(100)'
+        'FontAwesomeIcon' => 'Varchar(100)'
     );
     
     private static $has_many = array(

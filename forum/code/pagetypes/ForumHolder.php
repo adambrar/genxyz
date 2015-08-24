@@ -143,6 +143,9 @@ class ForumHolder extends Page {
 		  	"LoggedInUsers" => _t('Forum.READLOGGEDIN', 'Logged-in users'),
 			"NoOne" => _t('Forum.READNOONE', 'Nobody. Make Forum Read Only')
 		)));
+        
+        //Custom Added//
+        $this->updateCMSFields($fields);
 
 		return $fields;
 	}

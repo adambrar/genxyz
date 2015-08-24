@@ -22,7 +22,7 @@ class GroupRedirectLoginForm extends MemberLoginForm {
         );
         
         if($controller->ClassName != "PartnersPortalPage") {
-            $actions->push(FormAction::create('register', 'Register')->addExtraClass('register-button'));
+            $actions->push(LiteralField::create('register', '<a class="register-button button small" href="register">Register</a>'));
         }
 
         //LoginForm does its magic

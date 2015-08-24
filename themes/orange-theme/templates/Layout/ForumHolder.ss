@@ -1,6 +1,6 @@
 <% include ForumHeader %>
 
-<table class="forum-topics">
+<table class="default">
 
     <% if GlobalAnnouncements %>
         <tr class="category">

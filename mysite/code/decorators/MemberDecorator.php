@@ -54,21 +54,6 @@ class MemberDecorator extends DataExtension {
         ))->First()->Link() . 'show/' . $id;
     }
     
-    public function getProfilePictureLink($id) {
-        $member = Member::get()->ByID($id);
-        if(!$member || !$member->isStudent($member))
-            return false;
-        
-        if($member->ProfilePictureID) {
-            return File::get()->filter(array(
-            'ClassName' => 'Image',
-            'ID'        => $member->ProfilePictureID
-        ))->First()->Link();
-        } else {
-            return 'assets/Uploads/default.jpg';
-        }
-    }
-    
     public function isStudent(Member $member = null) {
         if(!$member) {
             return $this->owner->MemberType == "Student";
@@ -93,17 +78,22 @@ class MemberDecorator extends DataExtension {
     }
     
     // get profile picture
-    public function ProfilePicture($member = null) {
-        if(!$member) {
-            $member = Member::currentUser();
+    public function ProfilePictureLink($ID = null) {
+        if(!$ID) {
+            return File::get()->filter(array(
+                'Title' => 'DefaultProfilePicture'
+            ))->First()->Filename;
         }
         
         $profilePicture = File::get()->filter(array(
             'ClassName' => 'Image',
-            'ID'        => $member->ProfilePictureID
+            'ID'        => $ID
         ))->First();
+
         if(!$profilePicture) {
-            return "assets/Uploads/default.jpg";
+            return File::get()->filter(array(
+                'Title' => 'DefaultProfilePicture'
+            ))->First()->Filename;
         } else {
             return $profilePicture->Filename;
         }

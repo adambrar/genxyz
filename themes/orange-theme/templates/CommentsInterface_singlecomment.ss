@@ -1,6 +1,6 @@
 <div class="row 50%">
     <div class="2u profile-picture">
-        <a href="$Author.getProfilePageLink($Author.ID)" class="image fit"><img class="avatar" src="$Author.getProfilePictureLink($Author.ID)" alt="Avatar" /></a>
+        <a href="$Author.getProfilePageLink($Author.ID)" class="image fit"><img class="avatar" src="$Author.ProfilePictureLink($Author.ProfilePictureID)" alt="Avatar" /></a>
     </div>
     <div class="10u">
         <div class="comment-content" id="$Permalink">

@@ -26,41 +26,19 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     public function updateRegisterForm($form) {
         $fields = $form->Fields();
 		
-        $fields->insertBefore(new LiteralField('Hd_Personal', '<h3>' . _t(
+        $fields->insertBefore(LiteralField::create('Hd_Personal', '<h3>' . _t(
             'MemberRegForm.PERSONALINFOLABEL', 
             'Personal Info') . '</h3>'), 'FirstName');
-        $fields->insertAfter(new TextField('MiddleName', _t(
-            'MemberRegForm.MIDDLENAME', 
-            'Middle Name')), 'Firstname');
-//        $fields->insertAfter(DropdownField::create('Nationality', _t(
-//            'MemberRegForm.NATIONALITY', 
-//            'Nationality'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'), 'Email');
-		
-//        $fields->insertAfter(new LiteralField('Hd_Address', '<h3>' . _t(
-//            'MemberRegForm.ADDRESSLABEL', 
-//            'Address') . '</h3>'), 'Nationality');
-//        $fields->insertAfter(new TextField('StreetAddress', _t(
-//            'MemberRegForm.STREETADDRESS', 
-//            'Street Address')), 'Hd_Address');
-//        $fields->insertAfter(DropdownField::create('City', _t(
-//            'MemberRegForm.CITY', 
-//            'City'))->setEmptyString('Select a Country to see Cities')->addExtraClass('city-select-dropdown'), 'StreetAddress');
-//        $fields->insertAfter(DropdownField::create('Country', _t(
-//            'MemberRegForm.CURRENTCOUNTRY', 
-//            'Current Country'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown country-for-city-select'), 'City');
-//        $fields->insertAfter(new TextField('PostalCode', _t(
-//            'MemberRegForm.POSTALCODE', 
-//            'Postal Code')), 'Country');
-//        $fields->insertAfter(new DropdownField('HighSchool', _t(
-//            'MemberRegForm.HIGHSCHOOL', 
-//            'High School'), HighSchool::getHighSchoolOptions()), 'StreetAddress');
-//        
+        $fields->dataFieldByName('FirstName')->setAttribute('placeholder','Enter your first name.');
+        $fields->dataFieldByName('Surname')->setAttribute('placeholder','Enter your last name.');
+        $fields->dataFieldByName('Email')->setAttribute('placeholder','Enter a valid email we can confirm.');
         $fields->insertBefore(new LiteralField('Hd_Security', '<h3>' . _t(
             'MemberRegForm.SECUTRIYLABEL', 
             'Security') . '</h3>'), 'Password');
         $fields->insertAfter(new LiteralField('TermsConditions', '<p>' . _t(
             'MemberRegForm.TERMSCONDITIONS', 
             'By registering you confirm you have read our <a href="#">terms and conditions</a> and understand our <a href="#">policies</a></p>') . '</h4>'), 'Password');
+        $fields->dataFieldByName('Password')->setAttribute('placeholder', 'Enter a password');
         
         $required = new RequiredFields(array(
             'FirstName',
@@ -70,6 +48,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         ));
         
         $form->setFields($fields);
+        $form->setValidator($required);
     }
     
     //---Profile Page Data---//
@@ -90,17 +69,6 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $pageData['ChatLink'] = "http://localhost/ajax/chat?userName=" . $chatName . "&userID=".$member->ID;
 
         $pageData['IsSelf'] = $member->ID == Member::currentUserID();
-
-        // get profile picture
-        $profilePicture = File::get()->filter(array(
-            'ClassName' => 'Image',
-            'ID'        => $member->ProfilePictureID
-        ))->First();
-        if(!$profilePicture) {
-            $pageData['ProfilePictureFile'] = "assets/Uploads/Desert.jpg";
-        } else {
-            $pageData['ProfilePictureFile'] = $profilePicture->Filename;
-        }
             
         // get info for members blog
         $holder = BlogHolder::get()->filter(array(
@@ -228,24 +196,28 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new LiteralField('LiteralHeader', '<h2>' . _t(
                 'MemberProfileForms.BASICLABEL',
                 'Basic Information') . '</h2>'),
-            new TextField('FirstName', _t(
+            TextField::create('FirstName', _t(
                 'MemberProfileForms.FIRSTNAME',
-                'First Name') . '<span>*</span>'),
-            new TextField('MiddleName', _t(
+                'First Name') . '<span>*</span>')
+                ->setAttribute('placeholder', 'Enter your first name'),
+            TextField::create('MiddleName', _t(
                 'MemberProfileForms.MIDDLENAME',
-                'Middle Name')),
-            new TextField('Surname', _t(
+                'Middle Name'))
+                ->setAttribute('placeholder', 'Enter your middle name'),
+            TextField::create('Surname', _t(
                 'MemberProfileForms.SURNAME',
-                'Surname') . '<span>*</span>'),
+                'Surname') . '<span>*</span>')
+                ->setAttribute('placeholder', 'Enter your last name'),
             new DateField('DateOfBirth', _t(
                 'MemberProfileForms.BIRTHDAY',
                 'Birthday')),
             DropdownField::create('NationalityID', _t(
                 'MemberProfileForms.NATIONALITY',
                 'Nationality'), array('selected' => $member->NationalityID))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
-            new EmailField('Email', _t(
+            EmailField::create('Email', _t(
                 'MemberProfileForms.EMAIL',
                 'Email') . '<span>*</span>')
+                ->setAttribute('placeholder', 'Enter a valid email address')
         );
         
         $actions = new FieldList(
@@ -273,18 +245,21 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new LiteralField('LiteralHeader', '<h2>' . _t(
                 'MemberProfileForms.CURRENTADDRESS',
                 'Current Address') . '</h2>'),
-            new TextField('StreetAddress', _t(
+            TextField::create('StreetAddress', _t(
                 'MemberProfileForms.STREETADDRESS',
-                'Street Address') . '<span>*</span>'),
+                'Street Address') . '<span>*</span>')
+                ->setAttribute('placeholder', 'Enter your current address'),
             DropdownField::create('CurrentCountryID', _t(
                 'MemberProfileForms.COUNTRY',
                 'Country') . '<span>*</span>', array('selected' => $member->CurrentCountryID))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown country-for-city-select'),
             DropdownField::create('CityID', _t(
                 'MemberProfileForms.CITY',
-                'City'))->setEmptyString('Select a City')->addExtraClass('city-select-dropdown'),
-            new TextField('PostalCode', _t(
+                'City'))->setEmptyString('Select a Country to view Cities')->addExtraClass('city-select-dropdown')
+                ->setAttribute('data-selected-city', $member->CityID),
+            TextField::create('PostalCode', _t(
                 'MemberProfileForms.POSTALCODE',
-                'Postal Code')),
+                'Postal Code'))
+                ->setAttribute('placeholder', 'Enter your current postal code'),
             
             new HiddenField('Username', 'Username'),
             new HiddenField('Email', 'Email')
@@ -314,9 +289,10 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new LiteralField('LiteralHeader', '<h2>' . _t(
                 'MemberProfileForms.EDUCATIONLABEL',
                 'Education Information') . '</h2>'),
-            new TextField('Agency', _t(
+            TextField::create('Agency', _t(
                 'MemberProfileForms.AGENCY',
-                'Agency')),
+                'Agency'))
+                ->setAttribute('placeholder', 'Enter any academic agencies you\'re working with'),
             new DropdownField('HighSchoolID', _t(
                 'MemberProfileForms.HIGHSCHOOL',
                 'High School') . '<span>*</span>', HighSchool::getHighSchoolOptions()),
@@ -356,21 +332,25 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new LiteralField('LiteralHeader', '<h2>' . _t(
                 'MemberProfileForms.EMERGENCYCONTACTLABEL',
                 'Emergency Contact Details') . '</h2>'),
-            new TextField('ContactFirstName', _t(
+            TextField::create('ContactFirstName', _t(
                 'MemberProfileForms.FIRSTNAME',
-                'First Name') . '<span>*</span>'),
-            new TextField('ContactSurname', _t(
+                'First Name') . '<span>*</span>')
+                ->setAttribute('placeholder', 'Enter your contact\'s first name'),
+            TextField::create('ContactSurname', _t(
                 'MemberProfileForms.SURNAME',
-                'Family Name') . '<span>*</span>'),
-            new PhoneNumberField('ContactTelephone', _t(
+                'Family Name') . '<span>*</span>')
+                ->setAttribute('placeholder', 'Enter your contact\'s last name'),
+            PhoneNumberField::create('ContactTelephone', _t(
                 'MemberProfileForms.CONTACTTELEPHONE',
-                'Telephone')),
+                'Telephone'))
+                ->setAttribute('placeholder', 'Enter your contact\'s phone number'),
             DropdownField::create('ContactCountryID', _t(
                 'MemberProfileForms.COUNTRY',
                 'Current Country'), array('selected' => $member->ContactCountryID))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
-            new EmailField('ContactEmail', _t(
+            EmailField::create('ContactEmail', _t(
                 'MemberProfileForms.EMAIL',
-                'Email') . '<span>*</span>'),
+                'Email') . '<span>*</span>')
+                ->setAttribute('placeholder', 'Enter your contact\'s primary email'),
 
             new HiddenField('Username', 'Username'),
             new HiddenField('Email', 'Email')
@@ -440,24 +420,26 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
 			_t('MemberProfiles.PROFILEUPDATED', 'Your profile has been updated!'),
 			'good'
 		);
+        Session::set('profile-form-saved', 1);
         
-		return $this->owner->redirectBack();
+		return $this->owner->redirectBack('?saved=1');//($this->Link('?saved=1'));
 	}
     
-    public function includeChatRooms($member = null) {
-        require_once $_SERVER['DOCUMENT_ROOT']."/freechat/src/phpfreechat.class.php";
-
-        $params["serverid"] = md5(__FILE__."M"); // calculate a unique id for this chat
-        $params["title"]    = "Student Chat";
-        $params["nick"]     = "member";  // setup the intitial nickname
-        $params["channels"]        = array("room1");
-        $params["frozen_channels"] = array("room1", "room2", "room3", "room4");
-        $params["display_ping"] = false;
-        $params["theme"] = 'msn';
-        $params["showsmileys"] = false;
-
-        $chat = new phpFreeChat( $params );
-        return $chat->printChat(true);
+    public function isProfileSaved() {
+        if(Session::get('profile-form-saved')) {
+            Session::clear('profile-form-saved');
+            return true;
+        }
+        
+        return false;
+    }
+    
+    function AllForums($num=5) {
+        $holder = Forum::get()->First();
+        
+        if(!$holder) { return false; }
+        
+        return ($holder) ? Forum::get()->limit($num) : false;    
     }
     
     //---End Profile Page Data---//
@@ -508,6 +490,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         
         //set member type to student
         $member->MemberType = "Student";
+        
         $member->write();
     }
     

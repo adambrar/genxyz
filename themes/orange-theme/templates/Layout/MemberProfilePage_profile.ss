@@ -21,6 +21,7 @@
                                                 <tr>
                                                     <td><% _t('ForumHolder_ss.FORUM','Forum') %></td>
                                                     <td><% _t('ForumHolder_ss.LASTPOST','Last Post') %></td>
+                                                    <td><% _t('ForumHolder_ss.NEWPOST','') %></td>
                                                 </tr>
                                                 <% loop $AllForums %>
                                                     <% include MiniForumHolder_List %>

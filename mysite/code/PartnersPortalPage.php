@@ -2,9 +2,13 @@
  
 class PartnersPortalPage extends Page 
 {
-     private static $db = array(
-         'Message' => 'Text',
-     );
+    private static $db = array(
+        'Message' => 'Text',
+    );
+    
+    private static $defaults = array(
+        'menuShown' => 'None'
+    );
     
     public function getCMSFields() {
         $fields = parent::getCMSFields();

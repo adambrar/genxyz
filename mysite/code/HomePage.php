@@ -2,12 +2,17 @@
  
 class HomePage extends Page 
 {
-     private static $db = array(
-         'WelcomeTitle' => 'Text',
-         'WelcomeMessage' => 'Text',
-         'MediaUpdates' => 'HTMLText',
-         'InteractiveUpdates' => 'HTMLText'
-     );
+    private static $db = array(
+        'WelcomeTitle' => 'Text',
+        'WelcomeMessage' => 'Text',
+        'MediaUpdates' => 'HTMLText',
+        'InteractiveUpdates' => 'HTMLText'
+    );
+
+    private static $defaults = array(
+        'menuShown' => 'Welcome',
+        'menuWelcome' => true
+    );
     
     public function getCMSFields() {
         $fields = parent::getCMSFields();

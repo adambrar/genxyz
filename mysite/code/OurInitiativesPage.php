@@ -11,6 +11,11 @@ class OurInitiativesPage extends Page
         'WorkPlacement' => 'Text'
     );
     
+    private static $defaults = array(
+        'menuShown' => 'Welcome',
+        'menuWelcome' => true
+    );
+    
     public function getCMSFields() {
         $fields = parent::getCMSFields();
               

@@ -13,15 +13,20 @@
 
                                 <div class="blogEntry">
                                     <h2 class="postTitle">$Title</h2>
-                                    <p class="authorDate"><% if authorName %><% _t('BlogEntry_ss.POSTEDBY', 'Posted by') %> <a href="{$authorProfileURL($BlogHolder.OwnerID)}" target="_blank">$authorName</a><% else %>Posted <% end_if %><% _t('BlogEntry_ss.POSTEDON', 'on') %> $Date.Long | $Comments.Count <% _t('BlogEntry_ss.COMMENTS', 'Comments') %></p>
-                                    <% if TagsCollection %>
-                                        <p class="tags">
-                                             <% _t('BlogEntry_ss.TAGS', 'Tags:') %> 
+                                    <p class="authorDate"><% if authorName %><% _t('BlogEntry_ss.POSTEDBY', 'Posted by') %> <a href="{$authorProfileURL($BlogHolder.OwnerID)}" target="_blank">$authorName </a><% else %>Posted <% end_if %><% _t('BlogEntry_ss.POSTEDON', 'on') %> $Date.Long | $Comments.Count <% _t('BlogEntry_ss.COMMENTS', 'Comments') %></p>
+                                    <p class="tags">
+                                        <% if Topic %>
+                                            <% with Topic %>
+                                                Topic: <a href="{$Link}">$Title</a>
+                                            <% end_with %>
+                                        <% end_if %>
+                                        <% if TagsCollection %>
+                                            <% _t('BlogEntry_ss.TAGS', 'Tags:') %> 
                                             <% loop TagsCollection %>
                                                 <a href="$Link" title="<% _t('BlogEntry_ss.VIEWALLPOSTTAGGED', 'View all posts tagged') %> '$Tag'" rel="tag">$Tag</a><% if not Last %>,<% end_if %>
                                             <% end_loop %>
-                                        </p>
-                                    <% end_if %>		
+                                        <% end_if %>
+                                    </p>
                                     <div class="blog-content">$Content</div>
                                 </div>
 

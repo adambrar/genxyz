@@ -7,6 +7,12 @@ class AcademicsPage extends Page
          'RecentlyAdded' => 'HTMLText',
      );
     
+private static $defaults = array(
+        'menuShown' => 'Student',
+        'menuWelcome' => false,
+        'menuStudent' => true
+    );
+    
     public function getCMSFields() {
         $fields = parent::getCMSFields();
               

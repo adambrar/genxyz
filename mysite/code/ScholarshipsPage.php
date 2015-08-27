@@ -8,7 +8,8 @@ class ScholarshipsPage extends Page
      );
     
     private static $defaults = array(
-        'menuStudent' => '1'
+        'menuShown' => 'Student',
+        'menuStudent' => true
     );
         
     

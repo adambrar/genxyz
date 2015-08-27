@@ -5,6 +5,17 @@ class BlogEntryDecorator extends DataExtension {
         'Category' => 'BlogCategory'
     );
     
+    private static $defaults = array(
+        'menuShown' => 'Student'
+    );
+    
+    public function updateCMSFields(FieldList $fields) {
+        $fields->addFieldToTab("Root.Main", DropdownField::create('CategoryID', 'Category', BlogCategory::getBlogCategories())->setEmptyString('Select a Category'));
+        $fields->addFieldToTab("Root.Main", new HtmlEditorField('Content', 'Content'));
+
+    }
+
+    
     function authorProfileURL($authorID) {
         $profilePage = SiteTree::get()->filter(array(
             'ClassName' => 'MemberProfilePage',
@@ -26,6 +37,10 @@ class BlogEntryDecorator extends DataExtension {
     
     function CurrentUserIsOwner() {
         return $this->owner->BlogHolder->OwnerID == Member::currentUserID();
+    }
+    
+    public function Topic() {
+        return BlogCategory::get()->byID($this->owner->CategoryID);
     }
 
 }

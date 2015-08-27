@@ -22,6 +22,15 @@ error_reporting(E_ALL);
 
 Member::set_unique_identifier_field('Email');
 
+//set password requiresments
+$validator = new PasswordValidator();
+$validator->minLength(8);
+$validator->characterStrength(2, array('lowercase', 'uppercase', 'digits', 'punctuation'));
+$validator->checkHistoricalPasswords(3);
+Member::set_password_validator($validator);
+
+Member::lock_out_after_incorrect_logins(4);
+
 HTMLEditorConfig::get('cms')->setOption('valid_elements', '*[*]');
 HTMLEditorConfig::get('cms')->setOption('invalid_elements', 'script');
 

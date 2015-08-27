@@ -3,8 +3,7 @@ class GroupRedirectLoginForm extends MemberLoginForm {
     
     private static $allowed_actions = array(
         'dologin',
-        'LoginForm',
-        'register'
+        'LoginForm'
     );
     
     function __construct($controller, $name, $fields = null, 
@@ -18,19 +17,15 @@ class GroupRedirectLoginForm extends MemberLoginForm {
         );
 
         $actions = new FieldList(
-            new FormAction('dologin', 'Log in')
+            FormAction::create('dologin', 'Log in')->addExtraClass('login-button')
         );
         
         if($controller->ClassName != "PartnersPortalPage") {
-            $actions->push(LiteralField::create('register', '<a class="register-button button small" href="register">Register</a>'));
+            $actions->push(LiteralField::create('register', '<a id="register-button" class="button small" href="register">Register</a>'));
         }
 
         //LoginForm does its magic
         parent::__construct($controller, $name, $fields, $actions);
-    }
-    
-    public function register($data) {
-        $this->controller->redirect(Director::absoluteURL('register', true));
     }
     
     public function dologin($data) {

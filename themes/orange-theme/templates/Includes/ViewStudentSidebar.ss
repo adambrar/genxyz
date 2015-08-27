@@ -19,7 +19,11 @@
                         <li><%t StudentProfile.UNIVERSITYUNKNOWN "University: <span class='student-sidebar-text'>Unknown</span>" %></li>
                     <% end_if %>
                     <li><%t StudentProfile.COUNTRY "Country" %>: <span class="student-sidebar-text">$CountryName($Member.CurrentCountryID)</span></li>
-                    <li><%t StudentProfile.BIRTHDAY "Birthday" %>: <span class="student-sidebar-text">$Member.DateOfBirth.Long</span></li>
+                    <% if Member.DateOfBirth %>
+                        <li><%t StudentProfile.BIRTHDAY "Birthday" %>: <span class="student-sidebar-text">$Member.DateOfBirth.Long</span></li>
+                    <% else %>
+                        <li><%t StudentProfile.BIRTHDAY "Birthday" %>: <span class="student-sidebar-text">Classified</span></li>
+                    <% end_if %>
                 </ul>
                 </h1>
             </div>

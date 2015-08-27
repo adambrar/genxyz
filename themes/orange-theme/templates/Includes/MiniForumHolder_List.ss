@@ -18,4 +18,5 @@
 			<% end_with %>
 		<% end_if %>
 	</td>
+    <td class="mini-forum-button"><a class="mini-forum-button button small" href="$Link/starttopic">Start new topic!</a></td>
 </tr>

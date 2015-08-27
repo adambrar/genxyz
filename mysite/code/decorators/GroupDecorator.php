@@ -11,8 +11,8 @@ class GroupDecorator extends DataExtension {
     );
     
     public function updateCMSFields(FieldList $fields) {
-        $fields->addFieldToTab("Root.Members", new TreeDropdownField("LinkedPageID", "Select a Page to redirect to after Login", "SiteTree"), 'Members');
-        $fields->addFieldToTab("Root.Members", new CheckboxField("GoToAdmin", "Or go to Admin area after Login"), 'Members');
-        $fields->addFieldToTab("Root.Members", new CheckboxField("GoToAcademicsPortal", "Or go to Academics area after Login"), 'Members');
+        $fields->addFieldToTab('Root.Members', new TreeDropdownField('LinkedPageID', 'Select a Page to redirect to after Login', 'SiteTree'), 'Members');
+        $fields->addFieldToTab('Root.Members', new CheckboxField('GoToAdmin', 'Or go to Admin area after Login'), 'Members');
+        $fields->addFieldToTab('Root.Members', new CheckboxField('GoToAcademicsPortal', 'Or go to Academics area after Login'), 'Members');
     }
 }   

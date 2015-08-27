@@ -1,15 +1,19 @@
 <div class="blogSummary">
 	<h1 class="postTitle"><a href="$Link" title="<% _t('BlogSummary_ss.VIEWFULL', 'View full post titled -') %> '$Title'">$MenuTitle</a></h1>
 	<p class="authorDate"><% if authorName %><% _t('BlogSummary_ss.POSTEDBY', 'Posted by') %> <a href="{$authorProfileURL($BlogHolder.OwnerID)}" target="_bl  ank">$authorName</a><% else %><% _t('BlogSummary_ss.POSTED', 'Posted') %><% end_if %> <% _t('BlogSummary_ss.POSTEDON', 'on') %> $Date.Long</p>
-	<% if TagsCollection %>
-		<p class="tags">
-			<% _t('BlogSummary_ss.TAGS','Tags') %>:
-			<% loop TagsCollection %>
-				<a href="$Link" title="View all posts tagged '$Tag'" rel="tag">$Tag</a><% if not Last %>,<% end_if %>
-			<% end_loop %>
-		</p>
-	<% end_if %>
-
+    <p class="tags">
+        <% if Topic %>
+            <% with Topic %>
+                Topic: <a href="{$Link}">$Title</a>
+            <% end_with %>
+        <% end_if %>
+        <% if TagsCollection %>
+            <% _t('BlogEntry_ss.TAGS', 'Tags:') %> 
+            <% loop TagsCollection %>
+                <a href="$Link" title="<% _t('BlogEntry_ss.VIEWALLPOSTTAGGED', 'View all posts tagged') %> '$Tag'" rel="tag">$Tag</a><% if not Last %>,<% end_if %>
+            <% end_loop %>
+        <% end_if %>
+    </p>
     <p class="blog-content">$Content.LimitCharacters(120)</p>
 	
 	<p class="blogVitals">

@@ -7,7 +7,21 @@
             <div class="container">
                 <h2>$Title</h2>
                 <div class="row content-box-light">
-                    <div class="6u -1u 12u(2)">
+                    <% if getCategories %>
+                    <div class="3u 12u(1)">
+                        <div class="small-content-box">
+                            
+                            <ul class="blog-topics">
+                                <li><h2>Topics</h2></li>
+                                <% loop getCategories %>
+                                    <li<%if Top.isCategorySelected($Title) %> class="selected"<% end_if %>><a href="{$Top.Link}topic/{$Title}" title='{$Description}'><i class='fa fa-fw fa-{$FontAwesomeIcon}'></i>$Title</a></li>
+                                <% end_loop %>
+                                <li><a href="{$Link}" title='See all blog entries'><i class='fa fa-fw fa-refresh'></i>See All</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <% end_if %>
+                    <div class="6u 12u(2)">
                         <div id="content">
                             <% include BlogSideBar %>
                             <div class="content-container unit size3of4 lastUnit">
@@ -24,11 +38,12 @@
                                                 <h3><% _t('BlogTree_ss.VIEWINGPOSTEDIN', 'Viewing entries posted in') %> $SelectedNiceDate</h3>
                                             <% else_if SelectedAuthor %>
                                                 <h3><% _t('BlogTree_ss.VIEWINGPOSTEDBY', 'Viewing entries posted by') %> $SelectedAuthor</h3>
-                                        </div>
-                                    <% end_if %>
+                                            <% else_if SelectedCategory %>
+                                                <h3><% _t('BlogTree_ss.VIEWINGPOSTEDABOUT', 'Viewing entries posted about') %> $SelectedCategory</h3>
+                                            <% end_if %>
                                     <div class="blog blogentries">
-                                    <% if BlogEntries %>
-                                        <% loop BlogEntries %>
+                                    <% if EntriesByCategory %>
+                                        <% loop EntriesByCategory %>
                                             <div class="smaall-content-box">
                                                 <% include SingleBlogSummary %>
                                             </div>
@@ -48,17 +63,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="4u 12u(3)">
+                    <div class="3u 12u(3)">
                         <div class="small-content-box">
-                            <h3>Browse by Category</h3>
-                            <% if getCategories %>
-                                <% loop getCategories %>
-                                    <a class='button small icon fa-{$Icon}' title='{$Description}' href='#'>$Title</a>
-                                <% end_loop %>
-                            
-                            <% else %>
-                                <h1>No Categories!</h1>
-                            <% end_if %>
                             $SideBarWidget
                         </div>
                     </div>

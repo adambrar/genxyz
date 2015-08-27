@@ -1,12 +1,16 @@
 <?php 
  
-class OurPartnersPage extends Page 
-{
+class OurPartnersPage extends Page {
      private static $db = array(
          'MainBlurb' => 'Text',
          'CollageBlurb' => 'Text',
          'SecondaryBlurb' => 'Text'
      );
+    
+    private static $defaults = array(
+        'menuShown' => 'Welcome',
+        'menuWelcome' => true
+    );
     
     public function getCMSFields() {
         $fields = parent::getCMSFields();
@@ -21,7 +25,6 @@ class OurPartnersPage extends Page
     }
 }
  
-class OurPartnersPage_Controller extends Page_Controller 
-{
+class OurPartnersPage_Controller extends Page_Controller {
      
 }

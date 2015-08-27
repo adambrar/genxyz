@@ -1,6 +1,6 @@
 <?php
 class BlogHolder_ControllerDecorator extends DataExtension {
-     
+    
     public function updateBlogEntryForm($form) {
         if(Member::currentUserID() != $this->owner->OwnerID) { 
             return $this->owner->httpError(403);
@@ -13,7 +13,7 @@ class BlogHolder_ControllerDecorator extends DataExtension {
         
         $form->Fields()->insertBefore(
             DropdownField::create('CategoryID', 'Category', 
-                             BlogCategory::getBlogCategories())->setEmptyString('Select a category'), 'Tags');
+                             BlogCategory::getBlogCategories(), $this->owner->CategoryID)->setEmptyString('Select a category'), 'Tags');
 
         $form->Fields()->push(LiteralField::create(
             'InitTinyMCE', 
@@ -34,9 +34,13 @@ class BlogHolder_ControllerDecorator extends DataExtension {
                 }, 2000);
             </script>'));
         
-        if($form->getValidator()->fieldIsRequired('Tags')) {
-            $form->Fields()->dataFieldByName('Title')->setTitle('Second Title');
-        }
+        $required = new RequiredFields(array(
+            'Title',
+            'CategoryID',
+            'Content',
+        ));
+        
+        $form->setValidator($required);
         
         return $form;           
     }

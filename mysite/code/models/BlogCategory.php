@@ -29,4 +29,16 @@ class BlogCategory extends DataObject {
             return array('No Categories');
         }
     }
+    
+    public function Link() {
+        $pageURL = Page::get()->filter(array(
+            'ClassName' => 'BlogTree',
+            'ParentID' => 0
+        ))->First()->Link();
+        
+        $params = 'topic/'.$this->Title;
+        
+        return Controller::join_links($pageURL, $params);
+    }
+    
 }

@@ -19,6 +19,7 @@
                                     <div class="row">
                                         <div class="6u 12u(1) gutters-fix">
                                             <div class="small-content-box">
+                                                <h3>Recent Blog Posts</h3>
                                                  <% if BlogEntries %>
                                                     <% loop BlogEntries %>
 
@@ -31,6 +32,7 @@
                                         </div>
                                         <div class="6u 12u(2) gutters-fix">
                                             <div class="small-content-box">
+                                                <h3>Recent Forum Posts</h3>
                                                 <% if ForumPosts %>
                                                     <% loop ForumPosts %>
                                                         <h1><a href="$Link">$Title</a></h1>

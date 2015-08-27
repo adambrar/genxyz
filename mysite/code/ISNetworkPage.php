@@ -9,6 +9,11 @@ class ISNetworkPage extends Page
          'Interactive' => 'Text'
      );
     
+    private static $defaults = array(
+        'menuShown' => 'Welcome',
+        'menuWelcome' => true
+    );
+    
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         

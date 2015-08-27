@@ -38,13 +38,13 @@
 	{
 		font-family: 'Open Sans', sans-serif;
 		font-size: 12pt;
-		color: #696969;
+		color: #222222;
 		font-weight: 300;
 	}
 	
 	a
 	{
-		color: #0090c5;
+		color: #0085BC;
 		text-decoration: underline;
 	}
 	
@@ -246,6 +246,19 @@
     .message.good 
     { color: green; }
 
+    /* Login Form */
+    .action.login-button {
+        margin-left: 25%;
+        margin-right: 25%;
+        width: 50%;
+    }
+
+    #register-button {
+        margin-left: 30%;
+        width: 40%;
+        text-align: center;
+    }
+
 	/* Tables */
 	
 		table
@@ -438,14 +451,24 @@
 					background: rgba(0,0,0,0.15);
 				}
 
-            .register-button {
-                float: right;
-            }
-
             .checkbox input[type=checkbox]
             {
                 margin: 0;
             }
+
+    /* Mini Forum Topic Button */
+    a.mini-forum-button {
+        padding: 0.3em;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 1em;
+        vertical-align: middle;
+        letter-spacing: 0;
+    }
+    td.mini-forum-button {
+        vertical-align: middle;
+        text-align: center;
+    }
 
 	/* List */
 
@@ -495,6 +518,72 @@
 					margin-left: 0;
 					padding-left: 0;
 				}
+.pagination {
+    padding-right: auto;
+    padding-left: 40%;
+}
+
+ul.PageNumbers {
+    text-align: center;
+}
+
+ul.PageNumbers li {
+    display: inline-block;
+    padding: 0.2em;
+}
+
+ul.PageNumbers li a:hover {
+    font-weight: bold;
+    text-shadow: -2px 2px #000;
+}
+
+ul.PageNumbers li a {
+    text-decoration: none;
+    font-size: 1.6em;
+    display: block;
+}
+
+ul.PageNumbers li a.disabled {
+    color: black;
+}
+
+ul.PageNumbers li a.disabled:hover {
+    font-weight: normal;
+    text-shadow: none;
+}
+
+ul.blog-topics li {
+    background-color: #FFEF25;
+    padding-left: 1em;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+}
+
+ul.blog-topics li:hover {
+    background-color: #FFEF55;
+}
+
+ul.blog-topics li:first-child {
+    background-color: white;
+}
+
+ul.blog-topics li.selected {
+    margin-left: 1em;
+    background-color: #FFFE05
+}
+
+ul.blog-topics li a {
+    display: block;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+.tagcloud .not-popular { font-size: .9em; }
+.tagcloud .not-very-popular { font-size: 1em; }
+.tagcloud .somewhat-popular { font-size: 1.3em; }
+.tagcloud .popular { font-size: 1.6em; }
+.tagcloud .very-popular { font-size: 1.9em; }
+.tagcloud .ultra-popular { font-size: 2.2em; }
 
 		ol
 		{
@@ -759,7 +848,7 @@ h2.content-slider:hover {
 /*********************************************************************************/
     #student-view-info-box {
         /*theme color*/
-        background-color: #FFAE27;
+        background-color: #FFEF25;
         padding: 10px;
         border-radius: 8px;
         -moz-border-radius: 8px;

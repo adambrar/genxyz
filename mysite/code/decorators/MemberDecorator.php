@@ -18,7 +18,8 @@ class MemberDecorator extends DataExtension {
         'BusinessName' => 'Varchar(100)',
         'BusinessContact' => 'Varchar(100)',
         'BusinessTelephone' => 'Varchar(20)',
-        'BusinessRegistrationNumber' => 'Varchar(30)'
+        'BusinessRegistrationNumber' => 'Varchar(30)',
+        'PointsEarned' => 'Varchar(5)'
     );
     
     private static $has_one = array(
@@ -165,7 +166,9 @@ class MemberDecorator extends DataExtension {
     }
     
     private function addStudentFields(FieldList $fields) {
-         $fields->addFieldToTab('Root.Profile', new TextField('FirstName', 'First Name'));
+        $fields->addFieldToTab('Root.Main', new TextField('PointsEarned', 'Points Earned'), 'Email');
+        
+        $fields->addFieldToTab('Root.Profile', new TextField('FirstName', 'First Name'));
         $fields->addFieldToTab('Root.Profile', new TextField('MiddleName', 'Middle Name'));
         $fields->addFieldToTab('Root.Profile', new TextField('Surname', 'Surname'));
 

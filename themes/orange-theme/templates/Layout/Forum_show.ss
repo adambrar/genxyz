@@ -71,7 +71,7 @@
             
 <% if Posts.MoreThanOnePage %>
     <p class="forum-pages-numbers">
-        <% if Posts.NotFirstPage %><a class="button small" href="$Posts.PrevLink"><i class="icon fa-angle-double-left pull-left"></i><% _t('Forum_show_ss.PREVLNK','Prev') %></a><% end_if %>
+        <% if Posts.NotFirstPage %><a href="$Posts.PrevLink"><i class="icon fa-angle-double-left pull-left"></i><% _t('Forum_show_ss.PREVLNK','Prev') %></a><% end_if %>
         <span>
         <% loop Posts.Pages %>
             <% if CurrentBool %>
@@ -81,7 +81,7 @@
             <% end_if %>
         <% end_loop %>
         </span>
-        <% if Posts.NotLastPage %><a class="button small" href="$Posts.NextLink"><% _t('Forum_show_ss.NEXTLNK','Next') %><i class="icon fa-angle-double-right pull-right"></i></a><% end_if %>
+        <% if Posts.NotLastPage %><a href="$Posts.NextLink"><% _t('Forum_show_ss.NEXTLNK','Next') %><i class="icon fa-angle-double-right pull-right"></i></a><% end_if %>
 
     </p>
 <% end_if %>

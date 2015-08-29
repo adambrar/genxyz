@@ -18,7 +18,7 @@
                     <% if $menuShown = "Welcome" %>
                         <% if isSignedIn %>
                             <a id="langbar-button" href="{$profilePageLink}" title="MyProfile"><%t NavigationTemplate.MYPROFILE "MyProfile" %></a></li>
-                            <li><a id="logout-button" href="Security/logout" title="Logout!">Logout</a>
+                            <li><a onclick="$.get('http://localhost/ajax/chat?logout=true');" id="logout-button" href="Security/logout" title="Logout!">Logout</a>
                         <% else %>
                             <a id="langbar-button" href="Security/login" title="Login to your account"><%t NavigationTemplate.LOGINBUTTON "Login" %></a></li>
                         <% end_if %>
@@ -26,7 +26,7 @@
                         <a id="langbar-button" href="home" title="Go Home!"><%t NavigationTemplate.GENXYZ "GenXYZ" %></a>
                         <% if isSignedIn %>
 
-                            </li><li><a id="logout-button" href="Security/logout" title="Logout!">Logout</a>
+                            </li><li><a onclick="$.get('http://localhost/ajax/chat?logout=true');" id="logout-button" href="Security/logout" title="Logout!">Logout</a>
                         <% end_if %>
                     <% end_if %>
                 </li>

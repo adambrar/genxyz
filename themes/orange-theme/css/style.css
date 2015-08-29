@@ -113,6 +113,8 @@
 	{
 		margin-bottom: 2em;
 	}
+
+    .hidden-content { display: none; }
 	
 	/* Section/Article */
 	
@@ -518,6 +520,7 @@
 					margin-left: 0;
 					padding-left: 0;
 				}
+
 .pagination {
     padding-right: auto;
     padding-left: 40%;
@@ -722,6 +725,117 @@ article.home_page {
 /*********************************************************************************/
 
 /*********************************************************************************/
+/* Partner Profile Page                                                                   */
+/*********************************************************************************/
+
+.slidesjs-container {
+}
+    
+#slides {
+    display: none;
+}
+
+    a.slidesjs-next,
+    a.slidesjs-previous,
+    a.slidesjs-play,
+    a.slidesjs-stop {
+      background-image: url(../images/btns-next-prev.png);
+      background-repeat: no-repeat;
+      display:block;
+      width:12px;
+      height:18px;
+      overflow: hidden;
+      text-indent: -9999px;
+      float: left;
+      margin-right:5px;
+    }
+
+    a.slidesjs-next {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+#slides .slidesjs-previous {
+      margin-right: 5px;
+      float: left;
+    }
+
+    #slides .slidesjs-next {
+      margin-right: 5px;
+      float: left;
+    }
+
+    a.slidesjs-play {
+      width:15px;
+      background-position: -25px 0;
+    }
+
+    a:hover.slidesjs-play {
+      background-position: -25px -18px;
+    }
+
+    a.slidesjs-stop {
+      width:18px;
+      background-position: -41px 0;
+    }
+
+    a:hover.slidesjs-stop {
+      background-position: -41px -18px;
+    }
+
+/*
+    #slides a.slidesjs-stop,
+    #slides a.slidesjs-stop {
+        display: none !important;
+    }
+*/
+
+    .slidesjs-pagination {
+      margin: 6px 0 0;
+      float: right;
+      list-style: none;
+    }
+
+    .slidesjs-pagination li {
+      float: left;
+      margin: 0 1px;
+    }
+
+    .slidesjs-pagination li a {
+      display: block;
+      width: 13px;
+      height: 0;
+      padding-top: 13px;
+      background-image: url(../images/pagination.png);
+      background-position: 0 0;
+      float: left;
+      overflow: hidden;
+    }
+
+    .slidesjs-pagination li a.active,
+    .slidesjs-pagination li a:hover.active {
+      background-position: 0 -13px
+    }
+
+    .slidesjs-pagination li a:hover {
+      background-position: 0 -26px
+    }
+
+    #slides a:link,
+    #slides a:visited {
+      color: #333
+    }
+
+    #slides a:hover,
+    #slides a:active {
+      color: #9e2020
+    }
+
+
+/*********************************************************************************/
 /* Profile Page                                                                        */
 /*********************************************************************************/
 .picture-overlay {
@@ -747,11 +861,13 @@ h2.content-slider {
     margin-bottom: 0.5em;
 }
 
-h2.content-slider:hover {
+h2.content-slider:hover,
+h1.content-slider:hover {
     color: #888888;
     cursor: pointer;
     cursor: hand;
 }
+    
 
 /*********************************************************************************/
 /* User Vertical Menu                                                                         */
@@ -1084,6 +1200,10 @@ h2.content-slider:hover {
             -moz-box-shadow: 6px -4px 7px -4px rgba(0,0,0,0.4);
             box-shadow: 6px -4px 7px -4px rgba(0,0,0,0.4);
 		}
+
+.university-links {
+    text-align: center;
+}
 	
 /*********************************************************************************/
 /* Footer                                                                        */

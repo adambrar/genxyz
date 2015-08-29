@@ -357,25 +357,30 @@ class Page_Controller extends ContentController {
         // Get value from session
         $sessionStart = Session::get('session_start_time'); 
         if (isset($sessionStart)) {
-        $elapsed_time = time() - Session::get('session_start_time');
-        // If elapsed time is greater or equal to inactivity period, logout user
-        if ($elapsed_time >= $inactivityLimit) { 
-            $member = Member::currentUser(); 
-            if($member) {
-                // Logout member
-                $member->logOut();
-            }
-            // Clear session
-            Session::clear_all();
-            // Redirect user to the login screen
-            if(!$this->menuWelcome) {
-                $this->redirect(Director::baseURL() . 'Security/login');
-            }
-        } 
-    }
+            $elapsed_time = time() - Session::get('session_start_time');
+            // If elapsed time is greater or equal to inactivity period, logout user
+            if ($elapsed_time >= $inactivityLimit) { 
+                $member = Member::currentUser(); 
+                if($member) {
+                    // Logout member
+                    $member->logOut();
+                }
+                // Logout of chat
+                //http_get('http://localhost/ajax/chat?logout=1');
+                
+                // Clear session
+                Session::clear_all();
+                // Redirect user to the login screen
+                if(!$this->menuWelcome) {
+                    $this->redirect(Director::baseURL() . 'Security/login');
+                }
+            } 
+        }
 
-      // Set new value
-      Session::set('session_start_time', time()); 
+        // Set new value if user is logged in
+        if(Member::currentUserID()) {
+            Session::set('session_start_time', time());
+        }
     }
     
     

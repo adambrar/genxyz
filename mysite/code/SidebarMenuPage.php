@@ -61,7 +61,7 @@ class SidebarMenuPage_Controller extends Page_Controller
         $chatName = preg_replace("/[^A-Za-z0-9]/", "", $member->FirstName) . '%20' . preg_replace("/[^A-Za-z0-9]/", "", $member->Surname);
         $userurl = Director::absoluteURL("myprofile/show/".$member->ID, true);
         
-        return "http://localhost/chat/chat.php?username=" . $chatName . "&userurl=".$userurl;
+        return "http://localhost/ajax/chat?userName=" . $chatName . "&userID=".$member->ID;
     }
     
     public function BlogManagementURLs($member = null) {

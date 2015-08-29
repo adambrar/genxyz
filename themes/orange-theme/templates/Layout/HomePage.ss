@@ -30,21 +30,21 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="4u">
+                        <div class="4u -1u">
                             <ul>
                                 <li><a class="button big icon fa-arrow-circle-right" href="isnetwork">Students</a></li>
                             </ul>
                         </div>
-                        <div class="4u">
+                        <div class="4u -2u">
                             <ul>
                                 <li><a class="button big icon fa-arrow-circle-right" href="partners-portal">Partners</a></li>
                             </ul>
                         </div>
-                        <div class="4u">
+                        <!--<div class="4u">
                             <ul>
                                 <li><a id="see-more-button" class="button big icon fa-arrow-circle-right" href="#">See More</a></li>
                             </ul>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

@@ -490,6 +490,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         
         //set member type to student
         $member->MemberType = "Student";
+        $member->PointsEarned = 1;
         
         $member->write();
     }
@@ -528,7 +529,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $blog->Author = "Admin";
         $blog->URLSegment = 'first-post';
         $blog->Tags = "created, first, welcome";
-        $blog->Content = "<p>Thank you for registering with the ISNetwork. Take a look around.</p>";
+        $blog->Content = "<p>Thank you for registering with the ISNetwork. Take a look around.</p><p>Blog Management will be restricted to student mentors as of September 14th. Email admin@genxyz.ca with some details about yourself to become a mentor.";
         $blog->Status = "Published";
         $blog->ParentID = $blogHolder->ID;
         $blog->write();

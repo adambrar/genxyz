@@ -14,10 +14,12 @@
                                     </div>
                                     <ul class="tabs">
                                         <li class="tab-link current" data-tab="tab-1">Home</li>
-                                        <li class="tab-link" data-tab="tab-2">AboutUs</li>
+                                        <li class="tab-link" data-tab="tab-2">About</li>
                                         <li class="tab-link" data-tab="tab-3">Academic Programs</li>
-                                        <li class="tab-link" data-tab="tab-4">Contact Us</li>
-                                        <li id="search-bar" data-tab="tab-5"><span style="font-weight:800">Apply</span></li>
+                                        <li class="tab-link" data-tab="tab-4" style="white-space:nowrap">Tuition</li>
+                                        <li class="tab-link" data-tab="tab-5" style="white-space:nowrap">Scholarships</li>
+                                        <li class="tab-link" data-tab="tab-6">Contact</li>
+                                        <li id="search-bar" data-tab="tab-7"><span style="font-weight:800">Application Process</span></li>
                                     </ul>
 
                                     <div id="tab-1" class="tab-content current">
@@ -75,8 +77,6 @@ src="http://www.youtube.com/embed/XGSy3_Czz8k?showinfo=0"></iframe>
                                                         <li>Certificate</li>
                                                         <li>Diploma</li>
                                                         <li>Degree</li>
-                                                        <li>Masters</li>
-                                                        <li>Doctorate</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -84,8 +84,6 @@ src="http://www.youtube.com/embed/XGSy3_Czz8k?showinfo=0"></iframe>
                                                 <h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Engineering</h1>
                                                 <div class="hidden-content">
                                                     <ul>
-                                                        <li>Certificate</li>
-                                                        <li>Diploma</li>
                                                         <li>Degree</li>
                                                         <li>Masters</li>
                                                         <li>Doctorate</li>
@@ -96,7 +94,6 @@ src="http://www.youtube.com/embed/XGSy3_Czz8k?showinfo=0"></iframe>
                                                 <h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Sociology</h1>
                                                 <div class="hidden-content">
                                                     <ul>
-                                                        <li>Certificate</li>
                                                         <li>Diploma</li>
                                                         <li>Degree</li>
                                                         <li>Masters</li>
@@ -120,27 +117,59 @@ src="http://www.youtube.com/embed/XGSy3_Czz8k?showinfo=0"></iframe>
                                                 <h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Pharmacy</h1>
                                                 <div class="hidden-content">
                                                     <ul>
-                                                        <li>Certificate</li>
-                                                        <li>Diploma</li>
                                                         <li>Degree</li>
-                                                        <li>Masters</li>
-                                                        <li>Doctorate</li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div id="tab-4" class="tab-content">
-                                        <p>1234 Fakie Street</p>
-                                        <p>Whitehorse, Yukon</p>
-                                        <p>Canada</p>
-                                        <p>Y0A 1W0</p>
+                                        <h2>Tuition</h2>
+                                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur congue, mauris sed tempus consequat, nulla lacus rutrum dui, at venenatis orci lorem eget eros. Aenean a vehicula nulla. Mauris sit amet ex mattis, mollis elit at, mollis felis. Sed maximus felis id tortor elementum suscipit. In commodo ut nibh eget laoreet. Phasellus hendrerit nunc non mollis tempus.</p>
+                                        <h1>Undergraduate</h1>
+                                        <p>Maecenas volutpat nisl porttitor commodo vehicula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer euismod rhoncus orci, eu mollis metus malesuada vehicula. Pellentesque a lectus accumsan, facilisis nisl et, accumsan urna.</p>
+                                        <h1>Graduate</h1>
+                                        <p>Quisque nulla nisi, fermentum a mauris vel, pellentesque placerat velit. Aliquam erat volutpat. Phasellus in varius ligula. In ornare vitae dolor non rhoncus.</p>
                                     </div>
                                     <div id="tab-5" class="tab-content">
+                                        <h2>Scholarships</h2>
+                                        <p>Fusce efficitur, magna non malesuada iaculis, magna quam rutrum dui, vel tempor risus magna sed nunc. Sed pretium elit sed diam condimentum, et aliquet tellus laoreet. Integer tristique eros sapien, sit amet mattis arcu hendrerit eu. Sed tincidunt vitae diam blandit viverra.</p>
+                                    </div>
+                                    <div id="tab-6" class="tab-content" style="text-align:center">
+                                        <h1>Undergraduate</h1>
+                                        <ul>
+                                            <li>1234 Fakie Street</li>
+                                            <li>Whitehorse, Yukon</li>
+                                            <li>Canada</li>
+                                            <li>Y0A 1W0</li>
+                                        </ul>
+                                        <h1>Graduate</h1>
+                                        <ul>
+                                            <li>1234 Fakie Street</li>
+                                            <li>Whitehorse, Yukon</li>
+                                            <li>Canada</li>
+                                            <li>Y0A 1W0</li>
+                                        </ul>
+                                        <h1>Admissions</h1>
+                                        <ul>
+                                            <li>1234 Fakie Street</li>
+                                            <li>Whitehorse, Yukon</li>
+                                            <li>Canada</li>
+                                            <li>Y0A 1W0</li>
+                                        </ul>
+                                        <h1>Tuition</h1>
+                                        <ul>
+                                            <li>1234 Fakie Street</li>
+                                            <li>Whitehorse, Yukon</li>
+                                            <li>Canada</li>
+                                            <li>Y0A 1W0</li>
+                                        </ul>
+                                    </div>
+                                    <div id="tab-7" class="tab-content">
                                         <ul class="university-links">
                                             <li><a class="button medium icon fa-dollar" href="http://{$ProfilePage.Fees}" target="_blank">Fees</a></li>
 
-                                            <li><a class="button medium icon fa-file-text-o" href="http://{$ProfilePage.Application}" target="_blank">Application</a></li>
+                                            <li><a class="button medium icon fa-file-text-o" href="http://{$ProfilePage.Application}" target="_blank">Apply Now</a></li>
                                             <li><a class="button medium icon fa-clock-o" href="http://{$ProfilePage.ProcessingTime}" target="_blank">Processing Time</a></li>
 
                                             <li><a class="button medium icon fa-edit" href="http://{$ProfilePage.EnglishRequirements}" target="_blank">English Requirements</a></li>

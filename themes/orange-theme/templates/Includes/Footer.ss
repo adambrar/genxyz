@@ -37,7 +37,7 @@
                     <div class="row">
                         <div class="12u">
                             <div id="copyright">
-                                <ul class="menu"><li>© Untitled. All rights reserved.</li>
+                                <ul class="menu"><li>©2015 GenXYZ. All rights reserved.</li>
                                 </ul>
                             </div>
                         </div>

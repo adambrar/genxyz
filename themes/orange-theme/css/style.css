@@ -834,6 +834,19 @@ article.home_page {
       color: #9e2020
     }
 
+#university-programs {
+    margin-left: 2em;
+}
+
+#university-programs ul li {
+    margin-left: 2em;
+}
+
+#university-links li a {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
 
 /*********************************************************************************/
 /* Profile Page                                                                        */

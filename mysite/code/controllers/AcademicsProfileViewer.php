@@ -105,7 +105,8 @@ class AcademicsProfileViewer extends Page_Controller {
             'Member' => $member,
             'IsSelf' => $member->ID == Member::currentUserID(),
             'ProfilePage' => $profilePage,
-            'Logo' => $profilePage->LogoImageID ? File::get()->ByID($profilePage->LogoImageID) : false
+            'Logo' => $profilePage->LogoImageID ? File::get()->ByID($profilePage->LogoImageID) : false,
+            'Title' => $member->BusinessName ? $member->BusinessName."'s Profile Page" : 'Profile Page'
         );
         
         $controller = $this->customise($customData);

@@ -4,7 +4,7 @@ class SidebarMenuPage extends Page
 {
     private static $db = array(
          'PageContent' => 'HTMLText'
-    );  
+    );
     
     private static $defaults = array(
         'menuWelcome' => '0',
@@ -23,10 +23,10 @@ class SidebarMenuPage extends Page
         return $fields;
     }
     
-//    private static $allowed_children = array(
-//        'SidebarMenuService'
-//    );
-//    
+    private static $allowed_children = array(
+        'SidebarMenuService'
+    );
+    
       static $can_be_root = false;    
 }
  

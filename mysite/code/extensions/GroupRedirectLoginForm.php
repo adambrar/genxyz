@@ -8,8 +8,7 @@ class GroupRedirectLoginForm extends MemberLoginForm {
     
     function __construct($controller, $name, $fields = null, 
                          $actions = null, $checkCurrentUser = true) {
-        //create your authenticator input here, e.g. username, but it could be any credentials
-        //add your Authenticator to the form
+        
         $fields = new FieldList(
             new TextField('Email', 'Email'),
             new PasswordField('Password', 'Password'),

@@ -4,10 +4,10 @@
         <div id="slideshow">
             <div class="container 125%">
                 <ul class="slides">
-                    <li><img src="assets/homepage/slides/1.jpg" alt="Blue World" /></li>
-                    <li><img src="assets/homepage/slides/2.jpg" alt="Eagle" /></li>
-                    <li><img src="assets/homepage/slides/3.jpg" alt="Building" /></li>
-                    <li><img src="assets/homepage/slides/4.jpg" alt="Microprocessor" /></li>
+                    <li><img src="{$Image1.Filename}" alt="Image1.Title" /></li>
+                    <li><img src="{$Image2.Filename}" alt="Image2.Title" /></li>
+                    <li><img src="{$Image3.Filename}" alt="Image3.Title" /></li>
+                    <li><img src="{$Image4.Filename}" alt="Image4.Title" /></li>
                 </ul>
 
                 <span class="arrow previous"></span>

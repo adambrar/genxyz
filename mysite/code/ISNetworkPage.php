@@ -6,7 +6,8 @@ class ISNetworkPage extends Page
          'About' => 'Text',
          'Services' => 'Text',
          'Media' => 'Text',
-         'Interactive' => 'Text'
+         'Interactive' => 'Text',
+         'VideoLink' => 'Varchar(150)'
      );
     
     private static $defaults = array(
@@ -21,6 +22,7 @@ class ISNetworkPage extends Page
         $fields->addFieldToTab("Root.Main", new TextareaField('Services', 'Services'));
         $fields->addFieldToTab("Root.Main", new TextareaField('Media', 'Media'));
         $fields->addFieldToTab("Root.Main", new TextareaField('Interactive', 'Interactive'));
+        $fields->addFieldToTab("Root.Main", new TextField('VideoLink', 'Enter Link to Video'));
         
         $fields->removeByName("Content");
 

@@ -8,6 +8,14 @@ class HomePage extends Page
         'MediaUpdates' => 'HTMLText',
         'InteractiveUpdates' => 'HTMLText'
     );
+    
+    private static $has_one = array(
+        'Image1' => 'Image',
+        'Image2' => 'Image',
+        'Image3' => 'Image',
+        'Image4' => 'Image'
+    );
+        
 
     private static $defaults = array(
         'menuShown' => 'Welcome',
@@ -21,6 +29,28 @@ class HomePage extends Page
         $fields->addFieldToTab("Root.Main", new TextareaField('WelcomeMessage', 'Welcome Message'));
         $fields->addFieldToTab("Root.Main", new HtmlEditorField('MediaUpdates', 'Media Updates'));
         $fields->addFieldToTab("Root.Main", new HtmlEditorField('InteractiveUpdates', 'Interactive Updates'));
+        $fields->addFieldToTab("Root.Photos", new LiteralField('PhotoSizeWarning', '<h2>Only upload photos sized at 1700 by 900!</h2>'));
+        $UploadField = new UploadField('Image1', 'Upload first slideshow image');
+        $UploadField->setAllowedFileCategories('image');
+        $UploadField->setAllowedMaxFileNumber(1);
+        $UploadField->setFolderName('homepage/slides');
+        $fields->addFieldToTab("Root.Photos", $UploadField);
+        $UploadField = new UploadField('Image2', 'Upload second slideshow image');
+        $UploadField->setAllowedFileCategories('image');
+        $UploadField->setAllowedMaxFileNumber(1);
+        $UploadField->setFolderName('homepage/slides');
+        $fields->addFieldToTab("Root.Photos", $UploadField);
+        $UploadField = new UploadField('Image3', 'Upload third slideshow image');
+        $UploadField->setAllowedFileCategories('image');
+        $UploadField->setAllowedMaxFileNumber(1);
+        $UploadField->setFolderName('homepage/slides');
+        $fields->addFieldToTab("Root.Photos", $UploadField);
+        $UploadField = new UploadField('Image4', 'Upload fourth slideshow image');
+        $UploadField->setAllowedFileCategories('image');
+        $UploadField->setAllowedMaxFileNumber(1);
+        $UploadField->setFolderName('homepage/slides');
+        $fields->addFieldToTab("Root.Photos", $UploadField);
+        
         
         $fields->removeByName("Content");
 

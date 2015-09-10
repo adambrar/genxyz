@@ -1,4 +1,4 @@
-<% include Logo %>
+<% include Header %>
 <div class="main" role="main">
     <div id="main-wrapper">
         <div class="container">

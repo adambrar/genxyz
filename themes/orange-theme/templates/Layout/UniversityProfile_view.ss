@@ -33,6 +33,7 @@
                                             <div class="6u 12u(1)">
                                                 <iframe width="420" height="315"
 src="http://www.youtube.com/embed/XGSy3_Czz8k?showinfo=0"></iframe>
+                                                <iframe src="https://player.vimeo.com/video/137334520" width="420" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                                             </div>
                                             <div class="6u 12u(2)">
                                                 <div class="slides-container">

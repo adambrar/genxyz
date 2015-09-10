@@ -48,7 +48,7 @@
 
 	<% if Topics.MoreThanOnePage %>
 		<p class="forum-pages-numbers">
-			<% if Topics.PrevLink %><a href="$Topics.PrevLink"><i class="fa fa-angle-double-right"></i> <% _t('Forum_ss.PREVLNK','Previous Page') %></a><% end_if %>
+			<% if Topics.PrevLink %><a href="$Topics.PrevLink"><i class="fa fa-angle-double-right"></i> </a><% end_if %>
 			
             <% loop Topics.Pages %>
 				<% if CurrentBool %>
@@ -58,7 +58,7 @@
 				<% end_if %>
 			<% end_loop %>
                 
-            <% if Topics.NextLink %><a href="$Topics.NextLink"><% _t('Forum_ss.NEXTLNK','Next Page') %><i class="fa fa-angle-double-right"></i></a><% end_if %>
+            <% if Topics.NextLink %><a href="$Topics.NextLink"> <i class="fa fa-angle-double-right"></i></a><% end_if %>
 			
 		</p>
 	<% end_if %>

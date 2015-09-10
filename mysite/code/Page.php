@@ -377,8 +377,8 @@ class Page_Controller extends ContentController {
             } 
         }
 
-        // Set new value if user is logged in
-        if(Member::currentUserID()) {
+        // Set new value if user is logged in and on secure page
+        if(Member::currentUserID() && $this->menuShown != 'Welcome') {
             Session::set('session_start_time', time());
         }
     }

@@ -35,9 +35,10 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $fields->insertBefore(new LiteralField('Hd_Security', '<h3>' . _t(
             'MemberRegForm.SECUTRIYLABEL', 
             'Security') . '</h3>'), 'Password');
+        $termsPage = TermsAndConditionsPage::get()->First();
         $fields->insertAfter(new LiteralField('TermsConditions', '<p>' . _t(
             'MemberRegForm.TERMSCONDITIONS', 
-            'By registering you confirm you have read our <a href="#">terms and conditions</a> and understand our <a href="#">policies</a></p>') . '</h4>'), 'Password');
+            'By registering you confirm you have read and understood our <a href="' . $termsPage->Link() . '" target="_blank">terms and conditions</a></p>') . '</h4>'), 'Password');
         $fields->dataFieldByName('Password')->setAttribute('placeholder', 'Enter a password');
         
         $required = new RequiredFields(array(

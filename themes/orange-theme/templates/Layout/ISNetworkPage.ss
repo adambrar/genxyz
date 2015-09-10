@@ -19,12 +19,7 @@
                                 <% end_if %>
                             </div>
                             <div class="6u 12u(2)">
-                                <video controls>
-                                    <source src="{$BaseHref}assets/Uploads/vid.mp4" type="video/mp4">
-                                    <source src="{$BaseHref}assets/Uploads/vid.ogv" type="video/ogg">
-                                    <source src="{$BaseHref}assets/Uploads/vid.webm" type="video/webm">
-                                    <source src="{$BaseHref}assets/Uploads/vid.3gp" type="video/3gp">
-                                </video>
+                                <iframe src="{$VideoLink}" width="420" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                             </div>
                         </div>
                         <div class="row content-box-light">

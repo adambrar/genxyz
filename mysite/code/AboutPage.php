@@ -16,7 +16,7 @@ class AboutPage extends Page
     public function getCMSFields() {
         $fields = parent::getCMSFields();
               
-        $fields->addFieldToTab("Root.Main", new TextareaField('AboutStatement', 'About'));      
+        $fields->addFieldToTab("Root.Main", new TextareaField('AboutStatement', 'Vision'));      
         $fields->addFieldToTab("Root.Main", new TextareaField('MissionStatement', 'Mission Statement'));
         $fields->addFieldToTab("Root.Main", new TextareaField('AboutValues', 'Values'));
         

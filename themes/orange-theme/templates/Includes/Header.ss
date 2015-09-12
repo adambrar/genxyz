@@ -20,8 +20,8 @@
                             <a id="langbar-button" href="{$profilePageLink}" title="MyProfile"><%t NavigationTemplate.MYPROFILE "MyProfile" %></a></li>
                             <li><a onclick="$.get('http://localhost/ajax/chat?logout=true');" id="logout-button" href="Security/logout" title="Logout!">Logout</a>
                         <% else %>
-                            <a id="langbar-button" href="Security/login" title="Login to your account"><%t NavigationTemplate.LOGINBUTTON "Login" %></a></li>
-                            <!--<li class="link"><a id="langbar-button" href="register" title="Login to your account"><%t NavigationTemplate.REGISTERBUTTON "Register" %></a></li>-->
+                            <a id="langbar-button" href="Security/login" title="Login to your account" style="margin-right:1em"><%t NavigationTemplate.LOGINBUTTON "Login" %></a></li>
+                            <li class="link"><a id="langbar-button" href="register" title="Login to your account"><%t NavigationTemplate.REGISTERBUTTON "Register" %></a></li>
                         <% end_if %>
                     <% else %>
                         <a id="langbar-button" href="home" title="Go Home!"><%t NavigationTemplate.GENXYZ "GenXYZ" %></a>

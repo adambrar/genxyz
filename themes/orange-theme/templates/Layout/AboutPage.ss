@@ -8,7 +8,7 @@
                         <div class="content row content-box-light">
                             <div class="10u -1u 12u(1) gutters-fix">
                                 <div class="small-content-box">
-                                    <h2><%t AboutPage.ABOUT "About" %></h2>
+                                    <h2><%t AboutPage.VISION "Vision" %></h2>
                                     $AboutStatement
                                 </div>
                                 <div class="small-content-box">

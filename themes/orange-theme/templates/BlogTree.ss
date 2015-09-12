@@ -8,18 +8,20 @@
                 <h2>$Title</h2>
                 <div class="row content-box-light">
                     <% if getCategories %>
-                    <div class="3u 12u(1)">
-                        <div class="small-content-box">
-                            
-                            <ul class="blog-topics">
-                                <li><h2>Topics</h2></li>
-                                <% loop getCategories %>
-                                    <li<%if Top.isCategorySelected($Title) %> class="selected"<% end_if %>><a href="{$Top.Link}topic/{$Title}" title='{$Description}'><i class='fa fa-fw fa-{$FontAwesomeIcon}'></i>$Title</a></li>
-                                <% end_loop %>
-                                <li><a href="{$Link}" title='See all blog entries'><i class='fa fa-fw fa-refresh'></i>See All</a></li>
-                            </ul>
+                        <div class="3u 12u(1)">
+                            <div class="small-content-box">
+
+                                <ul class="blog-topics">
+                                    <li><h2>Topics</h2></li>
+                                    <% loop getCategories %>
+                                        <li<%if Top.isCategorySelected($Title) %> class="selected"<% end_if %>><a href="{$Top.Link}topic/{$Title}" title='{$Description}'><i class='fa fa-fw fa-{$FontAwesomeIcon}'></i>$Title</a></li>
+                                    <% end_loop %>
+                                    <li><a href="{$Link}" title='See all blog entries'><i class='fa fa-fw fa-refresh'></i>See All</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    <% else %>
+                        <div class="1u"></div>
                     <% end_if %>
                     <div class="6u 12u(2)">
                         <div id="content">

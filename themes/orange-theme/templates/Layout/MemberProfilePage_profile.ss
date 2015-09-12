@@ -15,8 +15,8 @@
                                 <div class="small-content-box">
                                     <!--Forum content-->
                                     <div class="slider-content">
-                                        <h2 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw"></i><%t StudentProfilePage.Chat "Forum Posts" %></h2>
-                                        <div class="hidden-content" style="display:none">    
+                                        <h2><i class="fa fa-arrow-circle-right fa-fw"></i><%t StudentProfilePage.Chat "Forum Posts" %></h2>
+                                        <div class="hidden-content">    
                                             <table class="default mini-forum">
                                                 <tr>
                                                     <td><% _t('ForumHolder_ss.FORUM','Forum') %></td>
@@ -29,31 +29,6 @@
                                             </table>
                                         </div>
 
-                                    </div>
-                                    <!--Blog content-->
-                                    <div class="slider-content">
-                                        <h2 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw"></i><%t StudentProfilePage.BLOGMANAGEMENT "Blog Management" %></h2>
-                                        <div class="row hidden-content" style="display:none">    
-                                            <div class="7u">
-                                                <% if BlogEntries %>
-                                                        <% loop BlogEntries %>
-                                                            <% include SingleBlogSummary TippyTop=$Top %>
-                                                        <% end_loop %>
-                                                <% else %>
-                                                    <h1><% _t('BlogHolder_ss.NOENTRIES', 'There are no blog entries!') %></h1>                                            
-                                                <% end_if %>
-                                            </div>
-                                            <div class="5u">
-                                                <ul>
-                                                    $BlogManagementURLs
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--Chatroom content-->                   
-                                    <div class="slider-content">
-                                        <h2 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw"></i><%t StudentProfilePage.STUDENTCHATROOM "Student Chatroom" %></h2>
-                                        <iframe id="student-chat" class="hidden-content" style="display:none" src={$ChatLink} width="100%" height="800" scrolling="auto" frameborder="0" name="frame_chat"> </iframe>
                                     </div>
                                 </div>
                             </div>

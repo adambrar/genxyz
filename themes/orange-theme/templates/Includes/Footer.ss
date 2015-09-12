@@ -24,11 +24,9 @@
                         <div class="3u 12u(10)">
                             <section class="widget contact last"><h3>Contact Us</h3>
                                 <ul>
-                                    <li><a class="icon fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-                                    <li><a class="icon fa-facebook" href="#"><span class="label">Facebook</span></a></li>
-                                    <li><a class="icon fa-instagram" href="#"><span class="label">Instagram</span></a></li>
-                                    <li><a class="icon fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
-                                    <li><a class="icon fa-pinterest" href="#"><span class="label">Pinterest</span></a></li>
+                                    <li><a class="icon fa-twitter" href="http://{$SiteConfig.TwitterLink}" target="_blank"><span class="label">Twitter</span></a></li>
+                                    <li><a class="icon fa-facebook" href="http://{$SiteConfig.FacebookLink}" target="_blank"><span class="label">Facebook</span></a></li>
+                                    <li><a class="icon fa-instagram" href="http://{$SiteConfig.InstagramLink}" target="_blank"><span class="label">Instagram</span></a></li>
                                 </ul>
                                 $SiteConfig.Address
                             </section>

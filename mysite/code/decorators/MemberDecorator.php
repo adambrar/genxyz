@@ -27,6 +27,7 @@ class MemberDecorator extends DataExtension {
         'University' => 'University',
         'PartnersProfile' => 'PartnersProfile',
         'ProfilePicture' => 'Image',
+        'BusinessLogo' => 'Image',
         'Nationality' => 'Country',
         'CurrentCountry' => 'Country',
         'ContactCountry' => 'Country',
@@ -78,6 +79,23 @@ class MemberDecorator extends DataExtension {
         }
     }
     
+    // get business logo
+    public function getLogoFile($ID = null) {
+        if(!$ID) { $ID = Member::currentUser()->BusinessLogoID; }
+        $Logo = File::get()->filter(array(
+            'ClassName' => 'Image',
+            'ID' => $ID
+        ))->First();
+
+        if(!$Logo) {
+            return File::get()->filter(array(
+                'Title' => 'DefaultProfilePicture'
+            ))->First();
+        } else {
+            return $Logo;
+        }
+    }
+    
     // get profile picture
     public function ProfilePictureLink($ID = null) {
         if(!$ID) {
@@ -112,7 +130,7 @@ class MemberDecorator extends DataExtension {
         return $posts;
     }
     
-    //get latest blog posts for member
+    //get latest blog posts for student
     public function getLatestBlogEntries($member = null, $max = 5) {
         if(!$member) {
             return false;

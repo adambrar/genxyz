@@ -56,5 +56,11 @@ class StudentReport_UnknownCountry extends SS_Report {
 			),
 		);
 	}
+    
+    public function getParameterFields() {
+		return new FieldList(
+			new TextField('FirstName', _t('SideReport.ParameterLiveCheckbox', 'Check live site'))
+		);
+	}
 }
 

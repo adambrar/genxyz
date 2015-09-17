@@ -42,5 +42,8 @@ ErrorDocument 500 /assets/error-500.html
 </IfModule>
 
 php_value display_errors On
+# allow larger file uploads
+php_value post_max_size 5M
+php_value upload_file_size 5M
 
 ### SILVERSTRIPE END ###

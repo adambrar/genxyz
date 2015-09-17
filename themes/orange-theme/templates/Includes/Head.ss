@@ -10,7 +10,6 @@
 	<% base_tag %>
 	<title>$Title &raquo; $SiteConfig.Title</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	$MetaTags(false)
 	<!--[if lt IE 9]>
@@ -36,8 +35,6 @@
     <% require themedCSS('flag-icon.min') %>
     <% require themedCSS('comments') %>
     <link rel="shortcut icon" href="$ThemeDir/images/favicon.ico" />
-    <% if $EnableZopim %>
-        <script src="//v2.zopim.com/?2uDfL8QV5WgywsgloRQMbP785ruTgGtR" charset="utf-8" type="text/javascript"></script>
+        <script src="//v2.zopim.com/?39aomudjMro4sj32xkLd9VcIVHhpvx1G" charset="utf-8" type="text/javascript"></script>
         <script src="$ThemeDir/javascript/zopimbuttons.js"></script>
-    <% end_if %>
 </head>

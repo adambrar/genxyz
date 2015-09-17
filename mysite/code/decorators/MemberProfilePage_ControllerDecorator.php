@@ -384,12 +384,15 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new HiddenField('Username', 'Username'),
             new HiddenField('Email', 'Email')
         );
+        $UploadField = new UploadField('ProfilePicture', 'Upload a new profile picture');
+        $UploadField->setAllowedFileCategories('image');
+        $UploadField->setAllowedMaxFileNumber(1);
+        $UploadField->setCanPreviewFolder(false);
+        $UploadField->upload->setReplaceFile(true);
+        $UploadField->setOverwriteWarning(true);
+        $UploadField->setFolderName('Uploads/ProfilePictures');
 
-        $imageUpload = new FileField('ProfilePicture', 'Use a .jpg or .png image file');
-        $imageUpload->getValidator()->allowedExtensions = array('jpg', 'png');
-        $imageUpload->setFolderName($imageUpload->getFolderName() . '/ProfilePictures');
-
-        $fields->insertBefore($imageUpload, 'Username');
+        $fields->insertBefore($UploadField, 'Username');
         
         $actions = new FieldList(
             new FormAction('saveProfileForm', _t(

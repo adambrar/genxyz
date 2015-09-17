@@ -72,6 +72,7 @@
 								.addClass('ui-state-warning-text');
 							data.context.find('.ss-uploadfield-item-progress').hide();
 							data.context.find('.ss-uploadfield-item-overwrite').show();
+							data.context.find('.ss-uploadfield-item-overwrite').removeClass('hide');
 							data.context.find('.ss-uploadfield-item-overwrite-warning').on('click', function(e){
 								data.context.find('.ss-uploadfield-item-progress').show();
 								data.context.find('.ss-uploadfield-item-overwrite').hide();

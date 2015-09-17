@@ -9,14 +9,14 @@
                             <div class="row content-box-dark">
                                 <div class="9u 12u(1)">
                                     <div class="row">
-                                        <div class="2u -1u gutters-fix"><% if Logo %><div style="margin:10px;"><a href="http://{$Member.BusinessWebsite}" class="image fit"><img style="max-height:10em;max-width:10em" src="{$BaseHref}{$Logo.Filename}" alt="Logo" /></a></div><% end_if %></div>
+                                        <div class="3u gutters-fix"><% if Member.BusinessLogo %><div style="margin:10px;"><a href="http://{$Member.BusinessWebsite}" class="image fit"><img style="max-height:10em;max-width:10em" src="{$BaseHref}{$Member.getLogoFile($Member.BusinessLogoID).Filename()}" alt="Logo" /></a></div><% end_if %></div>
                                         <div class="6u gutters-fix">
                                             <div class="small-content-box">
-                                                <h2><a href="">GenXYZ</a></h2>
-                                                <h1>~Tomorrow start today</h1>
+                                                <h2><a href="">$Member.BusinessName</a></h2>
+                                                <h1>~Member.Tagline</h1>
                                             </div>
                                         </div>
-                                        <div class="2u gutters-fix"><% if Logo %><div style="margin:10px;"><a href="http://{$Member.BusinessWebsite}" class="image fit"><img style="max-height:10em;max-width:10em" src="{$BaseHref}{$Logo.Filename}" alt="Logo" /></a></div><% end_if %></div>
+                                        <div class="3u gutters-fix"><% if Member.BusinessLogo %><div style="margin:10px;"><a href="http://{$Member.BusinessWebsite}" class="image fit"><img style="max-height:10em;max-width:10em" src="{$BaseHref}{$Member.getLogoFile($Member.BusinessLogoID).Filename()}" alt="Logo" /></a></div><% end_if %></div>
                                     </div>
                                     <ul class="tabs">
                                         <li class="tab-link current" data-tab="tab-1">Home</li>
@@ -31,16 +31,14 @@
                                     <div id="tab-1" class="tab-content current">
                                         <div class="row">
                                             <div class="6u 12u(1)">
-                                                <iframe width="420" height="315"
-src="http://www.youtube.com/embed/XGSy3_Czz8k?showinfo=0"></iframe>
-                                                <iframe src="https://player.vimeo.com/video/137334520" width="420" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                                                <iframe src="$ProfilePage.WelcomeVideoLink" width="420" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                                             </div>
                                             <div class="6u 12u(2)">
                                                 <div class="slides-container">
                                                     <div id="slides">
-                                                      <img src="{$ThemeDir}/images/Desert.jpg" alt="Photo by: Missy S Link: http://www.flickr.com/photos/listenmissy/5087404401/">
-                                                      <img src="{$ThemeDir}/images/Jellyfish.jpg" alt="Photo by: Daniel Parks Link: http://www.flickr.com/photos/parksdh/5227623068/">
-                                                      <img src="{$ThemeDir}/images/Hydrangeas.jpg" alt="Photo by: Mike Ranweiler Link: http://www.flickr.com/photos/27874907@N04/4833059991/">
+                                                      <img src="{$ProfilePage.SlideOne.Filename()}" alt="Photo by: Missy S Link: http://www.flickr.com/photos/listenmissy/5087404401/">
+                                                      <img src="{$ProfilePage.SlideTwo.Filename()}" alt="Photo by: Daniel Parks Link: http://www.flickr.com/photos/parksdh/5227623068/">
+                                                      <img src="{$ProfilePage.SlideThree.Filename()}" alt="Photo by: Mike Ranweiler Link: http://www.flickr.com/photos/27874907@N04/4833059991/">
                                                       
                                                       <a href="#" class="slidesjs-previous slidesjs-navigation" title="Previous"><i class="fa fa-chevron-left icon-large"></i></a>
                                                       <a href="#" class="slidesjs-next slidesjs-navigation" title="Next"><i class="fa fa-chevron-right icon-large"></i></a>
@@ -68,19 +66,12 @@ src="http://www.youtube.com/embed/XGSy3_Czz8k?showinfo=0"></iframe>
                                     </div>
                                     <%-- ABOUT --%>
                                     <div id="tab-2" class="tab-content">
-                                        <h1>Mission Statement</h1>
-                                        <p>GenXYZ is a platform dedicated to revolutionizing education by bridging gaps to achieve fairness and accessibility.</p>
-                                        <h1>Values</h1>
-                                        <p>Promote global education by facilitating the exchange of intercultural perspectives and providing access to international student services.</p>
                                         <h1>Vision</h1>
-                                        <p>Genxyz is committed to the following:
-                                        <ul>
-                                            <li>Integrity</li>
-                                            <li>Innovation</li>
-                                            <li>Inclusion</li>
-                                            <li>Harmony</li>
-                                        </ul>
-                                        </p>
+                                        $ProfilePage.Vision
+                                        <h1>Mission Statement</h1>
+                                        $ProfilePage.MissionStatement
+                                        <h1>Values</h1>
+                                        $ProfilePage.Values
                                     </div>
                                     <%-- ACADEMIC PROGRAMS --%>
                                     <div id="tab-3" class="tab-content">
@@ -197,43 +188,11 @@ src="http://www.youtube.com/embed/XGSy3_Czz8k?showinfo=0"></iframe>
                                     </div>
                                     <%-- SCHOLARSHIPS --%>
                                     <div id="tab-5" class="tab-content">
-                                        <p>International students are invaluable to GenXYZ. We realize that finances are a challenge sometimes and we do our best to help those hard-working, talented students financial help and resources. GenXYZ offers a full and partial scholarships. Scholarships are awarded on a need basis as well as on merit.</p>
-                                        <h1>GenXYZ Fund for Change Merit-based Scholarship</h1>
-                                        <p>This scholarship is designed for students currently attending one of our partner institutions and are showing promise. These students are actively working or volunteering in the community to enable positive change. See further eligibility requirements for this scholarship.</p>
-                                        <h1>GenXYZ Fund for Change Entrance Scholarship</h1>
-                                        <p>This scholarship is designed for recent secondary school graduates. Students must have graduated from one of our partner secondary schools and must have gained admission into one the selected programs at a post-secondary partner institution. See eligibility requirements for this scholarship.</p>
+                                        $ProfilePage.Scholarships
                                     </div>
                                     <%-- CONTACT --%>
                                     <div id="tab-6" class="tab-content" style="padding: 1em 4em;">
-                                        <p>Documents required for undergraduate applications should be mailed to the address below and must be <strong>sealed</strong> and <strong>sent directly</strong> from the secondary school. All documents should be <strong>translated</strong> whenever possible. Appropriate documents must be <strong>signed and dated.</strong></p>
-                                        <h1>Undergraduate Admissions</h1>
-                                        <ul>
-                                            <li>1234 Fake Street</li>
-                                            <li>Vancouver, Yukon</li>
-                                            <li>Canada</li>
-                                            <li>Y0A 1W0</li>
-                                        </ul>
-                                        <h1>Graduate Admissions</h1>
-                                        <ul>
-                                            <li>3358 Notfake Street</li>
-                                            <li>Vancouver, BC</li>
-                                            <li>Canada</li>
-                                            <li>Y0A 1W0</li>
-                                        </ul>
-                                        <h1>Undergraduate Enrolment</h1>
-                                        <ul>
-                                            <li>1234 Ekafton Avenue</li>
-                                            <li>Vancouver, Yukon</li>
-                                            <li>Canada</li>
-                                            <li>Y0A 1W0</li>
-                                        </ul>
-                                        <h1>Graduate Enrolment</h1>
-                                        <ul>
-                                            <li>6854 Ekaf Street</li>
-                                            <li>Vancouver, Yukon</li>
-                                            <li>Canada</li>
-                                            <li>Y0A 1W0</li>
-                                        </ul>
+                                        $ProfilePage.ContactInfo
                                     </div>
                                     <%-- APPICATION PROCESS --%>
                                     <div id="tab-7" class="tab-content">

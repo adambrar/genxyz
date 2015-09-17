@@ -89,9 +89,10 @@ class AcademicsProfileViewer extends Page_Controller {
 		}
 
 		$member = Member::get()->byID($id);
-        $profilePage = PartnersProfile::get()->ByID($member->PartnersProfileID);
+        if(!$member) {$this->httpError(404);}
         
-		if(!$member || !$profilePage) {
+        $profilePage = PartnersProfile::get()->ByID($member->PartnersProfileID);
+		if(!$profilePage) {
 			$this->httpError(404);
 		}
 
@@ -105,7 +106,11 @@ class AcademicsProfileViewer extends Page_Controller {
             'Member' => $member,
             'IsSelf' => $member->ID == Member::currentUserID(),
             'ProfilePage' => $profilePage,
-            'Logo' => $profilePage->LogoImageID ? File::get()->ByID($profilePage->LogoImageID) : false,
+            'SlidePhotos' => array(
+                'Slide1' => File::get()->byID($profilePage->SlideOneID),
+                'Slide2' => File::get()->byID($profilePage->SlideTwoID),
+                'Slide3' => File::get()->byID($profilePage->SlideThreeID)
+            ),
             'Title' => $member->BusinessName ? $member->BusinessName."'s Profile Page" : 'Profile Page'
         );
         

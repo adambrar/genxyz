@@ -97,18 +97,25 @@ class PartnersPortalPage_Controller extends Page_Controller
     }
     
     public function doRegister(array $data, Form $form) {
+        
+        if(!$data['MemberType']) {
+            $form->addErrorMessage('BusinessType', 'Please pick a business type!', 'Bad');
+            $form->loadDataFrom($data);
+            return $this->redirectBack();
+        }
+        
         $member = new Member();
         
 		$form->saveInto($member);
-        $member->FirstName = $data['BusinessName'];
         
         $member->PartnersProfileID = $this->createProfilePage();
+        $member->NeedsValidation = true; 
         
         try {
 			$member->write();
 		} catch(ValidationException $e) {
 			$form->sessionMessage($e->getResult()->message(), 'bad');
-			return;
+			return $this->redirectBack();
 		}
         
         $group = null;
@@ -143,9 +150,6 @@ class PartnersPortalPage_Controller extends Page_Controller
 
                 $group->Write();
             }     
-        } else {
-            $form->addErrorMessage('BusinessType', 'Pick a type!', 'Bad');
-            return $this->redirectBack();
         }
         
         $group->Members()->add($member);
@@ -161,11 +165,18 @@ class PartnersPortalPage_Controller extends Page_Controller
     
     public function BasicInfoForm() {
         $member = Member::currentUser();
-        if(!$member) { return false; }
+        if(!$member) { $this->httpError(403); return false; }
+        
+        $UploadField = new UploadField('BusinessLogo', 'Add your logo', File::get()->filter('ID', $member->BusinessLogoID)->First());
+        $UploadField->setAllowedFileCategories('image');
+        $UploadField->setAllowedMaxFileNumber(1);
+        $UploadField->setFolderName('Logos');
+        
         $fields = new FieldList(
             new TextField('BusinessName', 'Business Name<span>*</span>'),
             new TextField('BusinessWebsite', 'Website<span>*</span>'),
-            new LiteralField('LiteralHeader', '<h1>' . _t(
+            $UploadField,
+            new LiteralField('ContactInfo', '<h1>' . _t(
                 'AcademicsRegisterForm.CONTACT',
                 'Contact Info') . '</h1>'),
             new TextField('BusinessContact', 'Contact Name<span>*</span>'),
@@ -220,19 +231,42 @@ class PartnersPortalPage_Controller extends Page_Controller
         return $this->redirectBack();
     }
     
-    public function ProfileContentForm($id = 0) {
+    public function ProfileContentForm($id = 0) {        
         $fields = new FieldList(
-            new TextAreaField('MissionStatement', 'Mission Statement'),
-            new TextAreaField('Values', 'Values'),
-            new TextAreaField('Vision', 'Vision'),
+            LiteralField::create(
+            'InitTinyMCE', 
+            '<script type="text/javascript">
+            tinyMCE.init({
+            theme : "advanced",
+            mode: "textareas", 
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_buttons1 : "bold,italic,underline,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,link,unlink,bullist,numlist,separator,outdent,indent,separator,undo,redo,separator,fontsizeselect,formatselect,fontselect",
+            theme_advanced_buttons2 : "",
+            theme_advanced_buttons3 : "",
+            height:"400px",
+            width:"100%"
+            });
+            setTimeout(function () { 
+                tinyMCE.activeEditor.onKeyPress.add(function(){$("textarea#"+tinyMCE.activeEditor.id).val(tinyMCE.activeEditor.getContent());});
+                tinyMCE.activeEditor.onPaste.add(function(ed, e){$("textarea").val(tinyMCE.activeEditor.getContent());});
+                }, 2000);
+            </script>'),
+            new LiteralField('HomePageContent', '<h1>Home Page Content</h1>'),
+            new TextField('WelcomeVideoLink', 'Link to welcome video. <strong>*Make sure to use embed link, not link to the actual video*</strong>'),
+            $this->slideshowUploadField('One'),
+            $this->slideshowUploadField('Two'),
+            $this->slideshowUploadField('Three'),
+            new LiteralField('AboutPageContent', '<h1>About Page Content</h1>'),
+            new HTMLEditorField('Vision', 'Vision'),
+            new HTMLEditorField('MissionStatement', 'Mission Statement'),
+            new HTMLEditorField('Values', 'Values'),
+            new LiteralField('ScholarshipsPageContent', '<h1>Scholarships Page Content</h1>'),
+            new HTMLEditorField('Scholarships', 'Scholarships Content'),
+                        new LiteralField('ContactPageContent', '<h1>Contact Page Content</h1>'),
+
+            new HTMLEditorField('ContactInfo', 'Contact Information'),
             new HiddenField('MemberID', 'MemberID', $id)
         );
-        
-        $imageUpload = new FileField('LogoImage', 'Business Logo (use a .png or .jpg file)');
-        $imageUpload->getValidator()->allowedExtensions = array('jpg', 'png');
-        $imageUpload = $imageUpload->setFolderName($imageUpload->getFolderName . '/Logos');
-
-        $fields->insertBefore($imageUpload, 'MissionStatement');
         
         $actions = FieldList::create(
             FormAction::create('saveProfilePage', _t(
@@ -241,9 +275,7 @@ class PartnersPortalPage_Controller extends Page_Controller
         );
         
         $required = new RequiredFields(array(
-            'MissionStatement',
-            'Values',
-            'Vision'
+            
         ));
         
         return new Form($this->owner, 'ProfileContentForm', $fields, $actions, $required);
@@ -271,6 +303,17 @@ class PartnersPortalPage_Controller extends Page_Controller
         ));
         
         return new Form($this->owner, 'ProfileLinksForm', $fields, $actions, $required);
+    }
+    
+    private function slideshowUploadField($slideNumber) {
+        $UploadField = new UploadField('Slide'.$slideNumber, 'Slide '.$slideNumber);
+        $UploadField->setAllowedFileCategories('image');
+        $UploadField->setAllowedMaxFileNumber(1);
+        $UploadField->setCanPreviewFolder(false);
+        $UploadField->upload->setReplaceFile(true);
+        $UploadField->setOverwriteWarning(true);
+        $UploadField->setFolderName('slideshow_photos/'.Member::currentUserID());
+        return $UploadField;
     }
     
     public function saveProfilePage(array $data, Form $form) {

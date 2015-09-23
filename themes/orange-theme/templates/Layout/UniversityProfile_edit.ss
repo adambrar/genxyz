@@ -16,6 +16,7 @@
                                         <li class="tab-link current" data-tab="tab-1">Basic Info</li>
                                         <li class="tab-link" data-tab="tab-2">Profile Content</li>
                                         <li class="tab-link" data-tab="tab-3">Academic Programs</li>
+                                        <li class="tab-link" data-tab="tab-4">Tuition</li>
                                         <li class="tab-link" data-tab="tab-5">Application Links</li>
                                     </ul>
 
@@ -26,17 +27,13 @@
                                         $ProfileContent
                                     </div>
                                     <div id="tab-3" class="tab-content">
-                                        List of academic programs in alphabetic order.
-                                        <ul>
-                                            <li><a>Program 1</a></li>
-                                            <li><a>Program 2</a></li>
-                                            <li><a>Program 3</a></li>
-                                            <li><a>Program 4</a></li>
-                                            <li><a>Program 5</a></li>
-                                        </ul>
+                                        <% if $Member.Programs() %>
+                                        $EditAcademicProgramsForm
+                                        <% end_if %>
+                                        $AddAcademicProgramsForm
                                     </div>
                                     <div id="tab-4" class="tab-content">
-                                        
+                                        $TuitionForm
                                     </div>
                                     <div id="tab-5" class="tab-content">
                                         $ProfileLinks
@@ -55,5 +52,18 @@
 </div>
             
 <script src="{$ThemeDir}/javascript/tabbed.js"></script>
+<script type="text/javascript">
+    $('.edit-program-select select').change(function(){$.getJSON(location.origin + '/silver/partners-portal/ajaxProgramRequest',{'ProgramID':this.value},function(data){$.each(data,function(key,val){if(val.value){$('.'+val.title).val(val.value);}else{$('.'+val.title).val('');}});});});
+</script>
+<script type="text/javascript">
+    jQuery(".content-slider").click(function(){
+        jQuery(".fa-rotate-90").removeClass("fa-rotate-90");
+        if(!jQuery(this).parent().find(".hidden-content").is(":visible")) {
+            jQuery(this).children().addClass("fa-rotate-90");
+        }
+        jQuery(".hidden-content").not(jQuery(this).next(".hidden-content")).slideUp(750);
+        jQuery(this).next(".hidden-content").slideToggle(750);
+    });
+</script> 
 
 <% include EmptyFooter %>

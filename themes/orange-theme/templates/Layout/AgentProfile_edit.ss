@@ -63,5 +63,14 @@
 </div>
             
 <script src="{$ThemeDir}/javascript/tabbed.js"></script>
-
+<script type="text/javascript">
+    jQuery(".content-slider").click(function(){
+        jQuery(".fa-rotate-90").removeClass("fa-rotate-90");
+        if(!jQuery(this).parent().find(".hidden-content").is(":visible")) {
+            jQuery(this).children().addClass("fa-rotate-90");
+        }
+        jQuery(".hidden-content").not(jQuery(this).next(".hidden-content")).slideUp(750);
+        jQuery(this).next(".hidden-content").slideToggle(750);
+    });
+</script> 
 <% include EmptyFooter %>

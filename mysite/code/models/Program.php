@@ -3,32 +3,37 @@
 class Program extends DataObject {
     
     private static $db = array(
-        'Length' => "Enum('1 year, 2 years, 3 years, 4 years, 5 years')",
-        'Link' => 'Varchar(100)'
-    );
-    
-    private static $belongs_many_many = array(
-        'Members' => 'Member'
+        'CertificateLink' => 'Varchar(200)',
+        'DiplomaLink' => 'Varchar(200)',
+        'DegreeLink' => 'Varchar(200)',
+        'MastersLink' => 'Varchar(200)',
+        'DoctorateLink' => 'Varchar(200)'
     );
     
     private static $has_one = array(
-        'ProgramName' => 'ProgramName'
+        'ProgramName' => 'ProgramName',
+        'Institution' => 'Member'
     );
     
     private static $defaults = array(
-        'Length' => '4 years'
     );
     
     private static $summary_fields = array(
         'ProgramName.Name' => 'Name',
-        'Link' => 'Link',
-        'Length' => 'Length'
+        'Institution.BusinessName' => 'Institution'
     );
     
     private static $searchable_fields = array(
-        'Link' => 'Link',
-        'Length' => 'Length'
+        'ProgramName.Name' => 'PartialMatchFilter'
     );
+    
+    public function getCMSFields() {
+        $fields = parent::getCMSFields();
+        
+//        $fields->removeByName('Institution');
+//        $fields->addFieldToTab('Root.Main', DropdownField::create('InstitutionID', 'Institution', MemberDecorator::getInstitutionOptions())->setEmptyString('Select Institution'));
+        return $fields;
+    }
     
     public function getTitle() {
         return ProgramName::get()->ByID($this->ProgramNameID)->Name;
@@ -39,7 +44,7 @@ class Program extends DataObject {
         {
             return $programs->map('ID', 'Title', 'Please Select');
         } else {
-            return array('No Countries');
+            return array('No Programs');
         }
     }
 }

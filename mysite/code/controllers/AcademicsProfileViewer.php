@@ -106,11 +106,6 @@ class AcademicsProfileViewer extends Page_Controller {
             'Member' => $member,
             'IsSelf' => $member->ID == Member::currentUserID(),
             'ProfilePage' => $profilePage,
-            'SlidePhotos' => array(
-                'Slide1' => File::get()->byID($profilePage->SlideOneID),
-                'Slide2' => File::get()->byID($profilePage->SlideTwoID),
-                'Slide3' => File::get()->byID($profilePage->SlideThreeID)
-            ),
             'Title' => $member->BusinessName ? $member->BusinessName."'s Profile Page" : 'Profile Page'
         );
         

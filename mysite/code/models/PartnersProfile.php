@@ -4,9 +4,9 @@ class PartnersProfile extends DataObject {
     
     private static $db = array(
         'WelcomeVideoLink' => 'Varchar(200)',
-        'Testimonial1' => 'HTMLText',
-        'Testimonial2' => 'HTMLText',
-        'Testimonial3' => 'HTMLText',
+        'Testimonial1' => 'Text',
+        'Testimonial2' => 'Text',
+        'Testimonial3' => 'Text',
         'MissionStatement' => 'HTMLText',
         'Values' => 'HTMLText',
         'Vision' => 'HTMLText',

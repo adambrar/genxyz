@@ -123,7 +123,11 @@ class AcademicsProfileEditor extends Page_Controller {
             'BasicInfo' => $this->parent->BasicInfoForm()->loadDataFrom($member),
             'ProfileContent' => $this->parent->ProfileContentForm($id)->loadDataFrom($profileContent),
             'ProfileLinks' => $this->parent->ProfileLinksForm($id)->loadDataFrom($profileContent),
-            'Logo' => $profileContent->LogoImageID ? File::get()->ByID($profileContent->LogoImageID) : false
+            'TuitionForm' => $this->parent->TuitionForm($id)->loadDataFrom($profileContent),
+            'AddAcademicProgramsForm' => $this->parent->AddAcademicProgramsForm($member)->loadDataFrom($member),
+            'EditAcademicProgramsForm' => $this->parent->EditAcademicProgramsForm($member)->loadDataFrom($member),
+            'Logo' => $profileContent->LogoImageID ? File::get()->ByID($profileContent->LogoImageID) : false,
+            'Title' => $member->BusinessName ? $member->BusinessName."'s Profile Page" : 'Profile Page'
         );
         
         $controller = $this->customise($customData);

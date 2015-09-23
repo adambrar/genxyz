@@ -35,7 +35,7 @@ class MemberDecorator extends DataExtension {
         'City' => 'City'
     );
     
-    private static $many_many = array(
+    private static $has_many = array(
         'Programs' => 'Program'
     );
     
@@ -128,6 +128,15 @@ class MemberDecorator extends DataExtension {
         ))->sort('Created', 'DESC')->limit($max);
         
         return $posts;
+    }
+    
+    public static function getInstitutionOptions() {
+        if($institutions = Member::get()->filter('MemberType','University'))
+        {
+            return $institutions->map('ID', 'BusinessName', 'Please Select');
+        } else {
+            return array('No Institutions');
+        }
     }
     
     //get latest blog posts for student

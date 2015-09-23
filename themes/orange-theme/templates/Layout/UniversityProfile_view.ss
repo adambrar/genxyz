@@ -75,59 +75,21 @@
                                     </div>
                                     <%-- ACADEMIC PROGRAMS --%>
                                     <div id="tab-3" class="tab-content">
-                                        List of academic programs in alphabetic order.
                                         <div id="university-programs">
-                                            <div class="slider-content">
-                                                <h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Nursing</h1>
-                                                <div class="hidden-content">
-                                                    <ul>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Certificate</a></li>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Diploma</a></li>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Degree</a></li>
-                                                    </ul>
+                                            <% loop $Member.Programs() %>
+                                                <div class="slider-content">
+                                                    <h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>$ProgramName.Name</h1>
+                                                    <div class="hidden-content">
+                                                        <ul>
+                                                            <% if CertificateLink %><li><i class="fa fa-hand-o-right"></i> <a href="#">Certificate</a></li><% end_if %>
+                                                            <% if DiplomaLink %><li><i class="fa fa-hand-o-right"></i> <a href="#">Diploma</a></li><% end_if %>
+                                                            <% if DegreeLink %><li><i class="fa fa-hand-o-right"></i> <a href="#">Degree</a></li><% end_if %>
+                                                            <% if MastersLink %><li><i class="fa fa-hand-o-right"></i> <a href="#">Masters</a></li><% end_if %>
+                                                            <% if DoctorateLink %><li><i class="fa fa-hand-o-right"></i> <a href="#">Doctorate</a></li><% end_if %>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="slider-content">
-                                                <h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Engineering</h1>
-                                                <div class="hidden-content">
-                                                    <ul>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Degree</a></li>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Masters</a></li>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Doctorate</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="slider-content">
-                                                <h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Sociology</h1>
-                                                <div class="hidden-content">
-                                                    <ul>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Diploma</a></li>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Degree</a></li>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Masters</a></li>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Doctorate</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="slider-content">
-                                                <h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Philosophy</h1>
-                                                <div class="hidden-content">
-                                                    <ul>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Certificate</a></li>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Diploma</a></li>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Degree</a></li>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Masters</a></li>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Doctorate</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>                                            
-                                            <div class="slider-content">
-                                                <h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Pharmacy</h1>
-                                                <div class="hidden-content">
-                                                    <ul>
-                                                        <li><i class="fa fa-hand-o-right"></i> <a href="#">Degree</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                            <% end_loop %>
                                         </div>
                                     </div>
                                     <%-- TUITION --%>

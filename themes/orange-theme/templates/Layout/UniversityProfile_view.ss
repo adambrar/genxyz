@@ -9,14 +9,14 @@
                             <div class="row content-box-dark">
                                 <div class="9u 12u(1)">
                                     <div class="row">
-                                        <div class="3u gutters-fix"><% if Member.BusinessLogo %><div style="margin:10px;"><a href="http://{$Member.BusinessWebsite}" class="image fit"><img style="max-height:10em;max-width:10em" src="{$BaseHref}{$Member.getLogoFile($Member.BusinessLogoID).Filename()}" alt="Logo" /></a></div><% end_if %></div>
+                                        <div class="3u gutters-fix"><% if Member.BusinessLogo %><div style="margin:10px;"><a href="http://{$Member.BusinessWebsite}" class="image fit"><img style="max-height:10em;max-width:10em" src="{$BaseHref}{$Member.BusinessLogo.Filename()}" alt="Logo" /></a></div><% end_if %></div>
                                         <div class="6u gutters-fix">
                                             <div class="small-content-box">
                                                 <h2><a href="">$Member.BusinessName</a></h2>
                                                 <h1>~Member.Tagline</h1>
                                             </div>
                                         </div>
-                                        <div class="3u gutters-fix"><% if Member.BusinessLogo %><div style="margin:10px;"><a href="http://{$Member.BusinessWebsite}" class="image fit"><img style="max-height:10em;max-width:10em" src="{$BaseHref}{$Member.getLogoFile($Member.BusinessLogoID).Filename()}" alt="Logo" /></a></div><% end_if %></div>
+                                        <div class="3u gutters-fix"><% if Member.BusinessLogo %><div style="margin:10px;"><a href="http://{$Member.BusinessWebsite}" class="image fit"><img style="max-height:10em;max-width:10em" src="{$BaseHref}{$Member.BusinessLogo.Filename()}" alt="Logo" /></a></div><% end_if %></div>
                                     </div>
                                     <ul class="tabs">
                                         <li class="tab-link current" data-tab="tab-1">Home</li>
@@ -27,7 +27,7 @@
                                         <li class="tab-link" data-tab="tab-6">Contact</li>
                                         <li id="search-bar" data-tab="tab-7"><span style="font-weight:800">Application Process</span></li>
                                     </ul>
-                                    <%-- HOME --%>
+                                    <%-- HOME CONTENT --%>
                                     <div id="tab-1" class="tab-content current">
                                         <div class="row">
                                             <div class="6u 12u(1)">

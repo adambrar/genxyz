@@ -36,7 +36,8 @@ class MemberDecorator extends DataExtension {
     );
     
     private static $has_many = array(
-        'Programs' => 'Program'
+        'Programs' => 'Program',
+        'Services' => 'Service'
     );
     
     private static $searchable_fields = array(
@@ -132,6 +133,15 @@ class MemberDecorator extends DataExtension {
     
     public static function getInstitutionOptions() {
         if($institutions = Member::get()->filter('MemberType','University'))
+        {
+            return $institutions->map('ID', 'BusinessName', 'Please Select');
+        } else {
+            return array('No Institutions');
+        }
+    }
+    
+    public static function getAgentOptions() {
+        if($institutions = Member::get()->filter('MemberType','Agent'))
         {
             return $institutions->map('ID', 'BusinessName', 'Please Select');
         } else {

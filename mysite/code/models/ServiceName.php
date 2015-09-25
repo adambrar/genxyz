@@ -1,13 +1,13 @@
 <?php
 
-class ProgramName extends DataObject {
+class ServiceName extends DataObject {
     
     private static $db = array(
         'Name' => 'Varchar(100)'
     );
     
     private static $has_many = array(
-        'Program' => 'Program'
+        'Service' => 'Service'
     );
     
     private static $summary_fields = array(

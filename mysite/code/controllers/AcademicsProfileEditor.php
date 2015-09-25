@@ -71,8 +71,9 @@ class AcademicsProfileEditor extends Page_Controller {
             'IsSelf' => $member->ID == Member::currentUserID(),
             'menuShown' => 'None',
             'BasicInfo' => $this->parent->BasicInfoForm()->loadDataFrom($member),
-            'ProfileContent' => $this->parent->ProfileContentForm($id)->loadDataFrom($profileContent),
-            'Logo' => $profileContent->LogoImageID ? File::get()->ByID($profileContent->LogoImageID) : false            
+            'ProfileContent' => $this->parent->AgentProfileContentForm($id)->loadDataFrom($profileContent),
+            'AddServices' => $this->parent->AddAcademicServiceForm(),
+            'EditServices' => $this->parent->EditAcademicServiceForm()            
         );
         
         $controller = $this->customise($customData);
@@ -121,12 +122,11 @@ class AcademicsProfileEditor extends Page_Controller {
             'IsSelf' => $member->ID == Member::currentUserID(),
             'menuShown' => 'None',
             'BasicInfo' => $this->parent->BasicInfoForm()->loadDataFrom($member),
-            'ProfileContent' => $this->parent->ProfileContentForm($id)->loadDataFrom($profileContent),
+            'ProfileContent' => $this->parent->InstitutionProfileContentForm($id)->loadDataFrom($profileContent),
             'ProfileLinks' => $this->parent->ProfileLinksForm($id)->loadDataFrom($profileContent),
             'TuitionForm' => $this->parent->TuitionForm($id)->loadDataFrom($profileContent),
             'AddAcademicProgramsForm' => $this->parent->AddAcademicProgramsForm($member)->loadDataFrom($member),
             'EditAcademicProgramsForm' => $this->parent->EditAcademicProgramsForm($member)->loadDataFrom($member),
-            'Logo' => $profileContent->LogoImageID ? File::get()->ByID($profileContent->LogoImageID) : false,
             'Title' => $member->BusinessName ? $member->BusinessName."'s Profile Page" : 'Profile Page'
         );
         

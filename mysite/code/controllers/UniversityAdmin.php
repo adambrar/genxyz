@@ -21,6 +21,8 @@ class UniversityAdmin extends ModelAdmin {
         $fields->removeByName('q[Surname]');
         $fields->removeByName('q[FirstName]');
         $fields->removeByName('q[Nickname]');
+        $fields->removeByName('q[HighSchoolID]');
+        $fields->removeByName('q[UniversityID]');
 
         $context->setFields($fields);
         

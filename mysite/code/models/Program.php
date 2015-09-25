@@ -30,8 +30,8 @@ class Program extends DataObject {
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         
-//        $fields->removeByName('Institution');
-//        $fields->addFieldToTab('Root.Main', DropdownField::create('InstitutionID', 'Institution', MemberDecorator::getInstitutionOptions())->setEmptyString('Select Institution'));
+        $fields->removeByName('Institution');
+        $fields->addFieldToTab('Root.Main', DropdownField::create('InstitutionID', 'Institution', MemberDecorator::getInstitutionOptions())->setEmptyString('Select Institution'));
         return $fields;
     }
     

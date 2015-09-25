@@ -9,7 +9,7 @@
                             <div class="row content-box-dark">
                                 <div class="9u 12u(1)">
                                     <div class="row">
-                                        <div class="2u"><a href="#" class="image fit"><img src="{$BaseHref}{$Member.getLogoFile($Member.BusinessLogoID).Filename()}" alt="Logo" /></a></div>
+                                        <div class="2u"><a href="#" class="image fit"><img src="{$BaseHref}{$Member.BusinessLogo.Filename()}" alt="Logo" /></a></div>
                                         <div class="10u"><h2>$Member.BusinessName</h2></div>
                                     </div>
                                     <ul class="tabs">

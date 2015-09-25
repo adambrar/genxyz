@@ -9,7 +9,7 @@
                             <div class="row content-box-dark">
                                 <div class="9u 12u(1)">
                                     <div class="row">
-                                        <div class="2u"><% if Logo %><a href="#" class="image fit"><img src="{$BaseHref}{$Logo.Filename}" alt="Logo" /></a><% end_if %></div>
+                                        <div class="2u"><% if Member.BusinessLogo %><a href="#" class="image fit"><img src="{$BaseHref}{$Member.BusinessLogo.Filename}" alt="Logo" /></a><% end_if %></div>
                                         <div class="10u"><h2>$Member.BusinessName</h2></div>
                                     </div>
                                     <ul class="tabs">
@@ -25,29 +25,10 @@
                                         $ProfileContent
                                     </div>
                                     <div id="tab-3" class="tab-content">
-                                        List of agents services.
-                                        <ul>
-                                            <li>
-                                                <h3>Service 1</h3>
-                                                <p>Description of said service.</p>
-                                            </li>
-                                            <li>
-                                                <h3>Service 2</h3>
-                                                <p>Description of said service.</p>
-                                            </li>
-                                            <li>
-                                                <h3>Service 3</h3>
-                                                <p>Description of said service.</p>
-                                            </li>
-                                            <li>
-                                                <h3>Service 4</h3>
-                                                <p>Description of said service.</p>
-                                            </li>
-                                            <li>
-                                                <h3>Service 5</h3>
-                                                <p>Description of said service.</p>
-                                            </li>
-                                        </ul>
+                                        <% if Member.Services() %>
+                                            $EditServices
+                                        <% end_if %>
+                                        $AddServices
                                     </div>
                                 </div>
                                 <div class="3u 12u(2)">
@@ -63,6 +44,24 @@
 </div>
             
 <script src="{$ThemeDir}/javascript/tabbed.js"></script>
+<script type="text/javascript">
+    $('.edit-service-select select').change(function() {
+        $.getJSON(location.origin + '/silver/partners-portal/ajaxServiceRequest',
+                {'ServiceID':this.value},
+                function(data) {
+                    $.each(data,function(key,val) {
+                        if(val.value) {
+                            $('.'+val.title).val(val.value);
+                            if(val.title == 'DescriptionField') {
+                                tinymce.getInstanceById('Form_EditAcademicServiceForm_Description').setContent(val.value);
+                            }
+                        } else {
+                            $('.'+val.title).val('');
+                        }
+                    });
+        });
+    });
+</script>
 <script type="text/javascript">
     jQuery(".content-slider").click(function(){
         jQuery(".fa-rotate-90").removeClass("fa-rotate-90");

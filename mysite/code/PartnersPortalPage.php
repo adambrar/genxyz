@@ -31,14 +31,23 @@ class PartnersPortalPage_Controller extends Page_Controller
         'doRegister',
         'BasicInfoForm',
         'ProfileLinksForm',
-        'ProfileContentForm',
+        'InstitutionProfileContentForm',
+        'AgentProfileContentForm',
+        //Program Permissions
         'AddAcademicProgramsForm',
         'EditAcademicProgramsForm',
         'saveProfilePage',
         'addAcademicProgram',
         'editAcademicPrograms',
         'deleteAcademicProgram',
-        'ajaxProgramRequest'
+        'ajaxProgramRequest',
+        //Service Permissions
+        'AddAcademicServiceForm',
+        'EditAcademicServiceForm',
+        'addAcademicService',
+        'editAcademicService',
+        'deleteAcademicService',
+        'ajaxServiceRequest'
     );
     
     private static $url_handlers = array(
@@ -242,7 +251,63 @@ class PartnersPortalPage_Controller extends Page_Controller
         return $this->redirectBack();
     }
     
-    public function ProfileContentForm($isAgent = false, $id = 0) {        
+    public function InstitutionProfileContentForm($id = 0) {        
+        $fields = new FieldList(
+            LiteralField::create(
+            'InitTinyMCE', 
+            '<script type="text/javascript">
+            tinyMCE.init({
+            theme : "advanced",
+            mode: "textareas", 
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_buttons1 : "bold,italic,underline,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,link,unlink,bullist,numlist,separator,outdent,indent,separator,undo,redo,separator,fontsizeselect,formatselect,fontselect",
+            theme_advanced_buttons2 : "",
+            theme_advanced_buttons3 : "",
+            height:"400px",
+            width:"100%"
+            });
+            setTimeout(function () { 
+                tinyMCE.activeEditor.onKeyPress.add(function(){$("textarea#"+tinyMCE.activeEditor.id).val(tinyMCE.activeEditor.getContent());});
+                tinyMCE.activeEditor.onPaste.add(function(ed, e){$("textarea").val(tinyMCE.activeEditor.getContent());});
+                }, 2000);
+            </script>'),
+            new LiteralField('HomePageContent', '<h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Home Page Content</h1><div class="hidden-content">'),
+            new TextField('WelcomeVideoLink', 'Link to welcome video. <strong>*Make sure to use embed link, not link to the actual video*</strong>'),
+            $this->slideshowUploadField('One'),
+            $this->slideshowUploadField('Two'),
+            $this->slideshowUploadField('Three'),
+            new LiteralField('EndHomePageContent', '</div>'),
+            new LiteralField('AboutPageContent', '<h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>About Page Content</h1><div class="hidden-content">'),
+            new HTMLEditorField('Vision', 'Vision'),
+            new HTMLEditorField('MissionStatement', 'Mission Statement'),
+            new HTMLEditorField('Values', 'Values'),
+            new LiteralField('EndAboutPageContent', '</div>'),
+            new LiteralField('ScholarshipPageContent', '<h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Scholarship Page Content</h1><div class="hidden-content">'),
+
+            new HTMLEditorField('Scholarships', 'Scholarship Information'),
+            new LiteralField('EndScholarshipContent', '</div>'),
+            new LiteralField('ContactPageContent', '<h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Contact Page Content</h1><div class="hidden-content">'),
+
+            new HTMLEditorField('ContactInfo', 'Contact Information'),
+            new LiteralField('EndContactContent', '</div>'),
+            new HiddenField('MemberID', 'MemberID', $id)
+        );
+        
+        
+        $actions = FieldList::create(
+            FormAction::create('saveProfilePage', _t(
+                'AcademicsRegisterForm.DEFAULT',
+                'Save'))
+        );
+        
+        $required = new RequiredFields(array(
+            
+        ));
+        
+        return new Form($this->owner, 'InstitutionProfileContentForm', $fields, $actions, $required);
+    }
+    
+    public function AgentProfileContentForm($id = 0) {        
         $fields = new FieldList(
             LiteralField::create(
             'InitTinyMCE', 
@@ -291,9 +356,42 @@ class PartnersPortalPage_Controller extends Page_Controller
             
         ));
         
-        return new Form($this->owner, 'ProfileContentForm', $fields, $actions, $required);
+        return new Form($this->owner, 'AgentProfileContentForm', $fields, $actions, $required);
     }
     
+    public function saveProfilePage(array $data, Form $form) {
+        $member = Member::currentUser();
+        if(!$member || $data['MemberID'] != $member->ID) {
+            $this->httpError(403);
+        }
+                
+        $profilePage = PartnersProfile::get()->byID($member->PartnersProfileID);
+        
+        if(!$profilePage) {
+            $profilePage = new ProfilePage();
+            $member->PartnersProfileID = $profilePage->ID;
+            try {
+                $member->write();
+            } catch(ValidationException $e) {
+                $form->sessionMessage('There was an error saving your information. Please try again.', 'bad');
+
+                return $this->owner->redirectBack();
+            }
+        }
+        $form->saveInto($profilePage);
+
+        try {
+			$profilePage->write();
+		} catch(ValidationException $e) {
+			$form->sessionMessage($e->getResult()->message(), 'bad');
+            
+			return $this->owner->redirectBack();
+		}
+        
+        $form->addErrorMessage('Blurb', 'Your profile has been updated.', 'Good');
+        return $this->redirectBack();
+    }
+        
     public function AddAcademicProgramsForm($member = null) {
         $member = Member::currentUser();
         
@@ -425,6 +523,131 @@ class PartnersPortalPage_Controller extends Page_Controller
         return $this->redirectBack();
     }
     
+    public function AddAcademicServiceForm($member = null) {
+        $member = Member::currentUser();
+        
+        $memberServices = $member->Services();
+        $FilterList = array();
+        foreach($memberServices as $service)
+            $FilterList[] = $service->ServiceNameID;
+
+        $services = ServiceName::get()->exclude('ID',$FilterList)->map('ID','Name');
+
+        
+        $fields = new FieldList(
+            new LiteralField('AddService', '<h2>Add A New Service</h2>'),
+            DropdownField::create(
+                'ServiceNameID', 
+                'Select the service you would like to add.',
+                $services)->setEmptyString('Select service to add.'),
+            TextAreaField::create('Description', 'A description of the service'),
+            NumericField::create('Cost', 'The cost of the service')
+        );
+        
+        $actions = FieldList::create(
+            FormAction::create('addAcademicService', _t(
+                'AcademicsRegisterForm.DEFAULT',
+                'Add'))
+        );
+        
+        $required = new RequiredFields(array(
+            'ServiceNameID'
+        ));
+        
+        return new Form($this->owner, 'AddAcademicServiceForm', $fields, $actions, $required);
+    }
+    
+    public function addAcademicService(array $data, Form $form) {
+        if(!Member::currentUserID()) { return $this->httpError(403); }
+        
+        $service = new Service();
+        $form->saveInto($service);
+        $service->AgentID = Member::currentUserID();
+        
+        try {
+			$service->write();
+		} catch(ValidationException $e) {
+			$form->sessionMessage($e->getResult()->message(), 'bad');   
+			return $this->owner->redirectBack();
+		}
+                
+        $form->addErrorMessage('Blurb', 'Your service has been added.', 'Good');
+        return $this->redirectBack();
+    }
+    
+    public function EditAcademicServiceForm($member = null) {
+        $member = Member::currentUser();
+        
+        if($member->Services()) {
+            $service = $member->Services()->map('ID', 'Title', 'Please Select');
+        } else {
+            $service = array('empty', 'Add services before you can edit them.');
+        }
+            
+        $fields = new FieldList(
+            new LiteralField('EditService', '<h2>Edit Your Services</h2>'),
+            DropdownField::create('ServiceID', 'Edit Your Service', $service)->setEmptyString('Select a service to edit.')->addExtraClass('edit-service-select'),
+            TextAreaField::create('Description', 'A description of your service')->addExtraClass('DescriptionField'),
+            NumericField::create('Cost', 'The cost of your service')->addExtraClass('CostField')
+        );
+        
+        $actions = FieldList::create(
+            FormAction::create('editAcademicService', _t(
+                'AcademicsRegisterForm.DEFAULT',
+                'Save')),
+            FormAction::create('deleteAcademicService', _t(
+                'AcademicsRegisterForm.DEFAULT',
+                'Delete'))
+        );
+        
+        $required = new RequiredFields(array(
+            'ServiceName'
+        ));
+        
+        return new Form($this->owner, 'EditAcademicServiceForm', $fields, $actions, $required);
+    }
+    
+    public function editAcademicService(array $data, Form $form) {
+        if(!Member::currentUserID()) {return $this->httpError(403);}
+        
+        $service = Service::get()->byID($data['ServiceID']);
+        
+        if(!$service || $service->AgentID != Member::currentUserID()) {
+            $form->addErrorMessage('Blurb', 'That service was not found. Select a new service and try again.', 'Bad');
+            return $this->redirectBack();
+        }
+
+        $form->saveInto($service);
+            
+        try {
+			$service->write();
+		} catch(ValidationException $e) {
+			$form->sessionMessage($e->getResult()->message(), 'bad');   
+			return $this->owner->redirectBack();
+		}
+                
+        $form->addErrorMessage('Blurb', 'Your service has been updated.', 'Good');
+        return $this->redirectBack();
+    }
+    
+    public function deleteAcademicService(array $data, Form $form) {
+        if(!Member::currentUserID()) {return $this->httpError(403);}
+        var_dump($data);
+        $service = Service::get()->byID($data['ServiceID']);
+        
+        if(!$service || $service->AgentID != Member::currentUserID()) {
+            $form->addErrorMessage('Blurb', 'There was an error. Select a new service and try again.', 'Bad');
+            //return $this->redirectBack();
+        }
+        
+        $service->delete();
+        if(Member::currentUser()->Services()) {
+            $form->addErrorMessage('Blurb', 'Your service has been deleted.', 'Good');
+        }
+        
+        return $this->redirectBack();
+    }
+    
     public function TuitionForm($id = 0) {
         $fields = new FieldList(
             new LiteralField('TuitionDescription', 'Provide amounts for the following average costs.'),
@@ -480,28 +703,6 @@ class PartnersPortalPage_Controller extends Page_Controller
         return $UploadField;
     }
     
-    public function saveProfilePage(array $data, Form $form) {
-        $member = Member::currentUser();
-        if(!$member || $data['MemberID'] != $member->ID) {
-            $this->httpError(403);
-        }
-        
-                
-        $profilePage = PartnersProfile::get()->byID($member->PartnersProfileID);
-        $form->saveInto($profilePage);
-
-        try {
-			$profilePage->write();
-		} catch(ValidationException $e) {
-			$form->sessionMessage($e->getResult()->message(), 'bad');
-            
-			return $this->owner->redirectBack();
-		}
-        
-        $form->addErrorMessage('Blurb', 'Your profile has been updated.', 'Good');
-        return $this->redirectBack();
-    }
-    
     public function getProfileLink() {
         $member = Member::currentUser();
 
@@ -548,6 +749,11 @@ class PartnersPortalPage_Controller extends Page_Controller
                 'error'=>'Program not found',
                 'value'=>'error'
             ));
+        } else if($program->InstitutionID != Member::currentUserID()) {
+            return json_encode(array(
+                'error'=>'You cannot access this program',
+                'value'=>'error'
+            ));
         }
                   
         $js[] = array(
@@ -565,6 +771,47 @@ class PartnersPortalPage_Controller extends Page_Controller
         $js[] = array(
             'title' => 'DoctorateLink',
             'value' => $program->DoctorateLink ? $program->DoctorateLink : '');
+        
+        return json_encode($js);
+    }
+    
+    public function ajaxServiceRequest($message = "", $extraData = null, $status = 'success') {
+        $this->response->addHeader('Content-Type', 'application/json');
+        SSViewer::set_source_file_comments(false);
+        
+        if($status != 'success') {
+            $this->setStatusCode(400, $message);
+        }
+
+        $js = array();
+
+        if(!isset($_GET['ServiceID']) || !ctype_digit($_GET['ServiceID'])) {
+              return json_encode(array(
+                  'error' => 'Invalid argument.',
+                  'value' => 'error'
+              ));
+        }
+        
+        $service = Service::get()->byID($_GET['ServiceID']);
+        
+        if(!$service) {
+            return json_encode(array(
+                'error'=>'Program not found',
+                'value'=>'error'
+            ));
+        } else if($service->AgentID != Member::currentUserID()) {
+            return json_encode(array(
+                'error'=>'You cannot access this service',
+                'value'=>'error'
+            ));
+        }
+                  
+        $js[] = array(
+            'title' => 'DescriptionField',
+            'value' => $service->Description ? $service->Description : '');
+        $js[] = array(
+            'title' => 'CostField',
+            'value' => $service->Cost ? $service->Cost : '');
         
         return json_encode($js);
     }

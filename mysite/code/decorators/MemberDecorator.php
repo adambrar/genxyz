@@ -40,6 +40,11 @@ class MemberDecorator extends DataExtension {
         'Services' => 'Service'
     );
     
+    private static $many_many = array(
+        'Agents' => 'Member',
+        'Schools' => 'Member'
+    );
+
     private static $searchable_fields = array(
         'BusinessName' => 'BusinessName',
         'HighSchoolID' => 'HighSchool',
@@ -172,27 +177,36 @@ class MemberDecorator extends DataExtension {
     
     public function updateCMSFields(FieldList $fields) {
         $fields->addFieldToTab('Root.Main', DropdownField::create('MemberType', 'Member Type', singleton('Member')->dbObject('MemberType')->enumValues())->setEmptyString('Select Member Type'), 'FirstName');
-
-        $fields->removeByName('FirstName');
-        $fields->removeByName('Surname');
-        $fields->removeByName('Country');
-        $fields->removeByName('City');
+        $this->removeExtraFields($fields);
         
-        $this->addStudentFields($fields);
-        $this->addBusinessFields($fields);
-        
-
-        $fields->removeByName('FirstNamePublic');
-        $fields->removeByName('SurnamePublic');
-        $fields->removeByName('OccupationPublic');
-        $fields->removeByName('CompanyPublic');
-        $fields->removeByName('CityPublic');
-        $fields->removeByName('CountryPublic');
-        $fields->removeByName('EmailPublic');
-        $fields->removeByName('Occupation');
-        $fields->removeByName('Company');
-        $fields->removeByName('Nickname');
-        $fields->removeByName('Signature');
+        //customize CMS fields depending on member type
+        if($this->owner->MemberType == "Student") {
+            $this->addStudentFields($fields);
+            $fields->removeByName('Programs');
+            $fields->removeByName('Schools');
+            $fields->removeByName('Agents');
+            $fields->removeByName('Services');
+            $fields->removeByName('BusinessWebsite');
+            $fields->removeByName('BusinessName');
+            $fields->removeByName('BusinessContact');
+            $fields->removeByName('BusinessTelephone');
+            $fields->removeByName('BusinessRegistrationNumber');
+            $fields->removeByName('BusinessCountryID');
+            $fields->removeByName('PartnersProfileID');
+            $fields->removeByName('BusinessLogoID');
+        } else if($this->owner->MemberType == "Agent") {
+            $this->addBusinessFields($fields);
+            $fields->removeByName('Programs');
+            $fields->removeByName('Agents');
+            $this->removeStudentFields($fields);
+        } else if($this->owner->MemberType == "University") {
+            $this->addBusinessFields($fields);
+            $fields->removeByName('Services');
+            $this->removeStudentFields($fields);
+        } else {
+            $this->addStudentFields($fields);
+            $this->addBusinessFields($fields);
+        }
     }
     
     function Link() {
@@ -230,13 +244,53 @@ class MemberDecorator extends DataExtension {
     }
     
     private function addBusinessFields(FieldList $fields) {
-        $fields->addFieldToTab('Root.Partner', new TextField('BusinessName', 'Business Name'));         
-        $fields->addFieldToTab('Root.Partner', new TextField('BusinessWebsite', 'Website'));         
-        $fields->addFieldToTab('Root.Partner', new TextField('BusinessContact', 'Contact Name'));         
-        $fields->addFieldToTab('Root.Partner', new TextField('BusinessTelephone', 'Contact Telephone'));         
-        $fields->addFieldToTab('Root.Partner', DropdownField::create('BusinessCountryID', 'Country of Registration', Country::getCountryOptions())->setEmptyString('Select a country'));
-        $fields->addFieldToTab('Root.Partner', new TextField('BusinessRegistrationNumber', 'Business Registration Number'));         
-        $fields->addFieldToTab('Root.Partner', new HiddenField('PartnersProfileID', 'Partners Profile ID'));         
+        $fields->addFieldToTab('Root.BusinessInfo', new TextField('BusinessName', 'Business Name'));         
+        $fields->addFieldToTab('Root.BusinessInfo', new TextField('BusinessWebsite', 'Website'));         
+        $fields->addFieldToTab('Root.BusinessInfo', new TextField('BusinessContact', 'Contact Name'));         
+        $fields->addFieldToTab('Root.BusinessInfo', new TextField('BusinessTelephone', 'Contact Telephone'));         
+        $fields->addFieldToTab('Root.BusinessInfo', DropdownField::create('BusinessCountryID', 'Country of Registration', Country::getCountryOptions())->setEmptyString('Select a country'));
+        $fields->addFieldToTab('Root.BusinessInfo', new TextField('BusinessRegistrationNumber', 'Business Registration Number'));         
+        $fields->addFieldToTab('Root.BusinessInfo', new HiddenField('PartnersProfileID', 'Partners Profile ID'));         
+    }
+    
+    private function removeStudentFields(FieldList $fields) {
+        $fields->removeByName('MiddleName');
+        $fields->removeByName('DateOfBirth');
+        $fields->removeByName('Telephone');
+        $fields->removeByName('StreetAddress');
+        $fields->removeByName('PostalCode');
+        $fields->removeByName('Agency');
+        $fields->removeByName('HSGraduation');
+        $fields->removeByName('UniversityGraduation');
+        $fields->removeByName('ContactFirstName');
+        $fields->removeByName('ContactSurname');
+        $fields->removeByName('ContactTelephone');
+        $fields->removeByName('PointsEarned');
+        $fields->removeByName('HighSchoolID');
+        $fields->removeByName('UniversityID');
+        $fields->removeByName('ProfilePicture');
+        $fields->removeByName('NationalityID');
+        $fields->removeByName('CurrentCountryID');
+        $fields->removeByName('ContactCountryID');
+        $fields->removeByName('CityID');
+    }
+    
+    private function removeExtraFields(FieldList $fields) {
+        $fields->removeByName('FirstName');
+        $fields->removeByName('Surname');
+        $fields->removeByName('Country');
+        $fields->removeByName('City');
+        $fields->removeByName('FirstNamePublic');
+        $fields->removeByName('SurnamePublic');
+        $fields->removeByName('OccupationPublic');
+        $fields->removeByName('CompanyPublic');
+        $fields->removeByName('CityPublic');
+        $fields->removeByName('CountryPublic');
+        $fields->removeByName('EmailPublic');
+        $fields->removeByName('Occupation');
+        $fields->removeByName('Company');
+        $fields->removeByName('Nickname');
+        $fields->removeByName('Signature');
     }
     
 }

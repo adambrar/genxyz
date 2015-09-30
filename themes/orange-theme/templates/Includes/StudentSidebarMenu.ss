@@ -13,8 +13,8 @@
         </li>
     <% end_loop %>
     </li>
-    <li>-</li>
-    <% if isProfileSaved %>
+    <li></li>
+    <% if $Top.isProfileSaved %>
         <li><span class="message good">Your profile has been updated!</span></li>
     <% end_if %>
     <li id="account-settings-menu">

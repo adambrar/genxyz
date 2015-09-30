@@ -8,21 +8,18 @@
                         <div class="content">
                             <div class="row content-box-dark">
                                 <div class="9u 12u(1)">
-                                    <div class="row">
+                                    <div class="row small-content-box">
                                         <div class="3u gutters-fix"><% if Member.BusinessLogo %><div style="margin:10px;"><a href="http://{$Member.BusinessWebsite}" class="image fit"><img style="max-height:10em;max-width:10em" src="{$BaseHref}{$Member.BusinessLogo.Filename()}" alt="Logo" /></a></div><% end_if %></div>
-                                        <div class="6u gutters-fix">
-                                            <div class="small-content-box">
-                                                <h2><a href="">$Member.BusinessName</a></h2>
-                                                <h1>~Member.Tagline</h1>
-                                            </div>
+                                        <div class="9u gutters-fix">
+                                            <h2><a href="">$Member.BusinessName</a></h2>
+                                            <h1>~Member.Tagline</h1>
                                         </div>
-                                        <div class="3u gutters-fix"><% if Member.BusinessLogo %><div style="margin:10px;"><a href="http://{$Member.BusinessWebsite}" class="image fit"><img style="max-height:10em;max-width:10em" src="{$BaseHref}{$Member.BusinessLogo.Filename()}" alt="Logo" /></a></div><% end_if %></div>
                                     </div>
                                     <ul class="tabs">
                                         <li class="tab-link current" data-tab="tab-1">Home</li>
                                         <li class="tab-link" data-tab="tab-2">About</li>
                                         <li class="tab-link" data-tab="tab-3">Academic Programs</li>
-                                        <li class="tab-link" data-tab="tab-4" style="white-space:nowrap">Tuition</li>
+                                        <li class="tab-link" data-tab="tab-4" style="white-space:nowrap">Partners</li>
                                         <li class="tab-link" data-tab="tab-5" style="white-space:nowrap">Scholarships</li>
                                         <li class="tab-link" data-tab="tab-6">Contact</li>
                                         <li id="search-bar" data-tab="tab-7"><span style="font-weight:800">Application Process</span></li>
@@ -92,61 +89,20 @@
                                             <% end_loop %>
                                         </div>
                                     </div>
-                                    <%-- TUITION --%>
+                                    <%-- PARTNERS CONTENT --%>
                                     <div id="tab-4" class="tab-content">
-                                        <style type="text/css">
-                                            .tg  {border-collapse:collapse;border-spacing:0;}
-                                            .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
-                                            .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
-                                            .tg .tg-q7u4{background-color:#00009b;color:#ffffff}
-                                            .tg .tg-0a3w{background-color:#68cbd0}
-                                            .tg .tg-c7d0{background-color:#bbdaff}
-                                            .tg .tg-36xf{font-weight:bold;background-color:#bbdaff}
-                                            </style>
-                                            <table class="tg">
-                                              <tr>
-                                                <th class="tg-q7u4"></th>
-                                                <th class="tg-q7u4">Credits</th>
-                                                <th class="tg-q7u4">Canadian Citizen or<br>Permanent Resident</th>
-                                                <th class="tg-q7u4">Internation Students</th>
-                                              </tr>
-                                              <tr>
-                                                <td class="tg-0a3w">Arts</td>
-                                                <td class="tg-0a3w"><br>30</td>
-                                                <td class="tg-0a3w">4,898.83</td>
-                                                <td class="tg-0a3w">26,532.92</td>
-                                              </tr>
-                                              <tr>
-                                                <td class="tg-c7d0">Commerce</td>
-                                                <td class="tg-c7d0">30</td>
-                                                <td class="tg-c7d0">7,684.62</td>
-                                                <td class="tg-c7d0">30,208.93</td>
-                                              </tr>
-                                              <tr>
-                                                <td class="tg-0a3w">Applied Science</td>
-                                                <td class="tg-0a3w">35</td>
-                                                <td class="tg-0a3w">6,321.84</td>
-                                                <td class="tg-0a3w">31,098.31</td>
-                                              </tr>
-                                              <tr>
-                                                <td class="tg-c7d0">Science</td>
-                                                <td class="tg-c7d0">30</td>
-                                                <td class="tg-c7d0">5,246.60</td>
-                                                <td class="tg-c7d0">27,329.29</td>
-                                              </tr>
-                                              <tr>
-                                                <td class="tg-0a3w">Living costs, books and student fees</td>
-                                                <td class="tg-0a3w"></td>
-                                                <td class="tg-0a3w">13,000-15,000</td>
-                                                <td class="tg-0a3w">13,000-15,000</td>
-                                              </tr>
-                                              <tr>
-                                                <td class="tg-36xf">Total (CAD$)</td>
-                                                <td class="tg-c7d0"></td>
-                                                <td class="tg-36xf">19,000-24,000</td>
-                                                <td class="tg-36xf">39,000-46,000</td>
-                                              </tr>
-                                            </table>
+                                        Partnered Schools:
+                                        <ul>
+                                        <% loop Member.Schools %>
+                                            <li>$BusinessName</li>
+                                        <% end_loop %>
+                                        </ul>
+                                        Recommended Agencies:
+                                        <ul>
+                                        <% loop Member.Agents %>
+                                            <li>$BusinessName</li>
+                                        <% end_loop %>
+                                        </ul>
                                     </div>
                                     <%-- SCHOLARSHIPS --%>
                                     <div id="tab-5" class="tab-content">

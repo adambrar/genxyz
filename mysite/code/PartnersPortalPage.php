@@ -33,6 +33,10 @@ class PartnersPortalPage_Controller extends Page_Controller
         'ProfileLinksForm',
         'InstitutionProfileContentForm',
         'AgentProfileContentForm',
+        'AgentPartnersForm',
+        'saveAgentPartners',
+        'SchoolPartnersForm',
+        'saveSchoolPartners',
         //Program Permissions
         'AddAcademicProgramsForm',
         'EditAcademicProgramsForm',
@@ -54,6 +58,16 @@ class PartnersPortalPage_Controller extends Page_Controller
         'university/$MemberID' => 'edit',
         'agent/$MemberID' => 'edit'
     );
+    
+    function init() {        
+        parent::init();
+        
+	Requirements::css(FRAMEWORK_DIR . "/admin/thirdparty/chosen/chosen/chosen.css");
+        
+//        if(!Member::currentUserID() || Member::currentUser()->isStudent()) {
+//            Security::permissionFailure(null, 'You need to be logged into a partner profile to view this content.');
+//        }
+    }
     
     public function edit() {
         $member = Member::currentUser();
@@ -637,7 +651,7 @@ class PartnersPortalPage_Controller extends Page_Controller
         
         if(!$service || $service->AgentID != Member::currentUserID()) {
             $form->addErrorMessage('Blurb', 'There was an error. Select a new service and try again.', 'Bad');
-            //return $this->redirectBack();
+            return $this->redirectBack();
         }
         
         $service->delete();
@@ -646,26 +660,6 @@ class PartnersPortalPage_Controller extends Page_Controller
         }
         
         return $this->redirectBack();
-    }
-    
-    public function TuitionForm($id = 0) {
-        $fields = new FieldList(
-            new LiteralField('TuitionDescription', 'Provide amounts for the following average costs.'),
-            new TextField('Pages', 'All Pages'),
-            new HiddenField('MemberID', 'MemberID', $id)
-        );
-        
-        $actions = FieldList::create(
-            FormAction::create('saveProfilePage', _t(
-                'AcademicsRegisterForm.DEFAULT',
-                'Save'))
-        );
-        
-        $required = new RequiredFields(array(
-            'Application'
-        ));
-        
-        return new Form($this->owner, 'TuitionForm', $fields, $actions, $required);
     }
     
     public function ProfileLinksForm($id = 0) {
@@ -723,7 +717,149 @@ class PartnersPortalPage_Controller extends Page_Controller
         ))->First()->Link();
             
         }
-    }   
+    }
+    
+    public function AgentPartnersForm($id = 0) {
+        $member = Member::currentUser();
+        if(!$member) { return Security::permissionFailure(); }
+        
+        $items = Member::get()->filter('MemberType', 'Agent')->map('ID', 'BusinessName', '--Select agencies--')->toArray();
+        $current = array();
+        foreach($member->Agents() as $agent) {
+            $current[] = $agent->ID;
+        }
+        
+        $fields = new FieldList(
+            new LiteralField('AgentPartners', 'Select the agents you would like to partner with.'),
+            ListboxField::create('Agents', 'Agents')->setMultiple(true)->setSource($items)->setValue($current),
+            new HiddenField('MemberID', 'MemberID', $id)
+        );
+        
+        $actions = FieldList::create(
+            FormAction::create('saveAgentPartners', _t(
+                'AcademicsRegisterForm.DEFAULT',
+                'Save'))
+        );
+        
+        $required = new RequiredFields(array(
+            'Agents'
+        ));
+        
+        return new Form($this->owner, 'AgentPartnersForm', $fields, $actions, $required);
+    }
+    
+    public function saveAgentPartners(array $data, Form $form) {
+        $member = Member::currentUser();
+        if(!$member) { return Security::permissionFailure(); }
+        
+        $current = array();
+        foreach($member->Agents() as $agent) {
+            $current[] = $agent->ID;
+        }
+        
+        $toAdd = array_diff($data['Agents'], $current);
+        $toRemove = array_diff($current, $data['Agents']);
+        
+        $addedString = '';
+        $removedString = '';
+        
+        foreach($toAdd as $add) {
+            $agent = Member::get()->byID($add);
+            if(!$agent || !$agent->isAgent()) { echo "false"; continue; }
+            
+            $member->Agents()->add($agent);
+            $addedString .= $agent->BusinessName;
+        }
+        foreach($toRemove as $remove) {
+            $agent = Member::get()->byID($remove);
+            if(!$agent || !$agent->isAgent()) { echo "false"; }
+            
+            $member->Agents()->remove($agent);  
+            $removedString .= $agent->BusinessName . ' ';            
+        }
+        
+        $returnString = '';
+
+        if($removedString) { $returnString .= 'You removed: '. $removedString; } 
+        if($addedString) { $returnString .= ' / You added: '. $addedString; } 
+        $form->addErrorMessage('Blurb', $returnString, 'Good');
+
+        $this->redirectBack();
+    }
+    
+    public function SchoolPartnersForm($id = 0) {
+        $member = Member::currentUser();
+        if(!$member) { return Security::permissionFailure(); }
+        
+        $items = Member::get()->filter('MemberType', 'University')->map('ID', 'BusinessName', '--Select schools--')->toArray();
+        $current = array();
+        foreach($member->Schools() as $schools) {
+            $current[] = $schools->ID;
+        }
+        
+        $fields = new FieldList(
+            new LiteralField('School Partners', 'Select the schools you would like to partner with.'),
+            ListboxField::create('Schools', 'Schools')->setMultiple(true)->setSource($items)->setValue($current),
+            new HiddenField('MemberID', 'MemberID', $id)
+        );
+        
+        $actions = FieldList::create(
+            FormAction::create('saveSchoolPartners', _t(
+                'AcademicsRegisterForm.DEFAULT',
+                'Save'))
+        );
+        
+        $required = new RequiredFields(array(
+            'Schools'
+        ));
+        
+        return new Form($this->owner, 'SchoolPartnersForm', $fields, $actions, $required);
+    }
+    
+    public function saveSchoolPartners(array $data, Form $form) {
+        $member = Member::currentUser();
+        if(!$member) { return Security::permissionFailure(); }
+        
+        $current = array();
+        foreach($member->Schools() as $school) {
+            $current[] = $school->ID;
+        }
+        
+        $toAdd = array_diff($data['Schools'], $current);
+        $toRemove = array_diff($current, $data['Schools']);
+        
+        $addedString = '';
+        $removedString = '';
+        
+        foreach($toAdd as $add) {
+            $school = Member::get()->byID($add);
+            if(!$school || !$school->isUniversity()) { echo "false"; continue; }
+            
+            $member->Schools()->add($school);
+            if($member->MemberType == "Agent") {
+                $school->Agents()->add($member);
+            }
+            $addedString .= $school->BusinessName;
+        }
+        foreach($toRemove as $remove) {
+            $school = Member::get()->byID($remove);
+            if(!$school || !$school->isUniversity()) { echo "false"; }
+            
+            $member->Schools()->remove($school);
+            if($member->MemberType == "Agent") {
+                $school->Agents()->add($member);
+            }
+            $removedString .= $school->BusinessName . ' ';            
+        }
+        
+        $returnString = '';
+
+        if($removedString) { $returnString .= 'You removed: '. $removedString; } 
+        if($addedString) { $returnString .= ' / You added: '. $addedString; } 
+        $form->addErrorMessage('Blurb', $returnString, 'Good');
+
+        $this->redirectBack();
+    }
     
     public function ajaxProgramRequest($message = "", $extraData = null, $status = 'success') {
         $this->response->addHeader('Content-Type', 'application/json');

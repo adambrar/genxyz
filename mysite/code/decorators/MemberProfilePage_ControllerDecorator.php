@@ -89,6 +89,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         ))->limit(10);
         
         $pageData['BlogEntries'] = $entries;
+        $pageData['isProfileSaved'] = isset($_SESSION['profile-form-saved']) ? true : false;
         
         return $pageData;
     }
@@ -240,7 +241,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     public function AddressProfileForm(Member $member = null) {
         if(!$member) {
             $member = Member::currentUser();
-        }   
+        }
         
         $fields = new FieldList(
             new LiteralField('LiteralHeader', '<h2>' . _t(
@@ -428,15 +429,6 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         
 		return $this->owner->redirectBack('?saved=1');//($this->Link('?saved=1'));
 	}
-    
-    public function isProfileSaved() {
-        if(Session::get('profile-form-saved')) {
-            Session::clear('profile-form-saved');
-            return true;
-        }
-        
-        return false;
-    }
     
     function AllForums($num=5) {
         $holder = Forum::get()->First();

@@ -73,7 +73,7 @@
                                         List of agents services.
                                         <% loop $Member.Services() %>
                                             <h1>$ServiceName.Name - $Cost</h1>
-                                            <p>$Description</p>
+                                            $Description
                                         <% end_loop %>
                                     </div>
                                     <%-- CONTACT --%>

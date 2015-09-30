@@ -16,6 +16,7 @@
                                         <li class="tab-link current" data-tab="tab-1">Basic Information</li>
                                         <li class="tab-link" data-tab="tab-2">Profile Page</li>
                                         <li class="tab-link" data-tab="tab-3">Services</li>
+                                        <li class="tab-link" data-tab="tab-4">Partners</li>
                                     </ul>
 
                                     <div id="tab-1" class="tab-content current">
@@ -29,6 +30,9 @@
                                             $EditServices
                                         <% end_if %>
                                         $AddServices
+                                    </div>
+                                    <div id="tab-4" class="tab-content">
+                                        $SchoolPartnersForm
                                     </div>
                                 </div>
                                 <div class="3u 12u(2)">
@@ -71,5 +75,7 @@
         jQuery(".hidden-content").not(jQuery(this).next(".hidden-content")).slideUp(750);
         jQuery(this).next(".hidden-content").slideToggle(750);
     });
-</script> 
+</script>
+<script src="framework/admin/thirdparty/chosen/chosen/chosen.jquery.js" type="text/javascript"></script>
+<script type="text/javascript"> $(".listbox select").chosen({max_selected_options: 5, width: "400px"}); </script>
 <% include EmptyFooter %>

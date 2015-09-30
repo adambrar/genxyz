@@ -49,7 +49,7 @@ class AcademicsProfileEditor extends Page_Controller {
 		$member = Member::get()->byID($id);
         
 		if(!$member || !$member->isAgent() || Member::currentUserID() != $id) {
-			$this->httpError(404);
+			return Security::permissionFailure(null, 'Sign into a partner profile to view this content.');
 		}
         
         //check user has profile page and create if not
@@ -73,7 +73,8 @@ class AcademicsProfileEditor extends Page_Controller {
             'BasicInfo' => $this->parent->BasicInfoForm()->loadDataFrom($member),
             'ProfileContent' => $this->parent->AgentProfileContentForm($id)->loadDataFrom($profileContent),
             'AddServices' => $this->parent->AddAcademicServiceForm(),
-            'EditServices' => $this->parent->EditAcademicServiceForm()            
+            'EditServices' => $this->parent->EditAcademicServiceForm(),
+            'SchoolPartnersForm' => $this->parent->SchoolPartnersForm()
         );
         
         $controller = $this->customise($customData);
@@ -101,7 +102,7 @@ class AcademicsProfileEditor extends Page_Controller {
 		$member = Member::get()->byID($id);
         
 		if(!$member || !$member->isUniversity() || Member::currentUserID() != $id) {
-			$this->httpError(404);
+			return Security::permissionFailure(null, 'Sign into a partner profile to view this content.');
 		}
 
 		$this->data()->Title = sprintf(
@@ -124,10 +125,11 @@ class AcademicsProfileEditor extends Page_Controller {
             'BasicInfo' => $this->parent->BasicInfoForm()->loadDataFrom($member),
             'ProfileContent' => $this->parent->InstitutionProfileContentForm($id)->loadDataFrom($profileContent),
             'ProfileLinks' => $this->parent->ProfileLinksForm($id)->loadDataFrom($profileContent),
-            'TuitionForm' => $this->parent->TuitionForm($id)->loadDataFrom($profileContent),
             'AddAcademicProgramsForm' => $this->parent->AddAcademicProgramsForm($member)->loadDataFrom($member),
             'EditAcademicProgramsForm' => $this->parent->EditAcademicProgramsForm($member)->loadDataFrom($member),
-            'Title' => $member->BusinessName ? $member->BusinessName."'s Profile Page" : 'Profile Page'
+            'Title' => $member->BusinessName ? $member->BusinessName."'s Profile Page" : 'Profile Page',
+            'SchoolPartnersForm' => $this->parent->SchoolPartnersForm(),
+            'AgentPartnersForm' => $this->parent->AgentPartnersForm()
         );
         
         $controller = $this->customise($customData);

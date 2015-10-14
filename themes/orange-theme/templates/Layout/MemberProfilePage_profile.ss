@@ -16,7 +16,7 @@
                                     <!--Forum content-->
                                     <div class="slider-content">
                                         <h2><i class="fa fa-arrow-circle-right fa-fw"></i><%t StudentProfilePage.Chat "Forum Posts" %></h2>
-                                        <div class="hidden-content">    
+                                        <div class="not-hidden-content">    
                                             <table class="default mini-forum">
                                                 <tr>
                                                     <td><% _t('ForumHolder_ss.FORUM','Forum') %></td>

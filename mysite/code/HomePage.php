@@ -5,51 +5,102 @@ class HomePage extends Page
     private static $db = array(
         'WelcomeTitle' => 'Text',
         'WelcomeMessage' => 'Text',
-        'MediaUpdates' => 'HTMLText',
-        'InteractiveUpdates' => 'HTMLText'
+        'WhatIs' => 'Text',
+        //---ABOUT US---//
+        'AboutUsMessage' => 'Varchar(300)',
+        'AboutUsVision' => 'Varchar(300)',
+        'AboutUsMissionStatement' => 'Varchar(300)',
+        'AboutUsValueOne' => 'Varchar(100)',
+        'AboutUsValueTwo' => 'Varchar(100)',
+        'AboutUsValueThree' => 'Varchar(100)',
+        'AboutUsValueFour' => 'Varchar(100)',
+        //---ABOUT US END---//
+        //---SERVICES---//
+        'ServicesMessage' => 'Text',
+        'ServiceOneTitle' => 'Varchar(100)',
+        'ServiceOneContent' => 'Varchar(100)',
+        'ServiceOneIcon' => 'Varchar(100)',
+        'ServiceTwoTitle' => 'Varchar(100)',
+        'ServiceTwoContent' => 'Varchar(100)',
+        'ServiceTwoIcon' => 'Varchar(100)',
+        'ServiceThreeTitle' => 'Varchar(100)',
+        'ServiceThreeContent' => 'Varchar(100)',
+        'ServiceThreeIcon' => 'Varchar(100)',
+        'ServiceFourTitle' => 'Varchar(100)',
+        'ServiceFourContent' => 'Varchar(100)',
+        'ServiceFourIcon' => 'Varchar(100)',
+        'ServiceFiveTitle' => 'Varchar(100)',
+        'ServiceFiveContent' => 'Varchar(100)',
+        'ServiceFiveIcon' => 'Varchar(100)',
+        'ServiceSixTitle' => 'Varchar(100)',
+        'ServiceSixContent' => 'Varchar(100)',
+        'ServiceSixIcon' => 'Varchar(100)',
+        //---SERVICES END---//
+        'BlogMessage' => 'Text',
+        'ContactMessage' => 'Text'
     );
     
     private static $has_one = array(
-        'Image1' => 'Image',
-        'Image2' => 'Image',
-        'Image3' => 'Image',
-        'Image4' => 'Image'
     );
         
 
     private static $defaults = array(
-        'menuShown' => 'Welcome',
-        'menuWelcome' => true
     );
     
     public function getCMSFields() {
         $fields = parent::getCMSFields();
-              
-        $fields->addFieldToTab("Root.Main", new TextareaField('WelcomeTitle', 'Welcome Title'));      
-        $fields->addFieldToTab("Root.Main", new TextareaField('WelcomeMessage', 'Welcome Message'));
-        $fields->addFieldToTab("Root.Main", new HtmlEditorField('MediaUpdates', 'Media Updates'));
-        $fields->addFieldToTab("Root.Main", new HtmlEditorField('InteractiveUpdates', 'Interactive Updates'));
-        $fields->addFieldToTab("Root.Photos", new LiteralField('PhotoSizeWarning', '<h2>Only upload photos sized at 1700 by 900!</h2>'));
-        $UploadField = new UploadField('Image1', 'Upload first slideshow image');
-        $UploadField->setAllowedFileCategories('image');
-        $UploadField->setAllowedMaxFileNumber(1);
-        $UploadField->setFolderName('homepage/slides');
-        $fields->addFieldToTab("Root.Photos", $UploadField);
-        $UploadField = new UploadField('Image2', 'Upload second slideshow image');
-        $UploadField->setAllowedFileCategories('image');
-        $UploadField->setAllowedMaxFileNumber(1);
-        $UploadField->setFolderName('homepage/slides');
-        $fields->addFieldToTab("Root.Photos", $UploadField);
-        $UploadField = new UploadField('Image3', 'Upload third slideshow image');
-        $UploadField->setAllowedFileCategories('image');
-        $UploadField->setAllowedMaxFileNumber(1);
-        $UploadField->setFolderName('homepage/slides');
-        $fields->addFieldToTab("Root.Photos", $UploadField);
-        $UploadField = new UploadField('Image4', 'Upload fourth slideshow image');
-        $UploadField->setAllowedFileCategories('image');
-        $UploadField->setAllowedMaxFileNumber(1);
-        $UploadField->setFolderName('homepage/slides');
-        $fields->addFieldToTab("Root.Photos", $UploadField);
+        //---Welcome---//
+        $fields->addFieldToTab("Root.Welcome", new TextareaField('WelcomeTitle', 'Welcome Title'));      
+        $fields->addFieldToTab("Root.Welcome", new TextareaField('WelcomeMessage', 'Welcome Message'));
+        $fields->addFieldToTab("Root.Welcome", new TextareaField('WhatIs', 'What Is GenXYZ'));
+        //---About Us---//
+        $fields->addFieldToTab("Root.About", new TextareaField('AboutUsMessage', 'About Us Message'));
+        $fields->addFieldToTab("Root.About", new TextareaField('AboutUsVision', 'Vision'));
+        $fields->addFieldToTab("Root.About", new TextareaField('AboutUsMissionStatement', 'Mission Statement'));
+        $fields->addFieldToTab("Root.About", new TextField('AboutUsValueOne', 'Value One (100 characters)'));
+        $fields->addFieldToTab("Root.About", new TextField('AboutUsValueTwo', 'Value Two'));
+        $fields->addFieldToTab("Root.About", new TextField('AboutUsValueThree', 'Value Three'));
+        $fields->addFieldToTab("Root.About", new TextField('AboutUsValueFour', 'Value Four'));
+        //---Services---//
+        $fields->addFieldToTab("Root.Services", new TextareaField('ServicesMessage', 'Our Services Message'));
+        //One
+        $fields->addFieldToTab("Root.Services", new LiteralField('ServiceOne', '<h2>First Service</h2>'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceOneTitle', 'Service Title'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceOneContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceOneIcon', 'Service Icon'));
+        //Two
+        $fields->addFieldToTab("Root.Services", new LiteralField('ServiceTwo', '<h2>Second Service</h2>'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceTwoTitle', 'Service Title'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceTwoContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceTwoIcon', 'Service Icon'));
+        //Three
+        $fields->addFieldToTab("Root.Services", new LiteralField('ServiceThree', '<h2>Third Service</h2>'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceThreeTitle', 'Service Title'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceThreeContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceThreeIcon', 'Service Icon'));
+        //Four
+        $fields->addFieldToTab("Root.Services", new LiteralField('ServiceFour', '<h2>Fourth Service</h2>'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceFourTitle', 'Service Title'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceFourContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceFourIcon', 'Service Icon'));
+        //Five
+        $fields->addFieldToTab("Root.Services", new LiteralField('ServiceFive', '<h2>Fifth Service</h2>'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceFiveTitle', 'Service Title'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceFiveContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceFiveIcon', 'Service Icon'));
+        //Six
+        $fields->addFieldToTab("Root.Services", new LiteralField('ServiceSix', '<h2>Sixth Service</h2>'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceSixTitle', 'Service Title'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceSixContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new TextField('ServiceSixIcon', 'Service Icon'));
+        
+        //Blog
+        $fields->addFieldToTab("Root.Blog", new TextareaField('BlogMessage', 'Blog Message'));
+        //Contact
+        $fields->addFieldToTab("Root.Contact", new TextareaField('ContactMessage', 'Contact Message'));
+
+
+
         
         
         $fields->removeByName("Content");
@@ -60,41 +111,5 @@ class HomePage extends Page
  
 class HomePage_Controller extends Page_Controller 
 {
-    /**
-    * Gets latest blog posts, excluding account creation posts and 
-    * posts by GenXYZ (removes GenXYZ tag)
-    **/
-    function StudentBlogPosts($num=4) {
-        $id = BlogHolder::get()->filter('Title', 'GenXYZ')->First()->ID;
-
-        $entry = SiteTree::get()->filter(array(
-            'ClassName' => 'BlogEntry'            
-        ))->exclude('ParentID', $id)->First();
-        
-        return ($entry) ? SiteTree::get()->filter(array('ClassName' => 'BlogEntry'))->exclude(array('ParentID' => $id))->sort('Created', 'DESC')->limit($num) : false;    
-    }
     
-    /**
-    * Gets latest blog posts, from GenXYZ Blog Holder
-    **/
-    function GenXYZBlogPosts($num=4) {
-        $holder = BlogHolder::get()->filter(array(
-            'Title' => 'GenXYZ'
-        ))->First();
-        
-        if(!$holder) { return false; }
-            
-        $entry = BlogEntry::get()->filter('ParentID', $holder->ID)->First();
-
-        return ($entry) ? BlogEntry::get()->filter('ParentID', $holder->ID)->sort('Date', 'DESC')->limit($num) : false;
-    }
-    
-    function AllForums($num=5) {
-        $holder = Forum::get()->First();
-        
-        if(!$holder) { return false; }
-        
-        return ($holder) ? Forum::get()->limit($num) : false;    
-    }
-     
 }

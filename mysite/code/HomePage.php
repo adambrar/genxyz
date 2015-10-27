@@ -15,6 +15,9 @@ class HomePage extends Page
         'AboutUsValueThree' => 'Varchar(100)',
         'AboutUsValueFour' => 'Varchar(100)',
         //---ABOUT US END---//
+        //---ACADEMICS---//
+        'AcademicsMessage' => 'Text',
+        //---ACADEMICS END---//
         //---SERVICES---//
         'ServicesMessage' => 'Text',
         'ServiceOneTitle' => 'Varchar(100)',
@@ -61,6 +64,7 @@ class HomePage extends Page
         $fields->addFieldToTab("Root.About", new TextField('AboutUsValueTwo', 'Value Two'));
         $fields->addFieldToTab("Root.About", new TextField('AboutUsValueThree', 'Value Three'));
         $fields->addFieldToTab("Root.About", new TextField('AboutUsValueFour', 'Value Four'));
+        $fields->addFieldToTab("Root.Academics", new TextAreaField('AcademicsMessage', 'Academics Message'));
         //---Services---//
         $fields->addFieldToTab("Root.Services", new TextareaField('ServicesMessage', 'Our Services Message'));
         //One

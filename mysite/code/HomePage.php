@@ -99,10 +99,6 @@ class HomePage extends Page
         //Contact
         $fields->addFieldToTab("Root.Contact", new TextareaField('ContactMessage', 'Contact Message'));
 
-
-
-        
-        
         $fields->removeByName("Content");
 
         return $fields;
@@ -111,5 +107,20 @@ class HomePage extends Page
  
 class HomePage_Controller extends Page_Controller 
 {
+    public function FirstGenXYZPost() {
+        $holder = BlogHolder::get()->filter('OwnerID', 1)->First();
+
+        if(!$holder->ID) return false;
+
+        $entry = SiteTree::get()->filter(array(
+            'ClassName' => 'BlogEntry',
+            'ParentID' => $holder->ID
+        ))->sort('Created', 'DESC')->First();
+        
+        return $entry ? $entry : false;
+    }
     
+    public function LatestBlogPost(int $postNumber) {
+        return BlogEntry::get()->exclude('Tags:PartialMatch', 'first')->sort('Created', 'DESC')->limit(1,$postNumber-1)->First();
+    }
 }

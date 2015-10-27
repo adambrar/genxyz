@@ -17,6 +17,8 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     function init() {
         parent::init();
         
+        SSViewer::setOption('rewriteHashlinks', false);
+        
         if(!Member::currentUserID() || !Member::currentUser()->isStudent()) {
             Security::permissionFailure(null, 'You need to be logged in a student profile to view this content.');
         }
@@ -91,7 +93,14 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $pageData['BlogEntries'] = $entries;
         $pageData['isProfileSaved'] = isset($_SESSION['profile-form-saved']) ? true : false;
         
+        if(isset($_SESSION['profile-form-saved']))
+           unset($_SESSION['profile-form-saved']);
+        
         return $pageData;
+    }
+    
+    public function getIncludeTemplate() {
+        
     }
     
     // get profile picture

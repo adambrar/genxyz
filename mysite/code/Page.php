@@ -200,39 +200,13 @@ class Page extends SiteTree implements PermissionProvider {
         }
     }
     
-    function UniversityName($id) {
-        if(!$id) return false;
-        
-        $university = University::get()->byID($id);
-        
-        if($university)
-            return $university->Title;
-        else
-            return false;
+    function URLSafeTitle() {
+        return strtolower(str_replace(' ', '-', $this->Title));
     }
     
-    function HighSchoolName($id) {
-        if(!$id) return false;
-        
-        $highSchool = HighSchool::get()->byID($id);
-
-        if($highSchool)
-            return $highSchool->Title;
-        else
-            return false;
+    public function getIncludeTemplate() {
+        return $this->renderWith(array($this->ClassName,'DefaultStudentContent','Page'));
     }
-    
-    function CountryName($id) {
-        if(!$id) return false;
-
-        $country = Country::get()->ByID($id);
-        
-        if($country)
-            return $country->Name;
-        else
-            return false;
-    }
-    
 }
 
 class Page_Controller extends ContentController {
@@ -359,14 +333,12 @@ class Page_Controller extends ContentController {
         if (isset($sessionStart)) {
             $elapsed_time = time() - Session::get('session_start_time');
             // If elapsed time is greater or equal to inactivity period, logout user
-            if ($elapsed_time >= $inactivityLimit) { 
+            if ($elapsed_time >= $inactivityLimit && Member::currentUserID()) { 
                 $member = Member::currentUser(); 
                 if($member) {
                     // Logout member
                     $member->logOut();
                 }
-                // Logout of chat
-                //http_get('http://localhost/ajax/chat?logout=1');
                 
                 // Clear session
                 Session::clear_all();
@@ -374,7 +346,7 @@ class Page_Controller extends ContentController {
                 if(!$this->menuWelcome) {
                     $this->redirect(Director::baseURL() . 'Security/login');
                 }
-            } 
+            }
         }
 
         // Set new value if user is logged in and on secure page
@@ -386,18 +358,6 @@ class Page_Controller extends ContentController {
     
     function getFooterScholarships() {
         return Scholarship::get()->limit(5);
-    }
-    
-    function HorizontalLoginForm() {
-        $form = $this->LoginForm();
-        $form->Fields()->dataFieldByName('Email')->addExtraClass('HorizontalForm');
-        $form->Fields()->dataFieldByName('Password')->addExtraClass('HorizontalForm');
-        $form->Fields()->removeByName('Remember');
-        $form->Actions()->removeByName('action_register');
-        
-        $form->Actions()->dataFieldByName('action_dologin')->addExtraClass('HorizontalForm HorizontalForm_button');
-        
-        return $form;
     }
 
 }

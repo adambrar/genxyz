@@ -38,7 +38,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"><h2 style="font-family:'Lucida Console', Monaco, monospace;color:white;">GenXYZ</h2></a>
+                    <a class="navbar-brand" href=""><h2 style="font-family:'Lucida Console', Monaco, monospace;color:white;">GenXYZ</h2></a>
                 </div>
 				
                 <div class="collapse navbar-collapse navbar-right">
@@ -48,7 +48,11 @@
                         <li class="scroll"><a href="#services">Services</a></li>
                         <li class="scroll"><a href="#blog">Blog</a></li> 
                         <li class="scroll"><a href="#get-in-touch">Contact</a></li>
-                        <li><a href="Security/login">Login</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Login</a>
+                            <ul class="dropdown-menu">
+                                <li>$LoginForm</li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -119,7 +123,7 @@
                     </p>
                 </div>
                 <div class="col-sm-3 text-right">
-                    <a class="btn btn-primary btn-lg" href="#">Learn More</a>
+                    <a class="btn btn-primary btn-lg tohash" href="#blog">Learn More</a>
                 </div>
             </div>
         </div>
@@ -167,7 +171,6 @@
             </div>
         </div>
     </section><!--/#about-->
-    
     
     <section id="services" >
         <div class="container">
@@ -306,77 +309,83 @@
                 <div class="col-sm-6">
                     <div class="blog-post blog-large wow fadeInLeft" data-wow-duration="300ms" data-wow-delay="0ms">
                         <article>
-                            <header class="entry-header">
-                                <div class="entry-thumbnail">
-                                    <img class="img-responsive" src="$ThemeDir/test/images/blog/01.jpg" alt="">
-                                    <span class="post-format post-format-video"><i class="fa fa-film"></i></span>
+                            <% with LatestBlogPost(1) %>
+                                <header class="entry-header">
+                                    <div class="entry-thumbnail">
+                                        <img class="img-responsive" src="$ThemeDir/test/images/blog/01.jpg" alt="">
+                                        <span class="post-format post-format-video"><i class="fa fa-film"></i></span>
+                                    </div>
+                                    <div class="entry-date">$Date.Format('d F Y')</div>
+                                    <h2 class="entry-title"><a href="$Link">$Title</a></h2>
+                                </header>
+
+                                <div class="entry-content">
+                                    <P>$Content.LimitCharacters(300)</P>
+                                    <a class="btn btn-primary" href="$Link">Read More</a>
                                 </div>
-                                <div class="entry-date">25 November 2014</div>
-                                <h2 class="entry-title"><a href="#">While now the fated Pequod had been so long afloat this</a></h2>
-                            </header>
 
-                            <div class="entry-content">
-                                <P>With a blow from the top-maul Ahab knocked off the steel head of the lance, and then handing to the mate the long iron rod remaining, bade him hold it upright, without its touching off the steel head of the lance, and then handing to the mate the long iron rod remaining. without its touching off the steel without its touching off the steel</P>
-                                <a class="btn btn-primary" href="#">Read More</a>
-                            </div>
-
-                            <footer class="entry-meta">
-                                <span class="entry-author"><i class="fa fa-pencil"></i> <a href="#">Victor</a></span>
-                                <span class="entry-category"><i class="fa fa-folder-o"></i> <a href="#">Tutorial</a></span>
-                                <span class="entry-comments"><i class="fa fa-comments-o"></i> <a href="#">15</a></span>
-                            </footer>
+                                <footer class="entry-meta">
+                                    <% if authorName %><span class="entry-author"><i class="fa fa-pencil"></i> <a href="{$authorProfileURL($BlogHolder.OwnerID)}">$authorName</a></span><% end_if %>
+                                    <% if Topic %><span class="entry-category"><i class="fa fa-folder-o"></i> <a href="{$Topic.Link}">$Topic.Title</a></span><% end_if %>
+                                    <span class="entry-comments"><i class="fa fa-comments-o"></i> <a href="$Link#PageComments_holder">$Comments.Count</a></span>
+                                </footer>
+                            <% end_with %>
                         </article>
                     </div>
                 </div><!--/.col-sm-6-->
                 <div class="col-sm-6">
                     <div class="blog-post blog-media wow fadeInRight" data-wow-duration="300ms" data-wow-delay="100ms">
                         <article class="media clearfix">
-                            <div class="entry-thumbnail pull-left">
-                                <img class="img-responsive" src="$ThemeDir/test/images/blog/02.jpg" alt="">
-                                <span class="post-format post-format-gallery"><i class="fa fa-image"></i></span>
-                            </div>
-                            <div class="media-body">
-                                <header class="entry-header">
-                                    <div class="entry-date">01 December 2014</div>
-                                    <h2 class="entry-title"><a href="#">BeReviews was a awesome envent in dhaka</a></h2>
-                                </header>
-
-                                <div class="entry-content">
-                                    <P>With a blow from the top-maul Ahab knocked off the steel head of the lance, and then handing to the steel</P>
-                                    <a class="btn btn-primary" href="#">Read More</a>
+                            <% with LatestBlogPost(2) %>
+                                <div class="entry-thumbnail pull-left">
+                                    <img class="img-responsive" src="$ThemeDir/test/images/blog/02.jpg" alt="">
+                                    <span class="post-format post-format-gallery"><i class="fa fa-image"></i></span>
                                 </div>
+                                <div class="media-body">
+                                    <header class="entry-header">
+                                        <div class="entry-date">$Date.Format('d F Y')</div>
+                                        <h2 class="entry-title"><a href="#">$Title</a></h2>
+                                    </header>
 
-                                <footer class="entry-meta">
-                                    <span class="entry-author"><i class="fa fa-pencil"></i> <a href="#">Campbell</a></span>
-                                    <span class="entry-category"><i class="fa fa-folder-o"></i> <a href="#">Tutorial</a></span>
-                                    <span class="entry-comments"><i class="fa fa-comments-o"></i> <a href="#">15</a></span>
-                                </footer>
-                            </div>
+                                    <div class="entry-content">
+                                        <P>$Content.LimitCharacters(200)</P>
+                                        <a class="btn btn-primary" href="$Link">Read More</a>
+                                    </div>
+
+                                    <footer class="entry-meta">
+                                        <span class="entry-author"><i class="fa fa-pencil"></i> <a href="$authorProfileURL($BlogHolder.OwnerID)">$authorName</a></span>
+                                        <span class="entry-category"><i class="fa fa-folder-o"></i> <a href="$Topic.Link">$Topic.Title</a></span>
+                                        <span class="entry-comments"><i class="fa fa-comments-o"></i> <a href="$Link#PageComments_holder">$Comments.Count</a></span>
+                                    </footer>
+                                </div>
+                            <% end_with %>
                         </article>
                     </div>
                     <div class="blog-post blog-media wow fadeInRight" data-wow-duration="300ms" data-wow-delay="200ms">
                         <article class="media clearfix">
-                            <div class="entry-thumbnail pull-left">
-                                <img class="img-responsive" src="$ThemeDir/test/images/blog/03.jpg" alt="">
-                                <span class="post-format post-format-audio"><i class="fa fa-music"></i></span>
-                            </div>
-                            <div class="media-body">
-                                <header class="entry-header">
-                                    <div class="entry-date">03 November 2014</div>
-                                    <h2 class="entry-title"><a href="#">Play list of old bangle  music and gajal</a></h2>
-                                </header>
-
-                                <div class="entry-content">
-                                    <P>With a blow from the top-maul Ahab knocked off the steel head of the lance, and then handing to the steel</P>
-                                    <a class="btn btn-primary" href="#">Read More</a>
+                            <% with LatestBlogPost(3) %>
+                                <div class="entry-thumbnail pull-left">
+                                    <img class="img-responsive" src="$ThemeDir/test/images/blog/03.jpg" alt="">
+                                    <span class="post-format post-format-audio"><i class="fa fa-music"></i></span>
                                 </div>
+                                <div class="media-body">
+                                    <header class="entry-header">
+                                        <div class="entry-date">$Date.Format('d F Y')</div>
+                                        <h2 class="entry-title"><a href="$Link">$Title</a></h2>
+                                    </header>
 
-                                <footer class="entry-meta">
-                                    <span class="entry-author"><i class="fa fa-pencil"></i> <a href="#">Ruth</a></span>
-                                    <span class="entry-category"><i class="fa fa-folder-o"></i> <a href="#">Tutorial</a></span>
-                                    <span class="entry-comments"><i class="fa fa-comments-o"></i> <a href="#">15</a></span>
-                                </footer>
-                            </div>
+                                    <div class="entry-content">
+                                        <P>$Content.LimitCharacters(200)</P>
+                                        <a class="btn btn-primary" href="$Link">Read More</a>
+                                    </div>
+
+                                    <footer class="entry-meta">
+                                        <% if authorName %><span class="entry-author"><i class="fa fa-pencil"></i> <a href="{$authorProfileURL($BlogHolder.OwnerID)}">$authorName</a></span><% end_if %>
+                                        <span class="entry-category"><i class="fa fa-folder-o"></i> <a href="$Topic.Link">$Topic.Title</a></span>
+                                        <span class="entry-comments"><i class="fa fa-comments-o"></i> <a href="$Link#PageComments_holder">$Comments.Count</a></span>
+                                    </footer>
+                                </div>
+                            <% end_with %>
                         </article>
                     </div>
                 </div>
@@ -397,10 +406,10 @@
                             <h3>Contact Info</h3>
 
                             <address>
-                              <strong>Twitter, Inc.</strong><br>
-                              795 Folsom Ave, Suite 600<br>
-                              San Francisco, CA 94107<br>
-                              <abbr title="Phone">P:</abbr> (123) 456-7890
+                              <strong>$SiteConfig.Title</strong><br>
+                              $SiteConfig.AddressLine1<br>
+                              $SiteConfig.AddressLine2<br>
+                              Phone: $SiteConfig.PhoneNumber
                             </address>
 
                             <form id="main-contact-form" name="contact-form" method="post" action="#">

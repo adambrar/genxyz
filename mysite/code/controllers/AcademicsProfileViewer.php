@@ -47,12 +47,11 @@ class AcademicsProfileViewer extends Page_Controller {
 		}
 
 		$member = Member::get()->byID($id);
-        $profilePage = PartnersProfile::get()->ByID($member->PartnersProfileID);
+		if(!$member) { $this->httpError(404); }
         
-		if(!$member || !$profilePage) {
-			$this->httpError(404);
-		}
-
+        $profilePage = PartnersProfile::get()->ByID($member->PartnersProfileID);
+        if(!$member) { $this->httpError(404); }
+        
 		$this->data()->Title = sprintf(
 			_t('MemberProfiles.MEMBERPROFILETITLE', "%s's Information"),
 			$member->BusinessName

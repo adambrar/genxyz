@@ -29,7 +29,7 @@
 		</table>
 	<% end_if %>
 
-        <table class="forum-topics" summary="List of topics in this forum">
+    <table class="forum-topics" summary="List of topics in this forum">
 		<tr class="category">
 			<th class="odd"><% _t('Forum_ss.TOPIC','Topic') %></th>
 			<th class="odd"><% _t('Forum_ss.POSTS','Posts') %></th>

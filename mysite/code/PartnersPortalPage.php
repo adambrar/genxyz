@@ -96,15 +96,15 @@ class PartnersPortalPage_Controller extends Page_Controller
                     ))->setEmptyString('Select Level'),
             new TextField('BusinessName', 'Business Name<span>*</span>'),
             new TextField('BusinessWebsite', 'Website<span>*</span>'),
-            new LiteralField('LiteralHeader', '<h1>' . _t(
+            new LiteralField('LiteralHeader', '<h2>' . _t(
                 'AcademicsRegisterForm.CONTACT',
-                'Contact Info') . '</h1>'),
+                'Contact Info') . '</h2>'),
             new TextField('BusinessContact', 'Contact Name<span>*</span>'),
             new EmailField('Email', 'Contact Email<span>*</span>'),
             new TextField('BusinessTelephone', 'Contact Phone'),
-            new LiteralField('LiteralHeader', '<h1>' . _t(
+            new LiteralField('LiteralHeader', '<h2>' . _t(
                 'AcademicsRegisterForm.DEFAULT',
-                'Registration Info') . '</h1>'),
+                'Registration Info') . '</h2>'),
             new TextField('BusinessRegistrationNumber', 'Business Registration Number'),
             DropdownField::create('BusinessCountryID', _t(
             'AcademicsRegisterForm.COUNTRY', 
@@ -210,15 +210,15 @@ class PartnersPortalPage_Controller extends Page_Controller
             new TextField('BusinessName', 'Business Name<span>*</span>'),
             new TextField('BusinessWebsite', 'Website<span>*</span>'),
             $UploadField,
-            new LiteralField('ContactInfo', '<h1>' . _t(
+            new LiteralField('ContactInfo', '<h2>' . _t(
                 'AcademicsRegisterForm.CONTACT',
-                'Contact Info') . '</h1>'),
+                'Contact Info') . '</h2>'),
             new TextField('BusinessContact', 'Contact Name<span>*</span>'),
             new EmailField('Email', 'Contact Email<span>*</span>'),
             new TextField('BusinessTelephone', 'Contact Phone<span>*</span>'),
-            new LiteralField('LiteralHeader', '<h1>' . _t(
+            new LiteralField('LiteralHeader', '<h2>' . _t(
                 'AcademicsRegisterForm.DEFAULT',
-                'Registration Info') . '</h1>'),
+                'Registration Info') . '</h2>'),
             new TextField('BusinessRegistrationNumber', 'Registration Number'),
             DropdownField::create('BusinessCountryID', _t(
             'MemberRegForm.COUNTRY',
@@ -285,22 +285,22 @@ class PartnersPortalPage_Controller extends Page_Controller
                 tinyMCE.activeEditor.onPaste.add(function(ed, e){$("textarea").val(tinyMCE.activeEditor.getContent());});
                 }, 2000);
             </script>'),
-            new LiteralField('HomePageContent', '<h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Home Page Content</h1><div class="hidden-content">'),
+            LiteralField::create('HomePageContent', '<h2 class="toggle-btn">Home Page Content <i class="fa fa-arrow-circle-right"></i></h2><div class="toggle-content accordian-up">'),
             new TextField('WelcomeVideoLink', 'Link to welcome video. <strong>*Make sure to use embed link, not link to the actual video*</strong>'),
             $this->slideshowUploadField('One'),
             $this->slideshowUploadField('Two'),
             $this->slideshowUploadField('Three'),
             new LiteralField('EndHomePageContent', '</div>'),
-            new LiteralField('AboutPageContent', '<h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>About Page Content</h1><div class="hidden-content">'),
+            new LiteralField('AboutPageContent', '<h2 class="toggle-btn">About Page Content <i class="fa fa-arrow-circle-right"></i></h2><div class="toggle-content accordian-up">'),
             new HTMLEditorField('Vision', 'Vision'),
             new HTMLEditorField('MissionStatement', 'Mission Statement'),
             new HTMLEditorField('Values', 'Values'),
             new LiteralField('EndAboutPageContent', '</div>'),
-            new LiteralField('ScholarshipPageContent', '<h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Scholarship Page Content</h1><div class="hidden-content">'),
+            new LiteralField('ScholarshipPageContent', '<h2 class="toggle-btn">Scholarships Page Content <i class="fa fa-arrow-circle-right"></i></h2><div class="toggle-content accordian-up">'),
 
             new HTMLEditorField('Scholarships', 'Scholarship Information'),
             new LiteralField('EndScholarshipContent', '</div>'),
-            new LiteralField('ContactPageContent', '<h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Contact Page Content</h1><div class="hidden-content">'),
+            new LiteralField('ContactPageContent', '<h2 class="toggle-btn">Contact Page Content <i class="fa fa-arrow-circle-right"></i></h2><div class="toggle-content accordian-up">'),
 
             new HTMLEditorField('ContactInfo', 'Contact Information'),
             new LiteralField('EndContactContent', '</div>'),
@@ -341,18 +341,18 @@ class PartnersPortalPage_Controller extends Page_Controller
                 tinyMCE.activeEditor.onPaste.add(function(ed, e){$("textarea").val(tinyMCE.activeEditor.getContent());});
                 }, 2000);
             </script>'),
-            new LiteralField('HomePageContent', '<h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Home Page Content</h1><div class="hidden-content">'),
+            LiteralField::create('HomePageContent', '<h2 class="toggle-btn">Home Page Content <i class="fa fa-arrow-circle-right"></i></h2><div class="toggle-content accordian-up">'),
             new TextField('WelcomeVideoLink', 'Link to welcome video. <strong>*Make sure to use embed link, not link to the actual video*</strong>'),
             $this->slideshowUploadField('One'),
             $this->slideshowUploadField('Two'),
             $this->slideshowUploadField('Three'),
             new LiteralField('EndHomePageContent', '</div>'),
-            new LiteralField('AboutPageContent', '<h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>About Page Content</h1><div class="hidden-content">'),
+            LiteralField::create('AboutPageContent', '<h2 class="toggle-btn">About Page Content <i class="fa fa-arrow-circle-right"></i></h2><div class="toggle-content accordian-up">'),
             new HTMLEditorField('Vision', 'Vision'),
             new HTMLEditorField('MissionStatement', 'Mission Statement'),
             new HTMLEditorField('Values', 'Values'),
             new LiteralField('EndAboutPageContent', '</div>'),
-            new LiteralField('ContactPageContent', '<h1 class="content-slider"><i class="fa fa-arrow-circle-right fa-fw fa-2x"></i>Contact Page Content</h1><div class="hidden-content">'),
+            LiteralField::create('ContactPageContent', '<h2 class="toggle-btn">Contact Page Content <i class="fa fa-arrow-circle-right"></i></h2><div class="toggle-content accordian-up">'),
 
             new HTMLEditorField('ContactInfo', 'Contact Information'),
             new LiteralField('EndContactContent', '</div>'),
@@ -712,9 +712,9 @@ class PartnersPortalPage_Controller extends Page_Controller
             return $portalPage->Link() . $portalPage . 'edit/agent/' . $member->ID;
         } else if($member->isStudent()) {
             return $profilePage = MemberProfilePage::get()->filter(array(
-            'AllowRegistration' => '0',
-            'AllowProfileEditing' => '1'
-        ))->First()->Link();
+                'AllowRegistration' => '0',
+                'AllowProfileEditing' => '1'
+            ))->First()->Link();
             
         }
     }

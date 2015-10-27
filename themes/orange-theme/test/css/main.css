@@ -158,7 +158,7 @@ ul.nostyle i {
   border: 0;
   border-radius: 0;
   margin-bottom: 0;
-    background: rgba(150, 207, 224, 0.9);
+  background: rgba(150, 207, 224, 0.9);
 }
 .navbar.navbar-default .navbar-toggle {
   margin-top: 32px;
@@ -166,6 +166,9 @@ ul.nostyle i {
 .navbar.navbar-default .navbar-brand {
   height: auto;
   padding: 22px 15px 21px;
+}
+#main-menu.navbar-default .dropdown-menu > li > form .checkbox input[type=checkbox]  {
+  margin-left: 0;
 }
 @media only screen and (min-width: 768px) {
   #main-menu.navbar-default {
@@ -187,7 +190,7 @@ ul.nostyle i {
     font-weight: bold;
   }
   #main-menu.navbar-default .dropdown-menu {
-    padding: 0 20px;
+    padding: 10px 20px;
     min-width: 220px;
     background-color: rgba(26, 28, 40, 0.9);
     border: 0;

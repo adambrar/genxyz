@@ -23,6 +23,18 @@ class ScholarshipsPage extends Page
 
         return $fields;
     }
+    
+    public function getScholarships($limit = 20) {
+        if($limit) {
+            return Scholarship::get()->limit($limit);
+        } else {
+            return Scholarship::get();
+        }
+    }
+    
+    public function getAllScholarships() {
+        return new PaginatedList(Scholarship::get(), Controller::curr()->request);
+    }
 }
  
 class ScholarshipsPage_Controller extends Page_Controller 
@@ -35,7 +47,4 @@ class ScholarshipsPage_Controller extends Page_Controller
         }
     }
     
-    public function getScholarships() {
-        return Scholarship::get();
-    }
 }

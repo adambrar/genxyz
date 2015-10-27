@@ -395,7 +395,10 @@ class MemberProfilePage_Controller extends Page_Controller {
 		$mode = Member::currentUser() ? 'profile' : 'register';
 		$data = Member::currentUser() ? $this->indexProfile() : $this->indexRegister();
 		if (is_array($data)) {
-			return $this->customise($data)->renderWith(array('MemberProfilePage_'.$mode, 'MemberProfilePage', 'Page'));
+            Config::inst()->update('SSViewer', 'rewrite_hash_links', false);
+			$html = $this->customise($data)->renderWith(array('MemberProfilePage_'.$mode, 'MemberProfilePage', 'Page'));
+            Config::inst()->update('SSViewer', 'rewrite_hash_links', false);
+            return $html;
 		}
 		return $data;
 	}

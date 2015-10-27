@@ -5,8 +5,8 @@ jQuery(function($) {'use strict';
 		Scroll();
 	});
 
-	$('.navbar-collapse ul li a').on('click', function() {  
-		$('html, body').animate({scrollTop: $(this.hash).offset().top - 5}, 1000);
+	$('.navbar-collapse ul li.scroll a').on('click', function() {  
+		$('html, body').animate({scrollTop: $(this.hash).offset().top - 30}, 1000);
 		return false;
 	});
 
@@ -31,18 +31,22 @@ jQuery(function($) {'use strict';
 		})
 	};
 
-	$('#tohash').on('click', function(){
-		$('html, body').animate({scrollTop: $(this.hash).offset().top - 5}, 1000);
+	$('.tohash').on('click', function(){
+        var refName = $(this).attr('href').substring( $(this).attr('href').lastIndexOf('#'), $(this).attr('href').length );
+		$('html, body').animate({scrollTop: $(refName).offset().top - 30}, 1000);
 		return false;
 	});
 
 	// accordian
-	$('.accordion-toggle').on('click', function(){
-		$(this).closest('.panel-group').children().each(function(){
-		$(this).find('>.panel-heading').removeClass('active');
-		 });
+	$('.toggle-btn').on('click', function(){
+        $(this).siblings().each(function() {
+            $(this).next('.toggle-content').slideUp('slow');
+            $(this).children().first().removeClass('fa-arrow-circle-down');
+            $(this).children().first().addClass('fa-arrow-circle-right');
+        });
+		$(this).next('.toggle-content').slideToggle('slow');
 
-	 	$(this).closest('.panel-heading').toggleClass('active');
+	 	$(this).children().first().toggleClass('fa-arrow-circle-right fa-arrow-circle-down');
 	});
 
 	//Slider

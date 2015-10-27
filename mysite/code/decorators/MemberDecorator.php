@@ -51,17 +51,6 @@ class MemberDecorator extends DataExtension {
         'UniversityID' => 'University'
     );
     
-    public function getProfilePageLink($id) {
-        $member = Member::get()->ByID($id);
-        if(!$member || !$member->isStudent())
-            return false;
-        
-        return MemberProfilePage::get()->filter(array(
-            'AllowProfileViewing' => '1',
-            'AllowRegistration' => '0'
-        ))->First()->Link() . 'show/' . $id;
-    }
-    
     public function isStudent(Member $member = null) {
         if(!$member) {
             return $this->owner->MemberType == "Student";
@@ -85,6 +74,56 @@ class MemberDecorator extends DataExtension {
         }
     }
     
+    //profile page link
+    public static function viewProfileLink($id = null) {
+        if(!$id) {
+            return false;
+        }
+
+        $member = Member::get()->byID($id);
+        
+        if(!$member) {
+            return false;
+        }
+        
+        if($member->isUniversity()) {
+            $portalPage = PartnersPortalPage::get()->First();
+            return $portalPage->Link() . 'edit/university/' . $member->ID;
+        } else if($member->isAgent()) {
+            $portalPage = PartnersPortalPage::get()->First();
+            return $portalPage->Link() . $portalPage . 'edit/agent/' . $member->ID;
+        } else if($member->isStudent()) {
+            return $profilePage = MemberProfilePage::get()->filter(array(
+                'AllowRegistration' => '0',
+                'AllowProfileEditing' => '1'
+            ))->First()->Link();
+            
+        }
+    }
+    
+    public function showProfilePageLink($id = null) {
+        if(!$id) return false;
+        
+        $member = Member::get()->byID($id);
+        
+        if(!$member) {
+            return false;
+        }
+        
+        if($member->isUniversity()) {
+            $academicsPage = AcademicsPage::get()->First();
+            return $academicsPage->Link() . 'show/university/' . $member->ID;
+        } else if($member->isAgent()) {
+            $academicsPage = AcademicsPage::get()->First();
+            return $academicsPage->Link() . 'show/agent/' . $member->ID;
+        } else if($member->isStudent()) {
+            return $profilePage = MemberProfilePage::get()->filter(array(
+                'AllowRegistration' => '0',
+                'AllowProfileEditing' => '1'
+            ))->First()->Link('show') . '/' . $member->ID;
+        }
+    }
+        
     // get business logo
     public function getLogoFile($ID = null) {
         if(!$ID) { $ID = Member::currentUser()->BusinessLogoID; }
@@ -124,16 +163,21 @@ class MemberDecorator extends DataExtension {
         }
     }
     
-    public function getLatestForumPosts($member = null, $max = 5) {
-        if(!$member) {
+    public function getLatestForumPosts($max = null) {
+        if(!Member::currentUserID()) {
             return false;
         }
+        if($max) {
+            $posts = Post::get()->filter(array(
+                'AuthorID' => $this->owner->ID
+            ))->sort('Created', 'DESC')->limit($max);
+        } else {
+            $posts = Post::get()->filter(array(
+                'AuthorID' => $this->owner->ID
+            ))->sort('Created', 'DESC');
+        }
         
-        $posts = Post::get()->filter(array(
-            'AuthorID' => $member->ID
-        ))->sort('Created', 'DESC')->limit($max);
-        
-        return $posts;
+        return $posts ? $posts : false;
     }
     
     public static function getInstitutionOptions() {
@@ -154,7 +198,20 @@ class MemberDecorator extends DataExtension {
         }
     }
     
-    //get latest blog posts for student
+    public function getBlogHolder() {
+        if(!Member::currentUserID()) {
+            return Controller::curr()->httpError(403);
+        }
+        
+        $holder = BlogHolder::get()->filter(array(
+            'ownerID' => $this->owner->ID
+        ))->First();
+        
+        return $holder ? $holder : false;
+    }
+        
+    
+    //get latest blog posts for member
     public function getLatestBlogEntries($member = null, $max = 5) {
         if(!$member) {
             return false;
@@ -206,13 +263,6 @@ class MemberDecorator extends DataExtension {
         } else {
             $this->addStudentFields($fields);
             $this->addBusinessFields($fields);
-        }
-    }
-    
-    function Link() {
-        if($ProfilePage = DataObject::get_one('MemberProfilePage')->filter('AllowProfileEditing', '1'))
-        {
-           return $ProfilePage->Link();
         }
     }
     

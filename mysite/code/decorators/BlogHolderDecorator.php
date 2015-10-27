@@ -12,5 +12,12 @@ class BlogHolderDecorator extends DataExtension {
     public function updateCMSFields(FieldList $fields) {
         $fields->addFieldToTab("Root.Widgets", new WidgetAreaEditor("SideBarWidget"));
     }
+
+    public function HolderEntries($limit = 10) {
+        return SiteTree::get()->filter(array(
+            'ClassName' => 'BlogEntry',
+            'ParentID' => $this->owner->ID
+        ))->sort('Created', 'DESC')->limit($limit);
+    }
     
 }

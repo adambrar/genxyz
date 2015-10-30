@@ -242,8 +242,6 @@ class Page_Controller extends ContentController {
         
         Requirements::javascript(Director::baseFolder() . 'themes/' . SSViewer::current_theme() . '/javascript/selectload.js');
         Requirements::javascript(Director::baseFolder() . 'themes/' . SSViewer::current_theme() . '/javascript/scrolllink.js');
-        
-        self::logoutInactiveUser();
 	}
     
     public function countriesasjson($message = "", $extraData = null, $status = "success") {

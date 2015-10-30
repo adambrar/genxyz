@@ -2,21 +2,14 @@
 class CommentingControllerDecorator extends DataExtension {
     
     function alterCommentForm($form) {
-        $member = Member::currentUser();
-        if(!$member || !$member->isStudent()) {
-            
-            $fields = new FieldList(
-                new LiteralField('CantComent', '<p>You need to be logged in as a student to comment.</p>'),
-                new LiteralField('Buttons', '<a href="Security/login" class="button small">Login</a> || <a href="register" class="button small">Register</a>')
-            );
-            $form->setActions(new FieldList());
-        } else {
-            $fields = $form->Fields();
+        $fields = $form->Fields();
+
+        if(Member::currentUserID()) {
             $fields->removeByName('Name');
             $fields->removeByName('Email');
-            $fields->removeByName('URL');
-            $fields->renameField('Comment', 'Comment');
         }
+        $fields->removeByName('URL');
+        $fields->renameField('Comment', 'Comment');
             
         return $form->setFields($fields);
     }

@@ -1,30 +1,36 @@
 <div id="post{$ID}" class="forum-post">
-	<div class="user-info">
-		<% with Author %>
-			<a class="author-link" href="$getProfilePageLink($ID)" title="<% _t('SinglePost_ss.GOTOPROFILE','Go to this User&rsquo;s Profile') %>">$FirstName $Surname</a><br />
-		
-			<a href="$getProfilePageLink($ID)" title="Go to this user's profile"><img class="avatar" style="width:100%;" src="$ProfilePictureLink($ProfilePictureID)" alt="Avatar" /></a><br />
-			<% if ForumRank %><span class="forum-rank">$ForumRank</span><br /><% end_if %>
-			<% if NumPosts %>
-				<span class="post-count">$NumPosts 
-				<% if NumPosts = 1 %>
-					<% _t('SinglePost_ss.POST', 'Post') %>
-				<% else %>
-					<% _t('SinglePost_ss.POSTS', 'Posts') %>
-				<% end_if %>
-				</span>
-			<% end_if %>
-		<% end_with %>
+	<div class="user-info wow fadeInLeft">
+        <% if Author %>
+            <% with Author %>
+                <a class="author-link" href="$showProfilePageLink($ID)" title="<% _t('SinglePost_ss.GOTOPROFILE','Go to this User&rsquo;s Profile') %>">$FirstName $Surname</a><br />
+
+                <a href="$showProfilePageLink($ID)" title="Go to this user's profile"><img class="avatar" style="width:100%;" src="$ProfilePictureLink($ProfilePictureID)" alt="Avatar" /></a><br />
+                <% if ForumRank %><span class="forum-rank">$ForumRank</span><br /><% end_if %>
+                <% if NumPosts %>
+                    <span class="post-count">$NumPosts 
+                    <% if NumPosts = 1 %>
+                        <% _t('SinglePost_ss.POST', 'Post') %>
+                    <% else %>
+                        <% _t('SinglePost_ss.POSTS', 'Posts') %>
+                    <% end_if %>
+                    </span>
+                <% end_if %>
+            <% end_with %>
+        <% else %>
+            <a class="author-link">Anoonymous</a><br />
+
+                <img class="avatar" style="width:100%;" src="$SiteConfig.DefaultProfilePicture.Filename()" alt="Avatar" /><br />
+        <% end_if %>
 	</div><!-- user-info. -->
 
-	<div class="user-content">
+	<div class="user-content wow fadeInRight">
 
 		<div class="quick-reply">
 			<% if Thread.canPost %>
 				<p>$Top.ReplyLink</p>
 			<% end_if %>
 		</div>
-		<h4><a href="$Link">$Title <img src="forum/images/right.png" alt="Link to this post" title="Link to this post" /></a></h4>
+		<h4><a class="tohash" href="$Link">$Title</a></h4>
 		<p class="post-date">$Created.Long at $Created.Time
 		<% if Updated %>
 			<strong><% _t('SinglePost_ss.LASTEDITED','Last edited:') %> $Updated.Long <% _t('SinglePost_ss.AT') %> $Updated.Time</strong>

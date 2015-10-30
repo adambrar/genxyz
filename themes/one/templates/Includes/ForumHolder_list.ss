@@ -1,5 +1,5 @@
 <tr>
-	<td>
+	<td class="wow fadeInRight">
 		<a class="topic-title" href="$Link">$Title</a>
 		<% if Content || Moderators %>
 			<div class="summary">
@@ -12,13 +12,13 @@
 			</div>
 		<% end_if %>
 	</td>
-	<td class="count">
+	<td class="count wow fadeInRight" data-wow-delay="100ms">
 		$NumTopics
 	</td>
-	<td class="count">
+	<td class="count wow fadeInRight" data-wow-delay="300ms">
 		$NumPosts
 	</td>
-	<td class="">
+	<td class="wow fadeInRight" data-wow-delay="500ms">
 		<% if LatestPost %>
 			<% with LatestPost %>
                 <a class="topic-title" href="$Link" title="View post">$Title</a><br >

@@ -13,23 +13,11 @@
 
             <div class="collapse navbar-collapse navbar-right">
                 <ul class="nav navbar-nav">
-                    <% if isSignedIn %>
-                        <li><a href="$profilePageLink">My Profile</a></li>
-                    <% end_if %>
                     <li class="scroll active"><a href="#home">Home</a></li>
                     <li class="scroll"><a href="#about">About</a></li>
                     <li class="scroll"><a href="#services">Services</a></li>
                     <li class="scroll"><a href="#blog">Blog</a></li> 
                     <li class="scroll"><a href="#get-in-touch">Contact</a></li>
-                    <% if isSignedIn %>
-                        <li><a href="Security/logout">Logout</a></li>
-                    <% else %>
-                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Login</a>
-                            <ul class="dropdown-menu">
-                                <li>$LoginForm</li>
-                            </ul>
-                        </li>
-                    <% end_if %>
                 </ul>
             </div>
         </div><!--/.container-->

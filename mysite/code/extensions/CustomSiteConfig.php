@@ -20,8 +20,10 @@ class CustomSiteConfig extends DataExtension {
     );
 
     public function updateCMSFields(FieldList $fields) {
-        $imageUpload = new FileField('DefaultProfilePictureID', 'Upload a default profile picture photo.');
-        $imageUpload->getValidator()->allowedExtensions = array('jpg', 'png');
+        $imageUpload = new UploadField('DefaultProfilePicture', 'Upload a default profile picture photo.');
+        $imageUpload->setAllowedFileCategories('image');
+        $imageUpload->setAllowedMaxFileNumber(1);
+        $imageUpload->setFolderName('Logos');
 
         $fields->addFieldToTab('Root.Main', $imageUpload);
         $fields->addFieldToTab('Root.Main', new TextField('AddressLine1', 'Address Line 1'));

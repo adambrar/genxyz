@@ -46,10 +46,6 @@ class SearchPage_Controller extends Page_Controller
         HTMLEditorField::include_js();
         
         parent::init();
-        
-        if(!Member::currentUserID() || !Member::currentUser()->isStudent()) {
-            Security::permissionFailure(null, 'You need to be logged into a student profile to view this content.');
-        }
     }
     
     public function show() {

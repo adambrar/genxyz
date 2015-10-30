@@ -8,6 +8,7 @@
                         <li><a href="about">About Us</a></li>
                         <li><a href="services">Our Services</a></li>
                         <li><a href="genxyz">Blog Posts</a></li>
+                        <li><a href="forums">Forums</a></li>
                         <li><a href="terms-and-conditions">Terms and Conditions</a></li>
                     </ul>
                     PARTNERS

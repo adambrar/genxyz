@@ -13,19 +13,13 @@
             
             <div class="collapse navbar-collapse navbar-right">
                 <ul class="nav navbar-nav">
-                    <% if isSignedIn %>
-                        <li><a href="$profilePageLink">My Profile</a></li>
-                    <% end_if %>
                     <li><a href="home">Go Home</a></li>
-                    <% if isSignedIn %>
-                        <li><a href="$BaseHref/Security/logout">Logout</a></li>
-                    <% else %>
-                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Login</a>
-                            <ul class="dropdown-menu">
-                                <li>$LoginForm</li>
-                            </ul>
-                        </li>
-                    <% end_if %>
+                    <% with Page(forums) %>
+                    <li class="$LinkingMode"><a href="forums">Forums</a></li>
+                    <% end_with %>
+                    <% with Page(genxyz) %>
+                    <li class="$LinkingMode"><a href="$Link">Blog</a></li>
+                    <% end_with %>
                 </ul>
             </div>
         </div><!--/.container-->

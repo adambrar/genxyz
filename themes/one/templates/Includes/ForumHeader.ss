@@ -1,5 +1,5 @@
 <div class="forum-header row">
-    <div class="col-md-3">
+    <div class="col-md-3 wow fadeInUp">
 	<% loop ForumHolder %>
         <div class="forum-header-form">
             <h4><a class="Header">Select a topic</a></h4>
@@ -39,7 +39,7 @@
         </div>
 	<% end_loop %>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 wow fadeInUp" data-wow-delay="100ms">
 
         <h1 class="forum-heading"><a name='Header'>$HolderSubtitle</a></h1>
         <p class="forum-abstract">$ForumHolder.HolderAbstract</p>
@@ -54,7 +54,7 @@
             </p>
         <% end_if %>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 wow fadeInUp" data-wow-delay="300ms">
         <span class="forum-search-dropdown-icon"></span>
         <div class="forum-search-bar forum-header-form">
             <h4><a class="Header">Search forum</a></h4>

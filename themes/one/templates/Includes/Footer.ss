@@ -1,34 +1,37 @@
 <footer id="footer">
         <div class="container">
-            <div class="row">
+            <div class="row margin-bottom">
                 <div class="col-sm-3">
+                    PAGES
                     <ul>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Our Services</a></li>
-                        <li><a href="#">Our Latest Blog Posts</a></li>
-                        <li><a href="#">Terms and Conditions</a></li>
+                        <li><a href="contact">Contact Us</a></li>
+                        <li><a href="about">About Us</a></li>
+                        <li><a href="services">Our Services</a></li>
+                        <li><a href="genxyz">Blog Posts</a></li>
+                        <li><a href="terms-and-conditions">Terms and Conditions</a></li>
+                    </ul>
+                    PARTNERS
+                    <ul>
+                        <li><a href="partners-portal">Register</a></li>
+                        <li><a href="Security/login">Login</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <ul>
-                        <li>PARTNERS</li>
-                        <li><a href="#">Sign Up</a></li>
-                        <li><a href="#">Our Services</a></li>
-                        <li><a href="#">Our Latest Blog Posts</a></li>
-                        <li><a href="#">Terms and Conditions</a></li>
-                    </ul>
+                    SCHOLARSHIPS
+                    $SiteConfig.Scholarships
                 </div>
                 <div class="col-sm-3">
-                    Scholarships<br>
+                    HIGHLIGHT OF THE MONTH<br>
+                    $SiteConfig.HighlightofMonth
                 </div>
                 <div class="col-sm-3">
-                    Scholarships<br>
+                    SPECIAL THANKS TO<br>
+                    $SiteConfig.SpecialThanks
                 </div>
             </div>
-            <div class="row">
+            <div class="row margin-top">
                 <div class="col-sm-6">
-                    &copy; 2014 Your Company. Designed by <a target="_blank" href="http://adambrar.com/" title="Web Developemnt">Adam Brar</a>
+                    Designed by <a target="_blank" href="http://adambrar.com/" title="Web Developemnt">Adam Brar</a>
                 </div>
                 <div class="col-sm-6">
                     <ul class="social-icons">

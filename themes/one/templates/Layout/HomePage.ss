@@ -215,18 +215,6 @@
     </div><!--/.container-->
 </section><!--/#services-->
 
-<section id="academics">
-    <div class="container">
-        <h2 class="text-center wow fadeIn" style="color:white;">Academic Search</h2>
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2 wow center-text fadeInRight">
-                $AcademicsMessage
-                
-            </div>
-        </div>
-    </div>
-</section><!--/#academics-->
-
 <section id="blog">
     <div class="container">
         <div class="section-header">

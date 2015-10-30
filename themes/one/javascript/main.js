@@ -62,8 +62,8 @@ jQuery(function($) {'use strict';
 	 
 	    //Init the carousel
 	    $("#main-slider").find('.owl-carousel').owlCarousel({
-	      slideSpeed : 500,
-	      paginationSpeed : 500,
+	      slideSpeed : 900,
+	      paginationSpeed : 600,
 	      singleItem : true,
 	      navigation : true,
 			navigationText: [

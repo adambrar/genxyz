@@ -111,11 +111,11 @@ class MemberDecorator extends DataExtension {
         }
         
         if($member->isUniversity()) {
-            $academicsPage = AcademicsPage::get()->First();
-            return $academicsPage->Link() . 'show/university/' . $member->ID;
+            $searchPage = SearchPage::get()->First();
+            return $searchPage->Link() . 'show/university/' . $member->ID;
         } else if($member->isAgent()) {
-            $academicsPage = AcademicsPage::get()->First();
-            return $academicsPage->Link() . 'show/agent/' . $member->ID;
+            $searchPage = SearchPage::get()->First();
+            return $searchPage->Link() . 'show/agent/' . $member->ID;
         } else if($member->isStudent()) {
             return $profilePage = MemberProfilePage::get()->filter(array(
                 'AllowRegistration' => '0',

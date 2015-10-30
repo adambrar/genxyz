@@ -1,5 +1,13 @@
-<% include Head %>
+<% include OGHead %>
 <body id="blog" class="$ClassName" <% if $i18nScriptDirection %>dir="$i18nScriptDirection"<% end_if %>>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
     <% include EmptyHeader %>
     <div id="content">
         <div class="container margin-bottom">
@@ -52,12 +60,18 @@
                             <div class="entry-content">
                                 <P>$Content</P>
                             </div>
-
-                            <footer id="PageComments_holder" class="entry-meta">
+                            <div class="">
+                                <!-- Your share button code -->
+                                <h3>Share this article</h3>
+                                <div class="fb-like pull-right" data-href={$Link} data-layout="standard" data-action="like" data-show-faces="true"></div>
+                                <div class="fb-share-button" data-href={$Link} data-layout="button_count"></div>
+                                <a href="https://twitter.com/share" class="twitter-share-button" data-dnt="true">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                            </div>
+                            <footer id="PageComments_holder" class="entry-meta col-md-8 col-md-offset-2">
                                 $PageComments
                             </footer>
                         </div>
-                    
                 </article>
             </div>
         </div><!-- end container -->

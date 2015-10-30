@@ -1,6 +1,6 @@
 <?php 
  
-class AcademicsPage extends Page 
+class SearchPage extends Page 
 {
     private static $db = array(
          'Updates' => 'HTMLText',
@@ -16,20 +16,16 @@ private static $defaults = array(
     public function getCMSFields() {
         $fields = parent::getCMSFields();
               
-        $fields->addFieldToTab("Root.Main", new HTMLEditorField('Updates', 'About'));      
+        $fields->addFieldToTab("Root.Main", new HTMLEditorField('Updates', 'Updates'));      
         $fields->addFieldToTab("Root.Main", new HTMLEditorField('RecentlyAdded', 'Recently Added'));
         
         $fields->removeByName("Content");
 
         return $fields;
     }
-    
-    public function test() {
-        return "testing testing testing";
-    }
 }
  
-class AcademicsPage_Controller extends Page_Controller 
+class SearchPage_Controller extends Page_Controller 
 {
     private static $allowed_actions = array(
         'FilterAcademics',

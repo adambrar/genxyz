@@ -202,6 +202,14 @@ select {
 #forumposts .list-group-item {
     min-height: 144px;
 }
+#academics-search-content {
+    background: rgba(255,255,255,0.6);
+    border-radius: 0 0 6px 6px;
+    padding: 10px 20px 10px;
+}
+#academics form {
+    color: black;
+}
 /****** Responsive Video ******/
 .responsive-video {
     position: relative;

@@ -19,20 +19,20 @@
                                 <% end_if %>
                             </div>
                             <div class="col-md-12 col-xs-4">
-                            <% if TagsCollection %>
+                            <% if TagsCollection(1) %>
                                 <h4>Tags</h4>
                                 <ul class="list-unstyled">
-                                <% loop TagsCollection %>
-                                    <li>| <a href="$Link" title="<% _t('BlogEntry_ss.VIEWALLPOSTTAGGED', 'View all posts tagged') %> '$Tag'" rel="tag">$Tag</a></li>
+                                <% loop TagsCollection(3) %>
+                                    <li>| <a href="$Link" class="$Class" title="<% _t('BlogEntry_ss.VIEWALLPOSTTAGGED', 'View all posts tagged') %> '$Tag'" rel="tag">$Tag</a></li>
                                 <% end_loop %>
                                 </ul>
                             <% end_if %>
                             </div>
                             <div class="col-md-12 col-xs-4">
-                            <% if $BlogHolder.Dates %>
+                            <% if Dates %>
                                 <h4>Archive</h4>
                                 <ul class="list-unstyled">
-                                <% loop $BlogHolder.Dates %>
+                                <% loop Dates %>
                                     <li>| <a href="$Link" title="View posts from $Date.Format(F) $Date.Year" rel="tag">$Date.Format(F) $Date.Year</a></li>
                                 <% end_loop %>
                                 </ul>

@@ -17,9 +17,10 @@
                     <% with Page(forums) %>
                     <li class="$LinkingMode"><a href="forums">Forums</a></li>
                     <% end_with %>
-                    <% with Page(genxyz) %>
+                    <% if NotTrue %><% with Page(genxyz) %>
                     <li class="$LinkingMode"><a href="$Link">Blog</a></li>
-                    <% end_with %>
+                    <% end_with %><% end_if %>
+                    <li><a href="Security/logout">Logout</a></li>
                 </ul>
             </div>
         </div><!--/.container-->

@@ -12,15 +12,18 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         'EducationProfileForm',
         'EmergencyContactProfileForm',
         'ProfilePictureForm',
+        'addMessage',
+        'ajax_profile_form'
     );
     
     function init() {
         parent::init();
-        
+
+        Requirements::javascript("themes/one/javascript/studentedit.js");
         SSViewer::setOption('rewriteHashlinks', false);
         
-        if(!Member::currentUserID() || !Member::currentUser()->isStudent()) {
-            Security::permissionFailure(null, 'You need to be logged in a student profile to view this content.');
+        if(!Permission::check('EDIT_STUDENT')) {
+            Security::permissionFailure();
         }
     }
             
@@ -63,8 +66,6 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $member = Member::currentUser();
         $pageData['Member'] = $member;
         
-        $pageData['IsStudent'] = true;
-        
     //pass link to student chatroom with username as 'firstName lastName' and link to user profile in 'userurl'
         $chatName = preg_replace("/[^A-Za-z0-9]/", "", $member->FirstName) . '%20' . preg_replace("/[^A-Za-z0-9]/", "", $member->Surname);
         $userurl = Director::absoluteURL("myprofile/show/".$member->ID, true);
@@ -99,10 +100,6 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         return $pageData;
     }
     
-    public function getIncludeTemplate() {
-        
-    }
-    
     // get profile picture
     public function ProfilePicture($member = null) {
         if(!$member) {
@@ -124,7 +121,7 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         if(!$member) $member = Member::currentUser();
         
         //if not a student, member has no blog to manage
-        if(!$member->isStudent()) {
+        if(Permission::check('BLOG_MANAGEMENT')) {
             return "You do not have a blog to manage.";
         }
         
@@ -151,7 +148,8 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
     public function getProfileForm($formName, Member $member = null) {
         $form = null;
         
-        if(!$member) {$member = Member::currentUser();}
+        if(!Permission::check('EDIT_STUDENT')) { return http_response_code(403); }
+        $member = Member::currentUser();
         
         switch($formName)
         {
@@ -175,14 +173,20 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
                 break;
         }
         
-        if(!$form) { 
-            user_error("Profile Form not found!", E_USER_ERROR); 
+        if(Director::is_ajax() && !$form) {
+            http_response_code(404);
+            return array();
+        } else if(!$form) { 
             return false;
         }
         
         $form->loadDataFrom($member);
         
-        return $form;
+        if(Director::is_ajax()) {
+            return $form->forTemplate();
+        } else {
+            return $form;
+        }
     }
     
     
@@ -232,9 +236,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         );
         
         $actions = new FieldList(
-            new FormAction('saveProfileForm', _t(
+            FormAction::create('saveProfileForm', _t(
                 'MemberProfileForms.SAVEBUTTON',
-                'Save'))
+                'Save'))->addExtraClass('btn btn-primary')
         );
         
         $required = new RequiredFields(array(
@@ -277,9 +281,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         );
         
         $actions = new FieldList(
-            new FormAction('saveProfileForm', _t(
+            FormAction::create('saveProfileForm', _t(
                 'MemberProfileForms.SAVEBUTTON',
-                'Save'))
+                'Save'))->addExtraClass('btn btn-primary')
         );
         
         $required = new RequiredFields(array(
@@ -322,9 +326,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         );
         
         $actions = new FieldList(
-            new FormAction('saveProfileForm', _t(
+            FormAction::create('saveProfileForm', _t(
                 'MemberProfileForms.SAVEBUTTON',
-                'Save'))
+                'Save'))->addExtraClass('btn btn-primary')
         );
         
         $required = new RequiredFields(array(
@@ -368,9 +372,9 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         );
         
         $actions = new FieldList(
-            new FormAction('saveProfileForm', _t(
+            FormAction::create('saveProfileForm', _t(
                 'MemberProfileForms.SAVEBUTTON',
-                'Save'))
+                'Save'))->addExtraClass('btn btn-primary')
         );
         
         $required = new RequiredFields(array(
@@ -391,7 +395,6 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
             new LiteralField('Hd_ProfilePicture', '<h3>' . _t(
                 'MemberProfileForms.PROFILEPICTUREUPLOAD',
                 'Upload A New Profile Picture') . '</h3>'),
-            new HiddenField('Username', 'Username'),
             new HiddenField('Email', 'Email')
         );
         $UploadField = new UploadField('ProfilePicture', 'Upload a new profile picture');
@@ -402,12 +405,12 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         $UploadField->setOverwriteWarning(true);
         $UploadField->setFolderName('Uploads/ProfilePictures');
 
-        $fields->insertBefore($UploadField, 'Username');
+        $fields->insertBefore($UploadField, 'Email');
         
         $actions = new FieldList(
-            new FormAction('saveProfileForm', _t(
+            FormAction::create('saveProfileForm', _t(
                 'MemberProfileForms.UPLOAD',
-                'Upload'))
+                'Upload'))->addExtraClass('btn btn-primary')
         );
         
         $required = new RequiredFields(array(
@@ -445,6 +448,35 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         if(!$holder) { return false; }
         
         return ($holder) ? Forum::get()->limit($num) : false;    
+    }
+    
+    public function addMessage(array $data, Form $form) {
+        $messageThread = MessageThread::get()->byID($data['ParentID']);
+        
+        //TODO: better error handling
+        if(!$messageThread || $messageThread->AgentID != Agent::currentUserID()) {
+            return false;
+        }
+        
+        $message = new Message();
+        
+        $form->saveInto($message);
+        $message->Author = "Student";
+        $message->write();
+        $this->redirectBack();
+    }
+    
+    public function ajax_profile_form() {
+        if(!Permission::check('EDIT_STUDENT')) {
+            return Security::permissionFailure('You cannot edit this profile');
+        }
+        
+        if(!isset($_GET['Name'])) {
+            http_response_code(404);
+            return array();
+        }
+        
+        return $this->getProfileForm($_GET['Name']);
     }
     
     //---End Profile Page Data---//
@@ -499,48 +531,4 @@ class MemberProfilePage_ControllerDecorator extends DataExtension {
         
         $member->write();
     }
-    
-    private function createNewStudentBlog(Member $member, BlogTree $blogTree) {
-        $blogHolder = new BlogHolder();
-        $blogHolder->Title = $member->FirstName."-".$member->Surname."-".$member->ID;
-        $blogHolder->AllowCustomAuthors = false;
-        $blogHolder->OwnerID = $member->ID;
-        $blogHolder->URLSegment = $member->FirstName."-".$member->Surname."-".$member->ID;
-        $blogHolder->Status = "Published";
-        $blogHolder->ParentID = $blogTree->ID;
-        
-        $widgetArea = new WidgetArea();
-        $widgetArea->write();
-        
-        $blogHolder->SideBarWidgetID = $widgetArea->ID;
-        $blogHolder->write();
-        $blogHolder->doRestoreToStage();
-        $blogHolder->menuShown = 'Student';
-        
-        //Tag Cloud Widget
-        $tagcloudwidget = new TagCloudWidget();
-        $tagcloudwidget->ParentID = $widgetArea->ID;
-        $tagcloudwidget->Enabled = 1;
-        $tagcloudwidget->write();
-        //Archive Widget
-        $archiveWidget = new ArchiveWidget();
-        $archiveWidget->ParentID = $widgetArea->ID;
-        $archiveWidget->Enabled = 1;
-        $archiveWidget->write();
-        
-        //create welcome blog entry
-        $blog = new BlogEntry();
-        $blog->Title = "Welcome to the ISNetwork " . $member->FirstName . "!";
-        $blog->Author = "Admin";
-        $blog->URLSegment = 'first-post';
-        $blog->Tags = "created, first, welcome";
-        $blog->Content = "<p>Thank you for registering with the ISNetwork. Take a look around.</p><p>Blog Management will be restricted to student mentors as of September 14th. Email admin@genxyz.ca with some details about yourself to become a mentor.";
-        $blog->Status = "Published";
-        $blog->ParentID = $blogHolder->ID;
-        $blog->write();
-        $blog->doRestoreToStage();
-        
-        return $blogHolder->ID;
-    }
-    
 }

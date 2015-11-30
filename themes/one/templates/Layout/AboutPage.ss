@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-        <% end_with %>        
+        <% end_with %>
     </div>
 </section><!--/#about-->
 

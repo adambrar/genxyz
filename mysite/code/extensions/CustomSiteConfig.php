@@ -23,7 +23,7 @@ class CustomSiteConfig extends DataExtension {
         $imageUpload = new UploadField('DefaultProfilePicture', 'Upload a default profile picture photo.');
         $imageUpload->setAllowedFileCategories('image');
         $imageUpload->setAllowedMaxFileNumber(1);
-        $imageUpload->setFolderName('Logos');
+        $imageUpload->setFolderName('Uploads');
 
         $fields->addFieldToTab('Root.Main', $imageUpload);
         $fields->addFieldToTab('Root.Main', new TextField('AddressLine1', 'Address Line 1'));

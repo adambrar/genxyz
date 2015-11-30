@@ -39,12 +39,6 @@ class ScholarshipsPage extends Page
  
 class ScholarshipsPage_Controller extends Page_Controller 
 {
-    function init() {
-        parent::init();
-        
-        if(!Member::currentUserID() || !Member::currentUser()->isStudent()) {
-            Security::permissionFailure(null, 'You need to be logged into a student profile to view this content.');
-        }
-    }
+    
     
 }

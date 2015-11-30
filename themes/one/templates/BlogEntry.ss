@@ -1,4 +1,4 @@
-<% include OGHead %>
+<% include Head %>
 <body id="blog" class="$ClassName" <% if $i18nScriptDirection %>dir="$i18nScriptDirection"<% end_if %>>
     <div id="fb-root"></div>
     <script>(function(d, s, id) {

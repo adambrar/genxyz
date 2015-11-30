@@ -3,13 +3,13 @@
 class Service extends DataObject {
     
     private static $db = array(
-        'Description' => 'HTMLText',
+        'Description' => 'Text',
         'Cost' => 'Varchar(200)'
     );
     
     private static $has_one = array(
         'ServiceName' => 'ServiceName',
-        'Agent' => 'Member'
+        'Agent' => 'Agent'
     );
     
     private static $defaults = array(
@@ -17,13 +17,13 @@ class Service extends DataObject {
     
     private static $summary_fields = array(
         'ServiceName.Name' => 'Name',
-        'Agent.BusinessName' => 'Institution',
+        'Agent.Name' => 'Agent',
         'Cost' => 'Cost'
     );
     
     private static $searchable_fields = array(
         'ServiceName.Name' => 'PartialMatchFilter',
-        'Agent.BusinessName' => 'PartialMatchFilter'
+        'Agent.Name' => 'PartialMatchFilter'
     );
     
     public function getCMSFields() {
@@ -38,10 +38,10 @@ class Service extends DataObject {
         return ServiceName::get()->ByID($this->ServiceNameID)->Name;
     }
     
-    public static function getProgramOptions() {
-        if($programs = Program::get())
+    public static function getServiceOptions() {
+        if($service = Service::get())
         {
-            return $programs->map('ID', 'Title', 'Please Select');
+            return $service->map('ID', 'Title', 'Please Select');
         } else {
             return array('No Programs');
         }

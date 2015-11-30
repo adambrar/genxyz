@@ -16,7 +16,7 @@
                     <li class="scroll active"><a href="#home">Home</a></li>
                     <li class="scroll"><a href="#about">About</a></li>
                     <li class="scroll"><a href="#services">Services</a></li>
-                    <li class="scroll"><a href="#blog">Blog</a></li> 
+                    <% if NotTrue %><li class="scroll"><a href="#blog">Blog</a></li><% end_if %>
                     <li class="scroll"><a href="#get-in-touch">Contact</a></li>
                 </ul>
             </div>

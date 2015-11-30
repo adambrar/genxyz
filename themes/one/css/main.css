@@ -160,6 +160,14 @@ ul.nostyle i {
 /*************************
 *******Custom******
 **************************/
+#myprofile-tab-content {
+    min-height: 500px;
+}
+#thread-content {
+    min-height: 500px;
+    max-height: 750px;
+    overflow-y: auto;
+}    
 .forum-header-form {
     margin-top: 15px;
 }
@@ -174,9 +182,10 @@ textarea,
 select {
     min-width:400px;
 }
-#Form_FilterAcademics select,
-#Form_FilterAcademics input[type=text] {
+#academics select,
+#academics input[type=text] {
     min-width: 140px;
+    max-width: 200px;
 }
 .partner-logo {
     margin: 1em;
@@ -206,6 +215,7 @@ select {
     background: rgba(255,255,255,0.6);
     border-radius: 0 0 6px 6px;
     padding: 10px 20px 10px;
+    height: 480px;
 }
 #academics form {
     color: black;
@@ -639,8 +649,15 @@ form .checkbox input[type=checkbox]  {
   transition: none;
 }
 #academics {
-  background: #333333 url(../images/testimonial/bg.jpg) no-repeat 0 0;
-  background-size: cover;
+  background: rgba(212,228,239,1);
+background: rgba(0,110,70,1);
+background: -moz-radial-gradient(center, ellipse cover, rgba(0,110,70,1) 0%, rgba(54,109,145,1) 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(0,110,70,1)), color-stop(100%, rgba(54,109,145,1)));
+background: -webkit-radial-gradient(center, ellipse cover, rgba(0,110,70,1) 0%, rgba(54,109,145,1) 100%);
+background: -o-radial-gradient(center, ellipse cover, rgba(0,110,70,1) 0%, rgba(54,109,145,1) 100%);
+background: -ms-radial-gradient(center, ellipse cover, rgba(0,110,70,1) 0%, rgba(54,109,145,1) 100%);
+background: radial-gradient(ellipse at center, rgba(0,110,70,1) 0%, rgba(54,109,145,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#006e46', endColorstr='#366d91', GradientType=1 );
   padding: 100px 0;
   color: #fff;
 }

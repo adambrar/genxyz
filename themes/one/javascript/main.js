@@ -9,6 +9,24 @@ jQuery(function($) {'use strict';
 		$('html, body').animate({scrollTop: $(this.hash).offset().top - 30}, 1000);
 		return false;
 	});
+                    
+    // Message box controls
+    $('#messages-select a').click(function(e) {
+        e.preventDefault();
+        $('#thread-content').html('<div class="text-center"><i class="fa fa-4x fa-spinner fa-spin"></i></div>');
+        $('#thread-content').load( "message/ajaxMessageRequest", {'ThreadID':$(this).attr('data-message-id')});
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active'); 
+    });
+                    
+    // Profile tab calls
+    $('#profile-form-call a').click(function(e) {
+        e.preventDefault();
+        $('#profile-forms-content').html('<div class="text-center"><i class="fa fa-4x fa-spinner fa-spin"></i></div>');
+        $.get('student/ajax_profile_form', {"Name": $(this).attr('data-form-name')}, function(data){$('#profile-forms-content').html(data);});
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+    });
 
 	// User define function
 	function Scroll() {
@@ -137,24 +155,6 @@ jQuery(function($) {'use strict';
 	new WOW().init();
 	//smoothScroll
 	smoothScroll.init();
-
-	// portfolio filter
-	$(window).load(function(){'use strict';
-		var $portfolio_selectors = $('.portfolio-filter >li>a');
-		var $portfolio = $('.portfolio-items');
-		$portfolio.isotope({
-			itemSelector : '.portfolio-item',
-			layoutMode : 'fitRows'
-		});
-		
-		$portfolio_selectors.on('click', function(){
-			$portfolio_selectors.removeClass('active');
-			$(this).addClass('active');
-			var selector = $(this).attr('data-filter');
-			$portfolio.isotope({ filter: selector });
-			return false;
-		});
-	});
 
 	$(document).ready(function() {
 		//Animated Progress

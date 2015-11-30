@@ -46,7 +46,7 @@ class SidebarMenuPage_Controller extends Page_Controller
 
         parent::init();
         
-        if(!Member::currentUserID() || !Member::currentUser()->isStudent()) {
+        if(!Permission::check('EDIT_STUDENT')) {
             Security::permissionFailure(null, 'You need to be logged into a student profile to view this content.');
         }
     }
@@ -68,7 +68,7 @@ class SidebarMenuPage_Controller extends Page_Controller
         if(!$member) $member = Member::currentUser();
         
         //if not a student, member has no blog to manage
-        if(!$member->isStudent()) {
+        if(Permission::check('BLOG_MANAGEMENT')) {
             return "You do not have a blog to manage.";
         }
         

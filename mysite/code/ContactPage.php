@@ -9,8 +9,7 @@ class ContactPage extends Page
     private static $defaults = array(
         'menuShown' => 'Welcome',
         'menuWelcome' => true
-    );
-    
+    );  
 }
  
 class ContactPage_Controller extends Page_Controller 

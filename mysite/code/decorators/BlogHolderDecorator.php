@@ -5,8 +5,8 @@ class BlogHolderDecorator extends DataExtension {
         'SideBarWidget' => 'WidgetArea'
     );
     
-    private static $defaults = array(
-        'menuShown' => 'Student'
+    private static $belongs_to = array(
+        'Student' => 'Student'
     );
     
     public function updateCMSFields(FieldList $fields) {

@@ -20,6 +20,8 @@ i18n::set_locale('en_US');
 Director::set_environment_type('dev');
 error_reporting(E_ALL);
 
+SSViewer::set_theme('one');
+
 Member::set_unique_identifier_field('Email');
 
 //set password requiresments
@@ -27,18 +29,13 @@ $validator = new PasswordValidator();
 $validator->minLength(8);
 $validator->characterStrength(2, array('lowercase', 'uppercase', 'digits', 'punctuation'));
 $validator->checkHistoricalPasswords(3);
+
 Member::set_password_validator($validator);
 
 Member::lock_out_after_incorrect_logins(4);
 
 HTMLEditorConfig::get('cms')->setOption('valid_elements', '*[*]');
 HTMLEditorConfig::get('cms')->setOption('invalid_elements', 'script');
-
-Page::set_restricted_pagetypes(array(
-    'ErrorPage',
-    'VirtualPage',
-    'RedirectorPage'
-));
 
 Object::useCustomClass('MemberLoginForm', 'GroupRedirectLoginForm');
 
@@ -56,8 +53,8 @@ Object::add_extension('CommentingController', 'CommentingControllerDecorator');
 
 Object::add_extension('ForumHolder', 'ForumHolderDecorator');
 
-Object::add_extension('MemberProfilePage_Controller', 'MemberProfilePage_ControllerDecorator');
-
-Object::add_extension('MemberProfileViewer', 'MemberProfileViewerDecorator');
+//Object::add_extension('MemberProfilePage_Controller', 'MemberProfilePage_ControllerDecorator');
+//
+//Object::add_extension('MemberProfileViewer', 'MemberProfileViewerDecorator');
 
 SiteTree::add_extension('Translatable');

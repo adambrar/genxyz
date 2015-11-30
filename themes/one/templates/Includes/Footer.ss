@@ -7,14 +7,15 @@
                         <li><a href="contact">Contact Us</a></li>
                         <li><a href="about">About Us</a></li>
                         <li><a href="services">Our Services</a></li>
-                        <li><a href="genxyz">Blog Posts</a></li>
+                        <li><a href="our-initiatives">Our Initiatives</a></li>
+                        <% if NotTrue %><li><a href="genxyz">Blog Posts</a></li><% end_if %>
                         <li><a href="forums">Forums</a></li>
                         <li><a href="terms-and-conditions">Terms and Conditions</a></li>
                     </ul>
                     PARTNERS
                     <ul>
-                        <li><a href="partners-portal">Register</a></li>
-                        <li><a href="Security/login">Login</a></li>
+                        <li><a href="school">Schools</a></li>
+                        <li><a href="agent">Agents</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-3">
@@ -56,4 +57,19 @@
     <script src="$ThemeDir/javascript/wow.min.js"></script>
     <script src="$ThemeDir/javascript/main.js"></script>
     <script src="$ThemeDir/javascript/selectload.js"></script>
+    <!-- Piwik -->
+    <script type="text/javascript">
+      var _paq = _paq || [];
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//localhost/piwik/piwik/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', 1]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <noscript><p><img src="//localhost/piwik/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+    <!-- End Piwik Code -->
 <!-- === END FOOTER === -->

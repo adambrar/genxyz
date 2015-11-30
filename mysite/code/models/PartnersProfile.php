@@ -24,7 +24,6 @@ class PartnersProfile extends DataObject {
     );
     
     private static $has_one = array(
-        'LogoImage' => 'Image',
         'SlideOne' => 'Image',
         'SlideTwo' => 'Image',
         'SlideThree' => 'Image',

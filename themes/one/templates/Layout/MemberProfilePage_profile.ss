@@ -26,133 +26,162 @@
                         </ul>  
                     </div>
                 </div>
-                <div class="wow fadeInRight">
-                    <% if isSignedIn %>
-                    <% if isProfileSaved %>
-                        <h4 class="message good">Your profile has been saved</h4>
-                    <% end_if %>
-                    <ul class="nav nav-pills">
-                        <li class="active"><a data-toggle="pill" href="#blogposts">Blog</a></li>
-                        <li class=""><a data-toggle="pill" href="#forumposts">Forum Posts</a></li>
-                        <% loop Menu(1).Filter('menuStudentSidebar', 1) %>
-                            <% if $Children %>
-                                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">$MenuTitle.XML</a>
-                                    <ul class="dropdown-menu">
-                                        <% loop Children %>
-                                            <li><a data-toggle="pill" href="#$URLSafeTitle()">$MenuTitle.XML</a></li>
-                                        <% end_loop %>
-                                    </ul>
-                                </li>
-                            <% else %>
-                                <li><a data-toggle="pill" href="#$URLSafeTitle()">$MenuTitle.XML</a></li>
-                            <% end_if %>
-                        <% end_loop %>
-                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Edit Your Information</a>
+            </div>
+        </div>
+        <div class="wow fadeInRight">
+            <% include SessionMessage %>
+            <ul class="nav nav-pills">
+                <li class="active"><a data-toggle="pill" href="#messages">Messages</a></li>
+                <li class=""><a data-toggle="pill" href="#applications">Applications</a></li>
+                <% if Member.getBlogHolder() %><li class=""><a data-toggle="pill" href="#blogposts">Blog</a></li><% end_if %>
+                <li class=""><a data-toggle="pill" href="#forumposts">Forum Posts</a></li>
+                <% loop Menu(1).Filter('menuStudentSidebar', 1) %>
+                    <% if $Children %>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">$MenuTitle.XML</a>
                             <ul class="dropdown-menu">
-                                <li><a data-toggle="pill" href="#basicform">Basic Information</a></li>
-                                <li><a data-toggle="pill" href="#addressform">Address</a></li>
-                                <li><a data-toggle="pill" href="#educationform">Education</a></li>
-                                <li><a data-toggle="pill" href="#contactform">Emergency Contact</a></li>
-                                <li><a data-toggle="pill" href="#profilepicture">Profile Picture</a></li>
+                                <% loop Children %>
+                                    <li><a data-toggle="pill" href="#{$URLSafeTitle()}-content">$MenuTitle.XML</a></li>
+                                <% end_loop %>
                             </ul>
                         </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div id="blogposts" class="tab-pane fade in active">
-                            <div class="row">
-                                <% with Member.getBlogHolder() %>
-                                    <div class="btn-group btn-group-justified" role="group">
-                                        <a href="$postURL" type="button" class="btn btn-primary btn-md">Write a new post <i class="fa fa-pencil-square"></i></a>
-                                        <a href="$Link" type="button" class="btn btn-primary btn-md">See all your posts <i class="fa fa-file-text-o"></i></a>
-                                        <a href="$Parent.Link" type="button" class="btn btn-primary btn-md">See all recent posts <i class="fa fa-files-o"></i></a>
-                                    </div>
-                                    <h3 class="text-center">Your latest posts in <a title="View all your blog posts" href="$Link">$Title</a></h3>
-                                    <% loop HolderEntries(15) %>
-                                        <div class="col-sm-6 wow fadeInRight" data-wow-duration="800ms" <% if Odd %>data-wow-delay="100ms"<% else %>data-wow-delay="300ms"<% end_if %>>
-                                            <% include SmallBlogSummary %>
-                                        </div><!--/.col-md-4-->
-                                    <% end_loop %>
-                                <% end_with %>
-                            </div>
-                        </div>
-                        <div id="forumposts" class="tab-pane fade">
-                            <div class="list-group">
-                                <h3 class="text-center">Your latest posts in the <a href="forums">Forum</a></h3>
-                                <% loop Member.getLatestForumPosts(10) %>
-                                    <div class="list-group-item col-sm-6 wow fadeInRight" data-wow-duration="800ms" <% if Odd %>data-wow-delay="100ms"<% else %>data-wow-delay="300ms"<% end_if %>>
-                                        <% include SmallSinglePost %>
-                                    </div>
-                                <% end_loop %>
-                            </div>
-                        </div>
-                        <div id="basicform" class="tab-pane fade">
-                            <div class="wow fadeInRight">
-                                $getProfileForm("Basic")
-                            </div>
-                        </div>
-                        <div id="addressform" class="tab-pane fade">
-                            <div class="row">
-                                <div class="col-md-offset-1 wow fadeInRight">
-                                    $getProfileForm("Address")
-                                </div>
-                            </div>
-                        </div>
-                        <div id="educationform" class="tab-pane fade">
-                            <div class="row">
-                                <div class="col-md-offset-1 wow fadeInRight">
-                                    $getProfileForm("Education")
-                                </div>
-                            </div>
-                        </div>
-                        <div id="contactform" class="tab-pane fade">
-                            <div class="row">
-                                <div class="col-md-offset-1 wow fadeInRight">
-                                    $getProfileForm("Contact")
-                                </div>
-                            </div>
-                        </div>
-                        <div id="profilepicture" class="tab-pane fade">
-                            <div class="row">
-                                <div class="col-md-offset-1 wow fadeInRight">
-                                    $getProfileForm("ProfilePicture")
-                                </div>
-                            </div>
-                        </div>
-                        <% loop Menu(1).Filter('menuStudentSidebar', 1) %>
-                            <% if Children %>
-                                <% loop Children %> 
-                                    <div id="$URLSafeTitle()" class="tab-pane fade">
-                                        <% if $ClassName = 'ScholarshipsPage' %>
-                                        <% include ScholarshipsPage %> 
-                                    <% else_if $ClassName = 'AcademicsPage' %>
-                                        <% include AcademicsPage %>
-                                    <% else_if $ClassName = 'SidebarMenuPage' %>
-                                        <% include SidebarMenuPage %>
-                                    <% else %>
-                                        <% include DefaultTabContent %>
-                                    <% end_if %>
-                                    </div>
-                                <% end_loop %>
-                            <% else %>
-                                <div id="$URLSafeTitle()" class="tab-pane fade">
-                                    <% if $ClassName = 'ScholarshipsPage' %>
-                                        <% include ScholarshipsPage %> 
-                                    <% else_if $ClassName = 'AcademicsPage' %>
-                                        <% include AcademicsPage %>
-                                    <% else_if $ClassName = 'SidebarMenuPage' %>
-                                        <% include SidebarMenuPage %>
-                                    <% else %>
-                                        <% include DefaultTabContent %>
-                                    <% end_if %>
-                                </div>
-                            <% end_if %>
-                        <% end_loop %>                        
-                    </div>
                     <% else %>
-                        <h2>You need to sign in to view the rest of this profile</h2>
+                        <li><a data-toggle="pill" href="#{$URLSafeTitle()}-content">$MenuTitle.XML</a></li>
+                    <% end_if %>
+                <% end_loop %>
+                <li><a data-toggle="pill" href="#profile-forms">Edit Your Profile</a>
+                </li>
+            </ul>
+            <div id="myprofile-tab-content" class="tab-content">
+                <div id="messages" class="tab-pane fade in active">
+                    <% if AddMessageForm %>
+                        <% include MessageBox %>
+                    <% else %>
+                        <h3 class="text-center">You currently have no messages to view.</h3>
                     <% end_if %>
                 </div>
+                <div id="applications" class="tab-pane fade">
+                    <div class="row">
+                        <ul class="list-group col-sm-6">
+                        <li class="list-group-item list-group-item-default"><h2>Active Applications</h2></li>
+                        <% if Member.InProcessApplications %>
+                            <% loop Member.InProcessApplications %>
+                                <li class="list-group-item $StatusClass">
+                                    <h5><a href="{$School.ViewProfileLink()}">$School.Name</a> - <small>$Created.Ago</small>
+                                        <button type="button" class="pull-right" data-toggle="modal" data-target="#editModal" data-application-id="{$ID}"><i class="fa fa-edit"></i></button>
+                                    </h5>
+                                </li>
+                            <% end_loop %>
+                        <% else %>
+                            <li class="list-group-item"><h2><small>No active applications</small></h2></li>
+                        <% end_if %>
+                    </ul>
+                    <ul class="list-group col-sm-6">
+                        <li class="list-group-item list-group-item-default"><h2>Done Processing</h2></li>
+                        <% if Member.DoneApplications %>
+                            <% loop Member.DoneApplications %>
+                                <li class="list-group-item $StatusClass">
+                                    <h5><a href="{$School.ViewProfileLink()}">$School.Name</a> - <small>$Created.Ago</small>
+                                        <button type="button" class="pull-right" data-toggle="modal" data-target="#editModal" data-application-id="{$ID}"><i class="fa fa-edit"></i></button>
+                                    </h5>
+                                </li>
+                            <% end_loop %>
+                        <% else %>
+                            <li class="list-group-item"><h2><small>No completed applications</small></h2></li>
+                        <% end_if %>
+                    </ul>
+                    </div>
+                </div>
+                <% if Member.getBlogHolder() %>
+                <div id="blogposts" class="tab-pane fade">
+                    <div class="row">
+                        <% with Member.getBlogHolder() %>
+                            <div class="btn-group btn-group-justified" role="group">
+                                <a href="$postURL" type="button" class="btn btn-primary btn-md">Write a new post <i class="fa fa-pencil-square"></i></a>
+                                <a href="$Link" type="button" class="btn btn-primary btn-md">See all your posts <i class="fa fa-file-text-o"></i></a>
+                                <a href="$Parent.Link" type="button" class="btn btn-primary btn-md">See all recent posts <i class="fa fa-files-o"></i></a>
+                            </div>
+                            <h3 class="text-center">Your latest posts in <a title="View all your blog posts" href="$Link">$Title</a></h3>
+                            <% loop HolderEntries(15) %>
+                                <div class="col-sm-6 wow fadeInRight" data-wow-duration="800ms" <% if Odd %>data-wow-delay="100ms"<% else %>data-wow-delay="300ms"<% end_if %>>
+                                    <% include SmallBlogSummary %>
+                                </div><!--/.col-md-4-->
+                            <% end_loop %>
+                        <% end_with %>
+                    </div>
+                </div>
+                <% end_if %>
+                <div id="forumposts" class="tab-pane fade">
+                    <div class="list-group">
+                        <h3 class="text-center">Your latest posts in the <a href="forums">Forum</a></h3>
+                        <% loop Member.getLatestForumPosts(10) %>
+                            <div class="list-group-item col-sm-6 wow fadeInRight" data-wow-duration="800ms" <% if Odd %>data-wow-delay="100ms"<% else %>data-wow-delay="300ms"<% end_if %>>
+                                <% include SmallSinglePost %>
+                            </div>
+                        <% end_loop %>
+                    </div>
+                </div>
+                <div id="profile-forms" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div id="profile-form-call" class="list-group">
+                                <a href="#Picture" data-form-name="ProfilePicture" class="list-group-item active">Profile Picture</a>
+                                <a href="#Basic" data-form-name="Basic" class="list-group-item">Basic Information</a>
+                                <a href="#Address" data-form-name="Address" class="list-group-item">Address</a>
+                                <a href="#Education" data-form-name="Education" class="list-group-item">Education</a>
+                                <a href="#Contact" data-form-name="Contact" class="list-group-item">Emergency Contact</a>
+                            </div>
+                        </div>
+                        <div id="profile-forms-content" class="col-xs-8">
+                            $getProfileForm("ProfilePicture")
+                        </div>
+                    </div>
+                </div>
+                <% loop Menu(1).Filter('menuStudentSidebar', 1) %>
+                    <% if Children %>
+                        <% loop Children %> 
+                            <div id="{$URLSafeTitle()}-content" class="tab-pane fade">
+                                <% if $ClassName = 'ScholarshipsPage' %>
+                                <% include ScholarshipsPage %> 
+                            <% else_if $ClassName = 'AcademicsPage' %>
+                                <% include AcademicsPage %>
+                            <% else_if $ClassName = 'SidebarMenuPage' %>
+                                <% include SidebarMenuPage %>
+                            <% else %>
+                                <% include DefaultTabContent %>
+                            <% end_if %>
+                            </div>
+                        <% end_loop %>
+                    <% else %>
+                        <div id="{$URLSafeTitle()}-content" class="tab-pane fade">
+                            <% if $ClassName = 'ScholarshipsPage' %>
+                                <% include ScholarshipsPage %> 
+                            <% else_if $ClassName = 'AcademicsPage' %>
+                                <% include AcademicsPage %>
+                            <% else_if $ClassName = 'SidebarMenuPage' %>
+                                <% include SidebarMenuPage %>
+                            <% else %>
+                                <% include DefaultTabContent %>
+                            <% end_if %>
+                        </div>
+                    <% end_if %>
+                <% end_loop %>                        
             </div>
         </div>
     </div>
+</div>
+<div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Application Details</h4>
+      </div>
+      <div class="modal-body">
+        <h2 class="text-center"><i class="fa fa-2x fa-spinner fa-spin"></i></h2>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
 </div>

@@ -214,7 +214,7 @@
         </div><!--/.row-->    
     </div><!--/.container-->
 </section><!--/#services-->
-
+<% if NotTrue %>
 <section id="blog">
     <div class="container">
         <div class="section-header">
@@ -310,6 +310,7 @@
 
     </div>
 </section>
+<% end_if %>
 
 <section id="get-in-touch">
     <div class="container">

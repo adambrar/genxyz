@@ -15,14 +15,10 @@ class BlogEntryDecorator extends DataExtension {
 
     }
 
-    
     function authorProfileURL($authorID) {
-        $profilePage = SiteTree::get()->filter(array(
-            'ClassName' => 'MemberProfilePage',
-            'Title' => 'MyProfile'
-        ))->First();
+        $profilePage = StudentPortalPage::get()->First();
         
-        return $profilePage->Link('show') . '/' . $authorID;
+        return $profilePage ? $profilePage->Link('show') . '/' . $authorID : false;
     }
     
     function authorName() {

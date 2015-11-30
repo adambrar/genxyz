@@ -4,7 +4,14 @@
     <div id="content">
         <div class="container margin-bottom">
             <h2>$Title</h2>
-            <article>
+            <% if SelectedTag %>
+                    <h5><% _t('BlogTree_ss.VIEWINGTAGGED', 'Viewing entries tagged with') %> '$SelectedTag'</h5>
+                <% else_if SelectedDate %>
+                    <h5><% _t('BlogTree_ss.VIEWINGPOSTEDIN', 'Viewing entries posted in') %> $SelectedNiceDate</h5>
+                <% else_if SelectedAuthor %>
+                    <h5><% _t('BlogTree_ss.VIEWINGPOSTEDBY', 'Viewing entries posted by') %> $SelectedAuthor</h5>
+                <% end_if %>   
+                <article>
                 <% include BreadCrumbs %>
                 <div class="row">
                     <div class="col-md-2 wow fadeInLeft" data-wow-delay="200ms">
@@ -14,8 +21,6 @@
                                     <h4>Blog Admin</h4>
                                     <ul class="list-unstyled">
                                     <li>| <a href="$BlogHolder.postURL" id="postlink">Publish new post</a></li>
-                                    
-
                                 <% end_if %>
                             </div>
                             <div class="col-md-12 col-xs-4">

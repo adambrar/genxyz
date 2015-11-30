@@ -42,166 +42,24 @@ class Page extends SiteTree implements PermissionProvider {
 
         $fields->addFieldToTab("Root.Zopim", new CheckboxField('EnableZopim', 'Enable Zopim Chat on the page?'));
         
-        $fields->removeByName("Content");
+        //$fields->removeByName("Content");
 
         return $fields;
     }
     
-    /*
-     *  array of restricted pagetypes, only to be managed
-     *  by users that have MANAGE_RESTRICTED_PAGETYPES permission
-     */
-    protected static $restricted_pagetypes = array();
- 
-    /*
-     *  Add a new permission
-     */
-    function providePermissions() {
+    public function providePermissions() {
         return array(
-            'MANAGE_RESTRICTED_PAGETYPES' => array(
-                'name' => _t(
-                    'Page.RESTRICTED_PAGETYPES',
-                    'Manage restricted pagetypes'
-                ),
-                'category' => _t(
-                    'Page.PERMISSIONS_SETTINGS',
-                    'Special settings'
-                ),
-                'help' => _t(
-                    'Page.RESTRICTED_PAGETYPES_HELP',
-                    'Can create and delete restricted pagetypes'
-                ),
-                'sort' => 100
-            ),
-            'VIEW_PROFILES' => array(
-                'name' => 'Can view profiles',
-                'category' => 'User access',
-                'help' => 'Can view all user profiles',
-                'sort' => 101
-            ),
-            'POST_IN_FORUM' => array(
-                'name' => 'Can post to forum',
-                'category' => 'User access',
-                'help' => 'Can make new posts in forum',
-                'sort' => 103
-            ),
+            'VIEW_STUDENT' => 'Can view student content',
+            'EDIT_STUDENT' => 'Can edit student content',
+            'VIEW_AGENT' => 'Can view agent content',
+            'EDIT_AGENT' => 'Can edit agent content',
+            'VIEW_SCHOOL' => 'Can view school content',
+            'EDIT_SCHOOL' => 'Can edit school content'
         );
     }
     
-    /*
-     * setter for resticted pagetpes
-     */
-    public static function set_restricted_pagetypes($pagetypes) {
-        self::$restricted_pagetypes = $pagetypes;
-    }
-    
-    /*
-     *  check if this is a restricted pagetype and if the user
-     *  has permission to manage restricted pagetypes
-     */
-    protected function canManageRestrictedPagetypes($Member) {
- 
-        // are there any restricted pagetypes?
-        if (!empty(self::$restricted_pagetypes)) {
-            if (in_array($this->ClassName, self::$restricted_pagetypes)) {
- 
-                if (!Permission::check('MANAGE_RESTRICTED_PAGETYPES')) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-    
-    public function canViewProfiles($Member = null) {
-        return false;   
-        if(Permission::check('VIEW_PROFILES')) {
-            return true;
-        } else {
-            return Securtiy::permissionFailure($this, 'You need to be logged in to view this profile. Please login or create an account.');
-        }
-    }
-    
-    /*
-     *  disable the creation of restricted pages for people
-     *  that don't have the right pernmissions
-     */
-    function canCreate($Member = null) {
-        if ($this->canManageRestrictedPagetypes($Member)) {
-            return parent::canCreate($Member);
-        } else {
-            return false;
-        }
-    }
-    
-    /*
-     *  disable the deletion of restricted pages for people
-     *  that don't have the right pernmissions
-     */
-    function canDelete($Member = null) {
-        if ($this->canManageRestrictedPagetypes($Member)) {
-            return parent::canDelete($Member);
-        } else {
-            return false;
-        }
-    }
-    
-    function isSignedIn() {
-        if(Member::currentUserID()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    function profilePageLink() {
-        $member = Member::currentUser();        
-        
-        if(!$member) {
-            return false;
-        }
-
-        if($member->isUniversity()) {
-            $portalPage = PartnersPortalPage::get()->First();
-            return $portalPage->Link() . 'edit/university/' . $member->ID;
-        } else if($member->isAgent()) {
-            $portalPage = PartnersPortalPage::get()->First();
-            return $portalPage->Link() . $portalPage . 'edit/agent/' . $member->ID;
-        } else if($member->isStudent()) {
-            return MemberProfilePage::get()->filter(array(
-                'AllowRegistration' => '0',
-                'AllowProfileEditing' => '1'
-            ))->First()->Link();
-            
-        }
-    }
-    
-    function showProfilePageLink($id = null) {
-        if(!$id || !ctype_digit($id))
-             return false;
-        
-        $member = Member::get()->ByID($id);
-        
-        if(!$member) {
-            return false;
-        }
-
-        if($member->isUniversity()) {
-            $portalPage = AcademicsPage::get()->First();
-            return $portalPage->Link() . 'show/university/' . $member->ID;
-        } else if($member->isAgent()) {
-            $portalPage = AcademicsPage::get()->First();
-            return $portalPage->Link() . $portalPage . 'show/agent/' . $member->ID;
-        } else if($member->isStudent()) {
-            return MemberProfilePage::get()->filter(array(
-                'AllowRegistration' => '0',
-                'AllowProfileEditing' => '1'
-            ))->First()->Link() . 'show/' . $member->ID;
-        }
-    }
-    
     function URLSafeTitle() {
-        return strtolower(str_replace(' ', '-', $this->Title));
+        return strtolower(preg_replace('/[^A-Za-z0-9]/', '', $this->Title));
     }
     
     public function getIncludeTemplate() {
@@ -233,6 +91,8 @@ class Page_Controller extends ContentController {
     );
 	
 	public function init() {
+        Requirements::set_force_js_to_bottom(true);
+        
 		parent::init();
 		// You can include any CSS or JS required by your project here.
 		// See: http://doc.silverstripe.org/framework/en/reference/requirements
@@ -240,8 +100,10 @@ class Page_Controller extends ContentController {
             i18n::set_locale($this->dataRecord->Locale);
         }
         
-        Requirements::javascript(Director::baseFolder() . 'themes/' . SSViewer::current_theme() . '/javascript/selectload.js');
-        Requirements::javascript(Director::baseFolder() . 'themes/' . SSViewer::current_theme() . '/javascript/scrolllink.js');
+        Requirements::block(FRAMEWORK_DIR.
+                            "/thirdparty/jquery/jquery.js");
+        Requirements::block(FRAMEWORK_DIR.
+                            "/thirdparty/jquery/jquery.min.js");
 	}
     
     public function countriesasjson($message = "", $extraData = null, $status = "success") {
@@ -348,11 +210,31 @@ class Page_Controller extends ContentController {
         }
 
         // Set new value if user is logged in and on secure page
-        if(Member::currentUserID() && $this->menuShown != 'Welcome') {
+        if(Member::currentUserID()) {
             Session::set('session_start_time', time());
         }
     }
     
+    public function getSessionMessage() {
+        if(Session::get('SessionMessage')) {
+            $message = array();
+            $message['Content'] = Session::get('SessionMessage');
+            Session::clear('SessionMessage');
+            $message['Context'] = Session::get('SessionMessageContext') ? Session::get('SessionMessageContext') : 'primary';
+            Session::clear('SessionMessageContext');
+            return $message;
+        }
+        return false;
+    }
+    
+    public function getSessionMessageContext() {
+        if(Session::get('SessionMessageContext')) {
+            $context = Session::get('SessionMessageContext');
+            Session::clear('SessionMessageContext');
+            return $context;
+        }
+        return 'primary';
+    }
     
     function getFooterScholarships() {
         return Scholarship::get()->limit(5);

@@ -8,21 +8,29 @@ class GroupRedirectLoginForm extends MemberLoginForm {
     
     function __construct($controller, $name, $fields = null, 
                          $actions = null, $checkCurrentUser = true) {
-        
-        $fields = new FieldList(
-            new TextField('Email', 'Email'),
-            new PasswordField('Password', 'Password'),
-            new CheckboxField("Remember", "Remember me next time?")
-        );
-
-        $actions = new FieldList(
-            FormAction::create('dologin', 'Log in')->addExtraClass('login-button')
-        );
-        
-        if($controller->ClassName != "PartnersPortalPage") {
-            $actions->push(LiteralField::create('register', '<a id="register-button" class="button small" href="register">Register</a>'));
+        if(!$fields) {
+            $fields = new FieldList(
+                new TextField('Email', 'Email'),
+                new PasswordField('Password', 'Password'),
+                new CheckboxField('Remember', 'Remember me next time?')
+            );
         }
-
+        if(!$actions) {
+            $actions = new FieldList(
+                FormAction::create('dologin', 'Log in')->addExtraClass('login-button btn btn-primary')
+            );
+        
+        
+            if($controller->ClassName == "AgentPortalPage" ||
+              $controller->ClassName == "SchoolPortalPage" || 
+             $controller->ClassName == "StudentPortalPage") {
+                $actions->push(LiteralField::create('register', '<a data-toggle="tab" class="btn btn-default" href="#register">Register</a>'));
+            } else {
+                $actions->push(LiteralField::create('register', '<a class="btn btn-default" href="register">Register</a>'));
+            }
+                $actions->push(new LiteralField('forgotPassword', '<p id="forgotPassword"><a href="Security/lostpassword">I lost my password!</a></p>'));
+        }
+                           
         //LoginForm does its magic
         parent::__construct($controller, $name, $fields, $actions);
     }
@@ -43,39 +51,24 @@ class GroupRedirectLoginForm extends MemberLoginForm {
     public function redirectByGroup($data) {   
         // gets the current member that is logging in
         $member = Member::currentUser();
-         
-        // gets all the groups.
-        $Groups = DataObject::get("Group");
-         
-        //cycle through each group  
-        foreach($Groups as $Group)
-        {
-            //if the member is in the group and that group has GoToAdmin checked or GoToAcademicsPortal
-            if($member && $member->inGroup($Group->ID) 
-               && ($Group->GoToAdmin == 1 || $Group->GoToAcademicsPortal == 1)) 
-            {   
-                //redirect to the admin page
-                if($Group->GoToAdmin) {
-                    return $this->controller->redirect( Director::baseURL() . 'admin' );
-                } else if($member->MemberType == 'Agent') {
-                    $portalPage = PartnersPortalPage::get()->First()->Link();
-                    return $this->controller->redirect( $portalPage . 'edit/agent/' . $member->ID );
-                } else if($member->MemberType == 'University') {
-                    $portalPage = PartnersPortalPage::get()->First()->Link();
-                    return $this->controller->redirect( $portalPage . 'edit/university/' . $member->ID );
-                }
-            }
-            //otherwise if the member is in the group and that group has a page linked
-            elseif($member && $member->inGroup($Group->ID)  && $Group->LinkedPageID != 0) 
-            {   
-                //Get the page that is referenced in the group		
-				$Link = DataObject::get_by_id("SiteTree", "{$Group->LinkedPageID}")->URLSegment;
-				//direct to that page
-                $this->controller->redirect( Director::baseURL() . $Link );
-				return true;
+        
+        if($member) {
+            if(Permission::check('ADMIN')) {
+                return $this->controller->redirect( Director::baseURL() . 'admin' );                               
+            } else if(Permission::check('EDIT_AGENT')) {
+                $agentPage = AgentPortalPage::get()->First()->Link('edit');
+                return $this->controller->redirect( $agentPage );
+            } else if(Permission::check('EDIT_SCHOOL')) {
+                $schoolPage = SchoolPortalPage::get()->First()->Link('edit');
+                return $this->controller->redirect( $schoolPage );
+            } else if(Permission::check('EDIT_STUDENT')) {
+                $studentPage = StudentPortalPage::get()->First()->Link('edit');
+                return $this->controller->redirect( $studentPage );            
+            } else {
+                return false;
             }
         }
-        //if not found in group return false
+
         return false;
     }
 }

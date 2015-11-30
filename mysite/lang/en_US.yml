@@ -36,7 +36,7 @@ en_US:
     EMERGENCYCONTACTLABEL: 'Emergency Contact Information'
     CONTACTTELEPHONE: 'Telephone Number'
     PROFILEPICTURELABEL: 'Upload a new profile picture'
-    PROFILEPICTUREUPLOAD: 'use a .jpg or .png file'
+    PROFILEPICTUREUPLOAD: 'Upload a new profile picture'
     
   NavigationTemplate:
     MYPROFILE: 'MyProfile'

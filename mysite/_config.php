@@ -9,7 +9,7 @@ $databaseConfig = array(
 	"server" => 'localhost',
 	"username" => 'silver',
 	"password" => 'silverasdf1234',
-	"database" => 'SS_mysite',
+	"database" => 'genxyz',
 	"path" => '',
 );
 

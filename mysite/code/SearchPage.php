@@ -248,9 +248,6 @@ class SearchPage_Controller extends Page_Controller
 		// populate Javascript
 		$js = array();
         
-//        $countries = Country::get()->filter(array(
-//            'ID' => 'Members.BusinessCountryID'
-//        ))->sort('Name', 'ASC');
         $countries = Country::get();
         
         if($countries)

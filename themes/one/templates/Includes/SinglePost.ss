@@ -2,9 +2,9 @@
 	<div class="user-info wow fadeInLeft">
         <% if Author %>
             <% with Author %>
-                <a class="author-link" href="$showProfilePageLink($ID)" title="<% _t('SinglePost_ss.GOTOPROFILE','Go to this User&rsquo;s Profile') %>">$FirstName $Surname</a><br />
+                <a class="author-link" href="{$viewLink()}" title="<% _t('SinglePost_ss.GOTOPROFILE','Go to this profile') %>">$FirstName $Surname</a><br />
 
-                <a href="$showProfilePageLink($ID)" title="Go to this user's profile"><img class="avatar" style="width:100%;" src="$ProfilePictureLink($ProfilePictureID)" alt="Avatar" /></a><br />
+                <a href="{$viewLink()}" title="Go to this profile"><img class="avatar" style="width:100%;" src="<% if ProfilePicture %>{$ProfilePicture.Filename()}<% else %>$SiteConfig.DefaultProfilePicture.Filename()<% end_if %>" alt="Avatar" /></a><br />
                 <% if ForumRank %><span class="forum-rank">$ForumRank</span><br /><% end_if %>
                 <% if NumPosts %>
                     <span class="post-count">$NumPosts 
@@ -17,9 +17,8 @@
                 <% end_if %>
             <% end_with %>
         <% else %>
-            <a class="author-link">Anoonymous</a><br />
-
-                <img class="avatar" style="width:100%;" src="$SiteConfig.DefaultProfilePicture.Filename()" alt="Avatar" /><br />
+            <a class="author-link">Anonymous</a><br />
+            <img class="avatar" style="width:100%;" src="$SiteConfig.DefaultProfilePicture.Filename()" alt="Avatar" /><br />
         <% end_if %>
 	</div><!-- user-info. -->
 

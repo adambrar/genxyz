@@ -4,7 +4,7 @@
 			<strong><% _t('ForumFooter_ss.LATESTMEMBER','Welcome to our latest member:') %></strong>			
 			<% if $NewestMembers(4) %>
 				<% loop $NewestMember(4) %>
-					<a href="$getProfilePageLink($ID)" title="Profile page for $FirstName $Surname">$FirstName $Surname</a><% if Last %><% else %> | <% end_if %> 
+					<a href="{$viewLink()}" title="Profile page for $FirstName $Surname">$FirstName $Surname</a><% if Last %><% else %> | <% end_if %> 
 				<% end_loop %>
 			<% end_if %>
 		</p>

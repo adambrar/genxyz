@@ -59,8 +59,8 @@ class ApplicationsController extends Controller {
 
             $html = '<ul class="list-unstyled">';
 
-            if($application->Files()->Count() > 0) {
-                foreach($application->Files() as $file) {
+            if($application->StudentFiles()->Count() > 0) {
+                foreach($application->StudentFiles() as $file) {
                     $html .= '<li><strong>'.$file->Title.':</strong><div class="btn-group btn-group-justified" role="group"><a target="_blank" href="'.$file->Link().'" class="btn btn-primary btn-md">View</a><a href="'.$file->Link().'" class="btn btn-primary btn-md">Download <small>45MB</small></a></div></li>';
                 }
             } else {
@@ -100,7 +100,7 @@ class ApplicationsController extends Controller {
     public function SchoolApplicationEdit($schoolID = 0) {
         $fields = new FieldList(
             new TextAreaField('Notes', 'Notes'),
-            $uploadField = new UploadField($name = 'Files', $title = 'Upload the required files.'),
+            $uploadField = new UploadField($name = 'StudentFiles', $title = 'Upload the required files.'),
             new HiddenField('ID','ID')
         );
         $uploadField->setFolderName('students/'.Student::currentUserID().'/applications/'.$schoolID);
@@ -143,7 +143,7 @@ class ApplicationsController extends Controller {
     public function CreateSchoolApplicationForm($schoolID = 0) {
         $fields = new FieldList(
             new LiteralField('Description', '<h5>Fill out your application to apply for this school. <small>You need to have an account to apply.</small></h5>'),
-            $uploadField = new UploadField($name = 'Files', $title = 'Upload the required files.'),
+            $uploadField = new UploadField($name = 'StudentFiles', $title = 'Upload the required files.'),
             new HiddenField('SchoolID','SchoolID', $schoolID)
         );
         $uploadField->setFolderName('students/'.Student::currentUserID().'/applications/'.$schoolID);

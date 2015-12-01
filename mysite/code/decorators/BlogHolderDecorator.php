@@ -9,15 +9,16 @@ class BlogHolderDecorator extends DataExtension {
         'Student' => 'Student'
     );
     
-    public function updateCMSFields(FieldList $fields) {
-        $fields->addFieldToTab("Root.Widgets", new WidgetAreaEditor("SideBarWidget"));
-    }
-
     public function HolderEntries($limit = 10) {
         return SiteTree::get()->filter(array(
             'ClassName' => 'BlogEntry',
             'ParentID' => $this->owner->ID
         ))->sort('Created', 'DESC')->limit($limit);
+    }
+    
+    public function viewOwnerProfile() {
+        $page = StudentPortalPage::get()->First();
+        return $page->Link('show/'.$this->OwnerID);
     }
     
 }

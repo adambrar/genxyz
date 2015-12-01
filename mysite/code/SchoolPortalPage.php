@@ -119,7 +119,7 @@ class SchoolPortalPage_Controller extends Page_Controller
             new TextField('RegistrationNumber', 'Registration Number'),
             DropdownField::create('CountryID', _t(
             'MemberRegForm.COUNTRY',
-            'Country of Registration'))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
+            'Country of Registration'),Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
             ConfirmedPasswordField::create('Password', 'Password')
         );
         

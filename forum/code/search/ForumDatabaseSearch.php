@@ -42,7 +42,6 @@ class ForumDatabaseSearch implements ForumSearchProvider {
 				'Forum.ParentID' => $forumHolderID //posts must be from a particular forum section.
 				))
 			->filterAny(array(
-				'Author.Nickname:PartialMatch:nocase' => $query,
 				'Author.FirstName:PartialMatch:nocase' => $query,
 				'Author.Surname:PartialMatch:nocase' => $query,
 				'Content:PartialMatch:nocase' => $terms

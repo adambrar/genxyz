@@ -22,11 +22,22 @@ jQuery(function($) {'use strict';
     // Profile tab calls
     $('#profile-form-call a').click(function(e) {
         e.preventDefault();
-        $('#profile-forms-content').html('<div class="text-center"><i class="fa fa-4x fa-spinner fa-spin"></i></div>');
-        $.get('student/ajax_profile_form', {"Name": $(this).attr('data-form-name')}, function(data){$('#profile-forms-content').html(data);});
-        $(this).siblings().removeClass('active');
-        $(this).addClass('active');
+        if(!$(this).hasClass('active')) {
+            $('#profile-forms-content').html('<div class="text-center"><i class="fa fa-4x fa-spinner fa-spin"></i></div>');
+            $.get('student/ajax_profile_form', {"Name": $(this).attr('data-form-name')}, function(data){$('#profile-forms-content').html(data);setTimeout(function(){$('#profile-forms-content').find('select').chosen({disable_search_threshold:10});},750);});
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+        }
     });
+                    
+    if($('.tab-pane')[0]) {
+        $('.tab-pane.active').find('.chosen-select select').chosen();
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+            $(e.target.href.substring( e.target.href.lastIndexOf('#'), e.target.href.length )).find('select').chosen({disable_search_threshold:10});
+        });
+    } else {
+        $('chosen-select select').chosen();
+    }
 
 	// User define function
 	function Scroll() {
@@ -56,7 +67,7 @@ jQuery(function($) {'use strict';
 	});
 
 	// accordian
-	$('.toggle-btn').on('click', function(){
+	$('.toggle-btn').on('click', function() {
         $(this).siblings().each(function() {
             $(this).next('.toggle-content').slideUp('slow');
             $(this).children().first().removeClass('fa-arrow-circle-down');

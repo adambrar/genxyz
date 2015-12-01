@@ -11,24 +11,16 @@ class BlogEntryDecorator extends DataExtension {
     
     public function updateCMSFields(FieldList $fields) {
         $fields->addFieldToTab("Root.Main", DropdownField::create('CategoryID', 'Category', BlogCategory::getBlogCategories())->setEmptyString('Select a Category'));
-        $fields->addFieldToTab("Root.Main", new HtmlEditorField('Content', 'Content'));
-
     }
 
-    function authorProfileURL($authorID) {
-        $profilePage = StudentPortalPage::get()->First();
+    function Author() {
         
-        return $profilePage ? $profilePage->Link('show') . '/' . $authorID : false;
-    }
-    
-    function authorName() {
+        $member = Member::get()->byID($this->owner->BlogHolder->OwnerID);
+        
         //if admin post return false
-        if($this->owner->BlogHolder->OwnerID == 1) { return false; }
+        if(!$member) { return false; }
         
-        if($this->owner->BlogHolder->OwnerID == 0) { return "Anonymous Author"; }
-        
-        
-        return Member::get()->byId( $this->owner->BlogHolder->OwnerID ) ? Member::get()->byId( $this->owner->BlogHolder->OwnerID )->getName() : "Anonymous Author";
+        return $member;
     }
     
     function CurrentUserIsOwner() {

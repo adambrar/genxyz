@@ -297,7 +297,7 @@ class StudentPortalPage_Controller extends Page_Controller
                 'Birthday')),
             DropdownField::create('NationalityID', _t(
                 'MemberProfileForms.NATIONALITY',
-                'Nationality'), array('selected' => $member->NationalityID))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
+                'Nationality'), Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
             EmailField::create('Email', _t(
                 'MemberProfileForms.EMAIL',
                 'Email') . '<span>*</span>')
@@ -335,7 +335,7 @@ class StudentPortalPage_Controller extends Page_Controller
                 ->setAttribute('placeholder', 'Enter your current address'),
             DropdownField::create('CurrentCountryID', _t(
                 'MemberProfileForms.COUNTRY',
-                'Country') . '<span>*</span>', array('selected' => $member->CurrentCountryID))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown country-for-city-select'),
+                'Country') . '<span>*</span>', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown country-for-city-select'),
             DropdownField::create('CityID', _t(
                 'MemberProfileForms.CITY',
                 'City'))->setEmptyString('Select a Country to view Cities')->addExtraClass('city-select-dropdown')
@@ -430,7 +430,7 @@ class StudentPortalPage_Controller extends Page_Controller
                 ->setAttribute('placeholder', 'Enter your contact\'s phone number'),
             DropdownField::create('ContactCountryID', _t(
                 'MemberProfileForms.COUNTRY',
-                'Current Country'), array('selected' => $member->ContactCountryID))->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
+                'Current Country'), Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
             EmailField::create('ContactEmail', _t(
                 'MemberProfileForms.EMAIL',
                 'Email') . '<span>*</span>')

@@ -99,6 +99,20 @@ class Page_Controller extends ContentController {
         if($this->dataRecord->hasExtension('Translatable')) {
             i18n::set_locale($this->dataRecord->Locale);
         }
+        Requirements::javascript('themes/one/javascript/jquery.js');
+        Requirements::javascript('themes/one/javascript/bootstrap.min.js');
+        Requirements::javascript('themes/one/javascript/owl.carousel.min.js');
+        Requirements::javascript('themes/one/javascript/mousescroll.js');
+        Requirements::javascript('themes/one/javascript/smoothscroll.js');
+        Requirements::javascript('themes/one/javascript/jquery.prettyPhoto.js');
+        Requirements::javascript('themes/one/javascript/jquery.inview.min.js');
+        Requirements::javascript('themes/one/javascript/wow.min.js');
+        Requirements::javascript('themes/one/javascript/main.js');
+        Requirements::javascript('themes/one/javascript/selectload.js');
+        Requirements::javascript(
+            FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.jquery.js");
+        Requirements::css(
+            FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.css");
         
         Requirements::block(FRAMEWORK_DIR.
                             "/thirdparty/jquery/jquery.js");

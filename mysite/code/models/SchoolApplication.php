@@ -14,7 +14,7 @@ class SchoolApplication extends DataObject {
     );
     
     private static $has_many = array(
-        'Files' => 'File'
+        'StudentFiles' => 'File'
     );
     
     private static $searchable_fields = array(

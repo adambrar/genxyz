@@ -4,7 +4,7 @@ $(window).load(function(){
     $('.edit-service-select select').change(function() {
         $('.DescriptionField').val('LOADING...');
         $('.CostField').val('');
-        $.getJSON(location.origin + '/silver/agent/ajaxServiceRequest',
+        $.getJSON('/agent/ajaxServiceRequest',
             {'ServiceID':this.value},
             function(data) {
                 $.each(data,function(key,val) {

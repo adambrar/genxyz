@@ -1,13 +1,5 @@
 <% include Head %>
 <body id="blog" class="$ClassName" <% if $i18nScriptDirection %>dir="$i18nScriptDirection"<% end_if %>>
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
     <% include EmptyHeader %>
     <div id="content">
         <div class="container margin-bottom">
@@ -53,20 +45,12 @@
                             <header class="entry-header">
                                 <div class="entry-date">$Date.Format('d F Y')</div>
                                 <h2 class="entry-title"><a href="$Link">$Title</a></h2>
-                                <% if authorName %><span class="entry-author"><i class="fa fa-pencil"></i> <a href="{$authorProfileURL($BlogHolder.OwnerID)}" title="View authors profile">$authorName</a></span><% end_if %>
-                                <% if Topic %><span class="entry-category"><i class="fa fa-folder-o"></i> <a href="{$Topic.Link}" title="View more posts in this category">$Topic.Title</a></span><% end_if %>
-                                <span class="entry-comments"><i class="fa fa-comments-o"></i> <a class="tohash" href="$Link#PageComments_holder" title="See comments">$Comments.Count</a></span>
+                                <% if Author %><% with Author %><span class="entry-author"><i class="fa fa-pencil"></i> <a href="{$viewLink()}" title="View authors profile">$FirstName $Surname</a><% end_with %></span><% end_if %>
+                                <% if Topic %><span class="entry-category"> <i class="fa fa-folder-o"></i> <a href="{$Topic.Link}" title="View more posts in this category">$Topic.Title</a></span><% end_if %>
+                                <span class="entry-comments"> <i class="fa fa-comments-o"></i> <a class="tohash" href="$Link#PageComments_holder" title="See comments">$Comments.Count</a></span>
                             </header>
                             <div class="entry-content">
                                 <P>$Content</P>
-                            </div>
-                            <div class="">
-                                <!-- Your share button code -->
-                                <h3>Share this article</h3>
-                                <div class="fb-like pull-right" data-href={$Link} data-layout="standard" data-action="like" data-show-faces="true"></div>
-                                <div class="fb-share-button" data-href={$Link} data-layout="button_count"></div>
-                                <a href="https://twitter.com/share" class="twitter-share-button" data-dnt="true">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
                             </div>
                             <footer id="PageComments_holder" class="entry-meta col-md-8 col-md-offset-2">
                                 $PageComments

@@ -48,7 +48,7 @@
             <p>
                 Moderators: 
                 <% loop Moderators %>
-                    <a href="$getProfilePageLink($ID)">$FirstName $Surname</a>
+                    <a href="{viewLink()}">$FirstName $Surname</a>
                     <% if not Last %>, <% end_if %>
                 <% end_loop %>
             </p>

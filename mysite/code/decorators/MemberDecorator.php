@@ -4,14 +4,27 @@ class MemberDecorator extends DataExtension {
     private static $db = array(
 		'ValidationKey'   => 'Varchar(40)',
 		'NeedsValidation' => 'Boolean',
-		'NeedsApproval'   => 'Boolean'
+		'NeedsApproval'   => 'Boolean',
+        //Forum values
+        'LastViewed' => 'SS_Datetime',
+        'ForumStatus' => 'Enum("Normal, Banned, Ghost", "Normal")',
+        'SuspendedUntil' => 'Date',
+        'ForumRank' => 'Varchar'
 	);
+    
+    private static $belongs_many_many = array(
+        'ModeratedForums' => 'Forum'
+    );
     
     public function populateDefaults() {
         $this->owner->ValidationKey = sha1(mt_rand().mt_rand());
     }
     
     public function updateCMSFields(FieldList $fields) {
+        $fields->removeByName('ValidationKey');
+        $fields->removeByName('NeedsValidation');
+        $fields->removeByName('NeedsApproval');
+        
         if($this->owner->NeedsApproval) {
 			$note = 'This user has not yet been approved. They cannot log in until their account is approved.';
 

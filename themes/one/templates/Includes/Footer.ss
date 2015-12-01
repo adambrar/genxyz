@@ -47,16 +47,6 @@
             </div>
         </div>
     </footer><!--/#footer-->
-    <script src="$ThemeDir/javascript/jquery.js"></script>
-    <script src="$ThemeDir/javascript/bootstrap.min.js"></script>
-    <script src="$ThemeDir/javascript/owl.carousel.min.js"></script>
-    <script src="$ThemeDir/javascript/mousescroll.js"></script>
-    <script src="$ThemeDir/javascript/smoothscroll.js"></script>
-    <script src="$ThemeDir/javascript/jquery.prettyPhoto.js"></script>
-    <script src="$ThemeDir/javascript/jquery.inview.min.js"></script>
-    <script src="$ThemeDir/javascript/wow.min.js"></script>
-    <script src="$ThemeDir/javascript/main.js"></script>
-    <script src="$ThemeDir/javascript/selectload.js"></script>
     <!-- Piwik -->
     <script type="text/javascript">
       var _paq = _paq || [];

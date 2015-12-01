@@ -23,8 +23,7 @@ class Student extends Member {
         'ProfilePicture' => 'Image',
         'Nationality' => 'Country',
         'CurrentCountry' => 'Country',
-        'City' => 'City',
-        'BlogHolder' => 'BlogHolder'
+        'City' => 'City'
     );
     
     private static $has_many = array(
@@ -146,7 +145,7 @@ class Student extends Member {
         $blog->Author = "Admin";
         $blog->URLSegment = 'first-post';
         $blog->Tags = "created, first, welcome";
-        $blog->Content = "<p>Thank you for registering with the GenXYZ. Take a look around.</p><p>Blog Management will be restricted to student mentors as of September 14th. Email admin@genxyz.ca with some details about yourself to become a mentor.";
+        $blog->Content = "<p>Thank you for registering with GenXYZ. Take a look around.</p><p>Visit our forum if you have questions or to answer questions other students may have.</p>";
         $blog->Status = "Published";
         $blog->ParentID = $blogHolder->ID;
         $blog->write();

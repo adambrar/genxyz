@@ -35,7 +35,7 @@ class Agent extends Member {
     private static $summary_fields = array(
         'Name' => 'Name',
         'Email' => 'Email',
-        'Country' => 'Country'
+        'Country.Name' => 'Country'
     );
     
     private static $searchable_fields = array(

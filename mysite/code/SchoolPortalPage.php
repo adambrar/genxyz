@@ -72,14 +72,14 @@ class SchoolPortalPage_Controller extends Page_Controller
         
         $school = School::currentUser();
         
+        $profileContent = PartnersProfile::get()->byID($school->PartnersProfileID);
+        
         //check user has profile page and create if not
-        if(!$school->PartnersProfileID) {
-            $profilePage = new PartnersProfile();
-            $school->PartnersProfileID = $profilePage->write();
+        if(!$profileContent) {
+            $profileContent = new PartnersProfile();
+            $school->PartnersProfileID = $profileContent->write();
             $school->write();
         }
-        
-        $profileContent = PartnersProfile::get()->byID($school->PartnersProfileID);
         
         $customData = array(
             'Member' => $school,

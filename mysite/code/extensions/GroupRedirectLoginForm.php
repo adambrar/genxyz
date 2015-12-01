@@ -26,7 +26,7 @@ class GroupRedirectLoginForm extends MemberLoginForm {
              $controller->ClassName == "StudentPortalPage") {
                 $actions->push(LiteralField::create('register', '<a data-toggle="tab" class="btn btn-default" href="#register">Register</a>'));
             } else {
-                $actions->push(LiteralField::create('register', '<a class="btn btn-default" href="register">Register</a>'));
+                $actions->push(LiteralField::create('register', '<a class="btn btn-default" href="student">Register</a>'));
             }
                 $actions->push(new LiteralField('forgotPassword', '<p id="forgotPassword"><a href="Security/lostpassword">I lost my password!</a></p>'));
         }

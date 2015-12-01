@@ -74,9 +74,13 @@ class AgentPortalPage_Controller extends Page_Controller
         
         $agent = Agent::currentUser();
         
+        $profileContent = PartnersProfile::get()->byID($agent->PartnersProfileID);
+        
         //check user has profile page and create if not
-        if(!$agent->PartnersProfileID) {
-            $agent->createProfilePage();
+        if(!$profileContent) {
+            $profileContent = new PartnersProfile();
+            $agent->PartnersProfileID = $profileContent->write();
+            $agent->write();
         }
         
         $profileContent = PartnersProfile::get()->byID($agent->PartnersProfileID);
@@ -321,7 +325,7 @@ class AgentPortalPage_Controller extends Page_Controller
     
     public function AddServiceForm($member = null) {
         $agent = Agent::currentUser();
-                
+               
         $agentServices = $agent->Services();
         $FilterList = array();
         foreach($agentServices as $service)

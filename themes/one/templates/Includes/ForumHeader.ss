@@ -1,3 +1,5 @@
+<% include EmptyHeader %>
+<div class="container">
 <div class="forum-header row">
     <div class="col-md-3 wow fadeInUp">
 	<% loop ForumHolder %>

@@ -29,8 +29,6 @@ class Service extends DataObject {
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         
-        $fields->removeByName('Agent');
-        $fields->addFieldToTab('Root.Main', DropdownField::create('AgentID', 'Institution', MemberDecorator::getAgentOptions())->setEmptyString('Select Agent'));
         return $fields;
     }
     
@@ -39,7 +37,7 @@ class Service extends DataObject {
     }
     
     public static function getServiceOptions() {
-        if($service = Service::get())
+        if($service = ServiceName::get())
         {
             return $service->map('ID', 'Title', 'Please Select');
         } else {

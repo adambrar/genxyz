@@ -36,7 +36,6 @@ class GroupRedirectLoginForm extends MemberLoginForm {
     }
     
     public function dologin($data) {
-        Debug::show(Session::get("BadLoginURL"));
         if($this->performLogin($data)) {
                 if(!$this->redirectByGroup($data))
                     $this->controller->redirect(Director::baseURL());

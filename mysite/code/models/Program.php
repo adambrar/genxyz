@@ -12,7 +12,7 @@ class Program extends DataObject {
     
     private static $has_one = array(
         'ProgramName' => 'ProgramName',
-        'Institution' => 'Member'
+        'School' => 'School'
     );
     
     private static $defaults = array(
@@ -20,7 +20,7 @@ class Program extends DataObject {
     
     private static $summary_fields = array(
         'ProgramName.Name' => 'Name',
-        'Institution.BusinessName' => 'Institution'
+        'School.Name' => 'School'
     );
     
     private static $searchable_fields = array(
@@ -29,9 +29,7 @@ class Program extends DataObject {
     
     public function getCMSFields() {
         $fields = parent::getCMSFields();
-        
-        $fields->removeByName('Institution');
-        $fields->addFieldToTab('Root.Main', DropdownField::create('InstitutionID', 'Institution', MemberDecorator::getInstitutionOptions())->setEmptyString('Select Institution'));
+    
         return $fields;
     }
     
@@ -40,7 +38,7 @@ class Program extends DataObject {
     }
     
     public static function getProgramOptions() {
-        if($programs = Program::get())
+        if($programs = ProgramName::get())
         {
             return $programs->map('ID', 'Title', 'Please Select');
         } else {

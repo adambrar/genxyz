@@ -6,7 +6,7 @@
                     <p class="list-group-item-heading"><em>Create a new Message</em></p>
                 </a>
             <% end_if %>
-            <% loop Member.MessageThreads %>
+            <% loop Member.MessageThreads.Sort(Created) %>
                 <a href="#$ID" class="list-group-item <% if First %>active<% end_if %>" data-message-id="{$ID}">
                   <h4 class="list-group-item-heading">$Title - <em>$Student.Name</em></h4>
                   <p class="list-group-item-text">$Messages.Last.Content.LimitCharacters(75) - <em>$Messages.Last.Created.Format('H:i M d Y')</em></p>
@@ -19,15 +19,15 @@
             <% with Member.MessageThreads.First %>
                 <div class="panel-heading"><h3 class="text-center">$Title</h3></div>
                 <ul class="list-group">
-                    <% loop Messages %>
+                    <li class="list-group-item text-center">
+                        $Top.AddMessageForm($ID)
+                    </li>
+                    <% loop Messages.Sort(Created).Reverse %>
                         <li class="list-group-item">
                             <h4><a href="$Writer.viewLink()">$Writer.Name</a><span class="pull-right"><small>$Created.Format('H:i M d Y')</small></h4>
                             $Content
                         </li>
                     <% end_loop %>
-                        <li class="list-group-item text-center">
-                            $Top.AddMessageForm($ID)
-                        </li>
                 </ul>
             <% end_with %>
         </div>

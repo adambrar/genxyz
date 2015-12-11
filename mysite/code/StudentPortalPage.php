@@ -6,10 +6,6 @@ class StudentPortalPage extends Page
         'Message' => 'Text'
     );
     
-    private static $defaults = array(
-        'menuShown' => 'None'
-    );
-    
     public function getCMSFields() {
         $fields = parent::getCMSFields();
               
@@ -26,6 +22,7 @@ class StudentPortalPage_Controller extends Page_Controller
         'RegisterForm',
         'doRegister',
         'confirm',
+        'show',
         'edit',
         'saveProfileForm',
         'BasicProfileForm',
@@ -37,7 +34,11 @@ class StudentPortalPage_Controller extends Page_Controller
         'ajax_profile_form'
     );
     
-    function init() {        
+    private static $url_handlers = array(
+        'show/$StudentID!' => 'show'
+    );
+    
+    function init() {
         parent::init();
         
         Requirements::set_force_js_to_bottom(true);
@@ -65,14 +66,19 @@ class StudentPortalPage_Controller extends Page_Controller
         }
         
         $student = Student::currentUser();
+        $searchPage = SearchPage_Controller::create();
 
         $customData = array(
             'Member' => $student,
             'menuShown' => 'None',
             'AddMessageForm' => $student->MessageThreads()->First() ? MessagingController::create()->AddMessageForm($student->MessageThreads()->First()->ID) : false,
-            'SessionMessage' => $this->getSessionMessage()
+            'SessionMessage' => $this->getSessionMessage(),
+            'SchoolFilter' => $searchPage->SchoolFilter(),
+            'FilterAgents' => $searchPage->FilterAgents(),
+            'FilterAccomodations' => $searchPage->FilterAccomodations(),
+            'FilterMentors' => $searchPage->FilterMentors(),
         );
-
+        
         $controller = $this->customise($customData);
 		return $controller->renderWith(array(
 			'MemberProfilePage_profile', 'Page'
@@ -201,6 +207,25 @@ class StudentPortalPage_Controller extends Page_Controller
 		return $this->redirect($this->Link('edit'));
 	}
     
+    public function show() {
+        if(!Permission::check('VIEW_STUDENT')) {
+            return Security::permissionFailure();
+        }
+
+        if(!$this->getRequest()->param('StudentID') ||
+           !ctype_digit($this->getRequest()->param('StudentID')) ||
+           !$student = Student::get()->byID($this->getRequest()->param('StudentID'))) {
+            return $this->httpError(404);
+        }
+        
+        $customData = array(
+            'Member' => $student,
+            'Title' => 'Successfully registered'
+        );
+        
+        return $this->customise($customData)->renderWith(array('StudentPortalPage_show','Page'));
+    }
+    
     public function ajax_profile_form() {
         if(!Permission::check('EDIT_STUDENT')) {
             return Security::permissionFailure('You cannot edit this profile');
@@ -292,16 +317,15 @@ class StudentPortalPage_Controller extends Page_Controller
                 'MemberProfileForms.SURNAME',
                 'Surname') . '<span>*</span>')
                 ->setAttribute('placeholder', 'Enter your last name'),
-            new DateField('DateOfBirth', _t(
-                'MemberProfileForms.BIRTHDAY',
-                'Birthday')),
+            DateField::create('Birthdate', 'Birthday')
+                ->setAttribute('type', 'date')->setAttribute('value', $member->Birthdate),
             DropdownField::create('NationalityID', _t(
                 'MemberProfileForms.NATIONALITY',
                 'Nationality'), Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
             EmailField::create('Email', _t(
                 'MemberProfileForms.EMAIL',
                 'Email') . '<span>*</span>')
-                ->setAttribute('placeholder', 'Enter a valid email address')
+                ->setAttribute('placeholder', 'Enter your email address')
         );
         
         $actions = new FieldList(
@@ -329,23 +353,16 @@ class StudentPortalPage_Controller extends Page_Controller
             new LiteralField('LiteralHeader', '<h2>' . _t(
                 'MemberProfileForms.CURRENTADDRESS',
                 'Current Address') . '</h2>'),
-            TextField::create('StreetAddress', _t(
-                'MemberProfileForms.STREETADDRESS',
-                'Street Address') . '<span>*</span>')
-                ->setAttribute('placeholder', 'Enter your current address'),
-            DropdownField::create('CurrentCountryID', _t(
-                'MemberProfileForms.COUNTRY',
-                'Country') . '<span>*</span>', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown country-for-city-select'),
-            DropdownField::create('CityID', _t(
-                'MemberProfileForms.CITY',
-                'City'))->setEmptyString('Select a Country to view Cities')->addExtraClass('city-select-dropdown')
-                ->setAttribute('data-selected-city', $member->CityID),
-            TextField::create('PostalCode', _t(
-                'MemberProfileForms.POSTALCODE',
-                'Postal Code'))
+            TextField::create('AddressLineOne', 'Address Line One')
+                ->setAttribute('placeholder', 'Your street name and number'),
+            TextField::create('AddressLineTwo', 'Address Line One')
+                ->setAttribute('placeholder', 'Your apartment number, PO Box, etc.'),
+            TextField::create('City', 'City')->setAttribute('placeholder', 'Enter your current city'),
+            DropdownField::create('CurrentCountryID', 'Country<span>*</span>', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('chosen-select'),
+            TextField::create('PostalCode', 'Postal Code')
                 ->setAttribute('placeholder', 'Enter your current postal code'),
-            
-            new HiddenField('Username', 'Username'),
+            PhoneNumberField::create('Telephone', 'Phone Number')
+                ->setAttribute('placeholder', 'Enter the best number to contact you'),
             new HiddenField('Email', 'Email')
         );
         
@@ -356,8 +373,10 @@ class StudentPortalPage_Controller extends Page_Controller
         );
         
         $required = new RequiredFields(array(
-            'StreetAddress',
-            'Country'
+            'FirstName',
+            'Surname',
+            'CurrentCountryID',
+            'Email'
         ));
         
         return new Form($this->owner, 'AddressProfileForm', $fields, $actions, $required);
@@ -377,20 +396,12 @@ class StudentPortalPage_Controller extends Page_Controller
                 'MemberProfileForms.AGENCY',
                 'Agency'))
                 ->setAttribute('placeholder', 'Enter any academic agencies you\'re working with'),
-            new DropdownField('HighSchoolID', _t(
-                'MemberProfileForms.HIGHSCHOOL',
-                'High School') . '<span>*</span>', HighSchool::getHighSchoolOptions()),
-            new DateField('HSGraduation', _t(
-                'MemberProfileForms.HIGHSCHOOLGRAD',
-                'High School Graduation Date')),
-            new DropdownField('UniversityID', _t(
-                'MemberProfileForms.UNIVERSITY',
-                'University') . '<span>*</span>', University::getUniversityOptions()),
-            new DateField('UniversityGraduation', _t(
-                'MemberProfileForms.UNIVERSITYGRAD',
-                'University Graduation Date')),
-            
-            new HiddenField('Username', 'Username'),
+            TextField::create('HighSchool', 'High School')
+                ->setAttribute('placeholder', 'Your current or past high school'),
+            new DateField('HighSchoolGraduation', 'High School Graduation Date'),
+            TextField::create('University', 'University')
+                ->setAttribute('placeholder', 'Your post secondary education'),
+            new DateField('UniversityGraduation', 'University Graduation Date'),
             new HiddenField('Email', 'Email')
         );
         
@@ -416,27 +427,18 @@ class StudentPortalPage_Controller extends Page_Controller
             new LiteralField('LiteralHeader', '<h2>' . _t(
                 'MemberProfileForms.EMERGENCYCONTACTLABEL',
                 'Emergency Contact Details') . '</h2>'),
-            TextField::create('ContactFirstName', _t(
-                'MemberProfileForms.FIRSTNAME',
-                'First Name') . '<span>*</span>')
+            TextField::create('ContactName', 'Name of Contact')
                 ->setAttribute('placeholder', 'Enter your contact\'s first name'),
-            TextField::create('ContactSurname', _t(
-                'MemberProfileForms.SURNAME',
-                'Family Name') . '<span>*</span>')
-                ->setAttribute('placeholder', 'Enter your contact\'s last name'),
             PhoneNumberField::create('ContactTelephone', _t(
                 'MemberProfileForms.CONTACTTELEPHONE',
                 'Telephone'))
                 ->setAttribute('placeholder', 'Enter your contact\'s phone number'),
             DropdownField::create('ContactCountryID', _t(
                 'MemberProfileForms.COUNTRY',
-                'Current Country'), Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
-            EmailField::create('ContactEmail', _t(
-                'MemberProfileForms.EMAIL',
-                'Email') . '<span>*</span>')
+                'Current Country of Contact'), Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('chosen-select'),
+            EmailField::create('ContactEmail', 'Contact Email')
                 ->setAttribute('placeholder', 'Enter your contact\'s primary email'),
 
-            new HiddenField('Username', 'Username'),
             new HiddenField('Email', 'Email')
         );
         
@@ -447,8 +449,8 @@ class StudentPortalPage_Controller extends Page_Controller
         );
         
         $required = new RequiredFields(array(
-            'ContactFirstName',
-            'ContactSurname',
+            'ContactName',
+            'ContactCountryID',
             'ContactEmail'
         ));
 

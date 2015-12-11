@@ -7,34 +7,21 @@
                 <h2 class="text-center wow fadeInLeft"><a>$Member.FirstName $Member.Surname</a></h2>
                 <h5 class="text-center wow fadeInLeft" data-wow-delay="200ms">$Member.CurrentCountry.Name</h5>
                 <h5 class="text-center wow fadeInLeft" data-wow-delay="400ms">Joined <span class="text-primary">$Member.Created.Ago</span></h5>
+                <ul class="list-group">
+                    <li class="list-group-item"><i class="fa fa-file-text-o"></i> Number of Blog Posts <span class="pull-right">$Member.getBlogHolder().HolderEntries.Count()</span></li>
+                    <li class="list-group-item"><i class="fa fa-folder-open-o"></i> Number of Forum Posts <span class="pull-right">$Member.getLatestForumPosts().Count()</span></li>
+                    <li class="list-group-item list-group-item-success"><i class="fa fa-star"></i> Member Rank <span class="pull-right">Student</span></li>
+                </ul>
             </div>
             <div class="col-md-9 wow fadeInRight">
-                <div class="row">
-                    <div class="col-md-6 wow fadeInUp">
-                        <ul class="list-group">
-                            <li class="list-group-item"><i class="fa fa-graduation-cap"></i> High School <span class="pull-right">$Member.HighSchool.Title</span></li>
-                            <li class="list-group-item"><i class="fa fa-institution"></i> University <span class="pull-right">$Member.University.Title</span></li>
-                            <li class="list-group-item"><i class="fa fa-gift"></i> Birthday <span class="pull-right">$Member.DateOfBirth.Long</span></li>
-                            <li class="list-group-item"><i class="fa fa-map-marker"></i> City <span class="pull-right">$Member.City.Name</span></li>
-                        </ul>  
-                    </div>
-                    <div class="col-md-6 wow fadeInUp" data-wow-delay="300ms">
-                        <ul class="list-group">
-                            <li class="list-group-item"><i class="fa fa-file-text-o"></i> Number of Blog Posts <span class="pull-right">$Member.getBlogHolder().HolderEntries.Count()</span></li>
-                            <li class="list-group-item"><i class="fa fa-folder-open-o"></i> Number of Forum Posts <span class="pull-right">$Member.NumPosts</span></li>
-                            <li class="list-group-item list-group-item-success"><i class="fa fa-star"></i> Member Rank <span class="pull-right">Student</span></li>
-                        </ul>  
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="wow fadeInRight">
-            <% include SessionMessage %>
+                <% include SessionMessage %>
             <ul class="nav nav-pills">
-                <li class="active"><a data-toggle="pill" href="#messages">Messages</a></li>
-                <li class=""><a data-toggle="pill" href="#applications">Applications</a></li>
-                <% if Member.getBlogHolder() %><li class=""><a data-toggle="pill" href="#blogposts">Blog</a></li><% end_if %>
+                <li class="active"><a data-toggle="pill" href="#profile-forms">Edit Profile</a></li>
+                <li class=""><a data-toggle="pill" href="#student-services">Services</a></li>
+                <li class=""><a data-toggle="pill" href="#orders">Orders</a></li>
+                <li><a data-toggle="pill" href="#messages">Messages</a></li>
                 <li class=""><a data-toggle="pill" href="#forumposts">Forum Posts</a></li>
+                <% if Member.getBlogHolder() %><li class=""><a data-toggle="pill" href="#blogposts">Blog</a></li><% end_if %>
                 <% loop Menu(1).Filter('menuStudentSidebar', 1) %>
                     <% if $Children %>
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">$MenuTitle.XML</a>
@@ -48,18 +35,16 @@
                         <li><a data-toggle="pill" href="#{$URLSafeTitle()}-content">$MenuTitle.XML</a></li>
                     <% end_if %>
                 <% end_loop %>
-                <li><a data-toggle="pill" href="#profile-forms">Edit Your Profile</a>
-                </li>
             </ul>
             <div id="myprofile-tab-content" class="tab-content">
-                <div id="messages" class="tab-pane fade in active">
+                <div id="messages" class="tab-pane fade">
                     <% if AddMessageForm %>
                         <% include MessageBox %>
                     <% else %>
                         <h3 class="text-center">You currently have no messages to view.</h3>
                     <% end_if %>
                 </div>
-                <div id="applications" class="tab-pane fade">
+                <div id="orders" class="tab-pane fade">
                     <div class="row">
                         <ul class="list-group col-sm-6">
                         <li class="list-group-item list-group-item-default"><h2>Active Applications</h2></li>
@@ -120,7 +105,10 @@
                         <% end_loop %>
                     </div>
                 </div>
-                <div id="profile-forms" class="tab-pane fade">
+                <div id="student-services" class="tab-pane fade">
+                        <% include SearchMembers %>
+                </div>
+                <div id="profile-forms" class="tab-pane fade in active">
                     <div class="row">
                         <div class="col-xs-4">
                             <div id="profile-form-call" class="list-group">
@@ -166,6 +154,10 @@
                     <% end_if %>
                 <% end_loop %>                        
             </div>
+            </div>
+        </div>
+        <div class="wow fadeInRight">
+            
         </div>
     </div>
 </div>

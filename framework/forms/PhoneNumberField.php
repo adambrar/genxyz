@@ -142,6 +142,8 @@ class PhoneNumberField extends FormField {
 				"validation", 
 				false
 			);
+            Session::set('SessionMessage', 'Please enter a valid phone number');
+            Session::set('SessionMessageContext', 'danger');
 			return false;
 		}
 		

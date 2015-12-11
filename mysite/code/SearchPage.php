@@ -5,12 +5,6 @@ class SearchPage extends Page
     private static $db = array(
          'Updates' => 'HTMLText',
          'RecentlyAdded' => 'HTMLText',
-     );
-    
-    private static $defaults = array(
-        'menuShown' => 'Student',
-        'menuWelcome' => false,
-        'menuStudent' => true
     );
     
     public function getCMSFields() {
@@ -19,7 +13,7 @@ class SearchPage extends Page
         $fields->addFieldToTab("Root.Main", new HTMLEditorField('Updates', 'Updates'));      
         $fields->addFieldToTab("Root.Main", new HTMLEditorField('RecentlyAdded', 'Recently Added'));
         
-        $fields->removeByName("Content");
+        //$fields->removeByName("Content");
 
         return $fields;
     }
@@ -30,72 +24,57 @@ class SearchPage extends Page
 class SearchPage_Controller extends Page_Controller 
 {
     private static $allowed_actions = array(
-        'FilterAcademics',
+        'SchoolFilter',
         'FilterAccomodations',
         'FilterAgents',
         'FilterMentors',
-        'search',
+        'get',
         'show',
         'searchprogramsasjson',
         'searchcountriesasjson',
-        'doAcademicsSearch',
+        'doSchoolFilter',
         'doAccomodationsSearch',
         'doAgentsSearch',
         'doMentorsSearch',
         'getResults',
     );
     
+    private static $url_handlers = array(
+        'get/$SearchType!' => 'get'
+    );
+    
+    private $coutryOptions;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->countryOptions = Country::getCountryOptions();
+    }
+    
     function init() {
-        Requirements::set_force_js_to_bottom(true);
-        Requirements::javascript('themes/one/javascript/searchpage.js');
-        Requirements::javascript('themes/one/javascript/jquery.bootpag.min.js');
+        parent::init();
         Requirements::javascript(
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.jquery.js");
         Requirements::css(
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.css");
-        $search = new SearchPageResults($this, 'get');
         
-        parent::init();
     }
     
     public function show() {
         return new PartnersProfileViewer($this);
     }
     
-    public function getResults($request) {
-        $search = new SearchPageResults($this, 'get');
-        $customData = $search->handleSearch($request);
-        $controller = $this->customise($customData);
-        
-        if(Director::is_ajax()) {
-            return $controller->renderWith('SearchPageResults', 'Page');
-        }
-        
-        return $controller->renderWith(array('SearchPage', 'Page'));
-    }
-    
-    public function FilterAcademics() {
+    public function SchoolFilter() {
         $fields = new FieldList(
-            DropdownField::create('Country', _t(
-                'AcademicsSearchForm.COUNTRY',
-                'Country'))->setEmptyString('Select a country')->addExtraClass('filter-by-country chosen'),
-            DropdownField::create('City', _t(
-                'AcademicsSearchForm.COUNTRY',
-                'City'))->setEmptyString('Select a city')->addExtraClass('filter-by-city chosen'),
-            DropdownField::create('Program', _t(
-                'AcademicsSearchForm.DEFAULT',
-                'Program'), Program::getProgramOptions())->setEmptyString('Select Program')->addExtraClass('filter-by-program chosen'),
-            DropdownField::create('StartDate', _t(
-                'AcademicsSearchForm.COUNTRY',
-                'Start Date'), array('May', 'September', 'January'))->setEmptyString('Select a starting month')->addExtraClass('chosen'),
-            TextField::create('SchoolName', 'Name of Institution'),
-            DropdownField::create('Level', 'Level of Study', array('Certificate','Diploma','Associate Degree', 'Degree', 'Post-Degree Certificate', 'Post-Degree Diploma', 'Masters', 'Doctorate'))->addExtraClass('chosen')
+            DropdownField::create('Country', 'Country', $this->countryOptions)->setEmptyString('Select a country')->addExtraClass('filter-by-country chosen-select'),
+            DropdownField::create('Program', 'Program', Program::getProgramOptions())->setEmptyString('Select Program')->addExtraClass('filter-by-program chosen-select'),
+            TextField::create('SchoolName', 'Name of School'),
+            DropdownField::create('Level', 'Level of Study', singleton('School')->dbObject('Type')->enumValues())->setEmptyString('Type of School')->addExtraClass('chosen-select')
         );
         
         $actions = FieldList::create(
-            FormAction::create('doAcademicsSearch', _t(
+            FormAction::create('doSchoolFilter', _t(
                 'MemberProfileForms.DEFAULT',
-                'Filter'))->addExtraClass('btn btn-primary')
+                'Search'))->addExtraClass('btn btn-primary')
         );
         
         $required = new RequiredFields(array(
@@ -104,39 +83,38 @@ class SearchPage_Controller extends Page_Controller
             'Email'
         ));
         
-        return new Form($this->owner, 'FilterAcademics', $fields, $actions, $required);
+        return new Form($this->owner, 'SchoolFilter', $fields, $actions, $required);
     }
     
-    public function doAcademicsSearch(array $data, Form $form) {
-        if($data['Country'] == '' && $data['Program'] == '' && $data['StartDate'] == '' && $data['SchoolName'] == '') {
-            $form->addErrorMessage('Blurb', 'Select filters to search!', 'bad');
-            return $this->owner->redirect($this->Link( 'get/schools' ));
-        }
+    public function doSchoolFilter(array $data, Form $form) {
+        $URL = 'search/';
         
-        return $this->owner->redirect(
-            $this->Link( 'get/school?Country=' . base64_encode( Convert::raw2sql($data['Country']) )
-                            .'&Program=' . base64_encode( Convert::raw2sql($data['Program'])) )
-                            .'&SchoolName=' . base64_encode( Convert::raw2sql($data['SchoolName']) )
-                            .'&Level=' . base64_encode( Convert::raw2sql($data['Level']) ) );
+        $URL .= $data['Country'] == '' ? '0/' : $data['Country'].'/'; 
+        $URL .= $data['Program'] == '' ? '0/' : $data['Program'].'/'; 
+        $URL .= $data['SchoolName'] == '' ? '0/' : $data['SchoolName'].'/'; 
+        $URL .= $data['Level'] == '' ? '0/' : $data['Level'].'/'; 
+        
+        
+        return $this->owner->redirect( SchoolPortalPage::get()->First()->Link($URL) );
     }
     
     public function FilterAccomodations() {
         $fields = new FieldList(
             DropdownField::create('Country', _t(
                 'AcademicsSearchForm.COUNTRY',
-                'Country'))->setEmptyString('Select a country')->addExtraClass('filter-by-country chosen'),
+                'Country'), $this->countryOptions)->setEmptyString('Select a country')->addExtraClass('filter-by-country chosen-select'),
             DropdownField::create('City', _t(
                 'AcademicsSearchForm.COUNTRY',
-                'City'))->setEmptyString('Select a city')->addExtraClass('filter-by-city chosen'),
+                'City'))->setEmptyString('Select a city')->addExtraClass('filter-by-city chosen-select'),
             DropdownField::create('Type', _t(
                 'AcademicsSearchForm.DEFAULT',
-                'Type'), array('Homestay', 'Hotel', 'Apartment', 'Room Share', 'Roommate', 'Sublet'))->setEmptyString('Select Accomodation Type')->addExtraClass('chosen')
+                'Type'), array('Homestay', 'Hotel', 'Apartment', 'Room Share', 'Roommate', 'Sublet'))->setEmptyString('Select Accomodation Type')->addExtraClass('chosen-select')
         );
         
         $actions = FieldList::create(
             FormAction::create('doAccomodationsSearch', _t(
                 'MemberProfileForms.DEFAULT',
-                'Filter'))->addExtraClass('btn btn-primary')
+                'Search'))->addExtraClass('btn btn-primary')
         );
         
         $required = new RequiredFields(array(
@@ -163,59 +141,49 @@ class SearchPage_Controller extends Page_Controller
     
     public function FilterAgents() {
         $fields = new FieldList(
-            DropdownField::create('Country', _t(
-                'AcademicsSearchForm.COUNTRY',
-                'Country'))->setEmptyString('Select a country')->addExtraClass('filter-by-country chosen'),
-            DropdownField::create('City', _t(
-                'AcademicsSearchForm.COUNTRY',
-                'City'))->setEmptyString('Select a city')->addExtraClass('filter-by-city chosen'),
-            DropdownField::create('Service', 'Service Requested', Service::getServiceOptions())->addExtraClass('chosen')
+            DropdownField::create('Country', 'Country', $this->countryOptions)->setEmptyString('Select a country')->addExtraClass('chosen-select'),
+            DropdownField::create('Service', 'Service Requested', Service::getServiceOptions())->setEmptyString('Name of Service')->addExtraClass('chosen-select')
         );
         
         $actions = FieldList::create(
             FormAction::create('doAgentsSearch', _t(
                 'MemberProfileForms.DEFAULT',
-                'Filter'))->addExtraClass('btn btn-primary')
+                'Search'))->addExtraClass('btn btn-primary'),
+            new LiteralField('ClearFields', '<a href="'.AgentPortalPage::get()->First()->Link('search').'" class="btn btn-default">Clear Fields</a>')
         );
         
         $required = new RequiredFields(array(
-            'FirstName',
-            'Surname',
-            'Email'
         ));
         
         return new Form($this->owner, 'FilterAgents', $fields, $actions, $required);
     }
     
     public function doAgentsSearch(array $data, Form $form) {
-        if($data['Country'] == '' && $data['City'] == '' && $data['Service'] == '') {
-            $form->addErrorMessage('Blurb', 'Select filters to search!', 'bad');
-            return $this->owner->redirect($this->Link( 'get/agents' ));
-        }
+        $URL = 'search/';
         
-        return $this->owner->redirect(
-            $this->Link( 'get/agents?Country=' . base64_encode( Convert::raw2sql($data['Country']) )
-                            .'&City=' . base64_encode( Convert::raw2sql($data['City'])) )
-                            .'&Service=' . base64_encode( Convert::raw2sql($data['Type']) ) );
+        $URL .= $data['Country'] == '' ? '0/' : $data['Country'].'/'; 
+        $URL .= $data['Service'] == '' ? '0/' : $data['Service'].'/'; 
+                
+        return $this->owner->redirect(AgentPortalPage::get()->First()->Link($URL));
     }
     
     public function FilterMentors() {
         $fields = new FieldList(
             DropdownField::create('Country', _t(
                 'AcademicsSearchForm.COUNTRY',
-                'Country'))->setEmptyString('Select a country')->addExtraClass('filter-by-country chosen'),
+                'Country'), $this->countryOptions)->setEmptyString('Select a country')->addExtraClass('filter-by-country chosen-select'),
             DropdownField::create('City', _t(
                 'AcademicsSearchForm.COUNTRY',
-                'City'))->setEmptyString('Select a city')->addExtraClass('filter-by-city chosen'),
+                'City'))->setEmptyString('Select a city')->addExtraClass('filter-by-city chosen-select'),
             DropdownField::create('Request', _t(
                 'AcademicsSearchForm.COUNTRY',
-                'Request Type'), array('City Orientation', 'Academic Orientation', 'Events', 'Workshops', 'Tutoring'))->setEmptyString('What do you need?')->addExtraClass('chosen')
+                'Request Type'), array('City Orientation', 'Academic Orientation', 'Events', 'Workshops', 'Tutoring'))->setEmptyString('What do you need?')->addExtraClass('chosen-select')
         );
         
         $actions = FieldList::create(
             FormAction::create('doMentorsSearch', _t(
                 'MemberProfileForms.DEFAULT',
-                'Filter'))->addExtraClass('btn btn-primary')
+                'Search'))->addExtraClass('btn btn-primary')
         );
         
         $required = new RequiredFields(array(

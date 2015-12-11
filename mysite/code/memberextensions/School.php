@@ -63,7 +63,7 @@ class School extends Member {
         $fields->removeByName('PostalCode');
     }
     
-    public function ViewProfileLink() {
+    public function ViewLink() {
         $link = SearchPage::get()->First()->Link();
         return $link . 'show/school/' . $this->ID;
     }

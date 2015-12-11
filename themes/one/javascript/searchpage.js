@@ -1,32 +1,13 @@
 $(window).load(function(){
-    $.getJSON('/silver/search/searchcountriesasjson', 
-            function(data) {
-                $.each(data, function(key, val) {
-                    $("<option>").attr("value", val.value).text(val.title).appendTo($(".filter-by-country").not(".field"))
-                });
-                $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){var target = $(e.target.href.substring( e.target.href.lastIndexOf('#'), e.target.href.length )).find('.chosen').not('.field');target.chosen({
-                    disable_search_threshold: 10
-                });});
-    });
-    
-    setTimeout(function() {
-        $('.tab-pane.active').find('.chosen').not('.field').chosen({
-            disable_search_threshold: 10
-        });
-        $("#academics-search-content").css("min-height", function(){
-            return $(this).height();
-        });
-    }, 1500);
-    
     if($('.pagination-wrapper')[0]) {
         wrapper = $('.pagination-wrapper');
         totalPages = wrapper.attr('data-pagination-pages');
-        searchType = wrapper.attr('data-search-type');
+        pageLength = wrapper.attr('data-page-length');
         wrapper.bootpag({
             total: totalPages,
             page: 1,
-            maxVisible: 10,
-            leaps: false,
+            maxVisible: 6,
+            leaps: true,
             firstLastUse: true,
             first: '←',
             last: '→',
@@ -37,8 +18,9 @@ $(window).load(function(){
             prevClass: 'prev',
             lastClass: 'last',
             firstClass: 'first'
-        }).on("page", function(event, /* page number here */ num){
-             getResults(num,searchType); // some ajax content loading...
+        }).on("page", function(event, num){
+            $('html, body').animate({scrollTop: $('#results-section').offset().top - 125}, 750);
+            getResults(num,pageLength);
         });
         $("#results-section").css("min-height", function(){
             return $(this).height();
@@ -46,18 +28,19 @@ $(window).load(function(){
     }
 });
 
-function getResults(pageNum,type) {
+function getResults(pageNum, pageLength) {
     $("#results-section").html('<div class="text-center"><i class="fa fa-4x fa-spinner fa-spin"></i></div>');
-    startNum = (parseInt(pageNum) - 1) * 3;
-    $.get("search/get/"+type, {'start': startNum}, function(data) {
+    startNum = (parseInt(pageNum) - 1) * pageLength;
+    $.get(location.pathname, {'start': startNum}, function(data) {
         $("#results-section").html(data);
         wrapper = $('.pagination-wrapper');
         totalPages = wrapper.attr('data-pagination-pages');
+        pageLength = wrapper.attr('data-page-length');
         $('.pagination-wrapper').bootpag({
             total: totalPages,
             page: pageNum,
-            maxVisible: 10,
-            leaps: false,
+            maxVisible: 6,
+            leaps: true,
             firstLastUse: true,
             first: '←',
             last: '→',
@@ -69,8 +52,8 @@ function getResults(pageNum,type) {
             lastClass: 'last',
             firstClass: 'first'
         }).on("page", function(event, /* page number here */ num){
-             getResults(num,type);
-             $('html, body').animate({scrollTop: $('#results-section').offset().top - 125}, 750);
+            $('html, body').animate({scrollTop: $('#results-section').offset().top - 125}, 750);
+            getResults(num,pageLength);
         });                                                               
     });
 }

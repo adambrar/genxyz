@@ -178,6 +178,8 @@ class TimeField extends TextField {
 				"validation", 
 				false
 			);
+            Session::set('SessionMessage', 'The time you entered was incorrect!');
+            Session::set('SessionMessageContext', 'danger');
 			return false;
 		}
 		return true;

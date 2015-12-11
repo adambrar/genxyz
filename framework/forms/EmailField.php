@@ -45,6 +45,8 @@ class EmailField extends TextField {
 				_t('EmailField.VALIDATION', "Please enter an email address"),
 				"validation"
 			);
+            Session::set('SessionMessage', 'Please enter a valid email address.');
+            Session::set('SessionMessageContext', 'danger');
 			return false;
 		} else{
 			return true;

@@ -28,7 +28,7 @@ class University extends DataObject {
         if(!$id || !cytpe_digit($id))
             return false;
         
-        $name = Member::get()->ByID($id)->BusinessName;
+        $name = Member::get()->ByID($id)->Name;
         if($name) {
             return $name;
         } else {

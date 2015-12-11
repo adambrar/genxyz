@@ -1040,6 +1040,8 @@ class UploadField extends FileField {
 				),
 				"validation"
 			);
+            Session::set('SessionMessage', 'You uploaded too many files!');
+            Session::set('SessionMessageContext', 'danger');
 			return false;
 		}
 		
@@ -1062,6 +1064,8 @@ class UploadField extends FileField {
 			foreach($errors as $error) {
 				$validator->validationError($name, $error, "validation");
 			}
+            Session::set('SessionMessage', 'Your files were not uploaded! There was an error.');
+            Session::set('SessionMessageContext', 'danger');
 			return false;
 		}
 		

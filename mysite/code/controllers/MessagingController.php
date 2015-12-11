@@ -53,6 +53,8 @@ class MessagingController extends Controller {
         
         //TODO: better error handling
         if(!$messageThread || ($messageThread->AgentID != Agent::currentUserID() && $messageThread->StudentID != Student::currentUserID())) {
+            Session::set('SessionMessage', 'You cannot send that message.');
+            Session::set('SessionMessageContext', 'danger');
             return false;
         }
         
@@ -61,6 +63,9 @@ class MessagingController extends Controller {
         $form->saveInto($message);
         $message->Author = Member::currentUser()->ClassName;
         $message->write();
+        
+        Session::set('SessionMessage', 'Your has been sent.');
+        Session::set('SessionMessageContext', 'success');
         $this->redirectBack();
     }
     

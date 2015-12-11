@@ -358,6 +358,8 @@ class DateField extends TextField {
 				"validation", 
 				false
 			);
+            Session::set('SessionMessage', 'Please enter a valid date format!');
+            Session::set('SessionMessageContext', 'danger');
 			return false;
 		}
 		

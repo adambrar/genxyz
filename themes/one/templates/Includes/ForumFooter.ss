@@ -10,3 +10,4 @@
 		</p>
 	</div><!-- forum-footer. -->
 <% end_with %>
+</div>

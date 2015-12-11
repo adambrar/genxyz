@@ -8,7 +8,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href=""><h2 style="font-family:'Lucida Console', Monaco, monospace;color:white;">GenXYZ</h2></a>
+                <div class="navbar-brand media" style="margin:0px;">
+                    <div class="media-left media-middle"><a href="/"><img class="media-object" src="{$ThemeDir}/images/GenXYZ_dc.jpg" style="height:3.4em;border-radius:3px;"/></a></div>
+                    <div class="media-body"><h2 id="header-title" style="font-family:'Lucida Console', Monaco, monospace;color:white;">GenXYZ</h2></div>
+                </div>
             </div>
 
             <div class="collapse navbar-collapse navbar-right">

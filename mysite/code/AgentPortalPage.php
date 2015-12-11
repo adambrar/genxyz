@@ -26,11 +26,10 @@ class AgentPortalPage_Controller extends Page_Controller
         'RegisterForm',
         'doRegister',
         'edit',
+        'search',
         'BasicInfoForm',
-        'ProfileLinksForm',
         'SchoolPartnersForm',
         'saveSchoolPartners',
-        'saveProfilePage',
         'AddServiceForm',
         'EditServiceForm',
         'addService',
@@ -42,6 +41,10 @@ class AgentPortalPage_Controller extends Page_Controller
         'ajaxServiceRequest'
     );
     
+    private static $url_handlers = array(
+        'search/$Country/$Service' => 'search'
+    );
+    
     function init() {        
         parent::init();
         
@@ -49,7 +52,6 @@ class AgentPortalPage_Controller extends Page_Controller
         Requirements::javascript("themes/one/javascript/agentedit.js");
         Requirements::javascript(
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.jquery.js");
-        Requirements::javascript("themes/one/javascript/selectload.js");
         Requirements::css(
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.css");
     }
@@ -61,10 +63,57 @@ class AgentPortalPage_Controller extends Page_Controller
         
         $customData = array(
             'RegisterForm' => $this->RegisterForm(),
-            'Title' => 'Agents'
+            'Title' => 'Agents',
+            'BrowseLink' => $this->Link('search')
         );
         
         return $this->customise($customData)->renderWith(array('PortalPage','Page'));
+    }
+    
+    public function search() {
+        $filter = array();
+        $ids = array();
+        if( ($this->getRequest()->param('Country') != '0') &&
+           ctype_digit($this->getRequest()->param('Country')) ) {
+            $filter['CountryID'] = $this->getRequest()->param('Country');
+        }
+        if( ($this->getRequest()->param('Service') != '0') &&
+           ctype_digit($this->getRequest()->param('Service')) ) {
+            $ids = Service::get()->filter(array(
+                'ServiceName.ID' => $this->getRequest()->param('Service')
+            ))->column('AgentID');
+            
+            if($ids) {
+                $filter['ID'] = $ids;
+            }
+        }
+        
+        if($ids || $this->getRequest()->param('Service') == null ||
+            $this->getRequest()->param('Service') == '0') {
+            $agents = Agent::get()->filter($filter);
+            $paginated = PaginatedList::create($agents, $this->getRequest())->setPageLength(12);
+        } else {
+            $paginated = false;
+        }
+
+        if(Director::is_ajax()) {
+            return $this->renderWith('AgentResults', ['PaginatedResults' => $paginated]);
+        }
+        
+        Requirements::javascript("themes/one/javascript/jquery.bootpag.min.js");
+        Requirements::javascript("themes/one/javascript/searchpage.js");
+        
+        $customData = array(
+            'PaginatedResults' => $paginated,
+            'Title' => 'Agent search results',
+            'Content' => 'Browse our agents.',
+            'SearchPageLink' => SearchPage::get()->First()->Link(),
+            'AgentFilter' => SearchPage_Controller::create()->FilterAgents()
+        );
+        
+        return $this->customise($customData)->renderWith(array(
+            'AgentPortalPage_search','Page'
+        ));
     }
     
     public function edit() {
@@ -74,22 +123,10 @@ class AgentPortalPage_Controller extends Page_Controller
         
         $agent = Agent::currentUser();
         
-        $profileContent = PartnersProfile::get()->byID($agent->PartnersProfileID);
-        
-        //check user has profile page and create if not
-        if(!$profileContent) {
-            $profileContent = new PartnersProfile();
-            $agent->PartnersProfileID = $profileContent->write();
-            $agent->write();
-        }
-        
-        $profileContent = PartnersProfile::get()->byID($agent->PartnersProfileID);
-        
         $customData = array(
             'Member' => $agent,
             'menuShown' => 'None',
             'BasicInfo' => $this->BasicInfoForm()->loadDataFrom($agent),
-            'ProfileContent' => $this->ProfileLinksForm()->loadDataFrom($profileContent),
             'AddServices' => $this->AddServiceForm(),
             'EditServices' => $this->EditServiceForm(),
             'SchoolPartnersForm' => $this->SchoolPartnersForm(),
@@ -101,10 +138,10 @@ class AgentPortalPage_Controller extends Page_Controller
 			_t('MemberProfiles.MEMBERPROFILETITLE', "%s's Information"),
 			$agent->Name
 		);
-        
+
         $controller = $this->customise($customData);
 		return $controller->renderWith(array(
-			'AgentProfile_edit', 'Page'
+			'AgentPortalPage_edit', 'Page'
 		));
     }
     
@@ -113,17 +150,12 @@ class AgentPortalPage_Controller extends Page_Controller
             new LiteralField('ContactInfo', '<h3>' . _t(
                 'AcademicsRegisterForm.CONTACT',
                 'Contact Info') . '</h3>'),
-            new TextField('Name', 'Name<span>*</span>'),
-            new TextField('Website', 'Website<span>*</span>'),
+            new TextField('FirstName', 'First Name<span>*</span>'),
+            new TextField('Surname', 'Last Name<span>*</span>'),
             new EmailField('Email', 'Contact Email<span>*</span>'),
-            new TextField('ContactTelephone', 'Phone Number<span>*</span>'),
-            new LiteralField('LiteralHeader', '<h3>' . _t(
-                'AcademicsRegisterForm.DEFAULT',
-                'Registration Info') . '</h3>'),
             DropdownField::create('CountryID', _t(
             'MemberRegForm.COUNTRY',
             'Country of Registration'),Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown chosen-select'),
-            new TextField('RegistrationNumber', 'Registration Number'),
             ConfirmedPasswordField::create('Password', 'Password')
         );
         
@@ -135,11 +167,9 @@ class AgentPortalPage_Controller extends Page_Controller
         );
         
         $required = new RequiredFields(array(
-            'Name',
+            'FirstName',
+            'Surname',
             'Email',
-            'ContactName',
-            'ContactTelephone',
-            'RegistrationNumber'
         ));
         
         return new Form($this->owner, 'RegisterForm', $fields, $actions, $required);
@@ -179,7 +209,7 @@ class AgentPortalPage_Controller extends Page_Controller
         $email = new Email();
         $email
             ->setFrom('noreply@genxyz.ca')
-            ->setTo('admin@GenXYZ')
+            ->setTo('admin@genxyz.ca')
             ->setSubject('New Agent Registration')
             ->setTemplate('NewAgent')
             ->populateTemplate(new ArrayData(array(
@@ -209,22 +239,22 @@ class AgentPortalPage_Controller extends Page_Controller
         $UploadField->setFolderName('agents/'.$agent->ID.'/Logos');
         
         $fields = new FieldList(
-            new TextField('Name', 'Business Name<span>*</span>'),
+            new TextField('FirstName', 'First Name<span>*</span>'),
+            new TextField('Surname', ' Last Name<span>*</span>'),
             new TextField('Website', 'Website<span>*</span>'),
+            new TextAreaField('AboutMe', 'Write a little bit about yourself. (Max 200 characters!)'),
             $UploadField,
+            DropdownField::create('NationalityID', 'Nationality', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown chosen-select'),
             new LiteralField('ContactInfo', '<h2>' . _t(
                 'AcademicsRegisterForm.CONTACT',
                 'Contact Info') . '</h2>'),
-            new TextField('ContactName', 'Contact Name<span>*</span>'),
             new EmailField('Email', 'Contact Email<span>*</span>'),
-            new TextField('ContactTelephone', 'Contact Phone<span>*</span>'),
-            new LiteralField('LiteralHeader', '<h2>' . _t(
-                'AcademicsRegisterForm.DEFAULT',
-                'Registration Info') . '</h2>'),
-            DropdownField::create('CountryID', _t(
-            'MemberRegForm.COUNTRY',
-            'Country of Registration'), Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown chosen-select'),
-            new TextField('RegistrationNumber', 'Registration Number'),
+            new PhoneNumberField('PhoneNumber', 'Phone Number (with no separators)'),
+            new TextField('AddressLine1', 'Address Line 1'),
+            new TextField('AddressLine2', 'Address Line 2'),
+            new TextField('City', 'City'),
+            new TextField('PostalCode', 'Postal/Zip Code'),
+            DropdownField::create('CountryID', 'Country of Residence', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown chosen-select'),
             ConfirmedPasswordField::create('Password', 'Password', "", null, true),
             new HiddenField('ID', 'ID')
         );
@@ -265,62 +295,6 @@ class AgentPortalPage_Controller extends Page_Controller
             Session::set('SessionMessage', 'Your information has been updated and saved!');
             Session::set('SessionMessageContext', 'success');     
             return $this->redirectBack();
-    }
-    
-    public function ProfileLinksForm() {
-        $fields = new FieldList(
-            new LiteralField('Description', '<h5>Provide links to general pages with the information required.</h5>'),
-            new TextField('About', 'About school'),
-            new TextField('ContactInfo', 'Contact Information'),
-            new TextField('Scholarships', 'Scholarships'),
-            new LiteralField('Description', '<h5>Provide links to the following documents.</h5>'),
-            new TextField('AdmissionRequirements', 'Admission Requirements'),
-            new TextField('EnglishRequirements', 'English Requirements'),
-            new TextField('ProcessingTime', 'Processing Time'),
-            new TextField('Fees', 'Fees'),
-            new TextField('Application', 'Application')
-        );
-        
-        $actions = FieldList::create(
-            FormAction::create('saveProfilePage', _t(
-                'AcademicsRegisterForm.DEFAULT',
-                'Save'))->addExtraClass('btn btn-primary')
-        );
-        
-        $required = new RequiredFields(array(
-            'Application'
-        ));
-        
-        return new Form($this->owner, 'ProfileLinksForm', $fields, $actions, $required);
-    }
-    
-    public function saveProfilePage(array $data, Form $form) {
-        if(!Permission::check('EDIT_AGENT')) {
-            return Security::permissionFailure('Log into an agent profile to edit this content.');
-        }
-        
-        $agent = Agent::currentUser();
-                
-        $profilePage = PartnersProfile::get()->byID($agent->PartnersProfileID);
-        
-        if(!$profilePage) {
-            $profilePage = new PartnersProfile();
-            $agent->PartnersProfileID = $profilePage->write();
-            $agent->write();
-        }
-        $form->saveInto($profilePage);
-
-        try {
-			$profilePage->write();
-		} catch(ValidationException $e) {
-			Session::set('SessionMessage', $e->getResult()->message());
-            Session::set('SessionMessageContext', 'danger');            
-			return $this->owner->redirectBack();
-		}
-        
-        Session::set('SessionMessage', 'Your profile has been updated!');
-        Session::set('SessionMessageContext', 'success');
-        return $this->redirectBack();
     }
     
     public function AddServiceForm($member = null) {
@@ -470,7 +444,7 @@ class AgentPortalPage_Controller extends Page_Controller
         
         $fields = new FieldList(
             new LiteralField('School Partners', 'Select the schools you would like to partner with.'),
-            ListboxField::create('Schools', 'Schools')->setMultiple(true)->setSource($items)->setValue($current),
+            ListboxField::create('Schools', 'Schools')->setMultiple(true)->setSource($items)->setValue($current)->addExtraClass('chosen-select'),
             new HiddenField('MemberID', 'MemberID', $id)
         );
         
@@ -510,7 +484,7 @@ class AgentPortalPage_Controller extends Page_Controller
             if($member->ClassName == "Agent") {
                 $school->Agents()->add($member);
             }
-            $addedString .= $school->BusinessName;
+            $addedString .= $school->Name;
         }
         foreach($toRemove as $remove) {
             $school = School::get()->byID($remove);
@@ -520,7 +494,7 @@ class AgentPortalPage_Controller extends Page_Controller
             if($member->ClassName == "Agent") {
                 $school->Agents()->remove($member);
             }
-            $removedString .= $school->BusinessName . ' ';            
+            $removedString .= $school->Name . ' ';            
         }
         
         $returnString = '';

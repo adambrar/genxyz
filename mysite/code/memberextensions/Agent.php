@@ -9,17 +9,18 @@ class Agent extends Member {
     
     private static $db = array(
         'Website' => 'Varchar(200)',
-        'Name' => 'Varchar(200)',
-        'ContactName' => 'Varchar(100)',
-        'ContactTelephone' => 'Varchar(20)',
-        'RegistrationNumber' => 'Varchar(20)',
+        'AboutMe' => 'Varchar(200)',
+        'AddressLine1' => 'Varchar(200)',
+        'AddressLine2' => 'Varchar(200)',
+        'City' => 'Varchar(200)',
+        'PostalCode' => 'Varchar(10)',
+        'PhoneNumber' => 'Varchar(20)'
     );
     
     private static $has_one = array(
-        'PartnersProfile' => 'PartnersProfile',
         'Logo' => 'Image',
-        'Country' => 'Country',
-        'City' => 'City'
+        'Nationality' => 'Country',
+        'Country' => 'Country'
     );
     
     private static $has_many = array(
@@ -40,7 +41,8 @@ class Agent extends Member {
     
     private static $searchable_fields = array(
         'Email' => 'PartialMatchFilter',
-        'Name' => 'PartialMatchFilter'
+        'Name' => 'PartialMatchFilter',
+        'Country.Name' => 'StartsWith'
     );
     
     public function getCMSFields() {
@@ -74,11 +76,6 @@ class Agent extends Member {
     
     public function viewLink() {
         return SearchPage::get()->First()->Link('show/agent/'.$this->ID);
-    }
-    
-    public function createProfilePage() {
-        $this->PartnersProfile = PartnersProfile::create()->write();
-        $this->write();
     }
     
     public function DoneApplications() {

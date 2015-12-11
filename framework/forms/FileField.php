@@ -180,6 +180,8 @@ class FileField extends FormField {
 			if($errors) foreach($errors as $error) {
 				$validator->validationError($this->name, $error, "validation", false);
 			}
+            Session::set('SessionMessage', 'Files not uploaded! There was an error');
+            Session::set('SessionMessageContext', 'danger');
 			return false;
 		}
 		

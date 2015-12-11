@@ -16,14 +16,17 @@ class Student extends Member {
         'ContactName' => 'Varchar(100)',
         'ContactTelephone' => 'Varchar(100)',
         'ContactEmail' => 'Varchar(100)',
-        'Birthdate' => 'Date'
+        'Birthdate' => 'Date',
+        'City' => 'Varchar(100)',
+        'HighSchool' => 'Varchar(100)',
+        'University' => 'Varchar(100)'
     );
     
     private static $has_one = array(
         'ProfilePicture' => 'Image',
         'Nationality' => 'Country',
         'CurrentCountry' => 'Country',
-        'City' => 'City'
+        'ContactCountry' => 'Country'
     );
     
     private static $has_many = array(
@@ -89,7 +92,7 @@ class Student extends Member {
     }
     
     public function viewLink() {
-        return SearchPage::get()->First()->Link('show/' . $this->ID);
+        return StudentPortalPage::get()->First()->Link('show/' . $this->ID);
     }
     
     public static function getStudentOptions() {
@@ -107,6 +110,24 @@ class Student extends Member {
     
     public function InProcessApplications() {
         return $this->SchoolApplications()->exclude('Status', 'Completed');
+    }
+    
+    public function getBlogHolder() {
+        return BlogHolder::get()->filter('OwnerID', $this->ID)->First();
+    }
+    
+    public function getLatestForumPosts($max = null) {
+        if($max) {
+            $posts = Post::get()->filter(array(
+                'AuthorID' => $this->ID
+            ))->sort('Created', 'DESC')->limit($max);
+        } else {
+            $posts = Post::get()->filter(array(
+                'AuthorID' => $this->ID
+            ))->sort('Created', 'DESC');
+        }
+        
+        return $posts;
     }
     
     private function createNewStudentBlog(BlogTree $blogTree) {

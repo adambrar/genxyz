@@ -72,22 +72,26 @@ class MemberDecorator extends DataExtension {
 		));
 	}
     
-    public function getLatestForumPosts($max = null) {
-        if(!Member::currentUserID()) {
-            return false;
-        }
-        if($max) {
-            $posts = Post::get()->filter(array(
-                'AuthorID' => $this->owner->ID
-            ))->sort('Created', 'DESC')->limit($max);
-        } else {
-            $posts = Post::get()->filter(array(
-                'AuthorID' => $this->owner->ID
-            ))->sort('Created', 'DESC');
-        }
-        
-        return $posts ? $posts : false;
-    }
+    public function IsSuspended() {
+		if($this->owner->SuspendedUntil) {
+			return strtotime(SS_Datetime::now()->Format('Y-m-d')) < strtotime($this->SuspendedUntil);
+		} else {
+			return false; 
+		}
+	}
+
+	public function IsBanned() {
+		return $this->owner->ForumStatus == 'Banned';
+	}
+
+	public function IsGhost() {
+		return $this->owner->ForumStatus == 'Ghost' && $this->owner->ID !== Member::currentUserID();
+	}
+    
+    function isModeratingForum($forum) {
+		$moderatorIds = $forum->Moderators() ? $forum->Moderators()->getIdList() : array();
+		return in_array($this->owner->ID, $moderatorIds);
+	}
     
     public function getBlogHolder() {
         if(!Permission::check('BLOGMANAGEMENT')) {
@@ -108,7 +112,7 @@ class MemberDecorator extends DataExtension {
         return $holder ? $holder : false;
     }
         
-        private function createNewStudentBlog() {
+    private function createNewStudentBlog() {
         $blogHolder = new BlogHolder();
         $blogHolder->Title = $this->owner->FirstName."-".$this->owner->Surname."-".$this->owner->ID;
         $blogHolder->AllowCustomAuthors = false;
@@ -116,7 +120,7 @@ class MemberDecorator extends DataExtension {
         $blogHolder->URLSegment = $this->owner->FirstName."-".$this->owner->Surname."-".$this->owner->ID;
         $blogHolder->Status = "Published";
         $blogHolder->ParentID = SiteTree::get()->Filter('ClassName','BlogTree')->First()->ID;
-        Debug::show(SiteTree::get()->Filter('ClassName','BlogTree')->First()->ID);
+
         $blogHolder->write();
         $blogHolder->doRestoreToStage();
         
@@ -134,26 +138,4 @@ class MemberDecorator extends DataExtension {
         
         return $blogHolder;
     }
-        
-    
-    //get latest blog posts for member
-    public function getLatestBlogEntries($member = null, $max = 5) {
-        if(!$member) {
-            return false;
-        }
-
-        $holder = BlogHolder::get()->filter(array(
-            'ownerID' => $member->ID
-        ))->First();
-
-        if(!$holder) {
-            return false;
-        }
-        
-        $entries = SiteTree::get()->filter(array(
-            'ParentID' => $holder->ID
-        ))->limit($max);
-        
-        return $entries;
-    }  
 }

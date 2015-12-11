@@ -86,7 +86,7 @@ class Page_Controller extends ContentController {
 	 */
     
     private static $allowed_actions = array(
-        'countriesasjson',
+        'logout',
         'citiesasjson'
     );
 	
@@ -108,7 +108,6 @@ class Page_Controller extends ContentController {
         Requirements::javascript('themes/one/javascript/jquery.inview.min.js');
         Requirements::javascript('themes/one/javascript/wow.min.js');
         Requirements::javascript('themes/one/javascript/main.js');
-        Requirements::javascript('themes/one/javascript/selectload.js');
         Requirements::javascript(
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.jquery.js");
         Requirements::css(
@@ -120,33 +119,15 @@ class Page_Controller extends ContentController {
                             "/thirdparty/jquery/jquery.min.js");
 	}
     
-    public function countriesasjson($message = "", $extraData = null, $status = "success") {
-        $this->response->addHeader('Content-Type', 'application/json');
-        SSViewer::set_source_file_comments(false);
-		if($status != "success") {
-			$this->setStatusCode(400, $message);
-		}
-		// populate Javascript
-		$js = array ();
-        
-        $countries = Country::get()->sort('Name', 'ASC');
-        
-        if($countries)
-        {
-            foreach($countries as $country)
-            {
-                $js[] = array(
-                    "title" => $country->Name,
-                    "value" => $country->ID
-                );
-            }
+    public function logout() {
+        if(Controller::curr() == "StudentPortalPage_Controller" ||
+           Controller::curr() == "SchoolPortalPage_Controller" ||
+           Controller::curr() == "AgentPortalPage_Controller") {
+            Member::currentUser()->logout();
+            return $this->redirectBack();
+        } else {
+            return $this->redirect('Security/login');
         }
-        
-        if(is_array($extraData)) { $js = array_merge($js, $extraData); }
-        
-        $json = json_encode($js);
-        
-        return $json;
     }
     
     public function citiesasjson($message = "", $extraData = null, $status = "success") {

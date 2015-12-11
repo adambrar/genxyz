@@ -9,20 +9,16 @@
         </div>
         <% include SessionMessage %>
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#basic">Basic Information</a></li>
-            <li><a data-toggle="tab" href="#profile">Profile Page</a></li>
+            <li class="active"><a data-toggle="tab" href="#basic">Profile Page</a></li>
             <li><a data-toggle="tab" href="#service">Services</a></li>
+            <li><a data-toggle="tab" href="#applications">Orders</a></li>
             <li><a data-toggle="tab" href="#partners">Partners</a></li>
             <li><a data-toggle="tab" href="#messages">Messages</a></li>
-            <li><a data-toggle="tab" href="#applications">Applications</a></li>
         </ul>
 
         <div class="tab-content">
             <div id="basic" class="tab-pane fade in active">
                 $BasicInfo
-            </div>
-            <div id="profile" class="tab-pane fade">
-                $ProfileContent
             </div>
             <div id="service" class="tab-pane fade">
                 <div class="row">

@@ -333,7 +333,7 @@ class ConfirmedPasswordField extends FormField {
 				"validation", 
 				false
 			);
-
+            
 			return false;
 		}
 

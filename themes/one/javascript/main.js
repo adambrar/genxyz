@@ -31,12 +31,12 @@ jQuery(function($) {'use strict';
     });
                     
     if($('.tab-pane')[0]) {
-        $('.tab-pane.active').find('.chosen-select select').chosen();
+        $('.tab-pane.active').find('.chosen-select select').chosen({disable_search_threshold:10});
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-            $(e.target.href.substring( e.target.href.lastIndexOf('#'), e.target.href.length )).find('select').chosen({disable_search_threshold:10});
+            $(e.target.href.substring( e.target.href.lastIndexOf('#'), e.target.href.length )).find('.chosen-select select').chosen({disable_search_threshold:10});
         });
     } else {
-        $('chosen-select select').chosen();
+        $('.chosen-select select').chosen({disable_search_threshold:10});
     }
 
 	// User define function

@@ -160,14 +160,36 @@ ul.nostyle i {
 /*************************
 *******Custom******
 **************************/
+.contactme.table td {
+    border: none;
+}
+.contactme.table tr td:first-child {
+    text-align: right;
+}
+.contactme.table tr td:last-child {
+    text-align: left;
+}
 #myprofile-tab-content {
     min-height: 500px;
 }
+#school-results .panel-body p {
+    color: black;
+}
+#school-results .panel,
+#agent-results .panel {
+    border-color: #2caab3;
+}
+#school-results .panel:hover,
+#agent-results .panel:hover {
+    border-color: black;
+}
+#agent-results .panel p{color:black;}
+#agent-results .panel{min-height: 8em;}
 #thread-content {
     min-height: 500px;
     max-height: 750px;
     overflow-y: auto;
-}    
+}
 .forum-header-form {
     margin-top: 15px;
 }
@@ -182,10 +204,14 @@ textarea,
 select {
     min-width:400px;
 }
+#school-results select,
+#school-results input[type=text],
+#agent-results select,
+#agent-results input[type=text],
 #academics select,
 #academics input[type=text] {
-    min-width: 140px;
-    max-width: 200px;
+    min-width: 120px;
+    max-width: 240px;
 }
 .partner-logo {
     margin: 1em;

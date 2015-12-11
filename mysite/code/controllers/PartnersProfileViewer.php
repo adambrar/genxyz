@@ -52,20 +52,15 @@ class PartnersProfileViewer extends Page_Controller {
 		$member = Member::get()->byID($id);
 		if(!$member) { $this->httpError(404); }
         
-        $profilePage = PartnersProfile::get()->ByID($member->PartnersProfileID);
-        if(!$member) { $this->httpError(404); }
-        
 		$this->data()->Title = sprintf(
 			_t('MemberProfiles.MEMBERPROFILETITLE', "%s's Information"),
-			$member->BusinessName
+			$member->Name
 		);
 		$this->data()->Parent = $this->parent;
         
         $customData = array(
             'Member' => $member,
-            'IsSelf' => $member->ID == Member::currentUserID(),
-            'ProfilePage' => $profilePage,
-            'Logo' => $profilePage->LogoImageID ? File::get()->ByID($profilePage->LogoImageID) : false
+            'IsSelf' => $member->ID == Member::currentUserID()
         );
         
         $controller = $this->customise($customData);

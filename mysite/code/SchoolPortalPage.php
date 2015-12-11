@@ -25,6 +25,9 @@ class SchoolPortalPage_Controller extends Page_Controller
     private static $allowed_actions = array(
         'RegisterForm',
         'edit',
+        'search',
+        'SchoolFilter',
+        'doSchoolSearch',
         'BasicInfoForm',
         'ProfileLinksForm',
         'saveProfilePage',
@@ -41,7 +44,11 @@ class SchoolPortalPage_Controller extends Page_Controller
         'ajaxProgramRequest'
     );
     
-    function init() {        
+    private static $url_handlers = array(
+        'search/$Country/$Program/$SchoolName/$Level' => 'search'
+    );
+    
+    function init() {
         parent::init();
         
         Requirements::set_force_js_to_bottom(true);
@@ -63,6 +70,61 @@ class SchoolPortalPage_Controller extends Page_Controller
         );
         
         return $this->customise($customData)->renderWith(array('PortalPage','Page'));
+    }
+    
+    public function search() {
+        $filter = array();
+        $ids = array();
+        if( ($this->getRequest()->param('Country') != '0') &&
+           ctype_digit($this->getRequest()->param('Country')) ) {
+            $filter['CountryID'] = $this->getRequest()->param('Country');
+        }
+        if( ($this->getRequest()->param('Program') != '0') &&
+           ctype_digit($this->getRequest()->param('Program')) ) {
+            $ids = Program::get()->filter(array(
+                'ProgramName.ID' => $this->getRequest()->param('Program')
+            ))->column('SchoolID');
+            
+            if($ids) {
+                $filter['ID'] = $ids;
+            }
+        }
+        if( ($this->getRequest()->param('Level') != '0') &&
+           ctype_digit($this->getRequest()->param('Level')) ) {
+            $filter['Type'] = $this->getRequest()->param('Level');
+        }
+        if( ($this->getRequest()->param('SchoolName') != '0') &&
+            ($this->getRequest()->param('SchoolName') != null) ) {
+            $filter['Name:PartialMatch:nocase'] = $this->getRequest()->param('SchoolName');
+        }
+        
+        if( $ids || $this->getRequest()->param('Program') == null ||
+            $this->getRequest()->param('Program') == '0' ) {
+            $schools = School::get()->filter($filter);
+            $paginated = PaginatedList::create($schools, $this->getRequest())->setPageLength(10);
+            
+        } else {
+            $paginated = false;
+        }
+        
+        if(Director::is_ajax()) {
+            return $this->renderWith('SchoolResults', ['PaginatedResults' => $paginated]);
+        }
+        
+        Requirements::javascript("themes/one/javascript/jquery.bootpag.min.js");
+        Requirements::javascript("themes/one/javascript/searchpage.js");
+        
+        $customData = array(
+            'PaginatedResults' => $paginated,
+            'Title' => 'School search results',
+            'Content' => 'Browse our schools.',
+            'SearchPageLink' => SearchPage::get()->First()->Link(),
+            'SchoolFilter' => SearchPage_Controller::create()->SchoolFilter()
+        );
+        
+        return $this->customise($customData)->renderWith(array(
+            'SchoolPortalPage_search','Page'
+        ));
     }
     
     public function edit() {
@@ -106,20 +168,17 @@ class SchoolPortalPage_Controller extends Page_Controller
     
     public function RegisterForm() {
         $fields = new FieldList(
-            new LiteralField('ContactInfo', '<h3>' . _t(
-                'AcademicsRegisterForm.CONTACT',
-                'Contact Info') . '</h3>'),
-            new TextField('Name', 'Name<span>*</span>'),
-            new TextField('Website', 'Website<span>*</span>'),
+            new LiteralField('BasicInfo', '<h3>Basic Information</h3>'),
+            new TextField('Name', 'Name of School<span>*</span>'),
+            new TextField('Website', 'School Website<span>*</span>'),
             new EmailField('Email', 'Contact Email<span>*</span>'),
-            new TextField('ContactTelephone', 'Phone Number<span>*</span>'),
+            new TextField('ContactTelephone', 'Contact Phone Number<span>*</span>'),
+            new TextField('ContactName', 'Name of Contact<span>*</span>'),
             new LiteralField('LiteralHeader', '<h3>' . _t(
                 'AcademicsRegisterForm.DEFAULT',
                 'Registration Info') . '</h3>'),
             new TextField('RegistrationNumber', 'Registration Number'),
-            DropdownField::create('CountryID', _t(
-            'MemberRegForm.COUNTRY',
-            'Country of Registration'),Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
+            DropdownField::create('CountryID', 'Country of Registration', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown chosen-select'),
             ConfirmedPasswordField::create('Password', 'Password')
         );
         
@@ -134,8 +193,7 @@ class SchoolPortalPage_Controller extends Page_Controller
             'Name',
             'Email',
             'ContactName',
-            'ContactTelephone',
-            'RegistrationNumber'
+            'CountryID'
         ));
         
         return new Form($this, 'RegisterForm', $fields, $actions, $required);
@@ -220,7 +278,7 @@ class SchoolPortalPage_Controller extends Page_Controller
             new TextField('RegistrationNumber', 'Registration Number'),
             DropdownField::create('CountryID', _t(
             'MemberRegForm.COUNTRY',
-            'Country of Registration'), Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown'),
+            'Country of Registration'), Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('chosen-select'),
             ConfirmedPasswordField::create('Password', 'Password', "", null, true),
             new HiddenField('ID', 'ID')
         );
@@ -236,7 +294,7 @@ class SchoolPortalPage_Controller extends Page_Controller
             'Email',
             'ContactName',
             'ContactTelephone',
-            'RegistrationNumber'
+            'CountryID'
         ));
         
         return new Form($this, 'BasicInfoForm', $fields, $actions, $required);
@@ -289,12 +347,11 @@ class SchoolPortalPage_Controller extends Page_Controller
             new TextField('About', 'About school'),
             new TextField('ContactInfo', 'Contact Information'),
             new TextField('Scholarships', 'Scholarships'),
-            new LiteralField('Description', '<h5>Provide links to the following documents.</h5>'),
-            new TextField('AdmissionRequirements', 'Admission Requirements'),
-            new TextField('EnglishRequirements', 'English Requirements'),
-            new TextField('ProcessingTime', 'Processing Time'),
-            new TextField('Fees', 'Fees'),
-            new TextField('Application', 'Application')
+            new LiteralField('Description', '<h5>Provide links to the following documents. Requiremments may vary depending on program.</h5>'),
+            new TextField('AdmissionRequirements', 'General Admission Requirements'),
+            new TextField('EnglishRequirements', 'General English Requirements'),
+            new TextField('ProcessingTime', 'Estimated Processing Time'),
+            new TextField('Fees', 'Approximate Tuition Fees')
         );
         
         $actions = FieldList::create(
@@ -304,7 +361,10 @@ class SchoolPortalPage_Controller extends Page_Controller
         );
         
         $required = new RequiredFields(array(
-            'Application'
+            'SlideOne',
+            'SlideTwo',
+            'SlideThree',
+            'About'
         ));
         
         return new Form($this->owner, 'ProfileLinksForm', $fields, $actions, $required);
@@ -364,7 +424,7 @@ class SchoolPortalPage_Controller extends Page_Controller
             DropdownField::create(
                 'ProgramNameID', 
                 'Select the program you would like to add.',
-                $programs)->setEmptyString('Select program to add.'),
+                $programs)->addExtraClass('chosen-select')->setEmptyString('Select program to add.'),
             TextField::create('CertificateLink', 'Link to Program\'s Certification'),
             TextField::create('DiplomaLink', 'Link to Program\'s Diploma'),
             TextField::create('DegreeLink', 'Link to Program\'s Degree'),
@@ -392,7 +452,7 @@ class SchoolPortalPage_Controller extends Page_Controller
         
         $program = new Program();
         $form->saveInto($program);
-        $program->InstitutionID = Member::currentUserID();
+        $program->SchoolID = Member::currentUserID();
         
         try {
 			$program->write();
@@ -419,7 +479,7 @@ class SchoolPortalPage_Controller extends Page_Controller
             
         $fields = new FieldList(
             new LiteralField('EditPrograms', '<h2>Edit Your Programs</h2>'),
-            DropdownField::create('ProgramID', 'Edit Your Programs', $programs)->setEmptyString('Select a program to edit.')->addExtraClass('edit-program-select'),
+            DropdownField::create('ProgramID', 'Edit Your Programs', $programs)->setEmptyString('Select a program to edit.')->addExtraClass('edit-program-select chosen-select'),
             TextField::create('CertificateLink', 'Link to Program\'s Certification')->addExtraClass('CertificateLink'),
             TextField::create('DiplomaLink', 'Link to Program\'s Diploma')->addExtraClass('DiplomaLink'),
             TextField::create('DegreeLink', 'Link to Program\'s Degree')->addExtraClass('DegreeLink'),
@@ -450,7 +510,7 @@ class SchoolPortalPage_Controller extends Page_Controller
         
         $program = Program::get()->byID($data['ProgramID']);
         
-        if(!$program || $program->InstitutionID != Member::currentUserID()) {
+        if(!$program || $program->SchoolID != Member::currentUserID()) {
             Session::set('SessionMessage', 'You cannot edit this program. Select a different program and try again.');
             Session::set('SessionMessageContext', 'danger');
             return $this->redirectBack();
@@ -479,7 +539,7 @@ class SchoolPortalPage_Controller extends Page_Controller
         
         $program = Program::get()->byID($data['ProgramID']);
         
-        if(!$program || $program->InstitutionID != Member::currentUserID()) {
+        if(!$program || $program->SchoolID != Member::currentUserID()) {
             Session::set('SessionMessage', 'You cannot delete this program.');
             Session::set('SessionMessageContext', 'danger');
             return $this->redirectBack();
@@ -506,8 +566,8 @@ class SchoolPortalPage_Controller extends Page_Controller
         }
         
         $fields = new FieldList(
-            new LiteralField('AgentPartners', 'Select the agents you would like to partner with.'),
-            ListboxField::create('Agents', 'Agents')->setMultiple(true)->setSource($items)->setValue($current)
+            new LiteralField('AgentPartners', 'Select the agents you have agreements with.'),
+            ListboxField::create('Agents', 'Agents')->setMultiple(true)->setSource($items)->setValue($current)->addExtraClass('chosen-select')
         );
         
         $actions = FieldList::create(
@@ -580,8 +640,8 @@ class SchoolPortalPage_Controller extends Page_Controller
         }
         
         $fields = new FieldList(
-            new LiteralField('School Partners', 'Select the schools you would like to partner with.'),
-            ListboxField::create('Schools', 'Schools')->setMultiple(true)->setSource($items)->setValue($current),
+            new LiteralField('School Partners', 'Select the schools you have an articulation agreement with.'),
+            ListboxField::create('Schools', 'Schools')->setMultiple(true)->setSource($items)->setValue($current)->addExtraClass('chosen-select'),
             new HiddenField('MemberID', 'MemberID', $id)
         );
         
@@ -667,7 +727,7 @@ class SchoolPortalPage_Controller extends Page_Controller
                 'error'=>'Program not found',
                 'value'=>'error'
             ));
-        } else if($program->InstitutionID != Member::currentUserID()) {
+        } else if($program->SchoolID != Member::currentUserID()) {
             return json_encode(array(
                 'error'=>'You cannot access this program',
                 'value'=>'error'

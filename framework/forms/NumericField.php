@@ -34,7 +34,8 @@ class NumericField extends TextField {
 				),
 				"validation"
 			);
-
+            Session::set('SessionMessage', 'You entered an incorrect value. Only numbers are accepted.');
+            Session::set('SessionMessageContext', 'danger');
 			return false;
 		}
 		

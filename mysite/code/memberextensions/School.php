@@ -78,4 +78,13 @@ class School extends Member {
         $link = SearchPage::get()->First()->Link();
         return $link . 'show/school/' . $this->ID;
     }
+    
+    public function getProgramOptions() {
+        if($programs = $this->Programs())
+        {
+            return $programs->map('ID', 'ProgramName.Name', 'Please Select');
+        } else {
+            return array('No Programs');
+        }
+    }
 }

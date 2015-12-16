@@ -83,23 +83,20 @@ Ut fringilla lorem neque. Fusce tincidunt facilisis est, sed rutrum enim dictum 
                 </div>
             </div>
             <div id="programs" class="tab-pane fade">
-                <div class="list-group">
-                    <% loop Member.Programs() %>
-                        <div class="col-md-4 col-sm-6 wow fadeInUp list-group-item" data-wow-duration="300ms" data-wow-delay="100ms">
-                            <div class="media service-box">
-                                <div class="media-body">
-                                    <h4 class="media-heading">$ProgramName.Name <i class="fa fa-arrow-circle-down"></i></h4>
-                                    <ul class="list-unstyled">
-                                        <% if CertificateLink %><li><i class="fa fa-hand-o-right"></i> <a href="htp://$CertificateLink">Certificate</a></li><% end_if %>
-                                        <% if DiplomaLink %><li><i class="fa fa-hand-o-right"></i> <a href="htp://$DiplomaLink">Diploma</a></li><% end_if %>
-                                        <% if DegreeLink %><li><i class="fa fa-hand-o-right"></i> <a href="htp://$DegreeLink">Degree</a></li><% end_if %>
-                                        <% if MastersLink %><li><i class="fa fa-hand-o-right"></i> <a href="htp://$MastersLink">Masters</a></li><% end_if %>
-                                        <% if DoctorateLink %><li><i class="fa fa-hand-o-right"></i> <a href="htp://$DoctorateLink">Doctorate</a></li><% end_if %>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div><!--/.col-md-4-->
-                    <% end_loop %>
+                <h3 class="text-center">Programs available at this school</h3>
+                <div class="row">
+                    <div class="col-xs-4 col-md-offset-1">
+                        <p>Select a program to see a description and links to this schools detailed information about the selected program.</p>
+                        <select name="ProgramSelect" class="dropdown" id="ProgramSelect">
+                            <option value>Select a program</option>
+                            <% loop Member.Programs() %>
+                                <option value="{$ID}">$ProgramName.Name</option>
+                            <% end_loop %>
+                        </select>
+                    </div>
+                    <div id="program-details" class="col-xs-8 col-md-6">
+                        <% include ProgramDetails %>
+                    </div>
                 </div>
             </div>
             <div id="partners" class="tab-pane fade">

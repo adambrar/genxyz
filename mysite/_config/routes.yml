@@ -6,3 +6,4 @@ Director:
   rules:
     'message': 'MessagingController'
     'application': 'ApplicationsController'
+    'program': 'ProgramsController'

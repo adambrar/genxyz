@@ -111,9 +111,10 @@ class PartnersProfileViewer extends Page_Controller {
             'ProfilePage' => $profilePage,
             'Title' => $school->Name ? $school->Name."'s Profile Page" : 'Profile Page',
             'ApplicationForm' => ApplicationsController::create()->CreateSchoolApplicationForm($id),
-            'SessionMessage' => $this->getSessionMessage(),
+            'SessionMessage' => $this->getSessionMessage()
         );
-        
+        Requirements::javascript('themes/one/javascript/schoolview.js');
+
         $controller = $this->customise($customData);
 		return $controller->renderWith(array(
 			'SchoolProfile_view', 'Page'

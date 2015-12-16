@@ -13,6 +13,9 @@ jQuery(function($) {'use strict';
 		return false;
 	});
                     
+    //initialize popover elements
+    $('[data-toggle=popover]').popover();
+                    
     // Message box controls
     $('#messages-select a').click(function(e) {
         e.preventDefault();

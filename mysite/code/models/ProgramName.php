@@ -3,7 +3,8 @@
 class ProgramName extends DataObject {
     
     private static $db = array(
-        'Name' => 'Varchar(100)'
+        'Name' => 'Varchar(100)',
+        'Summary' => 'Text'
     );
     
     private static $has_many = array(
@@ -18,4 +19,12 @@ class ProgramName extends DataObject {
         'Name' => 'Name'
     );
     
+    public static function getProgramNameOptions() {
+        if($programs = ProgramName::get())
+        {
+            return $programs->map('ID', 'Title', 'Please Select');
+        } else {
+            return array('No Programs');
+        }
+    }
 }

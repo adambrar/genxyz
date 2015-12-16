@@ -107,6 +107,7 @@ class Page_Controller extends ContentController {
         Requirements::javascript('themes/one/javascript/jquery.prettyPhoto.js');
         Requirements::javascript('themes/one/javascript/jquery.inview.min.js');
         Requirements::javascript('themes/one/javascript/wow.min.js');
+        Requirements::javascript('themes/one/javascript/matchheight.min.js');
         Requirements::javascript('themes/one/javascript/main.js');
         Requirements::javascript(
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.jquery.js");

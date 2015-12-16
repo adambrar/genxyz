@@ -26,8 +26,6 @@ class SchoolPortalPage_Controller extends Page_Controller
         'RegisterForm',
         'edit',
         'search',
-        'SchoolFilter',
-        'doSchoolSearch',
         'BasicInfoForm',
         'ProfileLinksForm',
         'saveProfilePage',
@@ -41,12 +39,13 @@ class SchoolPortalPage_Controller extends Page_Controller
         'saveSchoolPartners',
         'AgentPartnersForm',
         'saveAgentPartners',
-        'ajaxProgramRequest'
     );
     
     private static $url_handlers = array(
         'search/$Country/$Program/$SchoolName/$Level' => 'search'
     );
+    
+    protected $FilterSchools;
     
     function init() {
         parent::init();
@@ -66,13 +65,18 @@ class SchoolPortalPage_Controller extends Page_Controller
         
         $customData = array(
             'RegisterForm' => $this->RegisterForm(),
-            'Title' => 'Schools'
+            'Title' => 'Schools',
+            'BrowseLink' => $this->Link('search')
         );
         
         return $this->customise($customData)->renderWith(array('PortalPage','Page'));
     }
     
     public function search() {
+        if(!isset($this->FilterSchools)) {
+            $this->FilterSchools = SearchPage_Controller::create()->FilterSchools();
+        }
+        
         $filter = array();
         $ids = array();
         if( ($this->getRequest()->param('Country') != '0') &&
@@ -119,7 +123,7 @@ class SchoolPortalPage_Controller extends Page_Controller
             'Title' => 'School search results',
             'Content' => 'Browse our schools.',
             'SearchPageLink' => SearchPage::get()->First()->Link(),
-            'SchoolFilter' => SearchPage_Controller::create()->SchoolFilter()
+            'SchoolFilter' => $this->FilterSchools
         );
         
         return $this->customise($customData)->renderWith(array(
@@ -172,13 +176,11 @@ class SchoolPortalPage_Controller extends Page_Controller
             new TextField('Name', 'Name of School<span>*</span>'),
             new TextField('Website', 'School Website<span>*</span>'),
             new EmailField('Email', 'Contact Email<span>*</span>'),
-            new TextField('ContactTelephone', 'Contact Phone Number<span>*</span>'),
+            new TextField('ContactTelephone', 'Contact Phone Number'),
             new TextField('ContactName', 'Name of Contact<span>*</span>'),
-            new LiteralField('LiteralHeader', '<h3>' . _t(
-                'AcademicsRegisterForm.DEFAULT',
-                'Registration Info') . '</h3>'),
+            new LiteralField('LiteralHeader', '<h3>Registration Info</h3>'),
             new TextField('RegistrationNumber', 'Registration Number'),
-            DropdownField::create('CountryID', 'Country of Registration', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown chosen-select'),
+            DropdownField::create('CountryID', 'Country of Registration', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('chosen-select'),
             ConfirmedPasswordField::create('Password', 'Password')
         );
         
@@ -266,9 +268,7 @@ class SchoolPortalPage_Controller extends Page_Controller
             new TextField('Name', 'Business Name<span>*</span>'),
             new TextField('Website', 'Website<span>*</span>'),
             $UploadField,
-            new LiteralField('ContactInfo', '<h2>' . _t(
-                'AcademicsRegisterForm.CONTACT',
-                'Contact Info') . '</h2>'),
+            new LiteralField('ContactInfo', '<h2>Contact Info</h2>'),
             new TextField('ContactName', 'Contact Name<span>*</span>'),
             new EmailField('Email', 'Contact Email<span>*</span>'),
             new TextField('ContactTelephone', 'Contact Phone<span>*</span>'),
@@ -284,9 +284,7 @@ class SchoolPortalPage_Controller extends Page_Controller
         );
         
         $actions = FieldList::create(
-            FormAction::create('saveBasicInfo', _t(
-                'AcademicsRegisterForm.DEFAULT',
-                'Save'))->addExtraClass('btn btn-primary')
+            FormAction::create('saveBasicInfo', 'Save')->addExtraClass('btn btn-primary')
         );
         
         $required = new RequiredFields(array(

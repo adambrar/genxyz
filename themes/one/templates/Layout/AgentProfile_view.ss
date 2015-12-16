@@ -10,10 +10,10 @@
             </div>
             <div class="col-sm-6">
                 <h3 class="text-center">Services Provided</h3>
-                <div class="row">
+                <div class="row match-height-boxes">
                     <% loop Member.Services() %>
-                        <div class="col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="100ms">
-                            <div class="media service-box">
+                        <div class="col-sm-6 wow fadeInUp" data-wow-duration="<% if Pos < 5 %>{$Pos}<% else %>4<% end_if %>00ms" data-wow-delay="100ms">
+                            <div class="media service-box match-height-box">
                                 <div class="pull-left">
                                     <i class="fa fa-cube"></i>
                                 </div>

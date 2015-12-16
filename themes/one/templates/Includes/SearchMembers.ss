@@ -14,7 +14,7 @@
                         <h3 class="text-center">Search for whatever you need.</h3>
                         <div class="tab-pane active in fade" id="school">
                             <div class="row">
-                                <div class="col-sm-4 col-xs-offset-1">$SchoolFilter</div>
+                                <div class="col-sm-4 col-xs-offset-1">$Top.FilterSchools</div>
                                 <div class="col-sm-6 col-sm-offset-1 hidden-xs">
                                     <h3 class="wow fadeInRight hidden-xs" data-wow-delay="100ms">Find the academic institution that suits you the best!</h3><br/>
                                     <img class="img-responsive wow fadeInRight" data-wow-delay="300ms" src="$ThemeDir/images/searchpage/uni.jpg" />

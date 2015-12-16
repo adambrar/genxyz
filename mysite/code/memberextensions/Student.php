@@ -19,7 +19,9 @@ class Student extends Member {
         'Birthdate' => 'Date',
         'City' => 'Varchar(100)',
         'HighSchool' => 'Varchar(100)',
-        'University' => 'Varchar(100)'
+        'HighSchoolGraduation' => 'Date',
+        'University' => 'Varchar(100)',
+        'UniversityGraduation' => 'Date'
     );
     
     private static $has_one = array(

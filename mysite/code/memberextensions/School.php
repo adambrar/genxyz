@@ -34,9 +34,32 @@ class School extends Member {
         'Agents' => 'Agent'
     );
     
+    private static $summary_fields = array(
+        'ContactName' => 'Contact Name',
+        'Email' => 'Email',
+        'Name' => 'Name of School'
+    );
+    
+    private static $searchable_fields = array(
+        'Email' => 'PartialMatchFilter',
+        'Name' => 'PartialMatchFilter',
+        'ContactName' => 'PartialMatchFilter',
+        'Country.Name' => 'PartialMatchFilter'
+    );
+    
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         $this->removeExtraFields($fields);
+        
+        $fieldList = array('Website', 'ContactName', 'ContactTelephone', 'RegistrationNumber', 'Type', 'Established', 'Logo');
+        
+        foreach($fieldList as $field) {
+            $tabField = $fields->dataFieldByName($field);
+            $fields->removeFieldFromTab('Root.Main', $field);
+            $fields->addFieldToTab('Root.Contact', $tabField);
+        }
+        
+        $fields->dataFieldByName('Logo')->setFolderName('schools/'.$this->ID.'/Logos');
         
         return $fields;
     }
@@ -49,18 +72,6 @@ class School extends Member {
         $fields->removeByName('Surname');
         $fields->removeByName('Country');
         $fields->removeByName('City');
-        $fields->removeByName('FirstNamePublic');
-        $fields->removeByName('SurnamePublic');
-        $fields->removeByName('OccupationPublic');
-        $fields->removeByName('CompanyPublic');
-        $fields->removeByName('CityPublic');
-        $fields->removeByName('CountryPublic');
-        $fields->removeByName('EmailPublic');
-        $fields->removeByName('Occupation');
-        $fields->removeByName('Company');
-        $fields->removeByName('Nickname');
-        $fields->removeByName('Signature');
-        $fields->removeByName('PostalCode');
     }
     
     public function ViewLink() {

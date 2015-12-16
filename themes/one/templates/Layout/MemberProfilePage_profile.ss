@@ -106,7 +106,25 @@
                     </div>
                 </div>
                 <div id="student-services" class="tab-pane fade">
-                        <% include SearchMembers %>
+                    <div class="row text-center">
+                        <div class="col-lg-3 col-xs-6">
+                            <h4>Search Schools</h4>
+                            $Top.FilterSchools
+                        </div>
+                        <div class="col-lg-3 col-xs-6">
+                            <h4>Search Agents</h4>
+                            <div class="filter-form" data-form-name="FilterAgents"></div>
+                        </div>
+                        <div class="col-lg-3 col-xs-6">
+                            <h4>Search Mentors</h4>
+                            $Top.FilterMentors
+                        </div>
+                        <div class="col-lg-3 col-xs-6">
+                            <h4>Search Homestays</h4>
+                            $Top.FilterAccomodations
+                        </div>
+
+                    </div>
                 </div>
                 <div id="profile-forms" class="tab-pane fade in active">
                     <div class="row">

@@ -138,9 +138,9 @@
         </div>
 
         <div class="row">
-            <div class="features">
+            <div class="features match-height-boxes">
                 <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="0ms">
-                    <div class="media service-box">
+                    <div class="media service-box match-height-box">
                         <div class="pull-left">
                             <i class="fa fa-$ServiceOneIcon"></i>
                         </div>
@@ -152,7 +152,7 @@
                 </div><!--/.col-md-4-->
 
                 <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="100ms">
-                    <div class="media service-box">
+                    <div class="media service-box match-height-box">
                         <div class="pull-left">
                             <i class="fa fa-$ServiceTwoIcon"></i>
                         </div>
@@ -164,7 +164,7 @@
                 </div><!--/.col-md-4-->
 
                 <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="200ms">
-                    <div class="media service-box">
+                    <div class="media service-box match-height-box">
                         <div class="pull-left">
                             <i class="fa fa-$ServiceThreeIcon"></i>
                         </div>
@@ -176,7 +176,7 @@
                 </div><!--/.col-md-4-->
 
                 <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">
-                    <div class="media service-box">
+                    <div class="media service-box match-height-box">
                         <div class="pull-left">
                             <i class="fa fa-$ServiceFourIcon"></i>
                         </div>
@@ -188,7 +188,7 @@
                 </div><!--/.col-md-4-->
 
                 <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="400ms">
-                    <div class="media service-box">
+                    <div class="media service-box match-height-box">
                         <div class="pull-left">
                             <i class="fa fa-$ServiceFiveIcon"></i>
                         </div>
@@ -200,7 +200,7 @@
                 </div><!--/.col-md-4-->
 
                 <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="500ms">
-                    <div class="media service-box">
+                    <div class="media service-box match-height-box">
                         <div class="pull-left">
                             <i class="fa fa-$ServiceSixIcon"></i>
                         </div>

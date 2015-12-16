@@ -160,6 +160,15 @@ ul.nostyle i {
 /*************************
 *******Custom******
 **************************/
+.btn {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+#student-services select,
+#student-services input[type="text"] {
+    min-width: 150px;
+    width: 190px;
+}
 .contactme.table td {
     border: none;
 }
@@ -202,7 +211,8 @@ input[type=email],
 input[type=password],
 textarea,
 select {
-    min-width:400px;
+    min-width:250px;
+    width:300px;
 }
 #school-results select,
 #school-results input[type=text],

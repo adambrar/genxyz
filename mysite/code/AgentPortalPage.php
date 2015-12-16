@@ -45,6 +45,8 @@ class AgentPortalPage_Controller extends Page_Controller
         'search/$Country/$Service' => 'search'
     );
     
+    protected $FilterAgents;
+        
     function init() {        
         parent::init();
         
@@ -71,6 +73,10 @@ class AgentPortalPage_Controller extends Page_Controller
     }
     
     public function search() {
+        if(!isset($this->FilterAgents)) {
+            $this->FilterAgents = SearchPage_Controller::create()->FilterAgents();
+        }
+        
         $filter = array();
         $ids = array();
         if( ($this->getRequest()->param('Country') != '0') &&
@@ -108,7 +114,7 @@ class AgentPortalPage_Controller extends Page_Controller
             'Title' => 'Agent search results',
             'Content' => 'Browse our agents.',
             'SearchPageLink' => SearchPage::get()->First()->Link(),
-            'AgentFilter' => SearchPage_Controller::create()->FilterAgents()
+            'AgentFilter' => $this->FilterAgents
         );
         
         return $this->customise($customData)->renderWith(array(
@@ -131,13 +137,9 @@ class AgentPortalPage_Controller extends Page_Controller
             'EditServices' => $this->EditServiceForm(),
             'SchoolPartnersForm' => $this->SchoolPartnersForm(),
             'AddMessageForm' => MessagingController::create()->AddMessageForm($agent->MessageThreads()->First()->ID),
-            'SessionMessage' => $this->getSessionMessage()
+            'SessionMessage' => $this->getSessionMessage(),
+            'Title' => $agent->Name . '\'s Profile'
         );
-         
-        $this->data()->Title = sprintf(
-			_t('MemberProfiles.MEMBERPROFILETITLE', "%s's Information"),
-			$agent->Name
-		);
 
         $controller = $this->customise($customData);
 		return $controller->renderWith(array(
@@ -153,9 +155,7 @@ class AgentPortalPage_Controller extends Page_Controller
             new TextField('FirstName', 'First Name<span>*</span>'),
             new TextField('Surname', 'Last Name<span>*</span>'),
             new EmailField('Email', 'Contact Email<span>*</span>'),
-            DropdownField::create('CountryID', _t(
-            'MemberRegForm.COUNTRY',
-            'Country of Registration'),Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown chosen-select'),
+            DropdownField::create('CountryID', 'Country of Registration', Country::getCountryOptions())->setEmptyString('Select Your Country')->addExtraClass('chosen-select'),
             ConfirmedPasswordField::create('Password', 'Password')
         );
         
@@ -436,7 +436,7 @@ class AgentPortalPage_Controller extends Page_Controller
         $member = Member::currentUser();
         if(!$member) { return Security::permissionFailure(); }
         
-        $items = School::get()->map('ID', 'Name', '--Select schools--')->toArray();
+        $items = School::get()->map('ID', 'Name')->toArray();
         $current = array();
         foreach($member->Schools() as $schools) {
             $current[] = $schools->ID;

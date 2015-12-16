@@ -73,7 +73,7 @@ class StudentPortalPage_Controller extends Page_Controller
             'menuShown' => 'None',
             'AddMessageForm' => $student->MessageThreads()->First() ? MessagingController::create()->AddMessageForm($student->MessageThreads()->First()->ID) : false,
             'SessionMessage' => $this->getSessionMessage(),
-            'SchoolFilter' => $searchPage->SchoolFilter(),
+            'FilterSchools' => $searchPage->FilterSchools(),
             'FilterAgents' => $searchPage->FilterAgents(),
             'FilterAccomodations' => $searchPage->FilterAccomodations(),
             'FilterMentors' => $searchPage->FilterMentors(),
@@ -358,7 +358,7 @@ class StudentPortalPage_Controller extends Page_Controller
             TextField::create('AddressLineTwo', 'Address Line One')
                 ->setAttribute('placeholder', 'Your apartment number, PO Box, etc.'),
             TextField::create('City', 'City')->setAttribute('placeholder', 'Enter your current city'),
-            DropdownField::create('CurrentCountryID', 'Country<span>*</span>', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('chosen-select'),
+            DropdownField::create('CurrentCountryID', 'Country<span>*</span>', Country::getCountryOptions(), $member->CurrentCountryID)->setEmptyString('Select a Country')->addExtraClass('chosen-select'),
             TextField::create('PostalCode', 'Postal Code')
                 ->setAttribute('placeholder', 'Enter your current postal code'),
             PhoneNumberField::create('Telephone', 'Phone Number')
@@ -398,10 +398,14 @@ class StudentPortalPage_Controller extends Page_Controller
                 ->setAttribute('placeholder', 'Enter any academic agencies you\'re working with'),
             TextField::create('HighSchool', 'High School')
                 ->setAttribute('placeholder', 'Your current or past high school'),
-            new DateField('HighSchoolGraduation', 'High School Graduation Date'),
+            DateField::create('HighSchoolGraduation', 'High School Graduation Date')
+                ->setAttribute('type', 'date')
+                ->setAttribute('value', $member->HighSchoolGraduation),
             TextField::create('University', 'University')
                 ->setAttribute('placeholder', 'Your post secondary education'),
-            new DateField('UniversityGraduation', 'University Graduation Date'),
+            DateField::create('UniversityGraduation', 'University Graduation Date')
+                ->setAttribute('type', 'date')
+                ->setAttribute('value', $member->UniversityGraduation),
             new HiddenField('Email', 'Email')
         );
         
@@ -424,18 +428,12 @@ class StudentPortalPage_Controller extends Page_Controller
         }
         
         $fields = new FieldList(
-            new LiteralField('LiteralHeader', '<h2>' . _t(
-                'MemberProfileForms.EMERGENCYCONTACTLABEL',
-                'Emergency Contact Details') . '</h2>'),
+            new LiteralField('LiteralHeader', '<h2>Emergency Contact Details</h2>'),
             TextField::create('ContactName', 'Name of Contact')
                 ->setAttribute('placeholder', 'Enter your contact\'s first name'),
-            PhoneNumberField::create('ContactTelephone', _t(
-                'MemberProfileForms.CONTACTTELEPHONE',
-                'Telephone'))
+            PhoneNumberField::create('ContactTelephone', 'Telephone')
                 ->setAttribute('placeholder', 'Enter your contact\'s phone number'),
-            DropdownField::create('ContactCountryID', _t(
-                'MemberProfileForms.COUNTRY',
-                'Current Country of Contact'), Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('chosen-select'),
+            DropdownField::create('ContactCountryID', 'Current Country of Contact', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('chosen-select'),
             EmailField::create('ContactEmail', 'Contact Email')
                 ->setAttribute('placeholder', 'Enter your contact\'s primary email'),
 
@@ -443,9 +441,7 @@ class StudentPortalPage_Controller extends Page_Controller
         );
         
         $actions = new FieldList(
-            FormAction::create('saveProfileForm', _t(
-                'MemberProfileForms.SAVEBUTTON',
-                'Save'))->addExtraClass('btn btn-primary')
+            FormAction::create('saveProfileForm', 'Save')->addExtraClass('btn btn-primary')
         );
         
         $required = new RequiredFields(array(
@@ -463,9 +459,7 @@ class StudentPortalPage_Controller extends Page_Controller
         }
         
         $fields = new FieldList(
-            new LiteralField('Hd_ProfilePicture', '<h3>' . _t(
-                'MemberProfileForms.PROFILEPICTUREUPLOAD',
-                'Upload A New Profile Picture') . '</h3>'),
+            new LiteralField('Hd_ProfilePicture', '<h3>Upload A New Profile Picture</h3>'),
             new HiddenField('Email', 'Email')
         );
         $UploadField = new UploadField('ProfilePicture', 'Upload a new profile picture');
@@ -479,9 +473,7 @@ class StudentPortalPage_Controller extends Page_Controller
         $fields->insertBefore($UploadField, 'Email');
         
         $actions = new FieldList(
-            FormAction::create('saveProfileForm', _t(
-                'MemberProfileForms.UPLOAD',
-                'Upload'))->addExtraClass('btn btn-primary')
+            FormAction::create('saveProfileForm', 'Upload')->addExtraClass('btn btn-primary')
         );
         
         $required = new RequiredFields(array(

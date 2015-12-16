@@ -4,6 +4,9 @@ jQuery(function($) {'use strict';
 	$(window).scroll(function(event) {
 		Scroll();
 	});
+                    
+    // Match height panels and media boxes
+    $('.match-height-boxes .match-height-box').matchHeight();
 
 	$('.navbar-collapse ul li.scroll a').on('click', function() {  
 		$('html, body').animate({scrollTop: $(this.hash).offset().top - 30}, 1000);
@@ -30,14 +33,9 @@ jQuery(function($) {'use strict';
         }
     });
                     
-    if($('.tab-pane')[0]) {
-        $('.tab-pane.active').find('.chosen-select select').chosen({disable_search_threshold:10});
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-            $(e.target.href.substring( e.target.href.lastIndexOf('#'), e.target.href.length )).find('.chosen-select select').chosen({disable_search_threshold:10});
-        });
-    } else {
-        $('.chosen-select select').chosen({disable_search_threshold:10});
-    }
+    $('.chosen-select select').chosen({
+        disable_search_threshold:10
+    });
 
 	// User define function
 	function Scroll() {

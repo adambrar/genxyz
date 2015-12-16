@@ -41,13 +41,24 @@ class Agent extends Member {
     
     private static $searchable_fields = array(
         'Email' => 'PartialMatchFilter',
-        'Name' => 'PartialMatchFilter',
-        'Country.Name' => 'StartsWith'
+        'FirstName' => 'PartialMatchFilter',
+        'Surname' => 'PartialMatchFilter',
+        'Country.Name' => 'PartialMatchFilter'
     );
     
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         $this->removeExtraFields($fields);
+        
+        $fieldList = array('Website', 'AddressLine1', 'AddressLine2', 'PostalCode', 'PhoneNumber', 'City', 'CountryID');
+        
+        foreach($fieldList as $field) {
+            $tabField = $fields->dataFieldByName($field);
+            $fields->removeFieldFromTab('Root.Main', $field);
+            $fields->addFieldToTab('Root.Contact', $tabField);
+        }
+        
+        $fields->dataFieldByName('Logo')->setFolderName('agents/'.$this->ID.'/Logos');
         
         return $fields;
     }
@@ -56,22 +67,8 @@ class Agent extends Member {
      * Remove unused fields from member form in CMS
      */
     private function removeExtraFields(FieldList $fields) {
-        $fields->removeByName('FirstName');
-        $fields->removeByName('Surname');
+        
         $fields->removeByName('Country');
-        $fields->removeByName('City');
-        $fields->removeByName('FirstNamePublic');
-        $fields->removeByName('SurnamePublic');
-        $fields->removeByName('OccupationPublic');
-        $fields->removeByName('CompanyPublic');
-        $fields->removeByName('CityPublic');
-        $fields->removeByName('CountryPublic');
-        $fields->removeByName('EmailPublic');
-        $fields->removeByName('Occupation');
-        $fields->removeByName('Company');
-        $fields->removeByName('Nickname');
-        $fields->removeByName('Signature');
-        $fields->removeByName('PostalCode');
     }
     
     public function viewLink() {

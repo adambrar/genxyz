@@ -24,19 +24,16 @@ class SearchPage extends Page
 class SearchPage_Controller extends Page_Controller 
 {
     private static $allowed_actions = array(
-        'SchoolFilter',
+        'FilterSchools',
         'FilterAccomodations',
         'FilterAgents',
         'FilterMentors',
-        'get',
         'show',
-        'searchprogramsasjson',
-        'searchcountriesasjson',
-        'doSchoolFilter',
+        'doSchoolSearch',
         'doAccomodationsSearch',
         'doAgentsSearch',
         'doMentorsSearch',
-        'getResults',
+        'getFilter'
     );
     
     private static $url_handlers = array(
@@ -56,25 +53,27 @@ class SearchPage_Controller extends Page_Controller
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.jquery.js");
         Requirements::css(
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.css");
-        
+        $this->data()->Title = 'Search Page';
     }
     
     public function show() {
         return new PartnersProfileViewer($this);
     }
     
-    public function SchoolFilter() {
+    public function FilterSchools() {
+        $schoolName = Controller::curr()->getRequest()->param('SchoolName');
+        if($schoolName == '0') { $schoolName = ''; }
+        
         $fields = new FieldList(
-            DropdownField::create('Country', 'Country', $this->countryOptions)->setEmptyString('Select a country')->addExtraClass('filter-by-country chosen-select'),
-            DropdownField::create('Program', 'Program', Program::getProgramOptions())->setEmptyString('Select Program')->addExtraClass('filter-by-program chosen-select'),
-            TextField::create('SchoolName', 'Name of School'),
-            DropdownField::create('Level', 'Level of Study', singleton('School')->dbObject('Type')->enumValues())->setEmptyString('Type of School')->addExtraClass('chosen-select')
+            DropdownField::create('Country', 'Country', $this->countryOptions, Controller::curr()->getRequest()->param('Country'))->setEmptyString('Select a country')->addExtraClass('filter-by-country chosen-select'),
+            DropdownField::create('Program', 'Program', Program::getProgramOptions(), Controller::curr()->getRequest()->param('Program'))->setEmptyString('Select Program')->addExtraClass('chosen-select'),
+            TextField::create('SchoolName', 'Name of School', $schoolName),
+            DropdownField::create('Level', 'Level of Study', singleton('School')->dbObject('Type')->enumValues(), Controller::curr()->getRequest()->param('Level'))->setEmptyString('Type of School')->addExtraClass('chosen-select')
         );
         
         $actions = FieldList::create(
-            FormAction::create('doSchoolFilter', _t(
-                'MemberProfileForms.DEFAULT',
-                'Search'))->addExtraClass('btn btn-primary')
+            FormAction::create('doSchoolSearch', 'Search')->addExtraClass('btn btn-primary'),
+            new LiteralField('ClearFields', '<a href="'.SchoolPortalPage::get()->First()->Link('search').'" class="btn btn-default">Clear Fields</a>')
         );
         
         $required = new RequiredFields(array(
@@ -83,10 +82,10 @@ class SearchPage_Controller extends Page_Controller
             'Email'
         ));
         
-        return new Form($this->owner, 'SchoolFilter', $fields, $actions, $required);
+        return new Form($this->owner, 'FilterSchools', $fields, $actions, $required);
     }
     
-    public function doSchoolFilter(array $data, Form $form) {
+    public function doSchoolSearch(array $data, Form $form) {
         $URL = 'search/';
         
         $URL .= $data['Country'] == '' ? '0/' : $data['Country'].'/'; 
@@ -141,8 +140,8 @@ class SearchPage_Controller extends Page_Controller
     
     public function FilterAgents() {
         $fields = new FieldList(
-            DropdownField::create('Country', 'Country', $this->countryOptions)->setEmptyString('Select a country')->addExtraClass('chosen-select'),
-            DropdownField::create('Service', 'Service Requested', Service::getServiceOptions())->setEmptyString('Name of Service')->addExtraClass('chosen-select')
+            DropdownField::create('Country', 'Country', $this->countryOptions, Controller::curr()->getRequest()->param('Country'))->setEmptyString('Select a country')->addExtraClass('chosen-select'),
+            DropdownField::create('Service', 'Service Requested', Service::getServiceOptions(), Controller::curr()->getRequest()->param('Service'))->setEmptyString('Name of Service')->addExtraClass('chosen-select')
         );
         
         $actions = FieldList::create(

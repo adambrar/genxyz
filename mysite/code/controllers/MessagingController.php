@@ -64,7 +64,11 @@ class MessagingController extends Controller {
         $message->Author = Member::currentUser()->ClassName;
         $message->write();
         
-        Session::set('SessionMessage', 'Your has been sent.');
+        if(Member::currentUser()->ClassName == 'Student') {
+            Session::set('SessionMessage', 'Your  message has been sent to your agent.');
+        } else {
+            Session::set('SessionMessage', 'Your  message has been sent to '.$messageThread->Student->FirstName.'.');
+        }
         Session::set('SessionMessageContext', 'success');
         $this->redirectBack();
     }
@@ -88,6 +92,10 @@ class MessagingController extends Controller {
         $message->Author = "Agent";
         $message->ParentID = $threadID;
         $message->write();
+        
+        Session::set('SessionMessage', 'Your  created a new message thread.');
+        Session::set('SessionMessageContext', 'success');
+        
         $this->redirectBack();
     }
     
@@ -95,7 +103,7 @@ class MessagingController extends Controller {
         $this->response->addHeader('Content-Type', 'application/json');
         
         if($status != 'success') {
-            $this->setStatusCode(400, $message);
+            return $this->setStatusCode(400, $message);
         }
                 
         if(!isset($_POST['ThreadID']) && !isset($_GET['ThreadID'])) {

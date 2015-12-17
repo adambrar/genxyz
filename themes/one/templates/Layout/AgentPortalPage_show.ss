@@ -1,7 +1,7 @@
 <% include EmptyHeader %>
 <div id="content">
     <div class="container margin-top margin-bottom">
-        <% include SessionMessage %></%>
+        <% include SessionMessage %>
         <div class="row">
             <div class="col-sm-3">
                 <img class="img-responsive img-circle" src="$Member.Logo.Filename" title="$Name" alt="Profile picture not found" />

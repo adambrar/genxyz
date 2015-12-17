@@ -25,6 +25,24 @@ jQuery(function($) {'use strict';
         $(this).addClass('active'); 
     });
                     
+    // TinyMCE initialize
+    if(typeof tinyMCE != 'undefined') {
+        tinyMCE.init({
+            theme : "advanced",
+            mode: "textareas", 
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_buttons1 : "bold,italic,underline,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,outdent,indent,separator,undo,redo",
+            theme_advanced_buttons2 : "",
+            theme_advanced_buttons3 : "",
+            height:"400px",
+            width:"100%"
+        });
+        setTimeout(function () { 
+            tinyMCE.activeEditor.onKeyPress.add(function(){$("textarea").val(tinyMCE.activeEditor.getContent());});
+            tinyMCE.activeEditor.onPaste.add(function(ed, e){$("textarea").val(tinyMCE.activeEditor.getContent());});
+        }, 2000);
+    }
+                    
     // Profile tab calls
     $('#profile-form-call a').click(function(e) {
         e.preventDefault();

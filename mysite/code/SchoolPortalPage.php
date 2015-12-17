@@ -26,6 +26,7 @@ class SchoolPortalPage_Controller extends Page_Controller
         'RegisterForm',
         'edit',
         'search',
+        'show',
         'BasicInfoForm',
         'ProfileLinksForm',
         'saveProfilePage',
@@ -167,6 +168,48 @@ class SchoolPortalPage_Controller extends Page_Controller
         $controller = $this->customise($customData);
 		return $controller->renderWith(array(
 			'SchoolProfile_edit', 'Page'
+		));
+    }
+    
+    public function show() {
+        if(!Permission::check('VIEW_SCHOOL')) {
+            return Security::permissionFailure();
+        }
+        
+        $id = $this->getRequest()->param('ID');
+        
+        if(!$id || !ctype_digit($id)) {
+            $this->httpError(404);
+        }
+
+        $school = School::get()->byID($id);
+        if(!$school) {$this->httpError(404);}
+        
+        $profilePage = PartnersProfile::get()->ByID($school->PartnersProfileID);
+		if(!$profilePage) {
+			$profilePage = new PartnersProfile();
+            $school->ProfilePageID = $profilePage->write();
+            $school->write();
+		}
+
+		$this->data()->Title = sprintf(
+			_t('MemberProfiles.MEMBERPROFILETITLE', "%s's Profile"),
+			$school->getName()
+		);
+        
+        $customData = array(
+            'Member' => $school,
+            'IsSelf' => $school->ID == School::currentUserID(),
+            'ProfilePage' => $profilePage,
+            'Title' => $school->Name ? $school->Name."'s Profile Page" : 'Profile Page',
+            'ApplicationForm' => ApplicationsController::create()->CreateSchoolApplicationForm($id),
+            'SessionMessage' => $this->getSessionMessage()
+        );
+        Requirements::javascript('themes/one/javascript/schoolview.js');
+
+        $controller = $this->customise($customData);
+		return $controller->renderWith(array(
+			'SchoolProfile_view', 'Page'
 		));
     }
     

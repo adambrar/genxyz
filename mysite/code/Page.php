@@ -223,15 +223,6 @@ class Page_Controller extends ContentController {
         return false;
     }
     
-    public function getSessionMessageContext() {
-        if(Session::get('SessionMessageContext')) {
-            $context = Session::get('SessionMessageContext');
-            Session::clear('SessionMessageContext');
-            return $context;
-        }
-        return 'primary';
-    }
-    
     function getFooterScholarships() {
         return Scholarship::get()->limit(5);
     }

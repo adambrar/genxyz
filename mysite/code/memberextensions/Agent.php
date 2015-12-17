@@ -75,6 +75,10 @@ class Agent extends Member {
         return SearchPage::get()->First()->Link('show/agent/'.$this->ID);
     }
     
+    public function editLink() {
+        return AgentPortalPage::get()->First()->Link('edit');
+    }
+    
     public function DoneApplications() {
         return $this->SchoolApplications()->filter('Status', 'Completed');
     }

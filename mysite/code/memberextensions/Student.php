@@ -97,6 +97,10 @@ class Student extends Member {
         return StudentPortalPage::get()->First()->Link('show/' . $this->ID);
     }
     
+    public function editLink() {
+        return StudentPortalPage::get()->First()->Link('edit');
+    }
+    
     public static function getStudentOptions() {
         if($students = DataObject::get("Student")->sort('Surname', 'ASC'))
         {
@@ -134,7 +138,7 @@ class Student extends Member {
     
     private function createNewStudentBlog(BlogTree $blogTree) {
         $blogHolder = new BlogHolder();
-        $blogHolder->Title = $this->Name."-".$member->ID;
+        $blogHolder->Title = $this->Name." ".$member->ID."'s Blog";
         $blogHolder->AllowCustomAuthors = false;
         $blogHolder->OwnerID = $member->ID;
         $blogHolder->URLSegment = $member->FirstName."-".$member->Surname."-".$member->ID;
@@ -164,7 +168,7 @@ class Student extends Member {
         
         //create welcome blog entry
         $blog = new BlogEntry();
-        $blog->Title = "Welcome to the ISNetwork " . $member->FirstName . "!";
+        $blog->Title = "Welcome to GenXYZ, " . $member->FirstName . "!";
         $blog->Author = "Admin";
         $blog->URLSegment = 'first-post';
         $blog->Tags = "created, first, welcome";

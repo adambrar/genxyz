@@ -30,5 +30,4 @@ class BlogEntryDecorator extends DataExtension {
     public function Topic() {
         return BlogCategory::get()->byID($this->owner->CategoryID);
     }
-
 }

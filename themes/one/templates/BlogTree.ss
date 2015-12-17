@@ -17,17 +17,17 @@
                     <div class="col-md-2 wow fadeInLeft" data-wow-delay="200ms">
                         <div class="row">
                             <div class="col-md-12 col-xs-4">
-                                <% if isSignedIn %>
+                                <% if CurrentUserIsOwner %>
                                     <h4>Blog Admin</h4>
                                     <ul class="list-unstyled">
-                                    <li>| <a href="$BlogHolder.postURL" id="postlink">Publish new post</a></li>
+                                    <li>| <a href="$postURL" id="postlink">Publish new post</a></li>
                                 <% end_if %>
                             </div>
                             <div class="col-md-12 col-xs-4">
                             <% if TagsCollection(1) %>
                                 <h4>Tags</h4>
                                 <ul class="list-unstyled">
-                                <% loop TagsCollection(3) %>
+                                <% loop TagsCollection() %>
                                     <li>| <a href="$Link" class="$Class" title="<% _t('BlogEntry_ss.VIEWALLPOSTTAGGED', 'View all posts tagged') %> '$Tag'" rel="tag">$Tag</a></li>
                                 <% end_loop %>
                                 </ul>

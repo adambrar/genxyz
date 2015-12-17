@@ -74,9 +74,12 @@ class School extends Member {
         $fields->removeByName('City');
     }
     
-    public function ViewLink() {
-        $link = SearchPage::get()->First()->Link();
-        return $link . 'show/school/' . $this->ID;
+    public function viewLink() {
+        return SearchPage::get()->First()->Link('show/school/' . $this->ID);
+    }
+    
+    public function editLink() {
+        return SchoolPortalPage::get()->First()->Link('edit');
     }
     
     public function getProgramOptions() {

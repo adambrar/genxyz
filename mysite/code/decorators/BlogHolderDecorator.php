@@ -21,4 +21,7 @@ class BlogHolderDecorator extends DataExtension {
         return $page->Link('show/'.$this->OwnerID);
     }
     
+    function CurrentUserIsOwner() {
+        return $this->owner->OwnerID == Member::currentUserID();
+    }
 }

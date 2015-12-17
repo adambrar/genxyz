@@ -27,6 +27,8 @@ class AgentPortalPage_Controller extends Page_Controller
         'doRegister',
         'edit',
         'search',
+        'show',
+        'preview',
         'BasicInfoForm',
         'SchoolPartnersForm',
         'saveSchoolPartners',
@@ -138,12 +140,66 @@ class AgentPortalPage_Controller extends Page_Controller
             'SchoolPartnersForm' => $this->SchoolPartnersForm(),
             'AddMessageForm' => MessagingController::create()->AddMessageForm($agent->MessageThreads()->First()->ID),
             'SessionMessage' => $this->getSessionMessage(),
-            'Title' => $agent->Name . '\'s Profile'
+            'Title' => $agent->Name . '\'s Profile',
+            'PreviewPorfileLink' => $this->Link('preview')
         );
 
         $controller = $this->customise($customData);
 		return $controller->renderWith(array(
 			'AgentPortalPage_edit', 'Page'
+		));
+    }
+    
+    public function show() {
+        if(!Permission::check('VIEW_AGENT')) {
+            return Security::permissionFailure();
+        }
+        
+        $id = $this->getRequest()->param('ID');
+
+        if(!$id || !ctype_digit($id)) {
+            $this->httpError(404);
+        }
+
+        $agent = Agent::get()->byID($id);
+		if(!$agent) { $this->httpError(404); }
+        
+		$this->data()->Title = sprintf(
+			_t('MemberProfiles.MEMBERPROFILETITLE', "%s's Information"),
+			$agent->Name
+		);
+		$this->data()->Parent = $this->parent;
+        
+        $customData = array(
+            'Member' => $agent,
+            'IsSelf' => $agent->ID == Member::currentUserID()
+        );
+        
+        $controller = $this->customise($customData);
+		return $controller->renderWith(array(
+			'AgentPortalPage_show', 'Page'
+		));
+    }
+    
+    public function preview() {
+        if(!Permission::check('EDIT_AGENT')) {
+            return Security::permissionFailure();
+        }
+        
+        $agent = Agent::currentUser();
+		if(!$agent) { $this->httpError(404); }
+        
+		$this->data()->Title = sprintf("PREVIEW: %s's Profile", $agent->Name);
+		$this->data()->Parent = $this->parent;
+        
+        $customData = array(
+            'Member' => $agent,
+            'SessionMessage' => array('Content' => 'This is what students see when looking at your profile', 'Context' => 'info', 'Title' => 'PROFILE PREVIEW')
+        );
+        
+        $controller = $this->customise($customData);
+		return $controller->renderWith(array(
+			'AgentPortalPage_show', 'Page'
 		));
     }
     

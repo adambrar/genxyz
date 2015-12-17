@@ -16,6 +16,7 @@
 
             <div class="collapse navbar-collapse navbar-right">
                 <ul class="nav navbar-nav">
+                    <% if CurrentMember %><li class=""><a href="{$CurrentMember.editLink()}">My Profile</a></li><% end_if %>
                     <li class="scroll active"><a href="#home">Home</a></li>
                     <li class="scroll"><a href="#about">About</a></li>
                     <li class="scroll"><a href="#services">Services</a></li>

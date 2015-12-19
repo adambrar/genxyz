@@ -25,6 +25,7 @@ class SchoolPortalPage_Controller extends Page_Controller
     private static $allowed_actions = array(
         'RegisterForm',
         'edit',
+        'preview',
         'search',
         'show',
         'BasicInfoForm',
@@ -53,6 +54,7 @@ class SchoolPortalPage_Controller extends Page_Controller
         
         Requirements::set_force_js_to_bottom(true);
         Requirements::javascript("themes/one/javascript/schooledit.js");
+        Requirements::javascript("themes/one/javascript/minimal-overlay.js");
         Requirements::javascript(
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.jquery.js");
         Requirements::css(
@@ -157,7 +159,8 @@ class SchoolPortalPage_Controller extends Page_Controller
             'EditPrograms' => $this->EditProgramForm(),
             'SchoolPartnersForm' => $this->SchoolPartnersForm(),
             'AgentPartnersForm' => $this->AgentPartnersForm(),
-            'SessionMessage' => $this->getSessionMessage()
+            'SessionMessage' => $this->getSessionMessage(),
+            'PreviewPorfileLink' => $this->Link('preview')
         );
          
         $this->data()->Title = sprintf(
@@ -167,7 +170,40 @@ class SchoolPortalPage_Controller extends Page_Controller
         
         $controller = $this->customise($customData);
 		return $controller->renderWith(array(
-			'SchoolProfile_edit', 'Page'
+			'SchoolPortalPage_edit', 'Page'
+		));
+    }
+    
+    public function preview() {
+        if(!Permission::check('EDIT_SCHOOL')) {
+            return Security::permissionFailure();
+        }
+        
+        $school = School::currentUser();
+		if(!$school) { $this->httpError(404); }
+        
+        Requirements::javascript('themes/one/javascript/schoolview.js');
+
+        $profileContent = PartnersProfile::get()->byID($school->PartnersProfileID);
+        
+        //check user has profile page and create if not
+        if(!$profileContent) {
+            $profileContent = new PartnersProfile();
+            $school->PartnersProfileID = $profileContent->write();
+            $school->write();
+        }
+        
+		$customData = array(
+            'Member' => $school,
+            'ProfilePage' => $profileContent,
+            'Title' => $school->Name ? $school->Name."'s Profile Page" : 'Profile Page',
+            'ApplicationForm' => 'This is where the application form would be.',
+            'SessionMessage' => array('Content' => 'This is what students see when looking at your profile', 'Context' => 'warning', 'Title' => 'PROFILE PREVIEW')
+        );
+        
+        $controller = $this->customise($customData);
+		return $controller->renderWith(array(
+			'SchoolPortalPage_show', 'Page'
 		));
     }
     
@@ -209,7 +245,7 @@ class SchoolPortalPage_Controller extends Page_Controller
 
         $controller = $this->customise($customData);
 		return $controller->renderWith(array(
-			'SchoolProfile_view', 'Page'
+			'SchoolPortalPage_show', 'Page'
 		));
     }
     
@@ -515,12 +551,12 @@ class SchoolPortalPage_Controller extends Page_Controller
         if($member->Programs()) {
             $programs = $member->Programs()->map('ID', 'Title', 'Please Select');
         } else {
-            $programs = array('empty', 'Add programs to edit.');
+            $programs = array();
         }
             
         $fields = new FieldList(
             new LiteralField('EditPrograms', '<h2>Edit Your Programs</h2>'),
-            DropdownField::create('ProgramID', 'Edit Your Programs', $programs)->setEmptyString('Select a program to edit.')->addExtraClass('edit-program-select chosen-select'),
+            DropdownField::create('ProgramID', 'Edit Your Programs', $programs)->setEmptyString('Select a program to edit.')->addExtraClass('edit-program-select chosen-select')->setAttribute('data-ajax-link', $this->Link('ajaxProgramRequest')),
             TextField::create('CertificateLink', 'Link to Program\'s Certification')->addExtraClass('CertificateLink'),
             TextField::create('DiplomaLink', 'Link to Program\'s Diploma')->addExtraClass('DiplomaLink'),
             TextField::create('DegreeLink', 'Link to Program\'s Degree')->addExtraClass('DegreeLink'),

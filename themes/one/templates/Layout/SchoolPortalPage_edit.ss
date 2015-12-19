@@ -4,7 +4,8 @@
         <div class="wow fadeInLeft margin-bottom">
             <div class="row">
                 <div class="col-xs-1"><% if Member.Logo %><img class="img-responsive img-thumbnail partner-logo" src="{$BaseHref}{$Member.Logo.Filename()}" alt="Logo" /><% end_if %></div>
-                <div class="col-xs-10"><h2>$Member.Name</h2></div>
+                <div class="col-xs-8"><h2>$Member.Name</h2></div>
+                <div class="col-xs-3 pull-right"><a class="btn btn-warning btn-lg pull-right" target="_blank" href="{$PreviewPorfileLink}">Preview your profile!</a></div>
             </div>
         </div>
         <% include SessionMessage %>

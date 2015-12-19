@@ -54,6 +54,7 @@ class AgentPortalPage_Controller extends Page_Controller
         
         Requirements::set_force_js_to_bottom(true);
         Requirements::javascript("themes/one/javascript/agentedit.js");
+        Requirements::javascript("themes/one/javascript/minimal-overlay.js");
         Requirements::javascript(
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.jquery.js");
         Requirements::css(
@@ -194,7 +195,7 @@ class AgentPortalPage_Controller extends Page_Controller
         
         $customData = array(
             'Member' => $agent,
-            'SessionMessage' => array('Content' => 'This is what students see when looking at your profile', 'Context' => 'info', 'Title' => 'PROFILE PREVIEW')
+            'SessionMessage' => array('Content' => 'This is what students see when looking at your profile', 'Context' => 'warning', 'Title' => 'PROFILE PREVIEW')
         );
         
         $controller = $this->customise($customData);
@@ -369,7 +370,7 @@ class AgentPortalPage_Controller extends Page_Controller
             DropdownField::create(
                 'ServiceNameID', 
                 'Select the service you would like to add.',
-                $services)->setEmptyString('Select service to add.'),
+                $services)->setEmptyString('Select service to add.')->addExtraClass('chosen-select'),
             TextAreaField::create('Description', 'A description of the service'),
             NumericField::create('Cost', 'The cost of the service')
         );
@@ -419,7 +420,7 @@ class AgentPortalPage_Controller extends Page_Controller
             
         $fields = new FieldList(
             new LiteralField('EditService', '<h2>Edit Your Services</h2>'),
-            DropdownField::create('ServiceID', 'Edit Your Service', $service)->setEmptyString('Select a service to edit.')->addExtraClass('edit-service-select'),
+            DropdownField::create('ServiceID', 'Edit Your Service', $service)->setEmptyString('Select a service to edit.')->addExtraClass('edit-service-select chosen-select')->setAttribute('data-ajax-link', $this->Link('ajaxServiceRequest')),
             TextAreaField::create('Description', 'A description of your service')->addExtraClass('DescriptionField'),
             NumericField::create('Cost', 'The cost of your service')->addExtraClass('CostField')
         );

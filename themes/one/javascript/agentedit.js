@@ -2,9 +2,9 @@ $(window).load(function(){
     
     //edit service load
     $('.edit-service-select select').change(function() {
-        $('.DescriptionField').val('LOADING...');
+        $('#Form_EditServiceForm').overlay();
         $('.CostField').val('');
-        $.getJSON('/agent/ajaxServiceRequest',
+        $.getJSON($(this).attr('data-ajax-link'),
             {'ServiceID':this.value},
             function(data) {
                 $.each(data,function(key,val) {
@@ -14,6 +14,7 @@ $(window).load(function(){
                         $('.'+val.title).val('');
                     }
                 });
+            $.overlayout();
         });
     });
     

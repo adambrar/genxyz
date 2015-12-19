@@ -26,9 +26,9 @@
                         </ul>  
                     </div>
                 </div>
+                <% include SessionMessage %>
             </div>
         </div>
-        <% include SessionMessage %>
         <ul class="nav nav-tabs margin-top">
             <li class="active"><a data-toggle="tab" href="#first">Home</a></li>
             <li><a data-toggle="tab" href="#programs">Academic Programs</a></li>

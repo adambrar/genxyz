@@ -12,9 +12,9 @@
                     <li class="list-group-item"><i class="fa fa-folder-open-o"></i> Number of Forum Posts <span class="pull-right">$Member.getLatestForumPosts().Count()</span></li>
                     <li class="list-group-item list-group-item-success"><i class="fa fa-star"></i> Member Rank <span class="pull-right">Student</span></li>
                 </ul>
+                <% include SessionMessage %>
             </div>
             <div class="col-md-9 wow fadeInRight">
-                <% include SessionMessage %>
             <ul class="nav nav-pills">
                 <li class="active"><a data-toggle="pill" href="#profile-forms">Edit Profile</a></li>
                 <li class=""><a data-toggle="pill" href="#student-services">Services</a></li>
@@ -96,35 +96,30 @@
                 </div>
                 <% end_if %>
                 <div id="forumposts" class="tab-pane fade">
-                    <div class="list-group">
-                        <h3 class="text-center">Your latest posts in the <a href="forums">Forum</a></h3>
-                        <% loop Member.getLatestForumPosts(10) %>
-                            <div class="list-group-item col-sm-6 wow fadeInRight" data-wow-duration="800ms" <% if Odd %>data-wow-delay="100ms"<% else %>data-wow-delay="300ms"<% end_if %>>
-                                <% include SmallSinglePost %>
+                    <div class="row">
+                        <div class="list-group">
+                            <h3 class="text-center">Latest posts in the <a href="forums">Forum</a></h3>
+                            <div class="col-md-6">
+                                <h4>Your Posts</h4>
+                                <% loop Member.getLatestForumPosts(10) %>
+                                    <div class="list-group-item wow fadeInRight" data-wow-duration="800ms" data-wow-delay="<% if Odd %>5<% else %>3<% end_if %>00ms">
+                                        <% include SmallSinglePost %>
+                                    </div>
+                                <% end_loop %>
                             </div>
-                        <% end_loop %>
+                            <h4>Forum Posts</h4>
+                            <div class="col-md-6">
+                                <% loop ForumPosts %>
+                                    <div class="list-group-item wow fadeInRight" data-wow-duration="800ms" <% if Odd %>data-wow-delay="100ms"<% else %>data-wow-delay="300ms"<% end_if %>>
+                                        <% include SmallSinglePost %>
+                                    </div>
+                                <% end_loop %>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="student-services" class="tab-pane fade">
-                    <div class="row text-center">
-                        <div class="col-lg-3 col-xs-6">
-                            <h4>Search Schools</h4>
-                            $Top.FilterSchools
-                        </div>
-                        <div class="col-lg-3 col-xs-6">
-                            <h4>Search Agents</h4>
-                            <div class="filter-form" data-form-name="FilterAgents"></div>
-                        </div>
-                        <div class="col-lg-3 col-xs-6">
-                            <h4>Search Mentors</h4>
-                            $Top.FilterMentors
-                        </div>
-                        <div class="col-lg-3 col-xs-6">
-                            <h4>Search Homestays</h4>
-                            $Top.FilterAccomodations
-                        </div>
-
-                    </div>
+                    <% include SearchMembers %>
                 </div>
                 <div id="profile-forms" class="tab-pane fade in active">
                     <div class="row">

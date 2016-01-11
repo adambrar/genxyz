@@ -77,11 +77,11 @@ class StudentPortalPage_Controller extends Page_Controller
             'FilterAgents' => $searchPage->FilterAgents(),
             'FilterAccomodations' => $searchPage->FilterAccomodations(),
             'FilterMentors' => $searchPage->FilterMentors(),
+            'ForumPosts' => Post::get()->Sort('LastEdited')->Limit(10)
         );
         
-        $controller = $this->customise($customData);
-		return $controller->renderWith(array(
-			'MemberProfilePage_profile', 'Page'
+        return $this->customise($customData)->renderWith(array(
+			'StudentPortalPage_edit', 'Page'
 		));
     }
     
@@ -260,7 +260,7 @@ class StudentPortalPage_Controller extends Page_Controller
                 $form = $this->EmergencyContactProfileForm($member);
                 break;
             case "ProfilePicture":
-                $form = $this->ProfilePictureForm($member);
+                $form = $this->ProfilePictureForm();
                 break;
             default:
                 $form = null;
@@ -453,23 +453,25 @@ class StudentPortalPage_Controller extends Page_Controller
         return new Form($this->owner, 'EmergencyContactProfileForm', $fields, $actions, $required);
     }
     
-    public function ProfilePictureForm($member = null) {
-        if(!$member) {
-            $member = Member::currentUser();
-        }
+    public function ProfilePictureForm() {
+        if(!Permission::check('EDIT_STUDENT')) { return Security::permissionFailure(); }
+        
+        $student = Student::currentUser();
         
         $fields = new FieldList(
-            new LiteralField('Hd_ProfilePicture', '<h3>Upload A New Profile Picture</h3>'),
+            new LiteralField('ProfilePicture_Label', '<h3>Upload A New Profile Picture</h3>'),
             new HiddenField('Email', 'Email')
         );
         $UploadField = new UploadField('ProfilePicture', 'Upload a new profile picture');
         $UploadField->setAllowedFileCategories('image');
         $UploadField->setAllowedMaxFileNumber(1);
-        $UploadField->setCanPreviewFolder(false);
+        $UploadField->setCanPreviewFolder(true);
         $UploadField->upload->setReplaceFile(true);
         $UploadField->setOverwriteWarning(true);
-        $UploadField->setFolderName('students/'.$member->ID.'/ProfilePicture');
-
+        if($student->ID) {
+            $UploadField->setFolderName('students/'.$student->ID.'/ProfilePicture');
+        }
+        
         $fields->insertBefore($UploadField, 'Email');
         
         $actions = new FieldList(

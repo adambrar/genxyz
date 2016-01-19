@@ -136,12 +136,12 @@ class Student extends Member {
         return $posts;
     }
     
-    private function createNewStudentBlog(BlogTree $blogTree) {
+    public function createNewStudentBlog(BlogTree $blogTree) {
         $blogHolder = new BlogHolder();
-        $blogHolder->Title = $this->Name." ".$member->ID."'s Blog";
+        $blogHolder->Title = $this->Name." ".$this->ID."'s Blog";
         $blogHolder->AllowCustomAuthors = false;
-        $blogHolder->OwnerID = $member->ID;
-        $blogHolder->URLSegment = $member->FirstName."-".$member->Surname."-".$member->ID;
+        $blogHolder->OwnerID = $this->ID;
+        $blogHolder->URLSegment = $this->FirstName."-".$this->Surname."-".$this->ID;
         $blogHolder->Status = "Published";
         $blogHolder->ParentID = $blogTree->ID;
         

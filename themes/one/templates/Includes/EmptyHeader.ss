@@ -24,7 +24,15 @@
                     <% if NotTrue %><% with Page(genxyz) %>
                     <li class="$LinkingMode"><a href="$Link">Blog</a></li>
                     <% end_with %><% end_if %>
-                    <li><a href="Security/logout">Logout</a></li>
+                    <% if CurrentMember %>
+                        <li><a href="Security/logout">Logout</a></li>
+                    <% else %>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Login</a>
+                            <ul class="dropdown-menu">
+                                <li>$LoginForm</li>
+                            </ul>
+                        </li>
+                    <% end_if %>
                 </ul>
             </div>
         </div><!--/.container-->

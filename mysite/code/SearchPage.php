@@ -7,13 +7,23 @@ class SearchPage extends Page
          'RecentlyAdded' => 'HTMLText',
     );
     
+    
+    private static $has_one = array(
+        'BackgroundImage' => 'Image'
+    );
+    
     public function getCMSFields() {
         $fields = parent::getCMSFields();
-              
+        $backgroundImage = new UploadField('BackgroundImage', 'Upload a background image.');
+        $backgroundImage->setAllowedFileCategories('image');
+        $backgroundImage->setAllowedMaxFileNumber(1);
+        $backgroundImage->setFolderName('Uploads/defaults');
+        $fields->addFieldToTab("Root.Main", $backgroundImage); 
+        
         $fields->addFieldToTab("Root.Main", new HTMLEditorField('Updates', 'Updates'));      
         $fields->addFieldToTab("Root.Main", new HTMLEditorField('RecentlyAdded', 'Recently Added'));
         
-        //$fields->removeByName("Content");
+        $fields->removeByName("Content");
 
         return $fields;
     }

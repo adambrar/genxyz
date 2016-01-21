@@ -41,12 +41,7 @@ class HomePage extends Page
         //---SERVICES END---//
         'BlogMessage' => 'Text',
         'ContactMessage' => 'Text'
-    );
-    
-    private static $has_one = array(
-        'BackgroundImage' => 'Image'
-    );
-        
+    );    
 
     private static $defaults = array(
     );
@@ -54,8 +49,6 @@ class HomePage extends Page
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         //---Welcome---//
-        $fields->addFieldToTab("Root.Welcome", new TextareaField('WelcomeTitle', 'Welcome Title'));      
-        $fields->addFieldToTab("Root.Welcome", new TextareaField('WelcomeMessage', 'Welcome Message'));
         $fields->addFieldToTab("Root.Welcome", new TextareaField('WhatIs', 'What Is GenXYZ'));
         //---About Us---//
         $fields->addFieldToTab("Root.About", new TextareaField('AboutUsMessage', 'About Us Message'));

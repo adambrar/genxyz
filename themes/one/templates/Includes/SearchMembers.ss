@@ -1,4 +1,6 @@
-<div id="academics" class="jumbotron" style="background: url($ThemeDir/images/slider/bg1.jpg) no-repeat;background-size:100% 100%;">
+<% with Page(search) %>
+<div id="academics" class="jumbotron" style="background: url({$BackgroundImage.Filename()}) no-repeat;background-size:100% 100%;">
+<% end_with %>
     <div class="container">
         <div class="row">
             <div class="col-md-7">

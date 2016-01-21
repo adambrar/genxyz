@@ -168,7 +168,7 @@ class Student extends Member {
         
         //create welcome blog entry
         $blog = new BlogEntry();
-        $blog->Title = "Welcome to GenXYZ, " . $member->FirstName . "!";
+        $blog->Title = "Welcome to GenXYZ, " . $this->FirstName . "!";
         $blog->Author = "Admin";
         $blog->URLSegment = 'first-post';
         $blog->Tags = "created, first, welcome";

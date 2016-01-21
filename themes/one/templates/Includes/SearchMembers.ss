@@ -1,7 +1,7 @@
-<div id="academics" class="jumbotron">
+<div id="academics" class="jumbotron" style="background: url($ThemeDir/images/slider/bg1.jpg) no-repeat;background-size:100% 100%;">
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-7">
                 <div class="">
                     <% include SessionMessage %>
                     <ul class="nav nav-tabs">
@@ -11,43 +11,35 @@
                         <li><a href="#mentor" data-toggle="tab"><i class="fa fa-users"></i> Student Mentors</a></li>
                     </ul>
                     <div id="academics-search-content" class="tab-content">
-                        <h3 class="text-center">Search for whatever you need.</h3>
-                        <div class="tab-pane active in fade" id="school">
-                            <div class="row">
-                                <div class="col-sm-4 col-xs-offset-1">$Top.FilterSchools</div>
-                                <div class="col-sm-6 col-sm-offset-1 hidden-xs">
-                                    <h3 class="wow fadeInRight hidden-xs" data-wow-delay="100ms">Find the academic institution that suits you the best!</h3><br/>
-                                    <img class="img-responsive wow fadeInRight" data-wow-delay="300ms" src="$ThemeDir/images/searchpage/uni.jpg" />
+                        <% with getSearchPageFilters %>    
+                                <h3 class="text-center">Search for whatever you need.</h3>
+                                <div class="tab-pane active in fade" id="school">
+                                    $FilterSchools
+                                    <h6 class="wow fadeInRight hidden-xs" data-wow-delay="100ms">Find the academic institution that suits you the best!</h6><br/>
                                 </div>
-                            </div>         
-                        </div>
-                        <div class="tab-pane fade" id="agent">
-                            <div class="row">
-                                <div class="col-sm-4 col-xs-offset-1">$Top.FilterAgents</div>
-                                <div class="col-xs-6 col-sm-offset-1 hidden-xs">
-                                    <h3 class="wow fadeInRight hidden-xs" data-wow-delay="100ms">Agents are waiting to help you with anything you might need. Search for one in your region.</h3><br/>
-                                    <img class="img-responsive wow fadeInRight" data-wow-delay="300ms" src="$ThemeDir/images/searchpage/agent.jpg" />
+                                <div class="tab-pane fade" id="agent">
+                                    $FilterAgents
+                                    <h6 class="wow fadeInRight hidden-xs" data-wow-delay="100ms">Agents are waiting to help you with anything you might need. Search for one in your region.</h6><br/>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="homestay">
-                            <div class="row">
-                                <div class="col-sm-4 col-xs-offset-1">$FilterAccomodations</div>
-                                <div class="col-sm-6 col-sm-offset-1 hidden-xs">
-                                    <h3 class="wow fadeInRight hidden-xs" data-wow-delay="100ms">Find a place to live wherever you are going!</h3><br/>
-                                    <img class="img-responsive wow fadeInRight" data-wow-delay="300ms" src="$ThemeDir/images/searchpage/house.jpg" />
+                                <div class="tab-pane fade" id="homestay">
+                                    $FilterAccomodations
+                                    <h6 class="wow fadeInRight hidden-xs" data-wow-delay="100ms">Find a place to live wherever you are going!</h6><br/>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="mentor">
+                                <div class="tab-pane fade" id="mentor">
+                                    $FilterMentors
+                                    <h6 class="wow fadeInRight" data-wow-delay="100ms">Mentors are available to help you out with anything and everything.</h6><br/>
+                                </div>
+                        <% end_with %>
+                        <% if isHomePage %>
                             <div class="row">
-                                <div class="col-sm-4 col-xs-offset-1">$FilterMentors</div>
-                                <div class="col-sm-6 col-sm-offset-1 hidden-xs">
-                                    <h3 class="wow fadeInRight" data-wow-delay="100ms">Mentors are available to help you out with anything and everything.</h3><br/>
-                                    <img class="img-responsive wow fadeInRight" data-wow-delay="300ms" src="$ThemeDir/images/searchpage/uni.jpg" />
+                                <div class="col-xs-3 col-xs-offset-2">
+                                    <a class="btn btn-primary btn-lg tohash" href="#about">Read More <i class="fa fa-arrow-down"></i></a>
+                                </div>
+                                <div class="col-xs-3 col-xs-offset-2">
+                                    <a class="btn btn-primary btn-lg" href="student">Students <i class="fa fa-arrow-right"></i></a>
                                 </div>
                             </div>
-                        </div>
+                        <% end_if %>
                     </div>
                 </div>
             </div>

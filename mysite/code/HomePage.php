@@ -44,6 +44,7 @@ class HomePage extends Page
     );
     
     private static $has_one = array(
+        'BackgroundImage' => 'Image'
     );
         
 
@@ -127,4 +128,6 @@ class HomePage_Controller extends Page_Controller
     public function LatestBlogPost(int $postNumber) {
         return BlogEntry::get()->exclude('Tags:PartialMatch', 'first')->sort('Created', 'DESC')->limit(1,$postNumber-1)->First();
     }
+    
+    public function isHomePage() { return true; }
 }

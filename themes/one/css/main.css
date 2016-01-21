@@ -250,6 +250,9 @@ select {
     padding: 10px 20px 10px;
     height: 550px;
 }
+#academics-search-content .tab-pane {
+    height: 375px;
+}
 #academics form {
     color: black;
 }
@@ -679,16 +682,14 @@ form .checkbox input[type=checkbox]  {
   transition: none;
 }
 #academics {
-  background: rgba(212,228,239,1);
-background: rgba(0,110,70,1);
-background: -moz-radial-gradient(center, ellipse cover, rgba(0,110,70,1) 0%, rgba(54,109,145,1) 100%);
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(0,110,70,1)), color-stop(100%, rgba(54,109,145,1)));
-background: -webkit-radial-gradient(center, ellipse cover, rgba(0,110,70,1) 0%, rgba(54,109,145,1) 100%);
-background: -o-radial-gradient(center, ellipse cover, rgba(0,110,70,1) 0%, rgba(54,109,145,1) 100%);
-background: -ms-radial-gradient(center, ellipse cover, rgba(0,110,70,1) 0%, rgba(54,109,145,1) 100%);
-background: radial-gradient(ellipse at center, rgba(0,110,70,1) 0%, rgba(54,109,145,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#006e46', endColorstr='#366d91', GradientType=1 );
-  padding: 100px 0;
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+  height: 100%;
+  background-color: #060;
+  text-align: center;
+  padding: 35px 0;
   color: #fff;
 }
 #academics h4 {

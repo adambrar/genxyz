@@ -223,6 +223,10 @@ class Page_Controller extends ContentController {
         return false;
     }
     
+    public function getSearchPageFilters() {
+        return new SearchPage_Controller();        
+    }
+    
     function getFooterScholarships() {
         return Scholarship::get()->limit(5);
     }

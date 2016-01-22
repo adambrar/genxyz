@@ -3,13 +3,11 @@
 class HomePage extends Page 
 {
     private static $db = array(
-        'WelcomeTitle' => 'Text',
-        'WelcomeMessage' => 'Text',
-        'WhatIs' => 'Text',
+        'WhatIs' => 'HTMLText',
         //---ABOUT US---//
-        'AboutUsMessage' => 'Varchar(300)',
-        'AboutUsVision' => 'Varchar(300)',
-        'AboutUsMissionStatement' => 'Varchar(300)',
+        'AboutUsMessage' => 'HTMLText',
+        'AboutUsVision' => 'HTMLText',
+        'AboutUsMissionStatement' => 'HTMLText',
         'AboutUsValueOne' => 'Varchar(100)',
         'AboutUsValueTwo' => 'Varchar(100)',
         'AboutUsValueThree' => 'Varchar(100)',
@@ -21,22 +19,22 @@ class HomePage extends Page
         //---SERVICES---//
         'ServicesMessage' => 'Text',
         'ServiceOneTitle' => 'Varchar(100)',
-        'ServiceOneContent' => 'Varchar(100)',
+        'ServiceOneContent' => 'HTMLText',
         'ServiceOneIcon' => 'Varchar(100)',
         'ServiceTwoTitle' => 'Varchar(100)',
-        'ServiceTwoContent' => 'Varchar(100)',
+        'ServiceTwoContent' => 'HTMLText',
         'ServiceTwoIcon' => 'Varchar(100)',
         'ServiceThreeTitle' => 'Varchar(100)',
-        'ServiceThreeContent' => 'Varchar(100)',
+        'ServiceThreeContent' => 'HTMLText',
         'ServiceThreeIcon' => 'Varchar(100)',
         'ServiceFourTitle' => 'Varchar(100)',
-        'ServiceFourContent' => 'Varchar(100)',
+        'ServiceFourContent' => 'HTMLText',
         'ServiceFourIcon' => 'Varchar(100)',
         'ServiceFiveTitle' => 'Varchar(100)',
-        'ServiceFiveContent' => 'Varchar(100)',
+        'ServiceFiveContent' => 'HTMLText',
         'ServiceFiveIcon' => 'Varchar(100)',
         'ServiceSixTitle' => 'Varchar(100)',
-        'ServiceSixContent' => 'Varchar(100)',
+        'ServiceSixContent' => 'HTMLText',
         'ServiceSixIcon' => 'Varchar(100)',
         //---SERVICES END---//
         'BlogMessage' => 'Text',
@@ -51,9 +49,9 @@ class HomePage extends Page
         //---Welcome---//
         $fields->addFieldToTab("Root.Welcome", new TextareaField('WhatIs', 'What Is GenXYZ'));
         //---About Us---//
-        $fields->addFieldToTab("Root.About", new TextareaField('AboutUsMessage', 'About Us Message'));
-        $fields->addFieldToTab("Root.About", new TextareaField('AboutUsVision', 'Vision'));
-        $fields->addFieldToTab("Root.About", new TextareaField('AboutUsMissionStatement', 'Mission Statement'));
+        $fields->addFieldToTab("Root.About", new HTMLEditorField('AboutUsMessage', 'About Us Message'));
+        $fields->addFieldToTab("Root.About", new HTMLEditorField('AboutUsVision', 'Vision'));
+        $fields->addFieldToTab("Root.About", new HTMLEditorField('AboutUsMissionStatement', 'Mission Statement'));
         $fields->addFieldToTab("Root.About", new TextField('AboutUsValueOne', 'Value One (100 characters)'));
         $fields->addFieldToTab("Root.About", new TextField('AboutUsValueTwo', 'Value Two'));
         $fields->addFieldToTab("Root.About", new TextField('AboutUsValueThree', 'Value Three'));
@@ -64,32 +62,32 @@ class HomePage extends Page
         //One
         $fields->addFieldToTab("Root.Services", new LiteralField('ServiceOne', '<h2>First Service</h2>'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceOneTitle', 'Service Title'));
-        $fields->addFieldToTab("Root.Services", new TextField('ServiceOneContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new HTMLEditorField('ServiceOneContent', 'Service Content (100 characters)'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceOneIcon', 'Service Icon'));
         //Two
         $fields->addFieldToTab("Root.Services", new LiteralField('ServiceTwo', '<h2>Second Service</h2>'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceTwoTitle', 'Service Title'));
-        $fields->addFieldToTab("Root.Services", new TextField('ServiceTwoContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new HTMLEditorField('ServiceTwoContent', 'Service Content (100 characters)'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceTwoIcon', 'Service Icon'));
         //Three
         $fields->addFieldToTab("Root.Services", new LiteralField('ServiceThree', '<h2>Third Service</h2>'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceThreeTitle', 'Service Title'));
-        $fields->addFieldToTab("Root.Services", new TextField('ServiceThreeContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new HTMLEditorField('ServiceThreeContent', 'Service Content (100 characters)'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceThreeIcon', 'Service Icon'));
         //Four
         $fields->addFieldToTab("Root.Services", new LiteralField('ServiceFour', '<h2>Fourth Service</h2>'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceFourTitle', 'Service Title'));
-        $fields->addFieldToTab("Root.Services", new TextField('ServiceFourContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new HTMLEditorField('ServiceFourContent', 'Service Content (100 characters)'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceFourIcon', 'Service Icon'));
         //Five
         $fields->addFieldToTab("Root.Services", new LiteralField('ServiceFive', '<h2>Fifth Service</h2>'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceFiveTitle', 'Service Title'));
-        $fields->addFieldToTab("Root.Services", new TextField('ServiceFiveContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new HTMLEditorField('ServiceFiveContent', 'Service Content (100 characters)'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceFiveIcon', 'Service Icon'));
         //Six
         $fields->addFieldToTab("Root.Services", new LiteralField('ServiceSix', '<h2>Sixth Service</h2>'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceSixTitle', 'Service Title'));
-        $fields->addFieldToTab("Root.Services", new TextField('ServiceSixContent', 'Service Content (100 characters)'));
+        $fields->addFieldToTab("Root.Services", new HTMLEditorField('ServiceSixContent', 'Service Content (100 characters)'));
         $fields->addFieldToTab("Root.Services", new TextField('ServiceSixIcon', 'Service Icon'));
         
         //Blog

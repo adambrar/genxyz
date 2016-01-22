@@ -691,6 +691,7 @@ form .checkbox input[type=checkbox]  {
   text-align: center;
   padding: 35px 0;
   color: #fff;
+  margin-bottom: 0px;
 }
 #academics h4 {
   color: #fff;

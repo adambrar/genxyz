@@ -17,12 +17,13 @@
                                 <div class="col-xs-6">
                                     <h4 class="panel-title"><strong>$Name</strong></h4>
                                     <p>$Country.Name</p>
-                                    <p><strong>Mission:</strong>words words words</p>
+                                    
                                 </div>
                                 <div class="text-right col-xs-4">
-                                    <p><strong>Level:</strong> school level</p>
-                                    <p><strong>Size:</strong> school size</p>
-                                    <p><strong>Mission:</strong>words words words</p>
+                                    <p><strong>Level:</strong> $Type</p>
+                                    <p><strong>Size:</strong> $SchoolSize Students</p>
+                                    <p><strong>Established:</strong> $Established</p>
+                                    
                                 </div>
                             </div>
                         </div>

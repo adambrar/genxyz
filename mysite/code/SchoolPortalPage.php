@@ -280,7 +280,7 @@ class SchoolPortalPage_Controller extends Page_Controller
         return new Form($this, 'RegisterForm', $fields, $actions, $required);
     }
     
-    public function doRegister() {
+    public function doRegister(array $data, Form $form) {
         $school = new School();
         
         $form->saveInto($school);
@@ -317,7 +317,7 @@ class SchoolPortalPage_Controller extends Page_Controller
             ->setSubject('New School Registration')
             ->setTemplate('NewSchool')
             ->populateTemplate(new ArrayData(array(
-                'Member' => $agent,
+                'Member' => $school,
                 'LoginLink' => Director::absoluteURL('admin')
             )));
                 
@@ -351,13 +351,11 @@ class SchoolPortalPage_Controller extends Page_Controller
             new TextField('ContactName', 'Contact Name<span>*</span>'),
             new EmailField('Email', 'Contact Email<span>*</span>'),
             new TextField('ContactTelephone', 'Contact Phone<span>*</span>'),
-            new LiteralField('LiteralHeader', '<h2>' . _t(
-                'AcademicsRegisterForm.DEFAULT',
-                'Registration Info') . '</h2>'),
+            DropdownField::create('Type', 'Type of School', singleton('School')->dbObject('Type')->enumValues())->setEmptyString('Select the type of your school')->addExtraClass('chosen-select'),
+            DropdownField::create('SchoolSize', 'Size of School', singleton('School')->dbObject('SchoolSize')->enumValues())->setEmptyString('Select the size of your school')->addExtraClass('chosen-select'),
+            new LiteralField('LiteralHeader', '<h2>Registration Info</h2>'),
             new TextField('RegistrationNumber', 'Registration Number'),
-            DropdownField::create('CountryID', _t(
-            'MemberRegForm.COUNTRY',
-            'Country of Registration'), Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('chosen-select'),
+            DropdownField::create('CountryID', 'Country of Registration', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('chosen-select'),
             ConfirmedPasswordField::create('Password', 'Password', "", null, true),
             new HiddenField('ID', 'ID')
         );

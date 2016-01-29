@@ -119,7 +119,23 @@ class Student extends Member {
     }
     
     public function getBlogHolder() {
-        return BlogHolder::get()->filter('OwnerID', $this->ID)->First();
+        $holder = BlogHolder::get()->filter('OwnerID', $this->ID)->First();
+        if($holder) {
+            return $holder;
+        }
+        
+        $blogTree = BlogTree::get()->filter('Title', 'Student Blogs')->First();
+        
+        //create new blog tree if not exists        
+        if(!$blogTree) {
+            $blogTree = new blogTree();
+            $blogTree->Title = "Student Blogs";
+            $blogTree->URLSegment = "student-blogs";
+            $blogTree->Status = "Published";
+            $blogTree->write();
+            $blogTree->doRestoreToStage();
+        }
+        return $this->createNewStudentBlog($blogTree);
     }
     
     public function getLatestForumPosts($max = null) {
@@ -178,6 +194,6 @@ class Student extends Member {
         $blog->write();
         $blog->doRestoreToStage();
         
-        return $blogHolder->ID;
+        return $blogHolder;
     }
 }

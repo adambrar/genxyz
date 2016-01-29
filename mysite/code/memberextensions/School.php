@@ -15,7 +15,7 @@ class School extends Member {
         'RegistrationNumber' => 'Varchar(20)',
         'Type' => "Enum('University,College,Polytechnic,High School,IB School,Language School')",
         'SchoolSize' => "Enum('Unknown,0-1000,1001-2000,2001-5000,5001-10000,10001-25000,25001-50000,50001-100000')",
-        'Established' => 'Varchar(4)'
+        'Established' => 'Varchar(4)',
     );
     
     private static $has_one = array(
@@ -36,7 +36,8 @@ class School extends Member {
     );
     
     private static $defaults = array(
-        'SchoolSize' => 'Unknown'
+        'SchoolSize' => 'Unknown',
+        'About' => 'A quick introduction of the school.'
     );
     
     private static $summary_fields = array(
@@ -80,7 +81,7 @@ class School extends Member {
     }
     
     public function viewLink() {
-        return SearchPage::get()->First()->Link('show/school/' . $this->ID);
+        return SchoolPortalPage::get()->First()->Link('show/' . $this->ID);
     }
     
     public function editLink() {

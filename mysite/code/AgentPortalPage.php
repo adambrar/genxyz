@@ -241,6 +241,23 @@ class AgentPortalPage_Controller extends Page_Controller
         $agent->NeedsApproval = true;
         $agent->ValidationKey = 0;
         
+        $blogTree = SiteTree::get()->filter(array(
+            'ClassName' => 'BlogTree',
+            'Title' => 'Agent Blogs'
+        ))->First();
+        
+        //create new blog tree if not exists        
+        if(!$blogTree) {
+            $blogTree = new blogTree();
+            $blogTree->Title = "Agent Blogs";
+            $blogTree->URLSegment = "agent-blogs";
+            $blogTree->Status = "Published";
+            $blogTree->write();
+            $blogTree->doRestoreToStage();
+        }
+        
+        $agent->createNewAgentBlog($blogTree);
+        
         try {
 			$agent->write();
 		} catch(ValidationException $e) {

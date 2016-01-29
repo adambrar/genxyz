@@ -14,6 +14,10 @@ class StudentPortalPage extends Page
 
         return $fields;
     }
+    
+    public function getStudentRegisterForm() {
+        return StudentPortalPage_Controller::create()->RegisterForm();
+    }
 }
 
 class StudentPortalPage_Controller extends Page_Controller 
@@ -119,6 +123,7 @@ class StudentPortalPage_Controller extends Page_Controller
         
         $blogTree = SiteTree::get()->filter(array(
             'ClassName' => 'BlogTree',
+            'Title' => 'Student Blogs'
         ))->First();
         
         //create new blog tree if not exists        

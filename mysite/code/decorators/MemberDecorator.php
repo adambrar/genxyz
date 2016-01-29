@@ -111,31 +111,4 @@ class MemberDecorator extends DataExtension {
         
         return $holder ? $holder : false;
     }
-        
-    private function createNewStudentBlog() {
-        $blogHolder = new BlogHolder();
-        $blogHolder->Title = $this->owner->FirstName."-".$this->owner->Surname."-".$this->owner->ID;
-        $blogHolder->AllowCustomAuthors = false;
-        $blogHolder->OwnerID = $this->owner->ID;
-        $blogHolder->URLSegment = $this->owner->FirstName."-".$this->owner->Surname."-".$this->owner->ID;
-        $blogHolder->Status = "Published";
-        $blogHolder->ParentID = SiteTree::get()->Filter('ClassName','BlogTree')->First()->ID;
-
-        $blogHolder->write();
-        $blogHolder->doRestoreToStage();
-        
-        //create welcome blog entry
-        $blog = new BlogEntry();
-        $blog->Title = "Welcome to GenXYZ " . $this->owner->FirstName . "!";
-        $blog->Author = "Admin";
-        $blog->URLSegment = 'first-post';
-        $blog->Tags = "created, first, welcome";
-        $blog->Content = "<p>Thank you for registering with the GenXYZ. Take a look around.</p>";
-        $blog->Status = "Published";
-        $blog->ParentID = $blogHolder->ID;
-        $blog->write();
-        $blog->doRestoreToStage();
-        
-        return $blogHolder;
-    }
 }

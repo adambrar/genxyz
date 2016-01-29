@@ -40,5 +40,4 @@ class BlogCategory extends DataObject {
         
         return Controller::join_links($pageURL, $params);
     }
-    
 }

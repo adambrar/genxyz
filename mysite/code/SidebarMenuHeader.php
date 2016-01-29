@@ -72,7 +72,8 @@ class SidebarMenuHeader_Controller extends Page_Controller
         
         if(!$holder) {
             $blogTree = SiteTree::get()->filter(array(
-                'ClassName' => 'BlogTree'
+                'ClassName' => 'BlogTree',
+                'Title' => 'Student Blogs'
             ))->First();
             $blogID = $this->createNewStudentBlog($member, $blogTree);
             $holder = BlogHolder::get()->ByID($blogID);

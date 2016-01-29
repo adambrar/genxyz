@@ -72,7 +72,7 @@ class Agent extends Member {
     }
     
     public function viewLink() {
-        return SearchPage::get()->First()->Link('show/agent/'.$this->ID);
+        return AgentPortalPage::get()->First()->Link('show/'.$this->ID);
     }
     
     public function editLink() {
@@ -85,5 +85,60 @@ class Agent extends Member {
     
     public function InProcessApplications() {
         return $this->SchoolApplications()->exclude('Status', 'Completed');
+    }
+    
+    public function getBlogHolder() {
+        $holder = BlogHolder::get()->filter('OwnerID', $this->ID)->First();
+        if($holder) {
+            return $holder;
+        }
+        $blogTree = SiteTree::get()->filter(array(
+            'ClassName' => 'BlogTree',
+            'Title' => 'Agent Blogs'
+        ))->First();
+        
+        //create new blog tree if not exists        
+        if(!$blogTree) {
+            $blogTree = new blogTree();
+            $blogTree->Title = "Agent Blogs";
+            $blogTree->URLSegment = "agent-blogs";
+            $blogTree->Status = "Published";
+            $blogTree->write();
+            $blogTree->doRestoreToStage();
+        }
+        
+        return $this->createNewAgentBlog($blogTree);
+    }
+    
+    public function createNewAgentBlog(BlogTree $blogTree) {
+        $blogHolder = new BlogHolder();
+        $blogHolder->Title = $this->Name." ".$this->ID."'s Blog";
+        $blogHolder->AllowCustomAuthors = false;
+        $blogHolder->OwnerID = $this->ID;
+        $blogHolder->URLSegment = $this->FirstName."-".$this->Surname."-".$this->ID;
+        $blogHolder->Status = "Published";
+        $blogHolder->ParentID = $blogTree->ID;
+        
+        $widgetArea = new WidgetArea();
+        $widgetArea->write();
+        
+        $blogHolder->SideBarWidgetID = $widgetArea->ID;
+        $this->BlogHolder = $blogHolder->write();
+        $this->write();
+        
+        $blogHolder->doRestoreToStage();
+        
+        //Tag Cloud Widget
+        $tagcloudwidget = new TagCloudWidget();
+        $tagcloudwidget->ParentID = $widgetArea->ID;
+        $tagcloudwidget->Enabled = 1;
+        $tagcloudwidget->write();
+        //Archive Widget
+        $archiveWidget = new ArchiveWidget();
+        $archiveWidget->ParentID = $widgetArea->ID;
+        $archiveWidget->Enabled = 1;
+        $archiveWidget->write();
+        
+        return $blogHolder;
     }
 }

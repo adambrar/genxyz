@@ -15,7 +15,8 @@ class PartnersProfile extends DataObject {
         'AdmissionRequirements' => 'Varchar(100)',
         'EnglishRequirements' => 'Varchar(100)',
         'ProcessingTime' => 'Varchar(100)',
-        'Fees' => 'Varchar(100)'
+        'Fees' => 'Varchar(100)',
+        'AboutSchool' => 'Text'
     );
     
     private static $belongs_to = array(

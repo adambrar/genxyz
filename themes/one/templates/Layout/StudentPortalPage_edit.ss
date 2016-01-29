@@ -57,7 +57,7 @@
                                 </li>
                             <% end_loop %>
                         <% else %>
-                            <li class="list-group-item"><h2><small>No active applications</small></h2></li>
+                            <li class="list-group-item"><h5><strong>No active applications</strong></h5></li>
                         <% end_if %>
                     </ul>
                     <ul class="list-group col-sm-6">
@@ -65,13 +65,13 @@
                         <% if Member.DoneApplications %>
                             <% loop Member.DoneApplications %>
                                 <li class="list-group-item $StatusClass">
-                                    <h5><a href="{$School.ViewProfileLink()}">$School.Name</a> - <small>$Created.Ago</small>
+                                    <h5><a href="{$School.viewLink()}" target="_blank">$School.Name</a> - <small>$Created.Ago</small>
                                         <button type="button" class="pull-right" data-toggle="modal" data-target="#editModal" data-application-id="{$ID}"><i class="fa fa-edit"></i></button>
                                     </h5>
                                 </li>
                             <% end_loop %>
                         <% else %>
-                            <li class="list-group-item"><h2><small>No completed applications</small></h2></li>
+                            <li class="list-group-item"><h5><strong>No completed applications</strong></h5></li>
                         <% end_if %>
                     </ul>
                     </div>
@@ -87,7 +87,7 @@
                             </div>
                             <h3 class="text-center">Your latest posts in <a title="View all your blog posts" href="$Link">$Title</a></h3>
                             <% loop HolderEntries(15) %>
-                                <div class="col-sm-6 wow fadeInRight" data-wow-duration="800ms" <% if Odd %>data-wow-delay="100ms"<% else %>data-wow-delay="300ms"<% end_if %>>
+                                <div class="wow fadeInRight" data-wow-duration="800ms" <% if Odd %>data-wow-delay="100ms"<% else %>data-wow-delay="300ms"<% end_if %>>
                                     <% include SmallBlogSummary %>
                                 </div><!--/.col-md-4-->
                             <% end_loop %>

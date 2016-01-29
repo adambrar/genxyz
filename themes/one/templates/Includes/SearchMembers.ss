@@ -10,7 +10,7 @@
                         <li class="active"><a href="#school" data-toggle="tab"><i class="fa fa-institution"></i> Schools</a></li>
                         <li><a href="#agent" data-toggle="tab"><i class="fa fa-user"></i> Agents</a></li>
                         <li><a href="#homestay" data-toggle="tab"><i class="fa fa-home"></i> Accommodation</a></li>
-                        <li><a href="#mentor" data-toggle="tab"><i class="fa fa-users"></i> Student Mentors</a></li>
+                        <li><a href="#mentor" data-toggle="tab"><i class="fa fa-users"></i> Mentors</a></li>
                     </ul>
                     <div id="academics-search-content" class="tab-content">
                         <% with getSearchPageFilters %>    

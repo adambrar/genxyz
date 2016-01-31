@@ -15,13 +15,13 @@
             <div class="col-sm-9">
                 <% include SessionMessage %>
                 <ul class="nav nav-tabs margin-top">
-                    <li class="active"><a data-toggle="tab" href="#first">Services</a></li>
-                    <li><a data-toggle="tab" href="#contact">Contact</a></li>
-                    <li><a data-toggle="tab" href="#blog">Blog</a></li>
-                    <li><a data-toggle="tab" href="#partners">Partners</a></li>
+                    <li class="{$ActiveTabToggle(first,default)}"><a data-toggle="tab" href="#first">Services</a></li>
+                    <li class="{$ActiveTabToggle(contact)}"><a data-toggle="tab" href="#contact">Contact</a></li>
+                    <li class="{$ActiveTabToggle(blog)}"><a data-toggle="tab" href="#blog">Blog</a></li>
+                    <li class="{$ActiveTabToggle(partners)}"><a data-toggle="tab" href="#partners">Partners</a></li>
                 </ul>
                 <div class="tab-content margin-bottom">
-                    <div id="first" class="tab-pane fade in active">
+                    <div id="first" class="tab-pane fade {$ActiveTabContent(first,default)}">
                         <h3 class="text-center">Services Provided</h3>
                         <div class="row match-height-boxes">
                             <% loop Member.Services() %>
@@ -42,7 +42,7 @@
                             <% end_loop %>
                         </div> 
                     </div>
-                    <div id="contact" class="tab-pane fade">
+                    <div id="contact" class="tab-pane fade {$ActiveTabContent(contact)}">
                         <h3 class="text-center">Contact Me</h3>
                         <table class="table contactme">
                             <tbody>
@@ -73,7 +73,7 @@
                             </tbody>
                         </table>
                     </div><!-- end contact tab -->
-                    <div id="blog" class="tab-pane fade">
+                    <div id="blog" class="tab-pane fade {$ActiveTabContent(blog)}">
                         <% with Member.getBlogHolder() %>
                             <% loop HolderEntries(15) %>
                                 <div class="wow fadeInRight" data-wow-duration="800ms" <% if Odd %>data-wow-delay="100ms"<% else %>data-wow-delay="300ms"<% end_if %>>
@@ -82,7 +82,7 @@
                             <% end_loop %>
                         <% end_with %>
                     </div>
-                    <div id="partners" class="tab-pane fade">
+                    <div id="partners" class="tab-pane fade {$ActiveTabContent(partners)}">
                         <% if Member.Schools() %>
                             <div class="row">
                                 <% loop Member.Schools() %>

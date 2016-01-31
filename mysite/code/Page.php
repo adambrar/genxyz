@@ -230,5 +230,31 @@ class Page_Controller extends ContentController {
     function getFooterScholarships() {
         return Scholarship::get()->limit(5);
     }
+    
+    public function ActiveTabToggle($tabName, $isDefault = false) {
+        if(Session::get('ActiveTab')) {
+            if(Session::get('ActiveTab') == $tabName) {
+                return "active";
+            }
+        } else {
+            if($isDefault == "default") {
+                return "active";
+            }
+        }
+        return "false";
+    }
 
+    public function ActiveTabContent($tabName, $isDefault = "") {
+        if(Session::get('ActiveTab')) {
+            if(Session::get('ActiveTab') == $tabName) {
+                Session::clear('ActiveTab');
+                return "active in";
+            }
+        } else {
+            if($isDefault == "default") {
+                return "active in";
+            }
+        }
+        return "false";
+    }
 }

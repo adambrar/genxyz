@@ -81,7 +81,7 @@ class ApplicationsController extends Controller {
     public function SchoolApplicationDetails() {
         $fields = new FieldList(
             new TextAreaField('Notes', 'Notes'),
-            new DropdownField('Status', 'Status', array('Completed','Processing','Incomplete')),
+            new DropdownField('Status', 'Status', singleton('SchoolApplication')->dbObject('Status')->enumValues()),
             new HiddenField('ID','ID')
         );
         
@@ -136,6 +136,7 @@ class ApplicationsController extends Controller {
         $application->write();
         Session::set('SessionMessage', 'Your application has been updated and saved.');
         Session::set('SessionMessageContext', 'success');
+        Session::set('ActiveTab', 'orders');
         
         return $this->redirectBack();
     }
@@ -170,6 +171,7 @@ class ApplicationsController extends Controller {
         if($application) {
             Session::set('SessionMessage', 'You have already applied to this school!');
             Session::set('SessionMessageContext', 'warning');
+            Session::set('ActiveTab', 'orders');
             return $this->redirectBack();
         }
         
@@ -183,6 +185,7 @@ class ApplicationsController extends Controller {
         
         Session::set('SessionMessage', 'Your application has been started! You can view and edit your application in your profile.');
         Session::set('SessionMessageContext', 'success');
+        Session::set('ActiveTab', 'orders');
 
         return $this->redirectBack();
     }

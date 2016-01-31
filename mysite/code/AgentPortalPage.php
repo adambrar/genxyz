@@ -418,11 +418,13 @@ class AgentPortalPage_Controller extends Page_Controller
 		} catch(ValidationException $e) {
 			Session::set('SessionMessage', $e->getResult()->message());
             Session::set('SessionMessageContext', 'danger'); 
+            Session::set('ActiveTab', 'service'); 
 			return $this->owner->redirectBack();
 		}
                 
         Session::set('SessionMessage', 'You added '.$service->getTitle().' as a service you provide. Students can now contact you to request this service.');
         Session::set('SessionMessageContext', 'success');
+        Session::set('ActiveTab', 'service');
         return $this->redirectBack();
     }
     
@@ -468,6 +470,7 @@ class AgentPortalPage_Controller extends Page_Controller
             $form->addErrorMessage('Blurb', 'That service was not found. Select a new service and try again.', 'Bad');
             Session::set('SessionMessage', 'That service was not found. Select a new service and try again.');
             Session::set('SessionMessageContext', 'danger');
+            Session::set('ActiveTab', 'service');
             return $this->redirectBack();
         }
 
@@ -477,12 +480,14 @@ class AgentPortalPage_Controller extends Page_Controller
 			$service->write();
 		} catch(ValidationException $e) {
 			Session::set('SessionMessage', $e->getResult()->message());
-            Session::set('SessionMessageContext', 'danger');   
+            Session::set('SessionMessageContext', 'danger');
+            Session::set('ActiveTab', 'service');
 			return $this->owner->redirectBack();
 		}
                 
         Session::set('SessionMessage', 'You updated your services. '.$service->getTitle().' has been saved.');
         Session::set('SessionMessageContext', 'success');
+        Session::set('ActiveTab', 'service');
         return $this->redirectBack();
     }
     
@@ -496,11 +501,13 @@ class AgentPortalPage_Controller extends Page_Controller
         if(!$service || $service->AgentID != Member::currentUserID()) {
             Session::set('SessionMessage', 'You don\'t have access to that service.');
             Session::set('SessionMessageContext', 'warning');
+            Session::set('ActiveTab', 'service');
             return $this->redirectBack();
         }
         
         Session::set('SessionMessage', 'Your services have been updated and you no longer provide '.$service->getTitle().'.');
         Session::set('SessionMessageContext', 'success');
+        Session::set('ActiveTab', 'service');
         $service->delete();
         
         return $this->redirectBack();
@@ -577,6 +584,10 @@ class AgentPortalPage_Controller extends Page_Controller
         if($addedString) { $returnString .= ' / You added: '. $addedString; } 
         $form->addErrorMessage('Blurb', $returnString, 'Good');
 
+        Session::set('SessionMessage', 'Your partners have been updated!');
+        Session::set('SessionMessageContext', 'success');
+        Session::set('ActiveTab', 'partners');
+        
         $this->redirectBack();
     }
         

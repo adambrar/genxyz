@@ -18,8 +18,10 @@ class SchoolApplication extends DataObject {
     );
     
     private static $searchable_fields = array(
-        'Agent.Name' => 'PartialMatchFilter',
-        'Student.FirstName' => 'PartialMatchFilter',
+        'Agent.FirstName' => 'StartsWith',
+        'Agent.LastName' => 'StartsWith',
+        'Student.FirstName' => 'StartsWith',
+        'Student.LastName' => 'StartsWith',
         'School.Name' => 'PartialMatchFilter'
     );
     

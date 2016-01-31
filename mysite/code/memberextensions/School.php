@@ -16,13 +16,13 @@ class School extends Member {
         'Type' => "Enum('University,College,Polytechnic,High School,IB School,Language School')",
         'SchoolSize' => "Enum('Unknown,0-1000,1001-2000,2001-5000,5001-10000,10001-25000,25001-50000,50001-100000')",
         'Established' => 'Varchar(4)',
+        'City' => 'Varchar(100)'
     );
     
     private static $has_one = array(
         'PartnersProfile' => 'PartnersProfile',
         'Logo' => 'Image',
-        'Country' => 'Country',
-        'City' => 'City'
+        'Country' => 'Country'
     );
     
     private static $has_many = array(

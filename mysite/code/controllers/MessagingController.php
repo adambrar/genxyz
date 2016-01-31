@@ -70,6 +70,8 @@ class MessagingController extends Controller {
             Session::set('SessionMessage', 'Your  message has been sent to '.$messageThread->Student->FirstName.'.');
         }
         Session::set('SessionMessageContext', 'success');
+        Session::set('ActiveTab', 'messages');
+
         $this->redirectBack();
     }
     
@@ -95,6 +97,7 @@ class MessagingController extends Controller {
         
         Session::set('SessionMessage', 'Your  created a new message thread.');
         Session::set('SessionMessageContext', 'success');
+        Session::set('ActiveTab', 'messages');
         
         $this->redirectBack();
     }

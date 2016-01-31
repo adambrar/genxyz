@@ -1,30 +1,30 @@
 <% include EmptyHeader %>
 <div id="content">
     <div class="container margin-bottom">
-        <div class="row" style="background-image: radial-gradient(circle at top left, #dfdfdf, yellow 150%);">
+        <div class="row" style="background-image: radial-gradient(circle at top left, #dfdfdf, #13E5A3 150%);background-image: radial-gradient(circle at top left, #ffffff, #{$ProfilePage.ProfileColour} 150%);">
             <div class="col-md-3 margin-top">
                 <img class="img-responsive img-thumbnail img-rounded" src="$Member.Logo.Filename" title="Profile picture" alt="Profile picture not found" />
                 <h2 class="text-center wow fadeInLeft"><a>$Member.Name</a></h2>
                 <ul class="list-group">
                     <li class="list-group-item"><i class="fa fa-graduation-cap"></i> Country <span class="pull-right">$Member.Country.Name</span></li>
+                    <li class="list-group-item"><i class="fa fa-map-marker"></i> City <span class="pull-right">$Member.City</span></li>
                     <li class="list-group-item"><i class="fa fa-institution"></i> Type <span class="pull-right">$Member.Type</span></li>
                     <li class="list-group-item"><i class="fa fa-gift"></i>  Joined<span class="pull-right">$Member.Created.Ago</span></li>
-                    <li class="list-group-item"><i class="fa fa-map-marker"></i> City <span class="pull-right">$Member.City.Name</span></li>
                 </ul>  
             </div>
             <div class="col-md-9 wow fadeInRight margin-top">
                 <% include SessionMessage %>
                 <ul class="nav nav-tabs margin-top">
-                    <li class="active"><a data-toggle="tab" href="#first">Home</a></li>
-                    <li><a data-toggle="tab" href="#programs">Academic Programs</a></li>
-                    <li><a data-toggle="tab" href="#application">Application</a></li>
-                    <li><a data-toggle="tab" href="#partners">Partners</a></li>
-                    <li><a data-toggle="tab" href="#contact">Contact</a></li>
-                    <li><a data-toggle="tab" href="#links">Application Process</a></li>
+                    <li class="{$ActiveTabToggle(first,default)}"><a data-toggle="tab" href="#first">Home</a></li>
+                    <li class="{$ActiveTabToggle(programs)}"><a data-toggle="tab" href="#programs">Academic Programs</a></li>
+                    <li class="{$ActiveTabToggle(application)}"><a data-toggle="tab" href="#application">Application</a></li>
+                    <li class="{$ActiveTabToggle(partners)}"><a data-toggle="tab" href="#partners">Partners</a></li>
+                    <li class="{$ActiveTabToggle(contact)}"><a data-toggle="tab" href="#contact">Contact</a></li>
+                    <li class="{$ActiveTabToggle(links)}"><a data-toggle="tab" href="#links">Application Process</a></li>
                 </ul>
 
                 <div class="tab-content margin-bottom">
-                    <div id="first" class="tab-pane fade in active">
+                    <div id="first" class="tab-pane fade {$ActiveTabContent(first,default)}">
                         <div class="row">
                             <div class="col-sm-5">
                                 <div class="wow fadeInLeft">$ProfilePage.AboutSchool</div>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="programs" class="tab-pane fade">
+                    <div id="programs" class="tab-pane fade {$ActiveTabContent(programs)}">
                         <h3 class="text-center">Programs available at this school</h3>
                         <div class="row">
                             <div class="col-sm-6">
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="partners" class="tab-pane fade">
+                    <div id="partners" class="tab-pane fade {$ActiveTabContent(partners)}">
                         <% if Member.Schools() %>
                             <div class="row">
                                 <% loop Member.Schools() %>
@@ -101,7 +101,7 @@
                             <h4 class="text-center">This school is currently not partnered with any other institutions.</h4>
                         <% end_if %>
                     </div>
-                    <div id="application" class="tab-pane fade">
+                    <div id="application" class="tab-pane fade {$ActiveTabContent(application)}">
                         <div class="row">
                             <div class="col-sm-6">
                                 $ApplicationForm                   
@@ -119,12 +119,12 @@
                             </div>
                         </div>
                     </div>
-                    <div id="contact" class="tab-pane fade">
+                    <div id="contact" class="tab-pane fade {$ActiveTabContent(contact)}">
                         <div class="wow fadeInUp">
                             $ProfilePage.ContactInfo
                         </div>
                     </div>
-                    <div id="links" class="tab-pane fade">
+                    <div id="links" class="tab-pane fade {$ActiveTabContent(links)}">
                         <div class="row">
                             <div class=" col-sm-6 col-sm-offset-3 list-group">
                                 <a class="text-center list-group-item list-group-item-info wow fadeInUp" data-wow-delay="0ms" href="http://$ProfilePage.Fees" target="_blank"><i class="fa fa-usd" aria-hidden="true"></i> FEES</a>

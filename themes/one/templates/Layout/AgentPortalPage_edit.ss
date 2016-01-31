@@ -12,19 +12,19 @@
             <div class="col-sm-9 margin-top">
                 <% include SessionMessage %>
                 <ul class="nav nav-tabs margin-top">
-                    <li class="active"><a data-toggle="tab" href="#basic">Profile Page</a></li>
-                    <li><a data-toggle="tab" href="#blogposts">Blog</a></li>
-                    <li><a data-toggle="tab" href="#service">Services</a></li>
-                    <li><a data-toggle="tab" href="#applications">Orders</a></li>
-                    <li><a data-toggle="tab" href="#partners">Partners</a></li>
-                    <li><a data-toggle="tab" href="#messages">Messages</a></li>
+                    <li class="{$ActiveTabToggle(basic,default)}"><a data-toggle="tab" href="#basic">Profile Page</a></li>
+                    <li class="{$ActiveTabToggle(blogposts)}"><a data-toggle="tab" href="#blogposts">Blog</a></li>
+                    <li class="{$ActiveTabToggle(service)}"><a data-toggle="tab" href="#service">Services</a></li>
+                    <li class="{$ActiveTabToggle(orders)}"><a data-toggle="tab" href="#orders">Orders</a></li>
+                    <li class="{$ActiveTabToggle(partners)}"><a data-toggle="tab" href="#partners">Partners</a></li>
+                    <li class="{$ActiveTabToggle(messages)}"><a data-toggle="tab" href="#messages">Messages</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div id="basic" class="tab-pane fade in active">
+                    <div id="basic" class="tab-pane fade {$ActiveTabContent(basic,default)}">
                         $BasicInfo
                     </div>
-                    <div id="blogposts" class="tab-pane fade">
+                    <div id="blogposts" class="tab-pane fade {$ActiveTabContent(blogposts)}">
                         <% with $Member.getBlogHolder %>
                             <div class="btn-group btn-group-justified" role="group">
                                 <a href="$postURL" type="button" class="btn btn-primary btn-md">Write a new post <i class="fa fa-pencil-square"></i></a>
@@ -39,7 +39,7 @@
                             <% end_loop %>
                         <% end_with %>
                     </div>
-                    <div id="service" class="tab-pane fade">
+                    <div id="service" class="tab-pane fade {$ActiveTabContent(service)}">
                         <div class="row">
                             <% if Member.Services() %>
                                 <div class="col-sm-6">
@@ -55,13 +55,13 @@
                             <% end_if %>
                         </div>
                     </div>
-                    <div id="partners" class="tab-pane fade">
+                    <div id="partners" class="tab-pane fade {$ActiveTabContent(partners)}">
                         $SchoolPartnersForm
                     </div>
-                    <div id="messages" class="tab-pane fade">
+                    <div id="messages" class="tab-pane fade {$ActiveTabContent(messages)}">
                         <% include MessageBox %>
                     </div>
-                    <div id="applications" class="tab-pane fade">
+                    <div id="orders" class="tab-pane fade {$ActiveTabContent(orders)}">
                         <div class="row">
                             <ul class="list-group col-sm-6">
                                 <li class="list-group-item list-group-item-default"><h2>Active Applications</h2></li>

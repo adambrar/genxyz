@@ -13,6 +13,12 @@ $databaseConfig = array(
 	"path" => '',
 );
 
+global $stripe_payments;
+$stripe_payments = array(
+    'secret_key' => 'sk_test_VUut2eSwowTAAxAzull9MaNW',
+    'publishable_key' => 'pk_test_ou3rXR9aUIFdtShDbyFDvtig'
+);
+
 // Set the site locale
 i18n::set_locale('en_US');
 
@@ -52,9 +58,5 @@ Object::add_extension('BlogTree_Controller', 'BlogTree_ControllerDecorator');
 Object::add_extension('CommentingController', 'CommentingControllerDecorator');
 
 Object::add_extension('ForumHolder', 'ForumHolderDecorator');
-
-//Object::add_extension('MemberProfilePage_Controller', 'MemberProfilePage_ControllerDecorator');
-//
-//Object::add_extension('MemberProfileViewer', 'MemberProfileViewerDecorator');
 
 SiteTree::add_extension('Translatable');

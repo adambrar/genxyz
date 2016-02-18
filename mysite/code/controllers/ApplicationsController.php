@@ -145,6 +145,18 @@ class ApplicationsController extends Controller {
         $fields = new FieldList(
             new LiteralField('Description', '<h5>Fill out your application to apply for this school. <small>You need to have an account to apply.</small></h5>'),
             $uploadField = new UploadField($name = 'StudentFiles', $title = 'Upload the required files.'),
+            new LiteralField('PaymentButton', 
+    '<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="pk_test_ou3rXR9aUIFdtShDbyFDvtig"
+          data-description="School Application"
+          data-name="GenXYZ"
+          data-amount="5000"
+          data-currency="CAD"
+          data-locale="auto"
+          data-email="user@email.com"
+          data-billing-address="false"
+          data-label="Pay for Application">
+    </script>'),
             new HiddenField('SchoolID','SchoolID', $schoolID)
         );
         $uploadField->setFolderName('students/'.Student::currentUserID().'/applications/'.$schoolID);
@@ -153,7 +165,7 @@ class ApplicationsController extends Controller {
         $uploadField->setCanPreviewFolder(false);
 
         $actions = FieldList::create(
-            FormAction::create('createapplication', 'Apply!')->addExtraClass('btn btn-primary btn-large')
+            FormAction::create('createapplication', 'Apply!')->addExtraClass('btn btn-primary btn-large hidden')
         );
         
         $required = new RequiredFields(array(
@@ -173,6 +185,50 @@ class ApplicationsController extends Controller {
             Session::set('SessionMessageContext', 'warning');
             Session::set('ActiveTab', 'orders');
             return $this->redirectBack();
+        }
+        
+        $token = $_POST['stripeToken'];
+        
+        global $stripe_payments;
+        
+        \Stripe\Stripe::setApiKey($stripe_payments['secret_key']);
+        
+        try {
+            $customer = \Stripe\Customer::create(array(
+                'email' => 'email.com',
+                'card' => $token
+            ));
+
+            $charge = \Stripe\Charge::create(array(
+                'customer' => $customer->id,
+                'amount'   => 5000,
+                'currency' => 'usd'
+            ));
+        } catch(\Stripe\Error\Card $e) {
+          // Since it's a decline, \Stripe\Error\Card will be caught
+          $body = $e->getJsonBody();
+          $err  = $body['error'];
+
+          print('Status is:' . $e->getHttpStatus() . "\n");
+          print('Type is:' . $err['type'] . "\n");
+          print('Code is:' . $err['code'] . "\n");
+          // param is '' in this case
+          print('Param is:' . $err['param'] . "\n");
+          print('Message is:' . $err['message'] . "\n");
+        } catch (\Stripe\Error\RateLimit $e) {
+          // Too many requests made to the API too quickly
+        } catch (\Stripe\Error\InvalidRequest $e) {
+          // Invalid parameters were supplied to Stripe's API
+        } catch (\Stripe\Error\Authentication $e) {
+          // Authentication with Stripe's API failed
+          // (maybe you changed API keys recently)
+        } catch (\Stripe\Error\ApiConnection $e) {
+          // Network communication with Stripe failed
+        } catch (\Stripe\Error\Base $e) {
+          // Display a very generic error to the user, and maybe send
+          // yourself an email
+        } catch (Exception $e) {
+          // Something else happened, completely unrelated to Stripe
         }
         
         $newApplication = new SchoolApplication();

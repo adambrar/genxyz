@@ -41,6 +41,7 @@ class SchoolPortalPage_Controller extends Page_Controller
         'saveSchoolPartners',
         'AgentPartnersForm',
         'saveAgentPartners',
+        'processpayment'
     );
     
     private static $url_handlers = array(
@@ -829,5 +830,10 @@ class SchoolPortalPage_Controller extends Page_Controller
             'value' => $program->DoctorateLink ? $program->DoctorateLink : '');
         
         return json_encode($js);
+    }
+    
+    public function processpayment()
+    {
+        echo "paid!";
     }
 }

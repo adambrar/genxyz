@@ -8,7 +8,8 @@
 		"silverstripe/widgets": "0.2.*",
 		"silverstripe/blog": "0.7.*",
 		"silverstripe/comments": "*",
-		"silverstripe/translatable": "*@stable"
+		"silverstripe/translatable": "*@stable",
+		"stripe/stripe-php": "^3.9"
 	},
     "require-dev": {
         "phpunit/phpunit": "3.7.*"

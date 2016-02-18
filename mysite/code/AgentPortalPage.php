@@ -248,7 +248,7 @@ class AgentPortalPage_Controller extends Page_Controller
         
         //create new blog tree if not exists        
         if(!$blogTree) {
-            $blogTree = new blogTree();
+            $blogTree = new BlogTree();
             $blogTree->Title = "Agent Blogs";
             $blogTree->URLSegment = "agent-blogs";
             $blogTree->Status = "Published";

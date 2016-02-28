@@ -33,7 +33,8 @@ class Student extends Member {
     
     private static $has_many = array(
         'SchoolApplications' => 'SchoolApplication',
-        'MessageThreads' => 'MessageThread'
+        'MessageThreads' => 'MessageThread',
+        'Ratings' => 'Rating'
     );
     
     private static $summary_fields = array(

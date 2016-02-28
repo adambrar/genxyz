@@ -143,8 +143,8 @@ class ApplicationsController extends Controller {
      
     public function CreateSchoolApplicationForm($schoolID = 0) {
         $fields = new FieldList(
-            new LiteralField('Description', '<h5>Fill out your application to apply for this school. <small>You need to have an account to apply.</small></h5>'),
-            $uploadField = new UploadField($name = 'StudentFiles', $title = 'Upload the required files.'),
+            LiteralField::create('Description', '<h5>Fill out your application to apply for this school. <small>You need to have an account to apply.</small></h5>'),
+            $uploadField = UploadField::create($name = 'StudentFiles', $title = 'Upload the required files.')->AddExtraClass('margin-bottom'),
             new LiteralField('PaymentButton', 
     '<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="pk_test_ou3rXR9aUIFdtShDbyFDvtig"
@@ -202,33 +202,47 @@ class ApplicationsController extends Controller {
             $charge = \Stripe\Charge::create(array(
                 'customer' => $customer->id,
                 'amount'   => 5000,
-                'currency' => 'usd'
+                'currency' => 'cad'
             ));
         } catch(\Stripe\Error\Card $e) {
           // Since it's a decline, \Stripe\Error\Card will be caught
           $body = $e->getJsonBody();
           $err  = $body['error'];
 
-          print('Status is:' . $e->getHttpStatus() . "\n");
-          print('Type is:' . $err['type'] . "\n");
-          print('Code is:' . $err['code'] . "\n");
-          // param is '' in this case
-          print('Param is:' . $err['param'] . "\n");
-          print('Message is:' . $err['message'] . "\n");
+          
         } catch (\Stripe\Error\RateLimit $e) {
-          // Too many requests made to the API too quickly
+            Session::set('SessionMessage', 'An error occurred! ');
+            Session::set('SessionMessageContext', 'danger');
+            Session::set('ActiveTab', 'orders');
+
+            return $this->redirectBack();
         } catch (\Stripe\Error\InvalidRequest $e) {
-          // Invalid parameters were supplied to Stripe's API
+            Session::set('SessionMessage', 'Your application has been started! You can view and edit your application in your profile.');
+            Session::set('SessionMessageContext', 'success');
+            Session::set('ActiveTab', 'orders');
+
+            return $this->redirectBack();
         } catch (\Stripe\Error\Authentication $e) {
-          // Authentication with Stripe's API failed
-          // (maybe you changed API keys recently)
+            Session::set('SessionMessage', 'Your application has been started! You can view and edit your application in your profile.');
+            Session::set('SessionMessageContext', 'success');
+            Session::set('ActiveTab', 'orders');
+
+            return $this->redirectBack();
         } catch (\Stripe\Error\ApiConnection $e) {
-          // Network communication with Stripe failed
+            Session::set('SessionMessage', 'Your application has been started! You can view and edit your application in your profile.');
+            Session::set('SessionMessageContext', 'success');
+            Session::set('ActiveTab', 'orders');
+
+            return $this->redirectBack();
         } catch (\Stripe\Error\Base $e) {
           // Display a very generic error to the user, and maybe send
           // yourself an email
         } catch (Exception $e) {
-          // Something else happened, completely unrelated to Stripe
+            Session::set('SessionMessage', 'Your application has been started! You can view and edit your application in your profile.');
+            Session::set('SessionMessageContext', 'success');
+            Session::set('ActiveTab', 'orders');
+
+            return $this->redirectBack();
         }
         
         $newApplication = new SchoolApplication();

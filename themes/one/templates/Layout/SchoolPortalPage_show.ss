@@ -4,8 +4,11 @@
         <div class="row" style="background-image: radial-gradient(circle at top left, #dfdfdf, #13E5A3 150%);background-image: radial-gradient(circle at top left, #ffffff, #{$ProfilePage.ProfileColour} 150%);">
             <div class="col-md-3 margin-top">
                 <img class="img-responsive img-thumbnail img-rounded" src="$Member.Logo.Filename" title="Profile picture" alt="Profile picture not found" />
-                <h2 class="text-center wow fadeInLeft"><a>$Member.Name</a></h2>
                 <ul class="list-group">
+                    <li class="list-group-item text-center wow fadeInLeft">
+                        <h4><a>$Member.Name</a></h4>
+                        <input type="hidden" class="rating" value="{$Member.GetRating()}" data-filled="glyphicon glyphicon-star fa-2x" data-empty="glyphicon glyphicon-star-empty fa-2x" data-fractions="2" data-readonly /> <br/>
+                    </li>
                     <li class="list-group-item"><i class="fa fa-graduation-cap"></i> Country <span class="pull-right">$Member.Country.Name</span></li>
                     <li class="list-group-item"><i class="fa fa-map-marker"></i> City <span class="pull-right">$Member.City</span></li>
                     <li class="list-group-item"><i class="fa fa-institution"></i> Type <span class="pull-right">$Member.Type</span></li>
@@ -65,6 +68,7 @@
                                   </div>
                             </div>
                         </div>
+                        <% include ReviewSlider %>
                     </div>
                     <div id="programs" class="tab-pane fade {$ActiveTabContent(programs)}">
                         <h3 class="text-center">Programs available at this school</h3>

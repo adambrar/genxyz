@@ -41,7 +41,7 @@ class SchoolPortalPage_Controller extends Page_Controller
         'saveSchoolPartners',
         'AgentPartnersForm',
         'saveAgentPartners',
-        'processpayment'
+        'rateschool'
     );
     
     private static $url_handlers = array(
@@ -55,6 +55,7 @@ class SchoolPortalPage_Controller extends Page_Controller
         
         Requirements::set_force_js_to_bottom(true);
         Requirements::javascript("themes/one/javascript/schooledit.js");
+        Requirements::javascript("themes/one/javascript/bootstrap-rating.min.js");
         Requirements::javascript("themes/one/javascript/minimal-overlay.js");
         Requirements::javascript(
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.jquery.js");
@@ -832,8 +833,51 @@ class SchoolPortalPage_Controller extends Page_Controller
         return json_encode($js);
     }
     
-    public function processpayment()
+    public function rateschool()
     {
-        echo "paid!";
+        if(!Permission::check('VIEW_SCHOOL')) {
+            return Security::permissionFailure();
+        }
+        
+        if( $this->GetRequest()->param('OtherID') == null 
+            || !ctype_digit($this->GetRequest()->param('OtherID')) 
+            || ($this->GetRequest()->param('ID') == null) 
+            || !ctype_digit($this->GetRequest()->param('ID')) ) {
+            return json_encode(array(
+                'responsetext' => 'Invalid arguments',
+                'value' => 'error'
+            ));
+        }
+        
+        $school = School::get()->byID($this->GetRequest()->param('ID'));
+                                      
+        if(!$school) return json_encode(array('value'=>'error','responsetext'=>'School not found.'));
+        
+        $rating = Rating::get()->filter(array(
+            'RaterID' => Student::currentUser()->ID,
+            'RateeID' => $this->GetRequest()->param('ID')
+        ))->First();
+        
+        if($rating) {
+            $rating->Value = $this->GetRequest()->param('OtherID');
+            $rating->Content = urldecode($_GET['reviewcontent']);
+            $rating->write();
+            return json_encode(array(
+                'responsetext' => 'Your rating has been changed for this school.',
+                'value' => 'error'
+            ));
+        }
+        
+        $rating = new Rating();
+        $rating->RaterID = Student::currentUser()->ID;
+        $rating->RateeID = $this->GetRequest()->param('ID');
+        $rating->Value = $this->GetRequest()->param('OtherID');
+        $rating->Content = urldecode($_GET['reviewcontent']);
+        $rating->write();
+        
+        return json_encode(array(
+            'value' => 'success',
+            'responsetext' => 'You rated this school.'
+        ));
     }
 }

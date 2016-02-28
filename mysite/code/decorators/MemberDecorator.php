@@ -12,6 +12,10 @@ class MemberDecorator extends DataExtension {
         'ForumRank' => 'Varchar'
 	);
     
+    private static $has_many = array(
+        'Ratings' => 'Rating'
+    );
+    
     private static $belongs_many_many = array(
         'ModeratedForums' => 'Forum'
     );

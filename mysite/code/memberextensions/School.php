@@ -96,4 +96,21 @@ class School extends Member {
             return array('No Programs');
         }
     }
+    
+    public function GetRating() {
+        $ratings = Rating::get()->filter(array(
+            'RateeID' => $this->ID
+        ));
+        
+        if(!$ratings) return 0;
+        
+        $aveRating = 0;
+        
+        foreach($ratings as $rating)
+        {
+            $aveRating += $rating->Value/$ratings->Count();
+        }
+        
+        return $aveRating;
+    }
 }

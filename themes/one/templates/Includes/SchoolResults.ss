@@ -18,7 +18,11 @@
                                     <div class="col-xs-6">
                                         <h4 class="panel-title"><strong>$Name</strong></h4>
                                         <p>$Country.Name</p>
-
+                                        <% if $GetRating() %>
+                                            <input type="hidden" class="rating" value="{$GetRating()}" data-readonly data-filled="glyphicon glyphicon-star fa-2x" data-empty="glyphicon glyphicon-star-empty fa-2x" data-fractions="4" />
+                                        <% else %>
+                                            <p>No ratings yet!</p>
+                                        <% end_if %>
                                     </div>
                                     <div class="text-right col-xs-4">
                                         <p><strong>Level:</strong> $Type</p>

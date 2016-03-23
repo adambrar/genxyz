@@ -16,7 +16,7 @@
                 <% include SessionMessage %>
                 <ul class="nav nav-tabs margin-top">
                     <li class="{$ActiveTabToggle(first,default)}"><a data-toggle="tab" href="#first">Services</a></li>
-                    <li class="{$ActiveTabToggle(contact)}"><a data-toggle="tab" href="#contact">Contact</a></li>
+                    
                     <li class="{$ActiveTabToggle(blog)}"><a data-toggle="tab" href="#blog">Blog</a></li>
                     <li class="{$ActiveTabToggle(partners)}"><a data-toggle="tab" href="#partners">Partners</a></li>
                 </ul>
@@ -97,7 +97,7 @@
                                 <% end_loop %>
                             </div>
                         <% else %>
-                            <h4 class="text-center">This school is currently not partnered with any other institutions.</h4>
+                            <h4 class="text-center">This agent is currently not partnered with any other institutions.</h4>
                         <% end_if %>        
                     </div>
                 </div>

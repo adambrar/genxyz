@@ -7,10 +7,9 @@
                 <div class="">
                     <% include SessionMessage %>
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#school" data-toggle="tab"><i class="fa fa-institution"></i> Schools</a></li>
+                        <li class="active"><a href="#school" data-toggle="tab"><i class="fa fa-institution"></i> Academics</a></li>
                         <li><a href="#agent" data-toggle="tab"><i class="fa fa-user"></i> Agents</a></li>
-                        <li><a href="#homestay" data-toggle="tab"><i class="fa fa-home"></i> Accommodation</a></li>
-                        <li><a href="#mentor" data-toggle="tab"><i class="fa fa-users"></i> Mentors</a></li>
+                        
                     </ul>
                     <div id="academics-search-content" class="tab-content">
                         <% with getSearchPageFilters %>    
@@ -24,11 +23,11 @@
                                     <h6 class="wow fadeInRight hidden-xs" data-wow-delay="100ms">Agents are waiting to help you with anything you might need. Search for one in your region.</h6><br/>
                                 </div>
                                 <div class="tab-pane fade" id="homestay">
-                                    $FilterAccomodations
+                                    
                                     <h6 class="wow fadeInRight hidden-xs" data-wow-delay="100ms">Find a place to live wherever you are going!</h6><br/>
                                 </div>
                                 <div class="tab-pane fade" id="mentor">
-                                    $FilterMentors
+                                    
                                     <h6 class="wow fadeInRight" data-wow-delay="100ms">Mentors are available to help you out with anything and everything.</h6><br/>
                                 </div>
                         <% end_with %>

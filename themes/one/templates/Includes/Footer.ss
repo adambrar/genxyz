@@ -33,18 +33,20 @@
             </div>
             <div class="row margin-top">
                 <div class="col-sm-6">
-                    Designed by <a target="_blank" href="http://adambrar.com/" title="Web Developemnt">Adam Brar</a>
                 </div>
                 <div class="col-sm-6">
                     <ul class="social-icons">
                         <li><a href="$SiteConfig.FacebookLink"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="$SiteConfig.TwitterLink"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="$SiteConfig.SnapchatLink"><i class="fa fa-google-plus"></i></a></li>
-                        <li><a href="$SiteConfig.InstagramLink"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="$SiteConfig.LinkedInLink"><i class="fa fa-linkedin-square"></i></a></li>
+                        <li><a href="$SiteConfig.GoogleLink"><i class="fa fa-google-plus"></i></a></li>
                         <li><a href="$SiteCongif.YoutubeLink"><i class="fa fa-youtube"></i></a></li>
                     </ul>
                 </div>
             </div>
+            <% with Page(terms-and-conditions) %>
+                <div class="row text-center">&copy; GenXYZ Education Inc. All Rights Reserved. GenXYZ <a href={$Link()}>Terms and Conditions</a></div>
+            <% end_with %>
+            <div class="row text-center">Designed By GenXYZ</div>
         </div>
     </footer><!--/#footer-->
     <!-- Piwik -->

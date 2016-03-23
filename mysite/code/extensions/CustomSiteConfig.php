@@ -7,9 +7,9 @@ class CustomSiteConfig extends DataExtension {
         'HighlightofMonth' => 'HTMLText',
         'SpecialThanks' => 'HTMLText',
         'FacebookLink' => 'Varchar(150)',
-        'TwitterLink' => 'Varchar(150)',
-        'SnapchatLink' => 'Varchar(150)',
-        'InstagramLink' => 'Varchar(150)',
+        'YoutubeLine' => 'Varchar(150)',
+        'GoogleLink' => 'Varchar(150)',
+        'LinkedInLink' => 'Varchar(150)',
         'AddressLine1' => 'Varchar(150)',
         'AddressLine2' => 'Varchar(150)',
         'PhoneNumber' => 'Varchar(20)'
@@ -44,9 +44,9 @@ class CustomSiteConfig extends DataExtension {
 
         $fields->addFieldToTab('Root.Footer', new LiteralField('SocialMediaLinks', '<h2>Social Media Links</h2>'));
         $fields->addFieldToTab('Root.Footer', new TextField('FacebookLink', 'Facebook Link'));
-        $fields->addFieldToTab('Root.Footer', new TextField('TwitterLink', 'Twitter Link'));
-        $fields->addFieldToTab('Root.Footer', new TextField('SnapchatLink', 'Snapchat Link'));
-        $fields->addFieldToTab('Root.Footer', new TextField('InstagramLink', 'Instagram Link'));
+        $fields->addFieldToTab('Root.Footer', new TextField('YoutubeLink', 'Twitter Link'));
+        $fields->addFieldToTab('Root.Footer', new TextField('GoogleLink', 'Snapchat Link'));
+        $fields->addFieldToTab('Root.Footer', new TextField('LinkedInLink', 'Instagram Link'));
         
         $fields->addFieldToTab('Root.Footer', new LiteralField('FooterContent', '<h2>Footer Content</h2>'));
 

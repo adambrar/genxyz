@@ -78,7 +78,7 @@ class SearchPage_Controller extends Page_Controller
             DropdownField::create('Country', 'Country', $this->countryOptions, Controller::curr()->getRequest()->param('Country'))->setEmptyString('Select a country')->addExtraClass('filter-by-country chosen-select'),
             DropdownField::create('Program', 'Program', Program::getProgramOptions(), Controller::curr()->getRequest()->param('Program'))->setEmptyString('Select Program')->addExtraClass('chosen-select'),
             TextField::create('SchoolName', 'Name of School', $schoolName),
-            DropdownField::create('Level', 'Level of Study', singleton('School')->dbObject('Type')->enumValues(), Controller::curr()->getRequest()->param('Level'))->setEmptyString('Type of School')->addExtraClass('chosen-select')
+            DropdownField::create('Level', 'Type', singleton('School')->dbObject('Type')->enumValues(), Controller::curr()->getRequest()->param('Level'))->setEmptyString('Type of School')->addExtraClass('chosen-select')
         );
         
         $actions = FieldList::create(

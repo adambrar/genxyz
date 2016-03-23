@@ -143,7 +143,7 @@ class ApplicationsController extends Controller {
      
     public function CreateSchoolApplicationForm($schoolID = 0) {
         $fields = new FieldList(
-            LiteralField::create('Description', '<h5>Fill out your application to apply for this school. <small>You need to have an account to apply.</small></h5>'),
+            LiteralField::create('Description', '<h5>Fill out your documents to apply for this school. <br/><small>You need to have an account to apply.</small></h5>'),
             $uploadField = UploadField::create($name = 'StudentFiles', $title = 'Upload the required files.')->AddExtraClass('margin-bottom'),
             new LiteralField('PaymentButton', 
     '<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"

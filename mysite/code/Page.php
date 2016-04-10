@@ -2,13 +2,7 @@
 class Page extends SiteTree implements PermissionProvider {
 
 	private static $db = array(
-        'menuWelcome' => 'Boolean',
-        'menuStudent' => 'Boolean',
-        'menuUniversity' => 'Boolean',
-        'menuStudentSidebar' => 'Boolean',
-        'menuShown' => "Enum('Welcome, Student, University, None')",
-        'showDropdown' => 'Boolean(1)',
-        'EnableZopim' => 'Boolean'
+        'EnableLiveChat' => 'Boolean'
 	);
 
 	private static $has_one = array(
@@ -16,34 +10,19 @@ class Page extends SiteTree implements PermissionProvider {
 	);
     
     private static $defaults = array(
-        'menuShown' => 'Student',
-        'showDropdown' => '1',
-        'EnableZopim' => false
+        'EnableLiveChat' => false
     );
     
     function getSettingsFields() {
         $fields = parent::getSettingsFields();
         
-        $fields->addFieldToTab('Root.Settings', new CheckboxField('menuWelcome',"Show up in welcome menu?"), 'ShowInSearch');
-        $fields->addFieldToTab('Root.Settings', new CheckboxField('menuStudent',"Show up in student menu?"), 'ShowInSearch');
-        $fields->addFieldToTab('Root.Settings', new CheckboxField('menuUniversity',"Show up in university menu?"), 'ShowInSearch');
-        $fields->addFieldToTab('Root.Settings', new CheckboxField('menuStudentSidebar',"Show up in student sidebar menu?"), 'ShowInSearch');
-        $fields->addFieldToTab('Root.Settings', new CheckboxField('showDropdown',"Show dropdown menu for children?"), 'ShowInSearch');
-        
-        $options = array('Welcome', 'Student', 'University');
-        $menuOptions = DropdownField::create( 'menuShown', 'Which menu will show on this page?', singleton('Page')->dbObject('menuShown')->enumValues() )->setEmptyString('Select menu');
-        $fields->addFieldToTab('Root.Settings', $menuOptions, 'ShowInSearch');
+        $fields->addFieldToTab('Root.Settings', new CheckboxField('EnableLiveChat',"Enable Live Chat on this page?"), 'ProvideComments');
         
         return $fields;
     }
     
     public function getCMSFields() {
         $fields = parent::getCMSFields();
-
-        $fields->addFieldToTab("Root.Zopim", new CheckboxField('EnableZopim', 'Enable Zopim Chat on the page?'));
-        
-        //$fields->removeByName("Content");
-
         return $fields;
     }
     

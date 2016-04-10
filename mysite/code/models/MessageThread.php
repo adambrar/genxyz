@@ -16,8 +16,6 @@ class MessageThread extends DataObject {
     );
     
     private static $searchable_fields = array(
-        'Agent.Name' => 'PartialMatchFilter',
-        'Student.FirstName' => 'PartialMatchFilter',
         'Title' => 'PartialMatchFilter'
     );
     

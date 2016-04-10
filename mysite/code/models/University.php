@@ -7,13 +7,9 @@ class University extends DataObject {
     );
     
     private static $has_many = array(
-        'Students' => 'Member',
+        
     );
     
-    private static $many_many = array(
-        'Programs' => 'Program'
-    );
-        
     public static function getUniversityOptions() {
         $universities = DataObject::get("University");
         if($universities)

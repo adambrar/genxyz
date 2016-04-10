@@ -51,7 +51,7 @@
                         <% if Member.InProcessApplications %>
                             <% loop Member.InProcessApplications %>
                                 <li class="list-group-item $StatusClass">
-                                    <h5><a href="{$School.ViewProfileLink()}">$School.Name</a> - <small>$Created.Ago</small>
+                                    <h5><a href="{$School.viewLink()}">$School.Name</a> - <small>$Created.Ago</small>
                                         <button type="button" class="pull-right" data-toggle="modal" data-target="#editModal" data-application-id="{$ID}"><i class="fa fa-edit"></i></button>
                                     </h5>
                                 </li>

@@ -315,7 +315,6 @@ class AgentPortalPage_Controller extends Page_Controller
         $fields = new FieldList(
             new TextField('FirstName', 'First Name<span>*</span>'),
             new TextField('Surname', ' Last Name<span>*</span>'),
-            new TextField('Website', 'Website<span>*</span>'),
             new TextAreaField('AboutMe', 'Write a little bit about yourself. (Max 200 characters!)'),
             $UploadField,
             DropdownField::create('NationalityID', 'Nationality', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown chosen-select'),

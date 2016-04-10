@@ -7,7 +7,7 @@ class HighSchool extends DataObject {
     );
     
     private static $has_many = array(
-        'Student' => 'Member'
+        
     );
     
     public static function getHighSchoolOptions() {

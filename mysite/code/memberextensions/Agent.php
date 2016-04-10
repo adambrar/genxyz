@@ -8,7 +8,6 @@
 class Agent extends Member {
     
     private static $db = array(
-        'Website' => 'Varchar(200)',
         'AboutMe' => 'Varchar(200)',
         'AddressLine1' => 'Varchar(200)',
         'AddressLine2' => 'Varchar(200)',

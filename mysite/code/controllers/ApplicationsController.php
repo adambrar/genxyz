@@ -12,11 +12,13 @@ class ApplicationsController extends Controller {
         'saveSchoolApplication',
         'CreateSchoolApplicationForm',
         'createschoolapplication',
-        'editschoolapplication'
+        'editschoolapplication',
+        'school'
     );
     
     private static $url_handlers = array(
-        'getform/$FormName/$ApplicationID' => 'getform'
+        'getform/$FormName/$ApplicationID' => 'getform',
+        'school/$SchoolID' => 'school'
     );
     
     public function getform($message = "", $extraData = null, $status = 'success') {
@@ -258,5 +260,59 @@ class ApplicationsController extends Controller {
         Session::set('ActiveTab', 'orders');
 
         return $this->redirectBack();
+    }
+    
+    public function school($message = "", $extraData = null, $status = 'success') {
+        if(!Permission::check('VIEW_SCHOOL'))
+        {
+            $this->setStatusCode(403, "You cannot access this school.");
+            return 'Parameter missing.';
+        }
+        
+        SSViewer::set_source_file_comments(false);
+        
+        if($status != 'success') {
+            $this->setStatusCode(400, $message);
+        }
+        
+        if(!$this->getRequest()->param('SchoolID')) {
+            return 'Parameter missing.';
+        }
+        
+        if(!ctype_digit($this->getRequest()->param('SchoolID'))) {
+            return 'Problem with parameter format.';
+        }
+        $school = School::get()->byID($this->getRequest()->param('SchoolID'));
+        if(!$school) {
+            return 'School not found.';
+        }
+        
+        $application = SchoolApplication::get()->filter(array(
+            'SchoolID' => $school->ID,
+            'StudentID' => Member::currentUserID()
+        ))->first();
+
+        if($application) {
+            return 'Application already exists.';
+        }
+        
+        $application = new SchoolApplication();
+        $application->SchoolID = $this->getRequest()->param('SchoolID');
+        $application->StudentID = Member::currentUserID();
+        $application->Status = "Processing";
+        $application->write();
+        
+        $email = new Email();
+        $email
+            ->setFrom('noreply@genxyz.ca')
+            ->setTo('admin@genxyz.ca')
+            ->setSubject('New School Application')
+            ->setTemplate('SchoolApplicationNotification')
+            ->populateTemplate(new ArrayData(array(
+                'Application' => $application
+            )));
+        $email->send();
+        
+        return "Application created. An agent will contact you shortly on your profile.";
     }
 }

@@ -13,6 +13,10 @@
                     <li class="list-group-item"><i class="fa fa-map-marker"></i> City <span class="pull-right">$Member.City</span></li>
                     <li class="list-group-item"><i class="fa fa-institution"></i> Type <span class="pull-right">$Member.Type</span></li>
                     <li class="list-group-item"><i class="fa fa-gift"></i>  Joined<span class="pull-right">$Member.Created.Ago</span></li>
+                    <li class="list-group-item text-center">
+                        <button id="interest-button" type="button" class="btn btn-info btn-lg btn-block" data-school-id="$Member.ID">I'm interested!</button>
+                        <div class="interest-response"></div>
+                    </li>
                 </ul>  
             </div>
             <div class="col-md-9 wow fadeInRight margin-top">
@@ -20,10 +24,10 @@
                 <ul class="nav nav-tabs margin-top">
                     <li class="{$ActiveTabToggle(first,default)}"><a data-toggle="tab" href="#first">Home</a></li>
                     <li class="{$ActiveTabToggle(programs)}"><a data-toggle="tab" href="#programs">Academic Programs</a></li>
-                    <li class="{$ActiveTabToggle(application)}"><a data-toggle="tab" href="#application">Application</a></li>
-                    <li class="{$ActiveTabToggle(partners)}"><a data-toggle="tab" href="#partners">Partners</a></li>
-                    <li class="{$ActiveTabToggle(contact)}"><a data-toggle="tab" href="#contact">Contact</a></li>
-                    <li class="{$ActiveTabToggle(links)}"><a data-toggle="tab" href="#links">Application Process</a></li>
+                    <%--<li class="{$ActiveTabToggle(application)}"><a data-toggle="tab" href="#application">Application</a></li>--%>
+                    <%--<li class="{$ActiveTabToggle(partners)}"><a data-toggle="tab" href="#partners">Partners</a></li>--%>
+                    <%--<li class="{$ActiveTabToggle(contact)}"><a data-toggle="tab" href="#contact">Contact</a></li>--%>
+                    <%--<li class="{$ActiveTabToggle(links)}"><a data-toggle="tab" href="#links">Application Process</a></li>--%>
                 </ul>
 
                 <div class="tab-content margin-bottom">
@@ -66,6 +70,13 @@
                                       <span class="sr-only">Next</span>
                                     </a>
                                   </div>
+                            </div>
+                        </div>
+                        <div class="row margin-bottom">
+                            <div class="col-sm-10 col-sm-offset-1 responsive-video margin-bottom">
+                                <iframe title="YouTube video player" class="youtube-player" type="text/html" 
+src="http://www.youtube.com/embed/W-Q7RMpINVo"
+frameborder="0" allowFullScreen></iframe>
                             </div>
                         </div>
                         <% include ReviewSlider %>
@@ -144,3 +155,16 @@
         </div>
     </div>
 </div>
+<% if Member.LiveChatID %>
+    <!-- Start of LiveChat (www.livechatinc.com) code -->
+    <script type="text/javascript">
+    window.__lc = window.__lc || {};
+    window.__lc.license = $Member.LiveChatID;
+    (function() {
+      var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+      lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+    })();
+    </script>
+    <!-- End of LiveChat code -->
+<% end_if %>

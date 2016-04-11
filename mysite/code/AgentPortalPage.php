@@ -30,6 +30,8 @@ class AgentPortalPage_Controller extends Page_Controller
         'show',
         'preview',
         'BasicInfoForm',
+        'ProfilePageForm',
+        'saveProfilePage',
         'SchoolPartnersForm',
         'saveSchoolPartners',
         'AddServiceForm',
@@ -131,11 +133,21 @@ class AgentPortalPage_Controller extends Page_Controller
         }
         
         $agent = Agent::currentUser();
+        if(!$agent)
+            return Security::permissionFailure('Must have an agent profile to access this page.');
+        
+        if(!$agent->ProfilePageID)
+        {
+            $agent->ProfilePageID = PartnersProfile::create()->write();
+            $agent->write();
+        }
+        $profilePage = PartnersProfile::get()->byID($agent->ProfilePageID);
         
         $customData = array(
             'Member' => $agent,
             'menuShown' => 'None',
             'BasicInfo' => $this->BasicInfoForm()->loadDataFrom($agent),
+            'ProfilePage' => $this->ProfilePageForm()->loadDataFrom($profilePage),
             'AddServices' => $this->AddServiceForm(),
             'EditServices' => $this->EditServiceForm(),
             'SchoolPartnersForm' => $this->SchoolPartnersForm(),
@@ -258,6 +270,8 @@ class AgentPortalPage_Controller extends Page_Controller
         
         $agent->createNewAgentBlog($blogTree);
         
+        $agent->ProfilePageID = PartnersProfile::create()->write();
+        
         try {
 			$agent->write();
 		} catch(ValidationException $e) {
@@ -315,7 +329,6 @@ class AgentPortalPage_Controller extends Page_Controller
         $fields = new FieldList(
             new TextField('FirstName', 'First Name<span>*</span>'),
             new TextField('Surname', ' Last Name<span>*</span>'),
-            new TextAreaField('AboutMe', 'Write a little bit about yourself. (Max 200 characters!)'),
             $UploadField,
             DropdownField::create('NationalityID', 'Nationality', Country::getCountryOptions())->setEmptyString('Select a Country')->addExtraClass('country-select-dropdown chosen-select'),
             new LiteralField('ContactInfo', '<h2>' . _t(
@@ -348,6 +361,48 @@ class AgentPortalPage_Controller extends Page_Controller
         return new Form($this->owner, 'BasicInfoForm', $fields, $actions, $required);
     }
     
+    public function ProfilePageForm() {
+        if(!Permission::check('EDIT_AGENT')) { return Security::permissionFailure(); }
+        
+        $agent = Agent::currentUser();
+        
+        $imageOne = new UploadField('SlideOne', 'Upload the first slide for your slideshow.');
+        $imageOne->setAllowedFileCategories('image');
+        $imageOne->setAllowedMaxFileNumber(1);
+        $imageOne->setFolderName('agents/'.Agent::currentUserID().'/Slides');
+        
+        $imageTwo = new UploadField('SlideTwo', 'Upload the second slide for your slideshow.');
+        $imageTwo->setAllowedFileCategories('image');
+        $imageTwo->setAllowedMaxFileNumber(1);
+        $imageTwo->setFolderName('agents/'.Agent::currentUserID().'/Slides');
+        
+        $imageThree = new UploadField('SlideThree', 'Upload the third slide for your slideshow.');
+        $imageThree->setAllowedFileCategories('image');
+        $imageThree->setAllowedMaxFileNumber(1);
+        $imageThree->setFolderName('agents/'.Agent::currentUserID().'/Slides');
+        
+        $fields = new FieldList(
+            $imageOne->addExtraClass('inline'),
+            $imageTwo->addExtraClass('inline'),
+            $imageThree->addExtraClass('inline'),
+            new TextField('WelcomeVideoLink', 'Paste the link to your embedded video. Make sure it is an https link and not http!'),
+            new HTMLEditorField('AboutSchool', 'Write a bit about yourself.')
+        );
+        
+        $actions = FieldList::create(
+            FormAction::create('saveProfilePage', 'Save')->addExtraClass('btn btn-primary')
+        );
+        
+        $required = new RequiredFields(array(
+//            'SlideOne',
+//            'SlideTwo',
+//            'SlideThree',
+//            'About'
+        ));
+        
+        return new Form($this->owner, 'ProfilePageForm', $fields, $actions, $required);
+    }
+    
     public function saveBasicInfo(array $data, Form $form) {
         if($data['ID'] != Member::currentUserID() ||
            !Permission::check('EDIT_AGENT')) {
@@ -368,6 +423,38 @@ class AgentPortalPage_Controller extends Page_Controller
             Session::set('SessionMessage', 'Your information has been updated and saved!');
             Session::set('SessionMessageContext', 'success');     
             return $this->redirectBack();
+    }
+    
+    public function saveProfilePage(array $data, Form $form) {
+        if(!Permission::check('EDIT_AGENT')) {
+            return Security::permissionFailure();
+        }
+        
+        $agent = Agent::currentUser();
+                
+        $profilePage = PartnersProfile::get()->byID($agent->ProfilePageID);
+        
+        if(!$profilePage) {
+            $profilePage = new PartnersProfile();
+            $agent->PartnersProfileID = $profilePage->write();
+            $agent->write();
+        }
+        
+        $form->saveInto($profilePage);
+
+        try {
+			$profilePage->write();
+		} catch(ValidationException $e) {
+			Session::set('SessionMessage', $e->getResult()->message());
+            Session::set('SessionMessageContext', 'danger');
+            
+			return $this->owner->redirectBack();
+		}
+        
+        Session::set('SessionMessage', 'Your profile has been saved successfully.');
+        Session::set('SessionMessageContext', 'success');
+
+        return $this->redirectBack();
     }
     
     public function AddServiceForm($member = null) {

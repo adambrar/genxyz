@@ -12,7 +12,8 @@
             <div class="col-sm-9 margin-top">
                 <% include SessionMessage %>
                 <ul class="nav nav-tabs margin-top">
-                    <li class="{$ActiveTabToggle(basic,default)}"><a data-toggle="tab" href="#basic">Profile Page</a></li>
+                    <li class="{$ActiveTabToggle(basic,default)}"><a data-toggle="tab" href="#basic">Basic Info</a></li>
+                    <li class="{$ActiveTabToggle(profile)}"><a data-toggle="tab" href="#profile">Profile Page</a></li>
                     <li class="{$ActiveTabToggle(blogposts)}"><a data-toggle="tab" href="#blogposts">Blog</a></li>
                     <li class="{$ActiveTabToggle(service)}"><a data-toggle="tab" href="#service">Services</a></li>
                     <li class="{$ActiveTabToggle(orders)}"><a data-toggle="tab" href="#orders">Orders</a></li>
@@ -23,6 +24,9 @@
                 <div class="tab-content">
                     <div id="basic" class="tab-pane fade {$ActiveTabContent(basic,default)}">
                         $BasicInfo
+                    </div>
+                    <div id="profile" class="tab-pane fade {$ActiveTabContent(profile)}">
+                        $ProfilePage
                     </div>
                     <div id="blogposts" class="tab-pane fade {$ActiveTabContent(blogposts)}">
                         <% with $Member.getBlogHolder %>

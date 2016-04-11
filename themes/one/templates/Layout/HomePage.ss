@@ -63,7 +63,7 @@
     <div class="container">
 
         <div class="section-header">
-            <h2 class="section-title text-center wow fadeInDown">Our Services</h2>
+            <h2 class="section-title text-center wow fadeInDown">What We Do</h2>
             <p class="text-center wow fadeInDown">$ServicesMessage</p>
         </div>
 
@@ -144,104 +144,82 @@
         </div><!--/.row-->    
     </div><!--/.container-->
 </section><!--/#services-->
-<% if NotTrue %>
-<section id="blog">
+<section id="magazine">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title text-center wow fadeInDown">Latest Blogs</h2>
-            <p class="text-center wow fadeInDown">$BlogMessage</p>
+            <h2 class="section-title text-center wow fadeInDown">Magazine Posts</h2>
         </div>
+        <% with LatestMagazinePost(1) %>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-1 wow fadeInRight">
+                     <h2><strong><a>$Title</a></strong></h2>
 
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="blog-post blog-large wow fadeInLeft" data-wow-duration="300ms" data-wow-delay="0ms">
-                    <article>
-                        <% with LatestBlogPost(1) %>
-                            <header class="entry-header">
-                                <div class="entry-thumbnail">
-                                    <img class="img-responsive" src="$ThemeDir/images/blog/01.jpg" alt="">
-                                    <span class="post-format post-format-video"><i class="fa fa-film"></i></span>
-                                </div>
-                                <div class="entry-date">$Date.Format('d F Y')</div>
-                                <h2 class="entry-title"><a href="$Link">$Title</a></h2>
-                            </header>
-
-                            <div class="entry-content">
-                                <P>$Content.LimitCharacters(300)</P>
-                                <a class="btn btn-primary" href="$Link">Read More</a>
-                            </div>
-
-                            <footer class="entry-meta">
-                                <% if authorName %><span class="entry-author"><i class="fa fa-pencil"></i> <a href="{$authorProfileURL($BlogHolder.OwnerID)}">$authorName</a></span><% end_if %>
-                                <% if Topic %><span class="entry-category"><i class="fa fa-folder-o"></i> <a href="{$Topic.Link}">$Topic.Title</a></span><% end_if %>
-                                <span class="entry-comments"><i class="fa fa-comments-o"></i> <a href="$Link#PageComments_holder">$Comments.Count</a></span>
-                            </footer>
-                        <% end_with %>
-                    </article>
-                </div>
-            </div><!--/.col-sm-6-->
-            <div class="col-sm-6">
-                <div class="blog-post blog-media wow fadeInRight" data-wow-duration="300ms" data-wow-delay="100ms">
-                    <article class="media clearfix">
-                        <% with LatestBlogPost(2) %>
-                            <div class="entry-thumbnail pull-left">
-                                <img class="img-responsive" src="$ThemeDir/images/blog/02.jpg" alt="">
-                                <span class="post-format post-format-gallery"><i class="fa fa-image"></i></span>
-                            </div>
-                            <div class="media-body">
-                                <header class="entry-header">
-                                    <div class="entry-date">$Date.Format('d F Y')</div>
-                                    <h2 class="entry-title"><a href="$Link">$Title</a></h2>
-                                </header>
-
-                                <div class="entry-content">
-                                    <P>$Content.LimitCharacters(200)</P>
-                                    <a class="btn btn-primary" href="$Link">Read More</a>
-                                </div>
-
-                                <footer class="entry-meta pull-right">
-                                    <% if authorName %><span class="entry-author"><i class="fa fa-pencil"></i> <a href="$authorProfileURL($BlogHolder.OwnerID)">$authorName</a></span><% end_if %>
-                                    <% if Topic %><span class="entry-category"><i class="fa fa-folder-o"></i> <a href="$Topic.Link">$Topic.Title</a></span><% end_if %>
-                                    <span class="entry-comments"><i class="fa fa-comments-o"></i> <a href="$Link#PageComments_holder">$Comments.Count</a></span>
-                                </footer>
-                            </div>
-                        <% end_with %>
-                    </article>
-                </div>
-                <div class="blog-post blog-media wow fadeInRight" data-wow-duration="300ms" data-wow-delay="200ms">
-                    <article class="media clearfix">
-                        <% with LatestBlogPost(3) %>
-                            <div class="entry-thumbnail pull-left">
-                                <img class="img-responsive" src="$ThemeDir/images/blog/03.jpg" alt="">
-                                <span class="post-format post-format-audio"><i class="fa fa-music"></i></span>
-                            </div>
-                            <div class="media-body">
-                                <header class="entry-header">
-                                    <div class="entry-date">$Date.Format('d F Y')</div>
-                                    <h2 class="entry-title"><a href="$Link">$Title</a></h2>
-                                </header>
-
-                                <div class="entry-content">
-                                    <P>$Content.LimitCharacters(200)</P>
-                                    <a class="btn btn-primary" href="$Link">Read More</a>
-                                </div>
-
-                                <footer class="entry-meta">
-                                    <% if authorName %><span class="entry-author"><i class="fa fa-pencil"></i> <a href="{$authorProfileURL($BlogHolder.OwnerID)}">$authorName</a></span><% end_if %>
-                                    <% if Topic %><span class="entry-category"><i class="fa fa-folder-o"></i> <a href="$Topic.Link">$Topic.Title</a></span><% end_if %>
-                                    <span class="entry-comments"><i class="fa fa-comments-o"></i> <a href="$Link#PageComments_holder">$Comments.Count</a></span>
-                                </footer>
-                            </div>
-                        <% end_with %>
-                    </article>
+                    <p>$Content.LimitCharacters(400)</p>
+                    <p><a class="btn btn-primary" href="#">Read more</a>
+                    </p>
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p><i class="glyphicon glyphicon-calendar"></i>$Date.Format('d F Y') | <a href="$Link#PageComments_holder"><i class="glyphicon glyphicon-comment"></i>  $Comments.Count</a> <% if Topic %>| <span class="entry-category"><i class="fa fa-folder-o"></i> <a href="$Topic.Link">$Topic.Title</a></span><% end_if %>
+                    </p>
+                </div>
+            </div>
+        <% end_with %>
+        <% with LatestMagazinePost(2) %>
+            <div class="row text-right">
+                <div class="col-md-8 col-md-offset-3 wow fadeInRight">
+                     <h2><strong><a>$Title</a></strong></h2>
 
+                    <p>$Content.LimitCharacters(400)</p>
+                    <p><a class="btn btn-primary" href="#">Read more</a>
+                    </p>
+                </div>
+            </div>
+            <div class="row text-right">
+                <div class="col-md-10 col-md-offset-1">
+                    <p><i class="glyphicon glyphicon-calendar"></i>$Date.Format('d F Y') | <a href="$Link#PageComments_holder"><i class="glyphicon glyphicon-comment"></i>  $Comments.Count</a> <% if Topic %>| <span class="entry-category"><i class="fa fa-folder-o"></i> <a href="$Topic.Link">$Topic.Title</a></span><% end_if %>
+                    </p>
+                </div>
+            </div>
+        <% end_with %>
+        <% with LatestMagazinePost(3) %>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-1 wow fadeInRight">
+                     <h2><strong><a>$Title</a></strong></h2>
+
+                    <p>$Content.LimitCharacters(400)</p>
+                    <p><a class="btn btn-primary" href="#">Read more</a>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p><i class="glyphicon glyphicon-calendar"></i>$Date.Format('d F Y') | <a href="$Link#PageComments_holder"><i class="glyphicon glyphicon-comment"></i>  $Comments.Count</a> <% if Topic %>| <span class="entry-category"><i class="fa fa-folder-o"></i> <a href="$Topic.Link">$Topic.Title</a></span><% end_if %>
+                    </p>
+                </div>
+            </div>
+        <% end_with %>
+        <% with LatestMagazinePost(4) %>
+            <div class="row text-right">
+                <div class="col-md-8 col-md-offset-3 wow fadeInRight">
+                     <h2><strong><a>$Title</a></strong></h2>
+
+                    <p>$Content.LimitCharacters(400)</p>
+                    <p><a class="btn btn-primary" href="#">Read more</a>
+                    </p>
+                </div>
+            </div>
+            <div class="row text-right">
+                <div class="col-md-10 col-md-offset-1">
+                    <p><i class="glyphicon glyphicon-calendar"></i>$Date.Format('d F Y') | <a href="$Link#PageComments_holder"><i class="glyphicon glyphicon-comment"></i>  $Comments.Count</a> <% if Topic %>| <span class="entry-category"><i class="fa fa-folder-o"></i> <a href="$Topic.Link">$Topic.Title</a></span><% end_if %>
+                    </p>
+                </div>
+            </div>
+        <% end_with %>
+        
     </div>
 </section>
-<% end_if %>
-
 <section id="get-in-touch">
     <div class="container">
         <div class="section-header">

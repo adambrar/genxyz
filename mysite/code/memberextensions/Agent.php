@@ -8,7 +8,7 @@
 class Agent extends Member {
     
     private static $db = array(
-        'AboutMe' => 'Varchar(200)',
+        'AboutMe' => 'HTMLText',
         'AddressLine1' => 'Varchar(200)',
         'AddressLine2' => 'Varchar(200)',
         'City' => 'Varchar(200)',
@@ -19,7 +19,8 @@ class Agent extends Member {
     private static $has_one = array(
         'Logo' => 'Image',
         'Nationality' => 'Country',
-        'Country' => 'Country'
+        'Country' => 'Country',
+        'ProfilePage' => 'PartnersProfile'
     );
     
     private static $has_many = array(

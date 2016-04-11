@@ -120,5 +120,11 @@ class HomePage_Controller extends Page_Controller
         return BlogEntry::get()->exclude('Tags:PartialMatch', 'first')->sort('Created', 'DESC')->limit(1,$postNumber-1)->First();
     }
     
+    public function LatestMagazinePost(int $postNumber) {
+        $blogHolder = BlogHolder::get()->filter('ParentID', '0')->First();
+        
+        return BlogEntry::get()->filter('ParentID', $blogHolder->ID)->sort('Created', 'DESC')->limit(1,$postNumber-1)->First();
+    }
+    
     public function isHomePage() { return true; }
 }

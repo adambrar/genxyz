@@ -32,11 +32,23 @@
 
                 <div class="tab-content margin-bottom">
                     <div id="first" class="tab-pane fade {$ActiveTabContent(first,default)}">
-                        <div class="row">
-                            <div class="col-sm-5">
-                                <div class="wow fadeInLeft">$ProfilePage.AboutSchool</div>
+                        <% if ProfilePage.WelcomeVideoLink %>
+                        <div class="row margin-bottom">
+                            <div class="col-sm-10 col-sm-offset-1 responsive-video">
+                                <iframe title="YouTube video player" class="youtube-player" type="text/html" 
+src="{$ProfilePage.WelcomeVideoLink}"
+frameborder="0" allowFullScreen></iframe>
                             </div>
-                            <div class="col-sm-7" style="height:400px;">
+                        </div>
+                        <% end_if %>
+                        <hr width=20% align=center style="background-color:#{$ProfilePage.ProfileColour};height:1px;">
+                        <hr width=50% align=center style="background-color:#{$ProfilePage.ProfileColour};height:1px;">
+                        <hr width=80% align=center style="background-color:#{$ProfilePage.ProfileColour};height:1px;">
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-1 margin-bottom">
+                                $ProfilePage.AboutSchool
+                            </div>
+                            <div class="col-sm-8 col-sm-offset-3 margin-bottom">
                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                     <!-- Indicators -->
                                     <ol class="carousel-indicators">
@@ -72,13 +84,9 @@
                                   </div>
                             </div>
                         </div>
-                        <div class="row margin-bottom">
-                            <div class="col-sm-10 col-sm-offset-1 responsive-video margin-bottom">
-                                <iframe title="YouTube video player" class="youtube-player" type="text/html" 
-src="http://www.youtube.com/embed/W-Q7RMpINVo"
-frameborder="0" allowFullScreen></iframe>
-                            </div>
-                        </div>
+                        <hr width=80% align=center style="background-color:#{$ProfilePage.ProfileColour};height:1px;">
+                        <hr width=50% align=center style="background-color:#{$ProfilePage.ProfileColour};height:1px;">
+                        <hr width=20% align=center style="background-color:#{$ProfilePage.ProfileColour};height:1px;">
                         <% include ReviewSlider %>
                     </div>
                     <div id="programs" class="tab-pane fade {$ActiveTabContent(programs)}">

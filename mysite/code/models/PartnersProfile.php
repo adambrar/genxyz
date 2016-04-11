@@ -16,7 +16,7 @@ class PartnersProfile extends DataObject {
         'EnglishRequirements' => 'Varchar(100)',
         'ProcessingTime' => 'Varchar(100)',
         'Fees' => 'Varchar(100)',
-        'AboutSchool' => 'Text',
+        'AboutSchool' => 'HTMLText',
         'ProfileColour' => 'Varchar(6)'
     );
     

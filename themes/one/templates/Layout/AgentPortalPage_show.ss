@@ -15,13 +15,71 @@
             <div class="col-sm-9">
                 <% include SessionMessage %>
                 <ul class="nav nav-tabs margin-top">
-                    <li class="{$ActiveTabToggle(first,default)}"><a data-toggle="tab" href="#first">Services</a></li>
+                    <li class="{$ActiveTabToggle(first,default)}"><a data-toggle="tab" href="#first">Home</a></li>
+                    <li class="{$ActiveTabToggle(service)}"><a data-toggle="tab" href="#service">Services</a></li>
                     
                     <li class="{$ActiveTabToggle(blog)}"><a data-toggle="tab" href="#blog">Blog</a></li>
                     <li class="{$ActiveTabToggle(partners)}"><a data-toggle="tab" href="#partners">Partners</a></li>
                 </ul>
                 <div class="tab-content margin-bottom">
                     <div id="first" class="tab-pane fade {$ActiveTabContent(first,default)}">
+                        <hr width=20% align=center style="background-color:#45aed6;height:1px;">
+                        <hr width=50% align=center style="background-color:#45aed6;height:1px;">
+                        <hr width=80% align=center style="background-color:#45aed6;height:1px;">
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-1 margin-bottom">
+                                $Member.ProfilePage.AboutSchool
+                            </div>
+                            <div class="col-sm-8 col-sm-offset-3 margin-bottom">
+                                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                    <!-- Indicators -->
+                                    <ol class="carousel-indicators">
+                                      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                      <li data-target="#myCarousel" data-slide-to="1"></li>
+                                      <li data-target="#myCarousel" data-slide-to="2"></li>
+                                    </ol>
+
+                                    <!-- Wrapper for slides -->
+                                    <div class="carousel-inner" role="listbox" style="max-height:400px;">
+                                      <div class="item active">
+                                        <img src="$Member.ProfilePage.SlideOne.Filename()" alt="Chania">
+                                      </div>
+
+                                      <div class="item">
+                                        <img src="$Member.ProfilePage.SlideTwo.Filename()" alt="Chania">
+                                     </div>
+
+                                      <div class="item">
+                                        <img src="$Member.ProfilePage.SlideThree.Filename()" alt="Flower">
+                                     </div>
+                                    </div>
+
+                                    <!-- Left and right controls -->
+                                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                      <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                      <span class="sr-only">Next</span>
+                                    </a>
+                                  </div>
+                            </div>
+                        </div>
+                        <hr width=80% align=center style="background-color:#45aed6;height:1px;">
+                        <hr width=50% align=center style="background-color:#45aed6;height:1px;">
+                        <hr width=20% align=center style="background-color:#45aed6;height:1px;">
+                        <% if Member.ProfilePage.WelcomeVideoLink %>
+                        <div class="row margin-bottom">
+                            <div class="col-sm-10 col-sm-offset-1 responsive-video">
+                                <iframe title="YouTube video player" class="youtube-player" type="text/html" 
+src="{$Member.ProfilePage.WelcomeVideoLink}"
+frameborder="0" allowFullScreen></iframe>
+                            </div>
+                        </div>
+                        <% end_if %>
+                    </div>
+                    <div id="service" class="tab-pane fade {$ActiveTabContent(service)}">
                         <h3 class="text-center">Services Provided</h3>
                         <div class="row match-height-boxes">
                             <% loop Member.Services() %>

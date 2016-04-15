@@ -155,7 +155,7 @@
                      <h2><strong><a>$Title</a></strong></h2>
 
                     <p>$Content.LimitCharacters(400)</p>
-                    <p><a class="btn btn-primary" href="#">Read more</a>
+                    <p><a class="btn btn-primary" href="{$Link}">Read more</a>
                     </p>
                 </div>
             </div>
@@ -172,7 +172,7 @@
                      <h2><strong><a>$Title</a></strong></h2>
 
                     <p>$Content.LimitCharacters(400)</p>
-                    <p><a class="btn btn-primary" href="#">Read more</a>
+                    <p><a class="btn btn-primary" href="{$Link}">Read more</a>
                     </p>
                 </div>
             </div>
@@ -189,7 +189,7 @@
                      <h2><strong><a>$Title</a></strong></h2>
 
                     <p>$Content.LimitCharacters(400)</p>
-                    <p><a class="btn btn-primary" href="#">Read more</a>
+                    <p><a class="btn btn-primary" href="{$Link}">Read more</a>
                     </p>
                 </div>
             </div>
@@ -206,7 +206,7 @@
                      <h2><strong><a>$Title</a></strong></h2>
 
                     <p>$Content.LimitCharacters(400)</p>
-                    <p><a class="btn btn-primary" href="#">Read more</a>
+                    <p><a class="btn btn-primary" href="{$Link}">Read more</a>
                     </p>
                 </div>
             </div>

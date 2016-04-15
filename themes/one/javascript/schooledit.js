@@ -1,5 +1,7 @@
 $(window).load(function(){
-    
+    // color picker
+    $('#Form_ProfileLinksForm_ProfileColour').spectrum({
+change: function(color){$('#Form_ProfileLinksForm_ProfileColour').val(color.toHex());},});
     //edit service load
     $('.edit-program-select select').change(function() {
         $('#Form_EditProgramForm').overlay();

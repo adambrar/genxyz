@@ -57,6 +57,8 @@ class SchoolPortalPage_Controller extends Page_Controller
         Requirements::javascript("themes/one/javascript/schooledit.js");
         Requirements::javascript("themes/one/javascript/bootstrap-rating.min.js");
         Requirements::javascript("themes/one/javascript/minimal-overlay.js");
+        Requirements::javascript("themes/one/javascript/spectrum.js");
+        Requirements::css("themes/one/css/spectrum.css");
         Requirements::javascript(
             FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.jquery.js");
         Requirements::css(
@@ -422,7 +424,7 @@ class SchoolPortalPage_Controller extends Page_Controller
             $imageOne->addExtraClass('inline'),
             $imageTwo->addExtraClass('inline'),
             $imageThree->addExtraClass('inline'),
-            new TextField('ProfileColour', 'Enter the RGB Hex value of the colour you want your profile to be. (ie. FF0000 for Red.)'),
+            new TextField('ProfileColour', 'Choose a color for your profile.'),
             new TextField('WelcomeVideoLink', 'Paste the link to your embedded video. Make sure it is an https link and not http!'),
             new HTMLEditorField('AboutSchool', 'About University'),
             new LiteralField('Description', '<h5>Provide links to general pages with the information required.</h5>'),

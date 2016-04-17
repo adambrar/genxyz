@@ -34,7 +34,8 @@ class Agent extends Member {
     );
     
     private static $summary_fields = array(
-        'Name' => 'Name',
+        'FirstName' => 'First Name',
+        'Surname' => 'Surname',
         'Email' => 'Email',
         'Country.Name' => 'Country'
     );

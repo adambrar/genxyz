@@ -302,7 +302,7 @@ class AgentPortalPage_Controller extends Page_Controller
             ->setTemplate('NewAgent')
             ->populateTemplate(new ArrayData(array(
                 'Member' => $agent,
-                'LoginLink' => Director::absoluteURL('admin')
+                'LoginLink' => Director::BaseURL() . '/admin'
             )));
                 
         $email->send();

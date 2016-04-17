@@ -51,7 +51,7 @@ class Agent extends Member {
         $fields = parent::getCMSFields();
         $this->removeExtraFields($fields);
         
-        $fieldList = array('Website', 'AddressLine1', 'AddressLine2', 'PostalCode', 'PhoneNumber', 'City', 'CountryID');
+        $fieldList = array('AddressLine1', 'AddressLine2', 'PostalCode', 'PhoneNumber', 'City', 'CountryID');
         
         foreach($fieldList as $field) {
             $tabField = $fields->dataFieldByName($field);
